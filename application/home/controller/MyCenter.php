@@ -287,6 +287,7 @@ class MyCenter extends Base{
         $this->assign('des' , '个人报名活动');
         return view();
     }
+    
     public function collection_activity(){
         $info = $this->jsGlobal;
         $model = model("Activity");
@@ -299,7 +300,7 @@ class MyCenter extends Base{
         }
         $this->assign('list' ,$list);
         $this->assign('list1' ,$list1);
-        $this->assign('title' , '个人收藏活动 -');
+        $this->assign('title' , '-个人收藏活动 ');
         $this->assign('img' , $info['member']['userPhoto']);
         $this->assign('des' , '个人收藏活动');
         return view();
