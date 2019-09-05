@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="smart-style-5">
+	<head>
+		<meta charset="utf-8">
+		<title>{:lang('system_manage')} - {$title|default=""}</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		{block name="base_css"}
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-production-plugins.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-production.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-skins.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-rtl.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/js/plugin/lightbox2/css/lightbox.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/js/plugin/bootstrap-fileinput/css/fileinput.min.css">
+		{/block}
+
+		{block name="my_css"}
+		<link rel="stylesheet" type="text/css" media="screen" href="__STATIC__/css/default.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="__STATIC__/css/webuploader.css">
+		{/block}
+
+		<link rel="shortcut icon" href="__COMMON__/img/favicon/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="__COMMON__/img/favicon/favicon.ico" type="image/x-icon">
+
+		<link rel="apple-touch-icon" href="__COMMON__/img/splash/sptouch-icon-iphone.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="__COMMON__/img/splash/touch-icon-ipad.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="__COMMON__/img/splash/touch-icon-iphone-retina.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="__COMMON__/img/splash/touch-icon-ipad-retina.png">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="apple-touch-startup-image" href="__COMMON__/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+		<link rel="apple-touch-startup-image" href="__COMMON__/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+		<link rel="apple-touch-startup-image" href="__COMMON__/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+		<script src="__COMMON__/js/libs/jquery-2.1.1.min.js"></script>
+		<script>
+			window.ctx = "__COMMON__";
+			window.static = "__STATIC__";
+			window.sound_path = "__COMMON__/sound/";
+		</script>
+	</head>
+
+	<body class="smart-style-5">
+		{block name="header"}
+		{include file="layouts/header" /}
+		{/block}
+
+		{block name="menu"}
+		{include file="layouts/menu" /}
+		{/block}
+
+		<div id="main" role="main">
+			<div id="ribbon">
+				<span class="ribbon-button-alignment">
+					<span class="btn btn-ribbon"  rel="tooltip" onclick="refresh()" ><i class="fa fa-refresh"></i></span>
+				</span>
+				<span class="ribbon-button-alignment">
+					<span class="btn btn-ribbon"  rel="tooltip" onclick="goBack()" ><i class="fa fa-reply"></i></span>
+				</span>
+                                <span class="ribbon-button-alignment">
+					<span class="btn btn-ribbon"  rel="tooltip" onclick="setSubmit()" ><i class="fa fa-wrench"></i></span>
+				</span>
+
+				<ol class="breadcrumb"></ol>
+			</div>
+			<div id="content"></div>
+		</div>
+
+		{block name="footer"}
+		{include file="layouts/footer" /}
+		{/block}
+
+		{block name="base_js"}
+		
+		<script src="__COMMON__/js/libs/jquery-ui-1.10.3.min.js"></script>
+		<script src="__COMMON__/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+		<script src="__COMMON__/js/bootstrap/bootstrap.min.js"></script>
+		<script src="__COMMON__/js/notification/SmartNotification.min.js"></script>
+		<script src="__COMMON__/js/smartwidgets/jarvis.widget.min.js"></script>
+		<script src="__COMMON__/js/plugin/select2/select2.min.js"></script>
+                <script src="__COMMON__/js/plugin/summernote/summernote.js"></script>
+		<script src="__COMMON__/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+        <script src="__COMMON__/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+		<script src="__COMMON__/js/plugin/fastclick/fastclick.min.js"></script>
+		<script src="__COMMON__/js/plugin/juicer/juicer-min.js"></script>
+		<script src="__COMMON__/js/plugin/lightbox2/js/lightbox.min.js"></script>
+		<script src="__COMMON__/js/plugin/bootstrap-fileinput/js/fileinput.js"></script>
+		<script src="__COMMON__/js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="__COMMON__/js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="__COMMON__/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="__COMMON__/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="__COMMON__/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+		{/block}
+
+		{block name="my_js"}
+		<script src="__COMMON__/js/module.js"></script>
+		<script src="__STATIC__/js/app.config.js"></script>
+		<script src="__STATIC__/js/app.js"></script>
+		<script src="__STATIC__/js/common.js"></script>
+		<!--<script src="__STATIC__/js/file_input_common.js"></script>-->
+		{/block}
+<!--		<script>
+			pageSetUp();
+		</script>-->
+	</body>
+</html>

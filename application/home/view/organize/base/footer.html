@@ -1,0 +1,130 @@
+<div class="bar">
+        <ul class="menu1 menu1-zxm" style="display: none;">
+            <li class="menu1-one menu1-index">
+              首页
+            </li>
+            <li class="menu1-Project">
+              精选项目
+            </li>
+            <li class="menu1-zfmxes">
+              定向增发
+            </li>
+            <li class="menu1-four menu1-zryxes">
+              大宗转让
+            </li>
+        </ul>
+    <a class="bar-1">找项目</a>
+    
+    <a href="{:url('organize/orglist')}" class="bar-2">找资本</a>
+    <ul class="menu2 menu1-fazx" style="display: none;">
+            <li class="menu1-one menu1-spoiler">
+              剧透中心
+            </li>
+            <li class="menu1-rs">
+              路演中心
+            </li>
+            <li class="menu1-study">
+             学习中心
+            </li>
+            <li class="menu1-four menu1-activity">
+              活动中心
+            </li>
+        </ul> 
+    <a class="bar-3">FA中心</a>
+    <!-- {if condition="$Request.controller eq 'Index' "}
+    <a href="{:url('Index/index')}" class="bar-1 actived">首页</a>
+    {else /}
+    <a href="{:url('Index/index')}" class="bar-1">首页</a>
+    {/if}
+    {if condition="$Request.controller eq 'Project' "}
+    <a href="{:url('Project/index')}" class="bar-2 actived">项目</a>
+    {else /}
+    <a href="{:url('Project/index')}" class="bar-2">项目</a>
+    {/if} -->
+    <!-- {if condition="$Request.controller eq 'Service' "}
+    <a href="{:url('Service/index')}" class="bar-3 actived">服务</a>
+    {else /}
+    <a href="{:url('Service/index')}" class="bar-3">服务</a>
+    {/if} -->
+
+    {if condition="$Request.controller eq 'MyCenter' "}
+    <a href="{:url('MyCenter/index')}" class="bar-4 actived">我的</a>
+    {else /}
+    <a href="{:url('MyCenter/index')}" class="bar-4">我的</a>
+    {/if}
+</div>
+</body>
+</html>
+<script type="text/javascript">
+
+    $(function(){
+        var flag1 = true;
+        var flag2 = true;
+        //点击一级菜单:找项目
+        
+        $(".bar-1").on('click',function(){
+            if(flag1){
+                $(".menu1-zxm").show();
+                $(".menu1-fazx").hide();
+                flag1 = false;
+                flag2 = true;
+            }else{
+                $(".menu1-zxm").hide();
+                flag1 = true;
+            }
+        });
+        //点击一级菜单:FA中心
+        
+        $(".bar-3").on('click',function(){
+            if(flag2){
+                $(".menu1-fazx").show();
+                $(".menu1-zxm").hide();
+                flag2 = false;
+                flag1 = true;
+            }else{
+                $(".menu1-fazx").hide();
+                flag2 = true;
+            }
+        });
+        var index_index_url = "{:url('Index/index')}";
+        var project_index_url = "{:url('Project/index')}";
+        var zfmxes_conlist_url = "{:url('zfmxes/conlist')}";
+        var zryxes_conlist_url = "{:url('zryxes/conlist')}";
+        var spoiler_index_url = "{:url('spoiler/index')}";
+        var road_show_index_url = "{:url('road_show/index')}";
+        var study_url = "http://read.test.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage";
+        var activity_index = "{:url('activity/index')}";
+        //点击首页
+        $(".menu1-index").on('click',function(){
+            location.href = index_index_url;
+        });
+        //精选项目
+         $(".menu1-Project").on('click',function(){
+            location.href = project_index_url;
+        });
+        //定向增发
+        $(".menu1-zfmxes").on('click',function(){
+              location.href = zfmxes_conlist_url;
+        });
+        //大宗转让
+        $(".menu1-zryxes").on('click',function(){
+              location.href = zryxes_conlist_url;
+        });
+        //剧透中心
+        $(".menu1-spoiler").on('click',function(){
+              location.href = spoiler_index_url;
+        });
+        //路演中心
+        $(".menu1-rs").on('click',function(){
+              location.href = road_show_index_url;
+        });
+        //学习中心
+        $(".menu1-study").on('click',function(){
+              location.href = study_url;
+        });
+        //活动中心
+        $(".menu1-activity").on('click',function(){
+              location.href = activity_index;
+        });
+    })
+</script>

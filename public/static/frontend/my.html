@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+
+<body>
+<div id="box" class="bg_gray mofh">
+    <!-- 个人中心 -->
+    <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+    <div id="pcHeader" class="radius shadow bg_white porel" style="position: absolute;top:20px;left:10px;z-index:999;">
+        <div style="padding:10px 5px 15px;">
+            <div class="clearfix">
+                <img id="headerImg" class="pull-left" :src="ui.userPhoto" width="46" height="46" style="border-radius:30px;margin-right:13px;">
+                <div class="pull-left" style="width:186px;">
+                    <div class="clearfix">
+                        <span class="pull-left f16 tofh" style="margin-top:-5px;width:86px;">{{(ui.realName.length > 0) ? ui.realName : ui.userName}}</span>
+                        <span v-show="ui.userPhone.length > 0" class="pull-right f12" style="margin-top:-1px;color:#666666;">{{ui.userPhone}}</span>
+                        <img v-show="ui.userPhone.length > 0" class="pull-right mr5" src="/static/frontend/images/phone-sign.png" alt="" width="13" height="13" style="margin-top:2px;">
+                    </div>
+                    <template v-if="ui.userType == 0">
+                        <a class="dbk" href="javascript:void(0)" onclick="doreg()" style="margin-top:4px;">
+                            <img src="/static/frontend/images/nonAuth.png" height="20">
+                        </a>
+                    </template>
+                    <template v-else-if="ui.userType == 1">
+                        <a class="dbk c_primary" href="javascript:void(0)" onclick="doinfo()" style="margin-top:8px;">去完善个人信息 ></a>
+                    </template>
+                    <template v-else>
+                        <div class="c_gray" style="margin-top:8px;">{{ui.company_jc}} | {{ui.position}}</div>
+                    </template>
+                </div>
+                <div class="pull-right dno" style="width:60px;">
+                    <template v-if="ui.userType == 2">
+                        <img class="pull-right" :src="ui.qr_code" width="60" height="60">
+                    </template>
+                    <template v-else>
+                        <div class="bg_gray" style="height:60px;width:60px;line-height:60px;"></div>
+                    </template>
+                    <div class="text-center c_primary f12">专属码</div>
+                </div>
+            </div>
+            <div class="clearfix ofh" style="color:#666666;margin-top:8px;">
+                <a class="text-center pull-left porel dbk" style="width:33.33%;" href="/static/frontend/myBusiness.html">
+                    <div class="f14 c_black">{{ui.service_num}}</div>
+                    <div class="f12 c_black">我的业务</div>
+                    <div style="border-right:2px solid #eeeeee;height:25px;position:absolute;right:0;bottom:0;"></div>
+                </a>
+                <a class="text-center pull-left porel dbk" style="width:33.33%;" href="/static/frontend/myBusiness.html?types=1">
+                    <div class="f14">{{ui.require_num}}</div>
+                    <div class="f12">我的需求</div>
+                    <div style="border-right:2px solid #eeeeee;height:25px;position:absolute;right:0;bottom:0;"></div>
+                </a>
+                <div @click="disableBtn" class="text-center pull-left porel" style="width:33.33%;">
+                    <img src="/static/frontend/images/share-sign.png" width="20" height="20">
+                    <div class="f12" style="margin-top:2px;">分享我的名片</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix" style="margin:55px 0 20px;padding:0 15px 0;">
+        <span class="pull-left f18">基本信息 > </span>
+        <a class="btn btn-primary pull-right btn-sm" href="/static/frontend/basic-info.html" role="button">修改个人信息</a>
+    </div>
+
+    <div class="clearfix pt15 pb15 bg_white" style="border-radius:3px;margin:0 7px;">
+        <a class="dbk porel pull-left" style="width:25%" href="/static/frontend/focus.html">
+            <div class="text-center f12" style="border-right:1px solid #eeeeee;">
+                <img src="/static/frontend/images/focus-sign.png" height="24" style="margin:0 auto 8px;">
+                <div class="c_black">我的关注</div>
+                <div class="c_gray" style="font-size:10px;">TA的实时动态</div>
+            </div>
+        </a>
+        <a class="dbk porel pull-left" style="width:25%" href="/static/frontend/myFans.html">
+            <div class="text-center f12" style="border-right:1px solid #eeeeee;">
+                <img src="/static/frontend/images/fans-sign.png" height="24" style="margin:0 auto 8px;">
+                <div class="c_black">我的粉丝</div>
+                <div class="c_gray" style="font-size:10px;">关注我的人</div>
+            </div>
+            <span v-show="ui.my_fans_num > 0" style="position:absolute;right:5px;top:-7px;font-size:10px;" class="badge bg_danger">+{{ui.my_fans_num}}</span>
+        </a>
+        <a class="dbk porel pull-left" style="width:25%" href="/static/frontend/myConnections.html">
+            <div class="text-center f12" style="border-right:1px solid #eeeeee;">
+                <img src="/static/frontend/images/contacts-sign.png" height="24" style="margin:0 auto 8px;">
+                <div class="c_black">我的人脉</div>
+                <div class="c_gray" style="font-size:10px;">为你推荐人脉</div>
+            </div>
+        </a>
+        <a class="dbk porel pull-left" style="width:25%" href="/static/frontend/myCollection.html">
+            <div class="text-center f12">
+                <img src="/static/frontend/images/collect-sign.png" height="24" style="margin:0 auto 8px;">
+                <div class="c_black">我的收藏</div>
+                <div class="c_gray" style="font-size:10px;">我感兴趣的</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="mt10 mb10">
+        <a class="btn btn-primary btn-sm btn-block" href="/static/frontend/intelligentMatch.html" role="button" style="width:272px;margin:0 auto">重置匹配标签 让匹配更精准 ></a>
+    </div>
+
+    <div class="bg_white" style="border-radius:3px;margin:0 7px;">
+        <a style="padding:12px 10px;" class="clearfix  bb1 dno" href="#">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-1.png" height="20">
+                <span class="pull-left c_black">看过我的人</span>
+            </div>
+            <div class="pull-right">
+                <span v-show="ui.view_me_num > 0" style="margin-top: 2px;" class="pull-left badge bg_danger mr10">{{ui.view_me_num}}</span>
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+        <a style="padding:12px 10px;" class="clearfix dbk bb1" href="http://fin.jrfacai.com/home/Chat/lists">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-2.png" height="20">
+                <span class="pull-left c_black">消息中心</span>
+            </div>
+            <div class="pull-right">
+                <span v-show="ui.msg_num > 0" style="margin-top: 2px;" class="pull-left badge bg_danger mr10">{{ui.msg_num}}</span>
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+        <a style="padding:12px 10px;" class="clearfix dbk bb1" href="#">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-3.png" height="20">
+                <span class="pull-left c_black">我的学习</span>
+            </div>
+            <div class="pull-right">
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+        <a style="padding:12px 10px;" class="clearfix dbk bb1" href="/home/my_center/collection_activity">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-4.png" height="20">
+                <span class="pull-left c_black">我的活动</span>
+            </div>
+            <div class="pull-right">
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+        <a style="padding:12px 10px;" class="clearfix dbk bb1" href="/home/my_center/index">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-5.png" height="20">
+                <span class="pull-left c_black">我的FA財钱包</span>
+            </div>
+            <div class="pull-right">
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+        <a style="padding:12px 10px;" class="clearfix dbk bb1" href="/static/frontend/guide.html">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-6.png" height="20">
+                <span class="pull-left c_black">使用指南</span>
+            </div>
+            <div class="pull-right">
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+        <a style="padding:12px 10px;" class="clearfix dbk" href="/static/frontend/aboutUs.html">
+            <div class="pull-left">
+                <img class="pull-left mr15" src="/static/frontend/images/pc-menu-sign-7.png" height="20">
+                <span class="pull-left c_black">关于我们</span>
+            </div>
+            <div class="pull-right">
+                <img src="/static/frontend/images/right-arrows-sign.png" class="pull-left" height="16" style="margin-top:4px;">
+            </div>
+        </a>
+    </div>
+
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+      <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+        <div class="modal-content" style="border:0;">
+          <div class="modal-body text-center"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img src="/static/frontend/images/sign-5-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_black">我的</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // 设置加载中...
+            // $(document).ajaxStart(function() {
+            //     $("#loading").removeClass('hidden');
+            // });
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        /**
+         * 异步未读消息总数实时更新
+         */
+        //接口前缀
+        var api_prefix = 'http://fin.jrfacai.com';
+        //连接websocket服务器
+        var ws = new WebSocket("ws://fin.jrfacai.com:8282");
+        //当前登录用户uid
+        var from_uid =ui.uid;
+        //接收websocket服务器推送的最新未读消息
+        ws.onmessage = function(e){
+            var message = $.parseJSON(e.data);
+            var data = {};
+            switch(message.type){
+                case 'init':
+                 data = '{"from_uid":'+from_uid+',"type":"bind"}';
+                 ws.send(data);
+                 //更新未读消息总数
+                 getAllNoReadNum();
+                return;
+                case 'text':
+                 //更新未读消息总数
+                 getAllNoReadNum();
+                return;
+                case 'url':
+                 //更新未读消息总数
+                 getAllNoReadNum();
+                return;
+                case 'image':
+                 //更新未读消息总数
+                 getAllNoReadNum();
+                return;
+            }
+              
+        }
+
+        //更新未读消息总数
+        function getAllNoReadNum()
+        {
+            $.ajax({
+                url:api_prefix + '/home/chat/getAllNoreadApi',
+                type:'get',
+                dataType:'json',
+                success:function(e){
+                    if (e.msg_num) {
+                        console.log(e.msg_num);
+                       ui.msg_num = e.msg_num;
+                    } else {
+                       ui.msg_num = 0;
+                    }
+                }
+            })
+        }
+        /**
+         * 异步未读消息总数实时更新
+         */
+        //提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/7*1000);
+        }
+
+        // 初始窗口
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#box").height(wh);
+        $("#pcHeader").width(ww-20);
+
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                ui: {},
+                publishList: [],
+                reportId: '',
+                pageFlag: true,
+                page: 1,
+                reportItem: {},
+                appId: "",
+                noncestr: "",
+                signature: "",
+                timestamp: "",
+                share: {}
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    vue.ui = ui;
+                    
+                 	// 加载微信配置
+                    $.ajax({
+                        url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                        type: 'GET',
+                        dataType: 'JSON',
+                        async: false,
+                        data: {"link": window.location.href},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.appId = res.data.appId;
+                            vue.noncestr = res.data.noncestr;
+                            vue.signature = res.data.signature;
+                            vue.timestamp = res.data.timestamp;
+                        }
+                    });
+                    vue.share = {
+                            "title": "FA財-个人中心",
+                            "desc": "一站式智能投融信息交互平台",
+                            "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+                        };
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: vue.appId, // 必填，公众号的唯一标识
+                        timestamp: vue.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: vue.noncestr, // 必填，生成签名的随机串
+                        signature: vue.signature,// 必填，签名
+                        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+                    });
+
+                    var shareLink = window.location.href;
+                    if (ui.userType == 1 || ui.userType == 2) {
+                        shareLink = "http://fin.jrfacai.com/static/frontend/my.html?superior="+ui.uid;
+                    }
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.onMenuShareAppMessage({ 
+                            title: vue.share.title, // 分享标题
+                            desc: vue.share.desc, // 分享描述
+                            link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: vue.share.imgUrl, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        });
+                        wx.onMenuShareTimeline({ 
+                            title: vue.share.title, // 分享标题
+                            link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: vue.share.imgUrl, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        });
+                    });
+                });
+            },
+            methods: {
+                disableBtn: function () {
+                    alertModal("功能尚未开放！");
+                }
+            }
+        })
+        
+        function doreg(){
+			if(ui.is_follow==1){
+        		window.location.href = '/static/frontend/reg.html';
+        	}else{
+        		window.location.href = '/static/frontend/followtab.html';
+        	}
+		}
+		
+		function doinfo(){
+			if(ui.is_follow==1){
+        		window.location.href = '/static/frontend/basic-info.html';
+        	}else{
+        		window.location.href = '/static/frontend/followtab.html';
+        	}
+		}
+    </script>
+</body>
+
+</html>

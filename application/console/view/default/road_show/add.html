@@ -1,0 +1,253 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="road_show/tab_add" /}
+            <div>
+                <form id="addRoadShowForm" action="{:url('RoadShow/add')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">项目名称： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="road_name" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">企业名称： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="company_name" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">路演形式： <sup>*</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach name="roadshow_form" key="k" item="ind"}
+                                    <label class="radio radio-inline">
+                                        {if condition="$k eq 0"}
+                                        <input type="radio" class="radiobox" name="type" value="{$ind.id}" checked="">
+                                        {else /}
+                                        <input type="radio" class="radiobox" name="type" value="{$ind.id}">
+                                        {/if}
+                                        <span> {$ind.value} </span> 
+                                    </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">项目简介： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <textarea class="form-control" name="road_introduce" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">项目详情： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <textarea class="form-control" name="road_detail" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">主讲人照片： <sup>&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false"/>
+                                    <input type="text" class="hide" name="speaker" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">主讲人介绍： <sup>&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <textarea class="form-control" name="speaker_introduce" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">选填</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">机构点评： <sup>&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <textarea class="form-control" name="review" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">选填</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头图： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false"/>
+                                    <input type="text" class="hide" name="top_img" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">路演视频： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_company_video" type="file" class="file file-upload" data-extension="mp4" name="file" data-show-preview="false"/>
+                                    <input type="text" class="hide" name="video"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">商业计划书：<sup>&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div id="summernote"></div>
+                                <input type="text" class="hide" name="summernote" value=""/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script src="__STATIC__/js/summernote_common.js"></script>
+<script>
+    var send_file_url = "{:url('RoadShow/uploads')}";
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addRoadShowForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    road_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入路演项目名称'
+                            }
+                        }
+                    },
+                    company_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入企业名称'
+                            }
+                        }
+                    },
+                    road_introduce: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入项目简介'
+                            }
+                        }
+                    },
+                    road_detail:{
+                        validators: {
+                            notEmpty: {
+                                message: '请输入项目详情'
+                            }
+                        }
+                    },
+                    top_img: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传头图'
+                            }
+                        }
+                    },
+                    video: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传路演视频'
+                            }
+                        }
+                    },
+                    summernote: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入正文'
+                            }
+                        }
+                    },
+                }
+            }).on('success.bv.form', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                var data = $form.serialize();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this)
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('addRoadShowForm', thiss, 'roadshow', type, '{:url("Publics/upload")}', 1);
+        });
+    });
+</script>
+

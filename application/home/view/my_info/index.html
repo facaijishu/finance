@@ -1,0 +1,42 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="form-view">
+            {if condition="$info.through.status eq -1"}
+            <button style="background-color: #F3F3F3;height: 72px;width: 100%;">认证失败理由:{$info.through.default.reason}</button>
+            {/if}
+            {if condition="$info.through.status eq 0"}
+            <button style="background-color: #F3F3F3;height: 72px;width: 100%;">认证待审核</button>
+            {/if}
+            <ul>
+                <li>
+                    <label for="realName">姓名</label><div>{$info.through.realName}</div><a href="{:url('Through/index')}" class="fa fa-edit">{if condition="$info.through eq null"}添加{else /}修改{/if}认证信息</a>
+                </li>
+                <li>
+                    <label for="phone">绑定电话</label><div>{$info.member.userPhone}</div>
+                </li>
+                <li>
+                    <label for="email">联系邮箱</label><div>{$info.through.email}</div>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <label for="company">公司名称</label><div>{$info.through.company}</div>
+                </li>
+                <li>
+                    <label for="position">职位</label><div>{$info.through.position}</div>
+                </li>
+                <li>
+                    <label for="card">名片</label>
+                    <div>
+                        {if condition="$info.through.card eq ''"}
+                        <img src="__UPLOAD__/default.jpg" alt="名片">
+                        {else /}
+                        <img src="__UPLOAD__/home/card/{$info.through.card}" alt="名片">
+                        {/if}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

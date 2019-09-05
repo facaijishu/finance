@@ -1,0 +1,122 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="tab">
+            <a class="actived">精品项目</a>
+            <a>定向增发</a>
+            <a>大宗转让</a>
+        </div>
+        <div class="collection_pro">
+            {if condition="$list neq ''"}
+            {foreach name="list" item="it"}
+            <div class="my-pro">
+                <a href="{:url('ProjectInfo/index' , ['id' => $it.pro_id])}">
+                    <div class="pro-t">{$it.pro_name}{if condition="$it.stock_code neq ''"}<small>（{$it.stock_code}）</small>{/if}</div>
+                    <div class="pro-label">
+                        {foreach name="$it.inc_industry" item="industry"}
+                        <span>{$industry}</span>
+                        {/foreach}
+                        <label for="transfer_type" class="red">{$it.transfer_type}</label>
+                        <label for="hierarchy" class="orange">{$it.hierarchy}</label>
+                    </div>
+                    <div class="pro-box">
+                        <img src="__UPLOAD__/{$it.top_img}" alt="头图">
+                        <p>{$it.introduction}</p>
+                    </div>
+                </a>
+            </div>
+            {/foreach}
+            <div class="text-over">
+                没有啦~~~
+            </div>
+            {else /}
+            <div class="text-over">
+                暂无项目
+            </div>
+            {/if}
+        </div>
+        <div class="collection_pro" style="display: none;">
+            {if condition="$list1 neq []"}
+            <div class="seos-box">
+                <ul>
+                    {foreach name="list1" item="it"}
+                    <li>
+                        <div class="seos-t">
+                            <i class="ico-yz">融资中</i>
+                            <i class="ico-shi">{if condition="$it.trademethod eq '协议'"}竞{else /}市{/if}</i>
+                            <strong>{$it.sec_uri_tyshortname} <small>【{$it.neeq}】</small></strong>
+                        </div>
+                        <div class="seos-c">
+                            <div class="each">
+                                <span class="red">{$it.add.raise_money}</span><small>万元</small><br />
+                                <div>计划募资</div>
+                            </div>
+                            <div class="each">
+                                {$it.add.additional_num}<small>万股</small><br />
+                                <div>增发数量</div>
+                            </div>
+                            <div class="each">
+                                {$it.add.increase_price}<small>元</small><br />
+                                <div>定增价格</div>
+                            </div>
+                        </div>
+                        <p><label>净利润：</label>{$it.add.profit}</p>
+                        <p><a href="{:url('ZfmxesInfo/index',['neeq' => $it.neeq ,'plannoticeddate' => $it.plannoticeddate])}" class="more">查看更多</a><label>董事会公告日：</label>{$it.add.announcement_date}</p>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+            <div class="text-over">
+                没有啦~~~
+            </div>
+            {else /}
+            <div class="text-over">
+                暂无项目
+            </div>
+            {/if}
+        </div>
+        <div class="collection_pro" style="display: none;">
+            {if condition="$list2 neq []"}
+            <div class="attorn-box">
+                <ul>
+                    {foreach name="$list2" item="it"}
+                    <li>
+                        <a href="{:url('ZryxesEffectInfo/index' , ['id' => $it.id])}">
+                            <div class="attorn-t">
+                                <div class="pull-right"><label>是否可议价：</label>{$it.isdiscount}</div>
+                                <strong>{$it.sec_uri_tyshortname} <small>【{$it.neeq}】</small></strong><span class="la-1">{$it.direction}</span>{if condition="$it.boutique eq 1"}<span class="la-3">精选</span>{/if}
+                            </div>
+                            <div class="attorn-c">
+                                <div class="each">
+                                    <label>意向价格：</label><span class="price">{$it.price}元/股</span>
+                                </div>
+                                <div class="each">
+                                    <label>买卖数量：</label>{$it.num}股
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+            <div class="text-over">
+                没有啦~~~
+            </div>
+            {else /}
+            <div class="text-over">
+                暂无项目
+            </div>
+            {/if}
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".tab a").on("click", function () {
+                    $(".tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".collection_pro").hide();
+                    $(".collection_pro").eq($(this).index()).show();
+                });
+            });
+        </script>
+    </body>
+</html>

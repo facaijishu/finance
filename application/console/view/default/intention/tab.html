@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">定增意向</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Intention/index")}')">定增意向</a></li>
+    {/if}
+    {if condition="$Request.action eq 'zryxes' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">转让意向</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Intention/zryxes")}')">转让意向</a></li>
+    {/if}
+</ul>

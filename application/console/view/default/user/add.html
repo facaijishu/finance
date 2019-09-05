@@ -1,0 +1,246 @@
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="well well-sm well-light">
+                {include file="user/tab" /}
+                <div>
+                    <form id="addUserForm" action="{:url('user/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                        <fieldset>
+                            <legend>基本属性</legend>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">登录名 <sup>*</sup></label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" name="login_name" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">登录密码 <sup>*</sup></label>
+                                <div class="col-lg-4">
+                                    <input type="password" class="form-control" name="login_pwd" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">确认密码 <sup>*</sup></label>
+                                <div class="col-lg-4">
+                                    <input type="password" class="form-control" name="pwd_confirm" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">真实姓名 <sup>*</sup></label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" name="real_name" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">E-mail </label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" name="email" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">手机号 </label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" name="mobile" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">用户备注信息</label>
+                                <div class="col-lg-4">
+                                    <textarea class="form-control" name="remark" placeholder="备注" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend></legend>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">所属角色 <sup>*</sup></label>
+                                <div class="col-lg-4 selectContainer">
+                                    <select multiple style="width:100%" class="form-control select2" id="role-select">
+                                        <optgroup label="请选择用户角色">
+                                        {$role_option}
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <input type="hidden" class="form-control" name="role" />
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">状态</label>
+                                <div class="col-lg-4">
+                                    <span class="onoffswitch">
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="st3">
+                                        <label class="onoffswitch-label" for="st3">
+                                            <span class="onoffswitch-inner" data-swchon-text="正常" data-swchoff-text="禁止"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {:token()}
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fa fa-save"></i>
+                                        提交
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var roles = {$roles};
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addUserForm').bootstrapValidator({
+                feedbackIcons : {
+                    valid : 'glyphicon glyphicon-ok',
+                    invalid : 'glyphicon glyphicon-remove',
+                    validating : 'glyphicon glyphicon-refresh'
+                },
+                fields : {
+                    login_name : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入登录名'
+                            }
+                        }
+                    },
+                    login_pwd : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入登录密码'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 20,
+                                message: '登录密码长度必须在6到20位之间'
+                            },
+                            identical: {
+                                message: '两次密码不一致',
+                                field: 'pwd_confirm'
+                            },
+                            different: {
+                                message: '密码不能与登录名相同',
+                                field: 'login_name'
+                            }
+                        }
+                    },
+                    pwd_confirm : {
+                        validators : {
+                            notEmpty : {
+                                message : '请再次输入登录密码'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 20,
+                                message: '登录密码长度必须在6到20位之间'
+                            },
+                            identical: {
+                                message: '两次密码不一致',
+                                field: 'login_pwd'
+                            },
+                            different: {
+                                message: '密码不能与登录名相同',
+                                field: 'login_name'
+                            }
+                        }
+                    },
+                    real_name : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入真实姓名'
+                            }
+                        }
+                    },
+                    email : {
+                        validators : {
+                            emailAddress : {
+                                message : '请输入正确的电子邮箱'
+                            }
+                        }
+                    },
+                    role : {
+                        validators : {
+                            notEmpty : {
+                                message : '请选择角色'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.form.bv', function(e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if(resp.code){
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        }else{
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $('#role-select').find('option').each(function (i) {
+            var _this = $(this);
+            var id = _this.val();
+            roles.forEach(function (val) {
+                if(id == val) {
+                    _this.attr("disabled", "disabled");
+                }
+            })
+        });
+        var roleSelect = $('#role-select');
+        roleSelect.select2({
+            closeOnSelect: true,
+            autoClear: true,
+            width: $(this).attr('data-select-width') || '100%',
+            placeholder: "请选择角色",
+            //minimumInputLength: 1,
+            //separator: ",", // 分隔符
+            //maximumSelectionSize: 5, // 限制数量
+            //initSelection: function(element, callback) { }, // 初始化时设置默认值
+            templateSelection: function (data, container) {
+                text = data.text.replace(/[\s+|├|─|└|│]/g, '');
+                return text;
+            }
+        }).on("change", function (e) {
+            var role = roleSelect.val() ? roleSelect.val().join(',') : '';
+            $("input[name='role']").val(role);
+        });
+    });
+</script>

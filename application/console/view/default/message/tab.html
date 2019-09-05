@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">留言列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Message/index")}')">留言列表</a></li>
+    {/if}
+</ul>

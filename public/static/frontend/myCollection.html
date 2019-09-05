@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+
+<body>
+<div id="box" class="bg_gray mofh">
+    <!-- 我的收藏 -->
+    <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+    <div id="pcHeader" class="radius shadow bg_white porel" style="position: absolute;top:20px;left:10px;z-index:999;">
+        <div style="padding:10px 5px 15px;">
+            <div class="clearfix ofh" style="color:#666666;margin-top:8px;">
+          
+                <div class="text-center pull-left porel" style="width:33.33%;">
+                    <div class="f20 c_black" style="margin-top:2px;font-weight:bold;">我的收藏</div>
+                </div>
+                <a href="#" class="pull-right" style="width: 15%;" @click="getServiceUrl">
+                    <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:34px;">
+                </a>
+            </div>
+            
+            <div class="ml5 mr5 bg_white clearfix mt5 pt10 bb1 radius_t">
+	            <div style="width:50%;" class="pull-left text-center porel">
+	                <div class="navName pb10 c_primary"> 项目</div>
+	                <div class="navSign bg_primary" style="height: 3px;line-height: 3px;border-radius: 2px;width: 32px;margin: -1px 0 0 -16px;position: absolute;left: 50%;"></div>
+	            </div>
+	            <div style="width:50%;" class="pull-left text-center porel">
+	                <div class="navName pb10">资金</div>
+	                <div class="navSign bg_primary dno" style="height: 3px;line-height: 3px;border-radius: 2px;width: 32px;margin: -1px 0 0 -16px;position: absolute;left: 50%;"></div>
+	            </div>
+        	</div>
+        </div>
+    </div>
+    <div id="project_show">
+	    <section style="overflow:hidden;width:100%;">
+			<a v-for="item in projectList" class="ml5 mr5 mb10 dbk pt10 pb10 pl10 radius" style="background:#ffffff;" @click="getDetail(item.id,item.type)">
+				<div class="clearfix porel">
+	              	<img :src="item.img" alt="" style="width:50px;height:50px;" class="pull-left">
+	              	<div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+	                	<div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;font-weight:bold;">{{item.bottom}}</div>
+	                  	<div class="c_gray clearfix rightDiv" style="position: absolute;top: 20px;left: 0;">
+	                      	<div style="height:18px;line-height:16px;margin-bottom: 3px;" class="pl5 pr5 f12 mr5 pull-left ball" v-for="l in item.label">{{l}}</div>
+	                  	</div>
+	              	</div>
+	              	<div class="pull-right porel" style="height:50px;width:50%;">
+	                  	<div class="c_white text-center f12 pl5" v-if="item.type == 'project'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(/static/frontend/images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">{{item.type_label}}</div>
+	                    <div v-else class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(/static/frontend/images/pro-sign.png);width:50px;height:26px;line-height:24px;">{{item.type_label}}</div>
+		                <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
+	              	</div>
+	         		</div>
+	            <div class="clearfix porel mt10 mr10">
+	              	<div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
+	              	<div class="pull-left c_gray tofh" style="width:230px;">{{item.p_from}}</div>
+	        	</div>
+	       	</a>
+		</section>
+		<div id="more_pro" style="height:15px;line-height:15px;"></div>
+	</div>
+	
+	<div id="organize_show" class="dno">
+	    <section style="overflow:hidden;width:100%;">
+			<a v-for="item in organizeList" class="ml5 mr5 mb10 dbk pt10 pb10 pl10 radius" style="background:#ffffff;" @click="getDetail(item.id,item.type)">
+				<div class="clearfix porel">
+	              	<img :src="item.img" alt="" style="width:50px;height:50px;" class="pull-left">
+	              	<div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+	                	<div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;font-weight:bold;">{{item.topname}}</div>
+	                  	<div class="c_gray clearfix rightDiv" style="position: absolute;top: 20px;left: 0;">
+	                      	<div style="height:18px;line-height:16px;margin-bottom: 3px;" class="pl5 pr5 f12 mr5 pull-left ball" v-for="l in item.label">{{l}}</div>
+	                  	</div>
+	              	</div>
+	              	<div class="pull-right porel" style="height:50px;width:50%;">
+	                  	<div class="c_white text-center f12 pl5" v-if="item.type == 'organize'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(/static/frontend/images/fund-filter-sign.png);width:74px;height:26px;line-height:24px;">{{item.type_label}}</div>
+	                    <div v-else class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(/static/frontend/images/fund-sign.png);width:50px;height:26px;line-height:24px;">{{item.type_label}}</div>
+		                <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
+	              	</div>
+	         		</div>
+	            <div class="clearfix porel mt10 mr10">
+	              	<div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
+	              	<div class="pull-left c_gray tofh" style="width:230px;">{{item.bottom_data}}</div>
+	        	</div>
+	       	</a>
+		</section>
+		<div id="more_org" style="height:15px;line-height:15px;"></div>
+	</div> 
+
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img src="/static/frontend/images/sign-5-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_black">我的</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        /**
+         * 异步未读消息总数实时更新
+         */
+        //接口前缀
+        var s_url = 'http://fin.jrfacai.com';
+
+        // 初始窗口
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#box").height(wh);
+        $("#pcHeader").width(ww-20);
+
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+            	ui: {}
+            	page: 1,
+                page2: 1,
+                pageFlag: true,
+                page2Flag: true,
+            	projectList: [],
+            	organizeList: [],
+                
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    vue.ui = ui;
+                    //项目收藏
+                    $.ajax({
+                        url: s_url+'/home/my_center_api/showMyCollectProject',
+                        type: 'GET',
+                        async: false,
+                        dataType: 'json',
+                        data: {"page": vue.page}
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.projectList = res.data;
+                        }
+                    });
+                    
+                    //机构资金收藏
+                    $.ajax({
+	                    url: s_url+'/home/my_center_api/showMyCollectOrganize',
+	                    type: 'GET',
+	                    async: false,
+	                    dataType: 'json',
+	                    data: {"page": vue.page2}
+	                })
+	                .done(function(res) {
+	                    if (res.code == 200) {
+	                        vue.organizeList = res.data;
+	                    }
+	                });
+                    
+                });
+                
+                $(".navName").click(function(event) {
+                    $(".navName").removeClass('c_primary');
+                    $(".navSign").hide();
+                    var e = $(event.currentTarget);
+                    e.addClass('c_primary');
+                    e.next().show();
+                    if ($(".navName").index(e) == 0) {
+                        $("#project_show").removeClass('dno');
+                        $("#organize_show").addClass('dno');
+                    }else {
+                        $("#project_show").addClass('dno');
+                        $("#organize_show").removeClass('dno');
+                    }
+                });
+            },
+            methods: {
+                disableBtn: function () {
+                    alertModal("功能尚未开放！");
+                },
+  
+	            getServiceUrl: function() {
+	                $.ajax({
+	                        url: s_url+'/home/index_api/serviceUrl',
+	                        type: 'GET',
+	                        dataType: 'json'
+	                    })
+	                    .done(function(res) {
+	                        window.location.href = res.data;
+	                    });
+	            },
+	            getDetail: function(id, type) {
+                    if (type == "project") {
+                        window.location.href = '/home/project_info/index/id/' + id;
+                    } else if (type == 'organize') {
+                        window.location.href = '/static/frontend/detailsShowSelectedFunds.html?id=' + id + '&type=' + type;
+                    } else if (type == 'organize_require') {
+                        window.location.href = '/static/frontend/detailsShowFunds.html?id=' + id + '&type=' + type;
+                    } else {
+                        window.location.href = '/static/frontend/detailsShowProject.html?id=' + id + '&type=' + type;
+                    }
+                },
+            
+            }
+            
+            
+        })
+    </script>
+</body>
+
+</html>

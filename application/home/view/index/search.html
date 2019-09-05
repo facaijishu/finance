@@ -1,0 +1,70 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="serach">
+            <div>
+                <input id="s-input" type="text">
+            </div>
+            <button>返回</button>
+        </div>
+        <div class="default-t" style="line-height: 100px;text-align: center;padding: 0 15px;color: #ccc;">暂无内容</div>
+        
+        <div class="search-t">项目</div>
+        <div class="search-list">
+            <a class="search-box">
+                <strong>蓝色未来<small>（835474）</small></strong>
+                <p>蓝色未来成立于2012年，专注于非义务教育领域（即学前教育和高等教育），主营业务为依托自营幼儿园为学龄前儿童提供保育…</p>
+            </a>
+            <a class="search-box">
+                <strong>蓝色未来<small>（835474）</small></strong>
+                <p>蓝色未来成立于2012年，专注于非义务教育领域（即学前教育和高等教育），主营业务为依托自营幼儿园为学龄前儿童提供保育…</p>
+            </a>
+            <a href="" class="more">更多项目</a>
+        </div>
+
+        <div class="search-t">路演</div>
+        <div class="search-list">
+            <a class="search-box">
+                <strong>
+                    <label for="" class="red">创新</label>
+                    <label for="" class="orange">协议</label>
+                    蓝色未来<small>（835474）</small>
+                </strong>
+                <p>蓝色未来成立于2012年，专注于非义务教育领域（即学前教育和高等教育），主营业务为依托自营幼儿园为学龄前儿童提供保育…</p>
+            </a>
+            <a class="search-box">
+                <strong>蓝色未来<small>（835474）</small></strong>
+                <p>蓝色未来成立于2012年，专注于非义务教育领域（即学前教育和高等教育），主营业务为依托自营幼儿园为学龄前儿童提供保育…</p>
+            </a>
+            <a href="" class="more">更多项目</a>
+        </div>
+
+        <div class="search-t">活动</div>
+        <div class="search-list">
+            <a class="search-box">
+                <strong>蓝色未来<small>（835474）</small></strong>
+                <p>蓝色未来成立于2012年，专注于非义务教育领域（即学前教育和高等教育），主营业务为依托自营幼儿园为学龄前儿童提供保育…</p>
+            </a>
+            <a class="search-box">
+                <strong>蓝色未来<small>（835474）</small></strong>
+                <p>蓝色未来成立于2012年，专注于非义务教育领域（即学前教育和高等教育），主营业务为依托自营幼儿园为学龄前儿童提供保育…</p>
+            </a>
+            <a href="" class="more">更多项目</a>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var index = "{:url('Index/index')}";
+                $("#s-input").focus(function () {
+                    $('.serach button').css({width: '40px'})
+                });
+                $("#s-input").blur(function () {
+                    $("#s-input").focus();
+                });
+                $("#s-input").focus();
+                $('.serach button').click(function(){
+                    location.href = index;
+                });
+            });
+        </script>
+    </body>
+</html>

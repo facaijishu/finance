@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="introdece_img/modal" /}
+            {include file="carousel_figure/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="carousel_figure_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 标题： </label>
+                                    <div class="col-lg-6 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="title" id="pro_name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-default" id="carousel_figure_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="carousel_figure" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> ID</th>
+                                <th> 标题</th>
+                                <th> 图片</th>
+                                <th> 排序</th>
+                                <th> 创建时间</th>
+                                <th> 创建用户</th>
+                                <th> 状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var carousel_figure_url = '{:url("CarouselFigure/read")}';
+    var root_path_url = $("#carousel_figure").attr("data-path");
+    var carousel_figure_stop_url = '{:url("CarouselFigure/stop")}';
+    var carousel_figure_start_url = '{:url("CarouselFigure/start")}';
+    var carousel_figure_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/show/carousel_figure/carousel_figure_list.js"></script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

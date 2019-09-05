@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+	        	<div class="bs-example-modal-sm" id="dataUp" style="right: 45%;top: 50%;position: absolute;z-index: 999999;display:none;">
+                    <div class="modal-content" style="width:500px;">
+                        <form id="excelForm" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="">导入待签到的数据</h4>
+                            </div>
+                            <div class="modal-body" style="height:150px;">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-1"> <sup></sup></label>
+                            		<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+	                                	<div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+	                                    	<!--<input id="import_file" type="file" class="file file-upload" data-extension="xls,xlsx" name="file" data-show-preview="false"/> 
+	                                    	<input type="text" class="hide" name="file" value=""/>
+	                                    	-->
+	                                    	<input id="file" type="file" name="file">
+	                                    	
+	                                	</div>
+                            		</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+            </div>
+            
+            {include file="activity_sign/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+				。btn-red{color:red;background-color:#ff0000;border-color:#ff0000;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="activity_form">
+                         <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 活动： </label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <select class="form-control m_uid" name=a_id>
+                                            <optgroup label="请选择客户">
+                                                <option value="">- - - 无 - - -</option>
+                                                {foreach name="list" item="activity"}
+                                                <option value="{$activity.a_id}">{$activity.act_name}</option>
+                                                {/foreach}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+	                            <div class="form-group">
+	                            </div>
+	                            <div class="col-lg-2 col-md-2 col-sm-2">
+	                                <div class="form-group">
+	                                    <div class="col-lg-12">
+	                                        <button type="button" class="btn btn-default" id="activity_btn" > <i class="fa fa-search"></i>查询 </button>
+	                                    </div>
+	                                </div>
+	                            </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="activity" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> 活动ID</th>
+                                <th> 活动标题</th>
+                                <th> 签到时间</th>
+                                <th> 姓名</th>
+                                <th> 手机号</th>
+                                <th> 公司名称</th>
+                                <th> 职位</th>
+                                <th> 渠道来源</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script src="__STATIC__/js/summernote_common.js"></script>
+<script>
+    var activity_url 			= '{:url("ActivitySign/read")}';
+    var root_path_url 			= $("#activity").attr("data-path");
+    
+
+    $(function () {	
+    	 $("#postData").on("click",function(){
+             $("#dataUp").css("display","block");
+         });
+    	 
+    	 $(".close").on("click",function(){
+             $("#dataUp").css("display","none");
+         });
+    	 
+    	 $("#btn-close").on("click",function(){
+             $("#dataUp").css("display","none");
+         });
+    	 
+        $("#file").on('change', function () {
+            var supplier = document.getElementById("excelForm");
+            var formData = new FormData(supplier);
+            $.ajax({
+                url: "{:url('ActivitySign/upload')}",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (resp) {
+                    if(resp.code==1){
+                    	alert(resp.msg);
+                    	$("#dataUp").css("display","none");
+                    }else{
+                        alert(resp.msg);
+                    }
+                }
+            });
+        });
+    });
+    
+</script>
+<script src="__STATIC__/js/activity_sign/activity_sign_list.js"></script>

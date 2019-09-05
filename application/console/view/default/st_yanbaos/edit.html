@@ -1,0 +1,231 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="st_yanbaos/tab_edit" /}
+            <div data-id="{$info.id}">
+                <form id="editStYanbaosForm" action="{:url('StYanbaos/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">标题：<sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="title" value="{$info.title}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">相关品种：<sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="codename" value="{$info.codename}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">机构：<sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="org" value="{$info.org}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">作者：<sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="authors" value="{$info.authors}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">评级：<sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="rate" value="{$info.rate}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">变动：<sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="change" value="{$info.change}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">发布日期：<sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <input id="start_time" type="text" class="form-control datepicker" name="report_date" style="z-index: 400;" placeholder="发布日期" data-dateformat="yy-mm-dd" value="{$info.report_date}"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-lg-1 col-md-2 col-sm-2 control-label">相关企业 ：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12 selectContainer">
+                                <select multiple style="width:100%" class="form-control select2" id="role-select">
+                                    <optgroup label="请选择相关企业">
+                                        {foreach name="$gszles" item="it"}
+                                        {if condition="in_array($it.neeq , $info.relation_arr)"}
+                                        <option value="{$it.neeq}" selected="">{$it.zqjc}（{$it.neeq}）</option>
+                                        {else /}
+                                        <option value="{$it.neeq}">{$it.zqjc}（{$it.neeq}）</option>
+                                        {/if}
+                                        {/foreach}
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <input type="hidden" class="form-control" name="relation" value="{$info.relation}"/>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>研报详情</legend>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <textarea rows="26" class="form-control" name="text">{$info.text}</textarea>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="text" name="id" class="hide" value="{$info.id}">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#editStYanbaosForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入标题'
+                            }
+                        }
+                    },
+                    org: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入机构'
+                            }
+                        }
+                    },
+                    authors: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入作者'
+                            }
+                        }
+                    },
+                    report_date: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入发布日期'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}$/,
+                                message: '请输入正确的发布日期'
+                            }
+                        }
+                    },
+                    text: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入研报详情'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('修改成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('修改失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $("#start_time").on('change', function() {
+            $('#editStYanbaosForm').data('bootstrapValidator').updateStatus('report_date', 'NOT_VALIDATED', null).validateField('report_date'); 
+        });
+        var roleSelect = $('#role-select');
+        roleSelect.select2({
+            closeOnSelect: false,
+            autoClear: true,
+            width: $(this).attr('data-select-width') || '100%',
+            placeholder: "请选择相关企业",
+            //minimumInputLength: 1,
+            //separator: ",", // 分隔符
+            //maximumSelectionSize: 5, // 限制数量
+            templateSelection: function (data, container) {
+                text = data.text.replace(/[\s+|├|─|└|│]/g, '');
+                return text;
+            },
+        }).on("change", function (e) {
+            var role = roleSelect.val().join(',');
+            $("input[name='relation']").val(role);
+        });
+    });
+</script>

@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="introdece_img/modal" /}
+            {include file="kf_message/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="kf_message_form">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 交流时间： </label>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date1" placeholder="开始时间" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date2" placeholder="结束时间" id="end_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 客户： </label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <select class="form-control m_uid" name="m_uid">
+                                            <optgroup label="请选择客户">
+                                                <option value="">- - - 无 - - -</option>
+                                                {foreach name="list1" item="user"}
+                                                <option value="{$user.uid}">{$user.userName}</option>
+                                                {/foreach}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 客服： </label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <select class="form-control m_uid" name="scs_id">
+                                            <optgroup label="请选择客服">
+                                                <option value="">- - - 无 - - -</option>
+                                                {foreach name="list2" item="user"}
+                                                <option value="{$user.scs_id}">{$user.kf_nick}</option>
+                                                {/foreach}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> openId： </label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="openId" id="openId" placeholder="openId">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 类型： </label>
+                                    <div class="radio-inline col-lg-9 col-sm-8 col-md-8">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="type" name="type" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="type" name="type" value="text">
+                                            <span> 文字 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="type" name="type" value="image">
+                                            <span> 图片 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="type" name="type" value="voice">
+                                            <span> 音频 </span> 
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <div class="col-lg-12">
+                                                <button type="button" class="btn btn-default" id="kf_message_btn" > <i class="fa fa-search"></i>查询 </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="kf_message" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> ID</th>
+                                <th class="col-lg-2 col-md-2"> 客户</th>
+                                <th class="col-lg-1 col-md-1"> 方向</th>
+                                <th class="col-lg-1 col-md-1"> 客服</th>
+                                <th> 类型</th>
+                                <th class="col-lg-4 col-md-4"> 内容</th>
+                                <th> 交流时间</th>
+                                <th> openId</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".m_uid,.m_uid").select2();
+    var kf_message_url = '{:url("KfMessage/read")}';
+    var root_path_url = $("#kf_message").attr("data-path");
+    var kf_message_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/kf_message/kf_message_list.js"></script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

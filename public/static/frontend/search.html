@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+
+<body class="mofh bg_white" style="width:100%;">
+    <div id="box">
+        <div class="pb10" style="overflow:hidden;width:100%;">
+            <!-- 搜索 -->
+            <div class="search-box pt15 pl15 pr15 clearfix  mb10">
+                <input type="serch" id="keyword" style="width:86%;" class="form-control pull-left bg_gray porel dbk tofh pr25" placeholder="输入业务、项目、资金、行业、用户名、个性标签……" v-model.trim="keyword">
+                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;right: 19%;top: 24px;z-index: 999;" alt="" @click="search">
+                <a href="javascript:history.go(-1)" class="pull-right c_primary mt5" style="font-size: 18px;color: #007FED;line-height: 25px;">取消</a>
+            </div>
+            <div style="width: 100%;" class="searchDiv p20" style="border: 0 solid #979797;box-shadow: 0 2px 6px 0 rgba(5,0,56,0.50);border-radius: 4px;">
+                <p style="font-size: 16px;color: #999999;line-height: 22px;margin-bottom: 30px;text-align: center;">搜索指定内容</p>
+                <div style="font-size: 18px;color: #007FED;line-height: 25px;width: 100%;">
+                    <div class="clearfix mb30">
+                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultBusiness.html')">业务</div>
+                        <div class="pull-left text-center" style="width: 33%;border-left: 1px solid #F0F0F0;border-right: 1px solid #F0F0F0;" @click="searchByLabel('searchResultProject.html')">项目</div>
+                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultFunds.html')">资金</div>
+                    </div>
+                    <div class="clearfix mb30">
+                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultIndustry.html')">行业</div>
+                        <div class="pull-left text-center" style="width: 33%;border-left: 1px solid #F0F0F0;border-right: 1px solid #F0F0F0;" @click="searchByLabel('searchResultPublish.html')">发现</div>
+                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultConnections.html')">人脉</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $("#box").height($(window).height());
+    $(".searchDiv").height($("#box").height() - $(".search-box").height() - 10 - 10);
+    $("#keyword").on('keypress', function(e) { //#keyword为input文本框
+        var keycode 	= e.keyCode;
+        var searchName 	= $(this).val();
+        if (keycode == '13') {
+            search();
+        }
+    });
+    var vue = new Vue({
+        el: "#box",
+        data: {
+            keyword: "",
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+
+            });
+        },
+        methods: {
+            searchByLabel: function(pageName) {
+                window.location.replace("/static/frontend/"+pageName);
+                // window.location.href = "/static/frontend/search2.html";
+            },
+            search: function() {
+                console.log(encodeURI(vue.keyword));
+                window.location.replace("/static/frontend/searchResult.html?keyword=" + encodeURI(vue.keyword));
+            },
+
+        }
+    });
+    </script>
+</body>
+
+</html>

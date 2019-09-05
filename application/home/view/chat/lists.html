@@ -1,0 +1,235 @@
+{include file="base/header_new" /}
+<script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+<script type="text/javascript" src="/static/frontend/js/component.js"></script>
+	<style type="text/css">
+		.fui-page-group{
+			background-color: #f8f8f8;
+		}
+		.chat-list{
+			background-color: #f5faff;;
+		}
+			
+		.chat-list p{
+			line-height: 1.5rem;
+		}
+		.t-281{
+			font-size: 14px;
+			font-weight: bold;
+		}
+		.t-28{
+			color: #bbbbbb;
+		}
+		.chat-info2 {
+			text-align: center;
+			width: 30px;
+			height: 1rem;
+			line-height: 1rem;
+			background-color: #2997ff;
+			border-radius: 0.6rem;
+			margin-left: 2rem;
+			color: white;
+			margin-top: 0.8rem;
+		}
+		.chat-text {
+		   color: #bbbbbb;
+		   font-size:14px; 
+		}
+		.fui-page {
+		   background-color: #ddd; 
+		}
+		.fui-header {
+		   background-color: #ddd; 
+		   height:78px;
+		   width:414px;
+		}
+	 	@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.fui-header{
+			background-color: #ddd; 
+		    height:68px;
+		    width:375px;
+			}
+	 	}
+		@media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.fui-header{
+			background-color: #ddd; 
+		    height:66px;
+		    width:360px;
+			}
+	 	}
+	 	
+		.list-bottom{
+			border-bottom:solid 1px #ededed;
+		}
+		.list-img{
+		border-radius:33px;margin: 10px;
+		}
+		.list-body{
+			background-color:#f5faff;margin-top:72px;
+		}
+		@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.list-body{
+			margin-top:60px;
+			}
+	 	}
+	 	
+	 	@media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
+		.list-body{
+			margin-top:58px;
+			}
+	 	}
+	 	
+		.time-text{
+			width:90%;text-align: right;
+		}
+		.flr{
+			float: right;
+		}
+		.list-r{
+			width: 100%; float:right;margin: 10px;
+		}
+		
+		.list_solid{
+			width:370px;border-bottom: solid 1px #ededed;margin-left: 15px;
+		}
+		@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.list_solid{
+			width:330px;
+			}
+	 	}
+	 	
+		@media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.list_solid{
+			width:320px;
+			}
+	 	}
+	</style>
+<body>
+	<div class='fui-page-group'>
+	    <div class="fui-statusbar"></div>
+		<div class='fui-page chat-page'>
+			<div class="fui-header">
+			    <img width="100%" height="100%" src="/static/home/css/img/news_title.png">
+			</div>
+			<div class="fui-content navbar list-body chat-fui-content"></div>
+			<input id="is_follow" value="{$follow}" type="hidden">
+			<input id="usertype" value="{$usertype}" type="hidden">
+		</div>
+	</div>
+	<!--绑定会员模块 -->
+	<div class="modal fade in" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-describedby="公众号二维码">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+                <div class="modal-body porel p0">
+                    <div style="width:290px;margin:0 auto;">
+                        <img src="/static/frontend/images/to_auth.png" width="290" alt="">
+                        <div id="closeAuthModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+                        </div>
+                        <a href="javascript:void(0)" onclick="doreg()" style="position: absolute;top: 365px;left: 75px;width: 210px;height: 35px;line-height:30px;"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--认证完善信息 -->
+    <div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="公众号二维码">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div style="width:290px;margin:0 auto;">
+	                        <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+	                        <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+	                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+	                        </div>
+	                        <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+	                     </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+</body>
+<script>
+    //接口前缀
+    var api_prefix = 'http://fin.jrfacai.com/';
+    //聊天详情页
+    var api_index = api_prefix + 'home/chat/index?to_uid=';
+    
+    //当前登录用户uid
+    var from_uid  = {$from_uid};
+    var is_follow = $("#is_follow").val();
+	var usertype  = $("#usertype").val();
+	
+	
+	$(document).ready(function () {
+		getlist();
+	});
+    
+    function doreg(){
+		if(is_follow==1){
+    		window.location.href = '/static/frontend/reg.html';
+    	}else{
+    		window.location.href = '/static/frontend/followtab.html';
+    	}
+	}
+    
+    function doinfo(){
+		if(is_follow==1){
+    		window.location.href = '/static/frontend/basic-info.html';
+    	}else{
+    		window.location.href = '/static/frontend/followtab.html';
+    	}
+	}
+    
+    function doline(uid){
+    	if (ui.userType == 0) {
+    		$("#authModal").modal("show");
+            $("#shadeAuth").show();
+    	}else{
+    		if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+           		$("#cmpInfoModal").modal("show");
+                $("#shadeAuth").show();
+            }else{
+            	if(is_follow==1){
+            		window.location.href = '/home/chat/index/to_uid/'+uid;
+            	}else{
+            		window.location.href = '/static/frontend/followtab.html';
+            	}
+            }
+    	}
+	}
+    
+    $("#closeAuthModal").click(function(event) {
+        history.back(-1);
+    });
+    $("#closeCmpInfoModal").click(function(event) {
+        history.back(-1);
+    });
+    
+    
+    function getlist()
+    {   
+       var i = 0;
+        $.ajax({
+            url:api_prefix + 'home/chat/getList',
+            type:'get',
+            data:{from_uid:from_uid},
+            dataType:'json',
+            success:function(e){
+                if (e) {
+                    $.each(e,function(index,result){
+                    	i++;
+                        if (result.noread_num) {
+                        	$('.chat-fui-content').append('<a href="javascript:void(0)" onclick="doline('+result.from_uid+ ')"><div class="chat-list flex" style="border:solid 1px #f5faff;"><div><img style="border-radius:33px;margin: 10px;" width="60" height="60" src="' + result.userPhoto + '"></div><div class="chat-info" style="margin: 10px;"><p class="chat-merch flex"><span class="title t-281">' + result.realName + '</span></p><p class="chat-text singleflow-ellipsis">'+ ' ' + result.company_jc + ' | ' + result.position +'</span></p></div><div class="chat-info list-r"><div class="chat-info time-text" style="width:90%;"><span class="title t-28">' + result.day + '</span></div><div class="chat-info" style="width:90%;"><div class="chat-info2 flr">' + result.noread_num + '</div></div></div></div></a><div class="list_solid"></div>');
+            			} else {
+                        	$('.chat-fui-content').append('<a href="javascript:void(0)" onclick="doline('+result.from_uid+ ')"><div class="chat-list flex" style="border:solid 1px #f5faff;"><div><img style="border-radius:33px;margin: 10px;" width="60" height="60" src="' + result.userPhoto + '"></div><div class="chat-info" style="margin: 10px;"><p class="chat-merch flex"><span class="title t-281">' + result.realName + '</span></p><p class="chat-text singleflow-ellipsis">'+ ' ' + result.company_jc + ' | ' + result.position +'</span></p></div><div class="chat-info list-r"><div class="chat-info time-text" style="width:90%;"><span class="title t-28">' + result.day + '</span></div><div class="chat-info" style="width:90%;"><div class="chat-info"></div></div></div></div></a><div class="list_solid"></div>');
+            			}
+                    });
+                }
+				if(i==0){
+					$('.chat-fui-content').append('<br/><br/><br/><br/><br/><br/><br/><br/><img src="/static/home/css/img/chatbgp.png" width="205" height="251">');
+				}
+            }
+        });
+    }
+</script>
+</html>

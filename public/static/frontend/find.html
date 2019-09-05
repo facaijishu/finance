@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <style>
+        .active{
+            color: #0076FF;
+        }
+        .activeSpan{
+            display: block;
+            width:22px;
+            height:3px;
+            background-color: #0076FF;
+            border-radius:1px;
+            position:relative;
+            top: 2px;
+            margin:2px auto 0;
+        }
+        .chooseBox{border:1px solid #dddddd;color:#888888;width:130px;height:28px;line-height:26px;text-align:center;margin:0 10px 15px;float:left;}
+        .chooseBox.active{color:#0076FF;border:1px solid #0076FF;}
+    </style>
+</head>
+
+<body>
+    <div id="box" class="mofh bg_gray" style="width:100%;">
+        <section class="bg_white" style="overflow:hidden;width:100%;">
+            <!-- 搜索 -->
+            <div class="search-box pt15 pl15 pr15 clearfix porel pb5">
+                <input type="text" class="form-control pull-left bg_gray" placeholder="输入项目、资金、需求" style="width:85%;" @click="searchModal">
+                <a class="pull-left text-right dbk" style="width: 15%;" href="/static/frontend/release-needs.html?needs=1">
+                    <img src="/static/frontend/images/find_release.png" alt="" style="height:27px;">
+                    <p style="font-size: 10px;color: #000000;">发布</p>
+                </a>
+                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 74%;top: 24px;z-index: 999;" alt="">
+            </div>
+        </section>
+        <div v-for="item in publishList" style="padding: 10px 7px 0;margin-top: 5px;">
+            <div style="padding:10px 10px;" class="bg_white">
+                <div class="clearfix porel">
+                    <a :href="'/static/frontend/othersBusiness.html?types=1&uid='+item.uid">
+                    <img id="headerImg" class="pull-left" :src="item.userPhoto"  width="46" height="46" style="border-radius:2px;margin-right:13px;">
+                    <div class="pull-left">
+                        <p style="font-size: 16px;line-height: 20px;color: #1E1E1E;margin-bottom: 10px;">{{item.realName}}</p>
+                        <p style="font-size: 12px;line-height: 16px;color: #999999;">{{item.company_jc}} | {{item.position}}</p>
+                    </div>
+                    </a>
+                    <template v-if="item.uid != ui.uid">
+                        <div v-if="item.is_follow == '关注'" @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #545AFF;color: #007FED;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">关注</div>
+                        <div v-else @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #979797;color: #999999;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">已关注</div>
+                    </template>
+                    <div @click="reportBtnAct" :sid="item.id" style="width: 18px;height: 18px;border-radius: 9px; position: absolute;top: -5px;right: -5px;border-color: #999999;" class="ball">
+                        <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute;top: 4px;right: 4px;">
+                    </div>
+                    </div>
+                    <div>
+                        <a style="font-size: 15px;color: #444444;line-height: 24px;" class="mt15 dbk" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                        <p>{{item.content}}</p>
+                    </a>
+                        <a class="clearfix mt15 mb15" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                        <img v-for="img in item.img_url" :src="'http://fin.jrfacai.com/uploads/'+img.url" alt="" width="108" class="mr10 mb5">
+                    </a>
+                    </div>
+                    <div class="clearfix mt5">
+                        <div class="pull-left tofh text-center mr5 mb5" style="color: #007FED;border:1px solid #545AFF;border-radius:2px;padding:2px 8px;font-size:10px;" v-if="item.all_tag" v-for="t in item.all_tag"> {{t}}</div>
+                    </div>
+                    <div class="clearfix" style="font-size: 12px;line-height: 17px;color: #999999;">
+                        <p class="pull-left">{{item.create_time}}</p>
+                        <div class="pull-right">
+                            <div class="mr20 pull-left">
+                                <img v-if="item.is_point == 0" src="/static/frontend/images/like-0.png" alt="点赞" :sid="item.id" width="14" @click="like(event, item)">
+                                <img v-else src="/static/frontend/images/like-1.png" alt="点赞" width="14" :sid="item.id" @click="like(event, item)"> <span>{{item.point_num}}</span>
+                            </div>
+                            <a class="pull-left" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                            <img src="/static/frontend/images/msg-0.png" alt="评论" width="14"> <span>{{item.comment_num}}</span>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="more" style="height:15px;line-height:15px;"></div>
+            <!-- 底部菜单 -->
+            <div style="height:80px;line-height:80px;"></div>
+            <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+                <div style="width: 100%;height: 50px;" class="clearfix">
+                    <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                    <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                    <div class="f12 c_gray">首页</div>
+                </a>
+                    <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                    <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                    <div class="f12 c_gray">市场</div>
+                </a>
+                    <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                    <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                    <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+                </a>
+                    <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                    <img src="/static/frontend/images/sign-4-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                    <div class="f12 c_black">发现</div>
+                </a>
+                    <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                    <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                    <div class="f12 c_gray">我的</div>
+                </a>
+                </div>
+            </div>
+        </div>
+        <!-- 模态框 -->
+        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-describedby="反馈信息">
+            <div class="modal-dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="reportModalLabel">请选择反馈信息</h4>
+                    </div>
+                    <div class="modal-body clearfix f12 pb0">
+                        <div class="chooseBox pull-left" v="1">内容不真实 虚假内容</div>
+                        <div class="chooseBox pull-left" v="2">身份虚假 假借身份</div>
+                        <div class="chooseBox pull-left" v="3">诈骗 造谣</div>
+                        <div class="chooseBox pull-left" v="4">恶语相加</div>
+                        <div class="chooseBox pull-left" v="5">不诚实</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="reportPublish" type="button" class="btn btn-primary btn-block">确 定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框 -->
+        <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+            <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+                <div class="modal-content" style="border:0;">
+                    <div class="modal-body text-center"></div>
+                </div>
+            </div>
+        </div>
+        <!-- loading -->
+        <div id='loading' class='loading-box hidden'>
+            <div class='css3-loading-shade'></div>
+            <div class='css3-loading-box'>
+                <div>歆宝科技</div>
+                <div class='css3-loading'>
+                    <div class='bounce1'></div>
+                    <div class='bounce2'></div>
+                    <div class='bounce3'></div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            // 设置加载中...
+            $(document).ajaxStart(function() {
+                $("#loading").removeClass('hidden');
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        //提示框
+        function alertModal(msg) {
+            $("#alertModal").find('.modal-body').html(msg);
+            $("#alertModal").modal("show");
+            setTimeout(function() {
+                $("#alertModal").modal("hide");
+            }, msg.length / 7 * 1000);
+        }
+
+        $("#box").height($(window).height());
+        var param = getParams();
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                ui: {},
+                publishList: [],
+                reportId: '',
+                pageFlag: true,
+                page: 1,
+                reportItem: {},
+                appId: "",
+                noncestr: "",
+                signature: "",
+                timestamp: "",
+                share: {}
+            },
+            mounted: function() {
+                this.$nextTick(function() {
+                    vue.ui = ui;
+
+                    // 发现-列表
+                    vue.loadItems();
+
+                    setTimeout(function() {
+                        $("#box").scroll(function() {
+                            if (vue.pageFlag) {
+                                var y = $("#more").offset().top - $(window).scrollTop() - $(window).height();
+                                if (y < 80) {
+                                    vue.pageFlag = false;
+                                    vue.page = vue.page + 1;
+                                    vue.loadItems();
+                                }
+                            }
+                        });
+                    }, 400);
+
+                    // 反馈信息
+                    $(".chooseBox").click(function(event) {
+                        var curr = event.currentTarget;
+                        if ($(curr).hasClass('active')) {
+                            $(curr).removeClass('active');
+                        }else {
+                            $(curr).addClass('active');
+                        }
+                    });
+                    $("#reportPublish").click(function(event) {
+                        var report = "";
+                        $(".chooseBox.active").each(function(index, el) {
+                            report += $(el).attr('v') + ",";
+                        });
+                        report = report.substring(0, report.length - 1);
+                        $.ajax({
+                                url: 'http://fin.jrfacai.com/home/publish_api/reportPublish',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "id": vue.reportId,
+                                    "report": report
+                                },
+                            })
+                            .done(function(res) {
+                                $("#reportModal").modal('hide');
+                                if (res.code == 200) {
+                                    var el = vue.reportItem;
+                                    $(el).parent().parent().parent().remove();
+                                }
+                                setTimeout(function() {
+                                    alertModal(res.msg);
+                                }, 400);
+                            });
+                    });
+
+                    // 加载微信配置
+                    $.ajax({
+                        url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                        type: 'GET',
+                        dataType: 'JSON',
+                        async: false,
+                        data: {"link": window.location.href},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.appId = res.data.appId;
+                            vue.noncestr = res.data.noncestr;
+                            vue.signature = res.data.signature;
+                            vue.timestamp = res.data.timestamp;
+                        }
+                    });
+
+                    vue.share = {
+                        "title": "FA財-发现中心",
+                        "desc": "好项目 好资金 一网打尽",
+                        "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+                    };
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: vue.appId, // 必填，公众号的唯一标识
+                        timestamp: vue.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: vue.noncestr, // 必填，生成签名的随机串
+                        signature: vue.signature,// 必填，签名
+                        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+                    });
+
+                    var shareLink = window.location.href;
+                    if (ui.userType == 1 || ui.userType == 2) {
+                        shareLink = "http://fin.jrfacai.com/static/frontend/find.html?superior="+ui.uid;
+                    }
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.onMenuShareAppMessage({ 
+                            title: vue.share.title, // 分享标题
+                            desc: vue.share.desc, // 分享描述
+                            link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: vue.share.imgUrl, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        });
+                        wx.onMenuShareTimeline({ 
+                            title: vue.share.title, // 分享标题
+                            link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: vue.share.imgUrl, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        });
+                    });
+                });
+            },
+            methods: {
+                loadItems: function() {
+                    $.ajax({
+                            url: 'http://fin.jrfacai.com/home/publish_api/publishList',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                "keyword": param.keyword,
+                                "page": vue.page
+                            },
+                        })
+                        .done(function(res) {
+                            if (res.code == 200 && res.data.length > 0) {
+                                var d = res.data;
+                                for (var i = 0; i < d.length; i++) {
+                                    vue.publishList.push(d[i]);
+                                }
+                                vue.pageFlag = true;
+                            }
+                            console.log(res)
+                        });
+                },
+                like: function(event, item) {
+                    var el = event.currentTarget;
+                    $.ajax({
+                            url: 'http://fin.jrfacai.com/home/publish_api/pointPublish',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { "id": $(el).attr('sid') },
+                        })
+                        .done(function(res) {
+                            alertModal(res.msg);
+                            if (res.code == 200) {
+                                if ($(el).attr('src') == '/static/frontend/images/like-0.png') {
+                                    $(el).attr('src', '/static/frontend/images/like-1.png');
+                                    item.point_num = parseInt(item.point_num) + 1;
+                                } else {
+                                    $(el).attr('src', '/static/frontend/images/like-0.png');
+                                    item.point_num = parseInt(item.point_num) - 1;
+                                }
+
+                            }
+                        });
+                },
+                followUser: function(item) {
+                    $.ajax({
+                            url: 'http://fin.jrfacai.com/home/follow_user_api/doFollowUser',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { "uid": item.uid },
+                        })
+                        .done(function(res) {
+                            alertModal(res.msg);
+                            if (res.code == 200) {
+                                if (item.is_follow == '关注') {
+                                    item.is_follow = "已关注";
+                                } else {
+                                    item.is_follow = "关注";
+                                }
+                            }
+                        });
+                },
+                reportBtnAct: function(event) {
+                    var el = event.currentTarget;
+                    vue.reportId = $(el).attr('sid');
+                    vue.reportItem = el;
+                    $(".chooseBox").removeClass('active');
+                    $("#reportModal").modal('show');
+                },
+                searchModal: function() {
+                    window.location.href = '/static/frontend/search.html';
+                },
+            }
+        })
+        </script>
+</body>
+
+</html>

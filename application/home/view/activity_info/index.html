@@ -1,0 +1,546 @@
+{include file="base/header" /}
+<style>
+    .fa-hand-paper-o{cursor: pointer;}
+    .fa-star{cursor: pointer;}
+    .fa-edit{cursor: pointer;}
+    .fa-close{cursor: pointer;}
+    .comment{cursor: pointer;}
+
+	.pro-barh{
+		width:100%;position:fixed;_position:absolute;bottom:0px;_bottom:0px;_margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop)
+	}
+  .pro-barc{width:30%;float:left;}
+  .pro-barc  a{
+  	  display:block;
+  	  height:50px;
+  	  line-height: 46px;
+	  background: url('/static/home/css/img/icon-activity-off.png') center -0.25rem #fff;
+	  background-size: 20px 20px;
+	  background-attachment:scorll;
+	  background-repeat:no-repeat;
+	  background-position:top center;
+	  padding: 6px 0 0 0px;
+	  margin: 0;
+	  box-shadow: none;
+	  color: #999999;
+	}
+	.pro-barc a.actived{
+	  display:block;
+  	  height:50px;
+  	  line-height: 46px;
+	  background: url('/static/home/css/img/icon-activity-on.png') center -0.25rem #fff;
+	  background-size: 20px 20px;
+	  background-attachment:scorll;
+	  background-repeat:no-repeat;
+	  background-position:top center;
+	  padding: 6px 0 0 0px;
+	  margin: 0;
+	  box-shadow: none;
+	  color: #999999;
+	}
+	.pro-bart{width:60%;float:right;background:#ffffff;}
+	.pro-bart a{
+	  display:block;
+  	  height:40px;
+  	  line-height: 30px;
+	  background-image: linear-gradient(-134deg, #007FED 0%, #545AFF 100%);
+	  border-radius: 60px;
+	  padding: 6px 0 0 0px;
+	  margin: 0 10px 0 0;
+	  box-shadow: none;
+	  color: #ffffff;
+	  text-align: center;
+	}
+	.pro-bart a.actived{
+	  display:block;
+  	  height:40px;
+  	  line-height: 30px;
+	  background-image: linear-gradient(-134deg, #c7c7c7 0%, #c7c7c7 100%);
+	  border-radius: 60px;
+	  padding: 6px 0 0 0px;
+	  margin: 0 10px 0 0;
+	  box-shadow: none;
+	  color: #ffffff;
+	  text-align: center;
+	}
+	
+	.swidth{
+		height:540px;
+		border-radius:15px;
+		width:320px;
+		background: url('/static/home/css/img/activity.png') center  -0.25rem #fff;
+	  	background-size: 320px 540px;
+	  	background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 50px 0 0 45px;
+	  	box-shadow: none;	
+	}
+	.swidth ul{
+		margin-top:120px;
+	}
+	.swidth ul li{
+		color: #787878;
+	}
+	 @media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.swidth{
+	 		margin: 50px 0 0 30px;
+		}
+	 }
+ 	@media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.swidth{
+	 		margin: 50px 0 0 20px;
+		}
+	 }
+	 .c-gray {
+		background-color: #f2f2f2;
+	 	width:280px;
+	 }
+	 
+	.submmit a{
+	  display:block;
+	  font-size:14px;
+  	  height:42px;
+  	  line-height: 30px;
+	  background: url('/static/home/css/img/callme.png') center  -0.25rem #fff;
+	  background-size: 280px 42px;
+	  background-attachment:scorll;
+	  background-repeat:no-repeat;
+	  background-position:top center;
+	  padding: 6px 0 0 0px;
+	  margin: 20px 0 0 0px;
+	  box-shadow: none;
+	  color: #ffffff;
+	  text-align: center;
+	}
+	
+	.cwidth{
+		height:390px;
+		border-radius:15px;
+		width:320px;
+		background: url('/static/home/css/img/activitycomment.png') center  -0.25rem #fff;
+	  	background-size: 320px 390px;
+	  	background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 100px 0 0 45px;
+	  	box-shadow: none;	
+	}
+	.cwidth ul{
+		margin-top:120px;
+	}
+	.cwidth ul li{
+		color: #787878;
+	}
+	 @media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.cwidth{
+			width:320px;
+	 		background-size: 320px 395px;
+	 		margin: 100px 0 0 30px;
+		}
+	 }
+ 	@media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
+	 	.cwidth{
+			width:320px;
+	 		background-size: 320px 395px;
+	 		margin: 100px 0 0 20px;
+		}
+	 }
+
+	.c-gray-text {
+		background-color: #f2f2f2;
+	 	width:280px;
+		margin-left:20px;
+	 }
+
+</style>
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        <div class="activity">
+            <img src="__UPLOAD__/{$info.top_img_url}" alt="{$info.top_img_name}">
+            <div class="stat stat-red">{$info.icon_name}</div>
+            <h3>{$info.act_name}</h3>
+            <div class="time">
+            	{if condition="$info.fee eq 0"}
+                <span class="fr gray">免费</span>
+                {else /}
+                <span class="fr red">￥{$info.fee}</span>
+                {/if}
+                                                        活动时间：{$info.start_time}～{$info.end_time} <br>
+                                                        活动地点：{$info.address}
+            </div>
+            <div class="text">
+                {$info.content}
+            </div>
+        </div>
+        <div class="comment-title" style="padding: 17px 15px;font-size:14px;">
+            <span class="fa fa-edit" data-id="{$info.a_id}">我要评论</span>评论
+        </div>
+        {foreach name="$list" item="comment"}
+        <div class="comment-box" data-id="{$comment.ac_id}">
+            <div class="user-img"><img src="{$comment.userPhoto}" alt="{$comment.userName}"></div>
+            <div class="user-text" style="font-size:14px;">
+                <span class="comment">回复</span>{$comment.userName} {$comment.create_time}
+                <p>{$comment.content}</p>
+                {foreach name="$comment.list" item="it"}
+                <dl>
+                    <dt><img src="{$it.userPhoto}" alt="{$it.userName}"></dt>
+                    <dd>
+                        {$it.userName}  {$it.create_time} <br>
+                        <p>{$it.content}</p>
+                    </dd>
+                </dl>
+                {/foreach}
+            </div>
+        </div>
+        {/foreach}
+        <div class="comment-box" style="height:80px;">
+            <div class="user-img"></div>
+            <div class="user-text">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+ 		<div class="pro-barh" style="font-size:14px;background:#ffffff;">
+       	 	<div style="width:100%;height:20px;"></div>		
+        	<div class="pro-barc">
+        	{if condition="$sign eq 'true'"}
+            <a class="collection actived" data-id="{$info.a_id}">已关注</a>
+            {else /}
+            <a class="collection" data-id="{$info.a_id}">关注</a>
+            {/if}
+            </div>
+            <div class="pro-bart">
+	        {if condition="$info.icon eq 1"}
+	        	<a class="signupbtn" data-id="{$info.a_id}">{$info.sign_name}</a>
+	        {else /}
+	        	<a class="actived" data-id="{$info.a_id}">{$info.sign_name}</a>
+	        {/if}
+	        </div>
+        </div>
+            
+        <div class="model"></div>
+        <!-- 报名-->
+        <div class="modal fade in" id="signModal" tabindex="-1" role="dialog" aria-labelledby="signModalLabel" aria-describedby="活动报名" style="height:600px;">
+        	<div class="swidth">
+            	<form id="SignUp">
+                 <ul style="margin-top:140px;">
+                    <li><input class="c-gray" name="name" value="{$sult.realName}" type="text" placeholder=" 姓名" ></li>
+                    <li style="height:20px;">&nbsp;</li>
+                    <li><input class="c-gray" name="phone" value="{$sult.phone}" type="tel" placeholder=" 电话" onBlur="changePhone()"></li>
+                    <li style="height:20px;">&nbsp;</li>
+                    <li class="getCode" style="display:none"><input class="c-gray" name="regcode" type="tel" style="width:140px;" maxlength="6" placeholder="验证码" ><div id="sendCode" class="activity_tel_btn" style="margin:5px 18px 0 0;">获取验证码</div></li>
+                    <li class="getCode" style="display:none;height:20px;">&nbsp;</li>
+                    <li><input class="c-gray" name="company_jc" value="{$sult.company_jc}" type="text" placeholder=" 公司（简称）"></li>
+                    <li style="height:20px;">&nbsp;</li>
+                    <li><input class="c-gray" name="position" value="{$sult.position}" type="text" placeholder=" 职位"></li>
+                </ul>
+            	<div class="submmit">
+		        	<a class="signbtn" data-id="{$info.a_id}">提交</a>
+		        </div>
+		        <div style="height:10px;">&nbsp;&nbsp;</div>
+		        <div>
+		        	<a class="signback">返回</a>
+		        </div>
+		        <input type="hidden" name="userphone" value="{$sult.phone}" >
+        		</form>
+    		</div>
+		</div>
+		
+		<div class="modal fade in" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-describedby="活动评论" style="height:600px;">
+        	<div class="cwidth">
+            	<form id="Comment">
+                 <ul style="margin-top:120px;">
+                    <li><textarea class="c-gray-text" name="content" rows="8" cols="80" placeholder="评论"></textarea></li>
+                    <li style="height:30px;">&nbsp;</li>
+                    <input type="text" name="pid" class="hide" value="0">
+                </ul>
+            	<div class="submmit">
+		        	<a class="commentbtn" data-id="{$info.a_id}">发表</a>
+		        </div>
+		        <div style="height:10px;">&nbsp;&nbsp;</div>
+		        <div>
+		        	<a class="commentback">返回</a>
+		        </div>
+        		</form>
+    		</div>
+		</div>
+		<div class="modal fade in msg_error_body" id="msgModal"><div class="msg_error" id="msgBody"></div></div>
+		
+        <script type="text/javascript">
+            $(document).ready(function () {
+            	var phone = $.trim($("input[name='phone']").val());
+            	if(phone==""){
+            		$("#getCode").show();
+            	}
+            	
+                $(".signbtn").on('click', function (e) {
+                    var id 		   = $(".signbtn").attr("data-id");
+                    var name 	   = $("#signModal").find("input[name='name']").val();
+                    var phone 	   = $("#signModal").find("input[name='phone']").val();
+                    var userphone  = $("#signModal").find("input[name='userphone']").val();
+                    var position   = $("#signModal").find("input[name='position']").val();
+                    var company_jc = $("#signModal").find("input[name='company_jc']").val();
+                    var regcode    = $("#signModal").find("input[name='regcode']").val();
+                    
+                    if (name == '') {
+                    	alertMsgModal('姓名不能为空');
+                        return false;
+                    }
+                    var phone_pattern = /^1\d{10}$/;
+                    if (phone == '') {
+                    	alertMsgModal('电话不能为空');
+                        return false;
+                    }
+                    if(phone_pattern.exec(phone) == null){
+                    	alertMsgModal('电话输入不正确');
+                        return false;
+                    }
+                    
+                    if(phone==userphone){
+                    	regcode = "noCode";
+                    }
+                    if (regcode == '') {
+                    	alertMsgModal('验证码不能为空');
+                        return false;
+                    }
+                    if (company_jc == '') {
+                    	alertMsgModal('公司简称不能为空');
+                        return false;
+                    }
+                    if (position == '') {
+                    	alertMsgModal('职位不能为空');
+                        return false;
+                    }
+                    $("#signModal").hide();
+                    $.ajax({
+                        url: "{:url('ActivityInfo/signUp')}",
+                        data: {name:name ,phone:phone , regcode:regcode , company_jc:company_jc, position:position, id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                            if(resp.code == 1){
+                                callpay(resp.data);
+                            }else if(resp.code == 3){
+                                location.href = resp.data.url;
+                            }else {
+                            	alertMsgModal(resp.msg);
+                            	$("#signModal").show();
+                            }
+                        }
+                    });
+                });
+                
+              //发送验证码
+                $("#sendCode").click(function(event) {
+                	var id    = $(".signbtn").attr("data-id");
+                    var phone = $.trim($("input[name='phone']").val());
+                    if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+                        alertMsgModal("请输入正确的手机号");
+                        return;
+                    }
+
+                    //发送请求
+                    if ($("#sendCode").hasClass('activity_tel_btn')) {
+                        $.ajax({
+                            url: "{:url('ActivityInfo/getNewNumber')}",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {phone:phone, id:id},
+                        })
+                        .done(function(res) {
+                            if (res.code == 0) {
+                                var i = 60;
+                                var it = setInterval(function(){
+                                    if (i > 0) {
+                                        $("#sendCode").removeClass("activity_tel_btn");
+                                        $("#sendCode").addClass("tel_primary");
+                                        $("#sendCode").html(i +" s");
+                                    }else {
+                                        $("#sendCode").removeClass("tel_primary");
+                                        $("#sendCode").addClass("activity_tel_btn");
+                                        $("#sendCode").html("发送验证码");
+                                        clearInterval(it);
+                                    }
+                                    i--;
+                                }, 1000);
+                            }else {
+                            	alertMsgModal(res.msg);
+                            }
+                        });
+                    }
+                });
+              
+                $(".collection").on("click",function(){
+                    var _this = $(this);
+                    var id 	  = _this.attr("data-id");
+                    if(_this.hasClass("actived")){
+						var sign = 'false';
+					}else{
+						var sign = 'true';
+					}
+                    $.ajax({
+                        url: "{:url('ActivityInfo/collection')}",
+                        data: {sign:sign , id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                            if(resp.code){
+                                if(_this.hasClass("actived")){
+                                    _this.removeClass("actived");
+                                    _this.text("关注");
+                                }else{
+                                    _this.addClass("actived");
+                                    _this.text("已关注");
+                                }
+                            }
+                        }
+                    });
+                });
+                
+                $(".signupbtn").on("click", function() {
+                    var _this = $(this);
+                    var id    = _this.attr("data-id");
+                    $.ajax({
+                        url: "{:url('ActivityInfo/readySignUp')}",
+                        data: {id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                            if(resp.code == 0){
+				    			alert(resp.msg);
+                            }else{
+                                $(".model").fadeIn('fast',function(){
+                                    $("#signModal").show();
+                                })
+                            }
+                        }
+                    });
+                });
+                $(".signback").on("click", function() {
+                    $("#signModal").hide();
+                    $(".model").hide();
+                });
+                $(".fa-edit").on('click',function(){
+                    $("#Comment").find("input[name='pid']").val(0);
+                    $(".model").fadeIn('fast',function(){
+                        $("#commentModal").show();
+                    })
+                });
+                
+                $(".commentback").on("click", function() {
+                    $("#commentModal").hide();
+                    $(".model").hide();
+                    
+                });
+                
+                $("body").on('click','.comment',function(){
+                    var pid = $(this).parents(".comment-box").attr("data-id");
+                    $("#Comment").find("input[name='pid']").val(pid);
+                    $(".model").fadeIn('fast',function(){
+                        $("#commentModal").show();
+                    })
+                });
+                $(".commentbtn").on('click',function(e){
+                    var id 		= $(".commentbtn").attr("data-id");
+                    var pid 	= $("#commentModal").find("input[name='pid']").val();
+                    var content = $("#commentModal").find("textarea[name='content']").val();
+                    if (content == '') {
+                    	alertMsgModal('评论内容不能为空', '提示框');
+                        return false;
+                    }
+                    $("#commentModal").hide();
+                    $(".model").hide();
+                    $("#Comment")[0].reset();
+                    $.ajax({
+                        url: "{:url('ActivityInfo/message')}",
+                        data: {pid:pid ,content:content , id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                            var data = resp.data;
+                            if(resp.code == 1){
+                                if(data.pid == 0){
+                                    var str = '<div class="comment-box" data-id="'+data.ac_id+'"><div class="user-img"><img src="'+data.userPhoto+'" alt="'+data.userName+'"></div><div class="user-text"><span class="comment">回复</span>'+data.userName+'  '+data.create_time+'<p>'+data.content+'</p></div></div>';
+                                    $(".bar-box").before(str);
+                                }else{
+                                    var str = '<dl><dt><img src="'+data.userPhoto+'" alt="'+data.userName+'"></dt><dd>'+data.userName+' 发表于 '+data.create_time+' <br><p>'+data.content+'</p></dd></dl>';
+                                    $(".comment-box[data-id='"+data.pid+"']").find(".user-text").append(str);
+                                }
+                            }else {
+                                alert(resp.msg);
+                            }
+                        }
+                    });
+                });
+            });
+            function jsApiCall(pay){
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest',
+                    {
+                        "appId":pay.appId,    
+                        "timeStamp":pay.timeStamp,     
+                        "nonceStr":pay.nonceStr, 
+                        "package":pay.package,     
+                        "signType":pay.signType,      
+                        "paySign":pay.paySign 
+                    },
+                    function(res){
+                        //如果支付成功
+                        if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                            var id = $(".fa-hand-paper-o").attr("data-id");
+                            //支付成功后跳转的地址
+                            $.ajax({
+                                url: "{:url('ActivityInfo/updateOrder')}",
+                                data: {id:id},
+                                type: "POST",
+                                dataType: 'json',
+                                success: function(resp){
+                                    if(resp.code){
+                                        location.href = "{:url('ActivityInfo/judge')}";
+                                    }else{
+                                        alert(resp.msg);
+                                    }
+                                }
+                            });
+                        }else if (res.err_msg == 'get_brand_wcpay_request:cancel') {
+                        	alertMsgModal('请尽快完成支付哦！');
+                        }else if (res.err_msg == 'get_brand_wcpay_request:fail') {
+                        	alertMsgModal('支付失败');
+                        }else {
+                        	alertMsgModal('意外错误');
+                        }
+                    }
+                );
+            }
+            function callpay(pay){
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                    }
+                }else{
+                    jsApiCall(pay);
+                }
+            }
+            
+            function changePhone(){
+            	var phone 		= $.trim($("input[name='phone']").val());
+            	var userphone 	= $.trim($("input[name='userphone']").val());
+            	if(userphone==""){
+            		 $(".getCode").show();
+            	}else{
+            		if (userphone != phone) {
+                        $(".getCode").show();
+                    }else {
+                        $(".getCode").hide();
+                    }
+            	}
+            }
+        </script>
+    </body>
+</html>

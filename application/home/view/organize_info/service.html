@@ -1,0 +1,26 @@
+{include file="base/header" /}
+<style>
+	img{
+	   pointer-events:auto !important;
+	}
+	.bgp{
+		wdith:353px;
+		height:328px;
+		background: url('/static/home/css/img/qrbgp.png') center  #fff;
+		background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+		background-size: 353px 328px;
+	}
+	</style>
+    <body style="background:#fff;">
+        {include file="base/dividend" /}
+        <div>
+            <div class="bgp">
+            	<img style="margin-top:48px;" src="__ORGANIZE__/code/{$info.qr_code}"  width="130" height="130" alt="客服二维码">
+            </div>
+            <div style="line-height:25px;font-size:16px;font-weight:bold;text-align:center;color:#333">扫码联系客服&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div style="line-height:25px;font-size:14px;font-weight:bold;text-align:center;color:#c7c7c7">感谢您关注FA財，<br/>请扫描上方二维码联系专属客服。<br/>如有疑问，请拨打客服电话：13818807894</div>
+        </div>
+    </body>
+</html>

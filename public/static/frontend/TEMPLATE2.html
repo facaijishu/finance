@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>后台管理中心</title>
+    <meta name="keywords" content="后台管理中心" />
+    <meta name="description" content="后台管理中心" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="./css/common.min.css" />
+    <link rel="stylesheet" type="text/css" href="./jedate/skin/jedate.css" />
+    <script type="text/javascript" src="../router.js"></script>
+    <script type="text/javascript" src="./js/common.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/component.min.js"></script>
+    <script type="text/javascript" src="./jedate/src/jedate.min.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <my-header uri="/backend/member.html"></my-header>
+        <div id="my_content" class="my_content bg_white" style="overflow-y:auto;">
+            <div class="p15">
+                <div class="porel table_parrent" id="table_parrent">
+                    <!-- 内容头部 -->
+                    <button type="button" class="btn btn-primary btn-sm mb15" @click="add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加实体</button>
+                    <div id="queryBox" class="clearfix mb15 well">
+                        <label class="control-label pull-left text-right mt5 mr5">实体名：</label>
+                        <input type="text" class="form-control pull-left text-center input-sm" placeholder="实体名" style="width:150px;" v-model.trim="queryParam.username" @click="uniqueInput">
+                        <label class="control-label pull-left text-right mt5 mr5 ml15">手机号：</label>
+                        <input type="text" class="form-control pull-left text-center input-sm" placeholder="手机号" style="width:150px;" v-model.trim="queryParam.phone" @click="uniqueInput">
+                        <label class="control-label pull-left text-right mt5 mr5 ml15">时间：</label>
+                        <input v-model.trim="queryParam.starttime" type="text" class="pull-left form-control text-center input-sm" id="startTimeInput" placeholder="开始时间" style="width:170px;">
+                        <div class="pull-left mt5 ml10 mr10 fb">至</div>
+                        <input v-model.trim="queryParam.endtime" type="text" class="pull-left form-control text-center input-sm" id="endTimeInput" placeholder="结束时间" style="width:170px;">
+                        <button id="queryBtn" type="button" class="pull-left btn btn-primary ml20 mr20 btn-sm" @click="queryPageAction"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</button>
+                    </div>
+                    <!-- 内容主体 -->
+                    <!-- 表格 table-bordered使表格周围有边框；table-hover使表格有鼠标悬停状态；可将table写入panel内组合使用 -->
+                    <table class="table table-hover table-bordered mb0">
+                        <thead>
+                            <tr class="bg_gray">
+                                <th style="width:50px;">
+                                    <input class="selectAll" type="checkbox" @click="selectAll">
+                                </th>
+                                <th>ID</th>
+                                <th>实体名</th>
+                                <th>姓名</th>
+                                <th>手机号</th>
+                                <th>实体</th>
+                                <th style="width:155px;">创建时间</th>
+                                <th style="width:155px;">更新时间</th>
+                                <th style="width:60px;">状态</th>
+                                <th style="width:140px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="f12" :class="filterStatusClass(item.enabled)" v-for="item in entities">
+                                <td>
+                                    <input class="chooseArrClass" type="checkbox" :value="item.id">
+                                </td>
+                                <td>{{item.id}}</td>
+                                <td>{{item.username}}</td>
+                                <td>{{item.cname}}</td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.role}}</td>
+                                <td>{{item.createTime}}</td>
+                                <td>{{item.updateTime}}</td>
+                                <td><img :src="filterEnabled(item.enabled)" height="22" class="pointer" @click="switchSingle(item)"></td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-xs" @click="edit(item)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编辑</button>
+                                    <button type="button" class="btn btn-primary btn-xs" @click="del(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 内容底部 -->
+                    <div class="bottom_groupbtn bg_white" id="bottom_groupbtn">
+                        <div class="bg_white ball clearfix bottom_groupbtn_box">
+                            <input class="selectAll pull-left ml10" type="checkbox" @click="selectAll" style="margin: 8px 0 0 11px;">
+                            <button type="button" class="btn btn-primary btn-sm pull-left ml20 mb5" @click="batchDel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 批量删除</button>
+                            <button type="button" class="btn btn-success btn-sm pull-left ml15 mb5" @click="switchBatch(true)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 启用</button>
+                            <button type="button" class="btn btn-danger btn-sm pull-left ml15 mb5" @click="switchBatch(false)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 禁用</button>
+                            <nav class="pull-right">
+                                <ul class="pagination pagination-sm m0">
+                                    <li>
+                                        <a href="javascript:void(0);" @click="prev" aria-label="Previous"><span aria-hidden="true">上一页</span></a>
+                                    </li>
+                                    <li><a href="javascript:void(0);" @click="firstpage">首页</a></li>
+                                    <template v-for="n in rollPageArray">
+                                        <li v-if="n == queryParam.page+1" class="active">
+                                            <span>{{ n }} <span class="sr-only">(current)</span></span>
+                                        </li>
+                                        <li @click="skip(n)" v-else><a href="javascript:void(0)">{{ n }}</a></li>
+                                    </template>
+                                    <li><a href="javascript:void(0);" @click="lastpage">尾页</a></li>
+                                    <li><a href="javascript:void(0);" @click="next" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                                </ul>
+                            </nav>
+                            <span class="pull-right mt5 mr15">
+                                每页记录数：
+                                <!-- 添加：dropup向上弹出 btn-group-lg/sm/xs按钮大小 -->
+                                <div class="btn-group btn-group-xs dropup mr15">
+                                    <button style="width:50px;" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span>{{ queryParam.size }}</span>
+                            <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="width:50px;min-width:50px;padding:0;">
+                                <li :class="(queryParam.size == 30) ? 'active text-center' : 'text-center'" style="width:50px;">
+                                    <a @click="setSize(30)" href="javascript:void(0);" style="padding:3px 0;">30</a>
+                                </li>
+                                <li :class="(queryParam.size == 60) ? 'active text-center' : 'text-center'" style="width:50px;">
+                                    <a @click="setSize(60)" href="javascript:void(0);" style="padding:3px 0;">60</a>
+                                </li>
+                                <li :class="(queryParam.size == 100) ? 'active text-center' : 'text-center'" style="width:50px;">
+                                    <a @click="setSize(100)" href="javascript:void(0);" style="padding:3px 0;">100</a>
+                                </li>
+                            </ul>
+                        </div>
+                        总页数：<span class="c_warning">{{ totalPages }}</span>&nbsp;&nbsp;&nbsp;总记录数：<span class="c_warning">{{ totalElements }}</span>&nbsp;&nbsp;&nbsp;当前记录数：<span class="c_warning">{{ numberOfElements }}</span>
+                        </span>
+                    </div>
+                </div>
+                <!-- 设置模态框 -->
+                <div class="modal fade" id="setModal" tabindex="-1" role="dialog" aria-labelledby="setModalLabel" aria-describedby="{{ addTitle }}">
+                    <div class="modal-dialog" aria-hidden="true">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="setModalLabel"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">所属父辈：</label>
+                                    <select v-model.trim="entity.pid" class="form-control pull-left" style="width:250px;">
+                                        <option value="0">===根部===</option>
+                                    </select>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">实体名称：</label>
+                                    <input @focus="useSelect" v-model.trim="entity.name" type="text" class="form-control pull-left" placeholder="1~30位的中英文组成" style="width:250px;">
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">实体备注：</label>
+                                    <textarea @focus="useSelect" v-model.trim="entity.remark" rows="3" class="form-control pull-left" placeholder="0~60位的中英文组成" style="width:250px"></textarea>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">实体名：</label>
+                                    <input @focus="useSelect" v-model.trim="entity.username" type="text" class="form-control pull-left" placeholder="4~30位的英文字符或数字组成" style="width:250px;">
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">密 码：</label>
+                                    <input @focus="useSelect" v-model.trim="entity.password" type="password" class="form-control pull-left" placeholder="密码长度为6~16位" style="width:250px;">
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">姓 名：</label>
+                                    <input @focus="useSelect" v-model.trim="entity.cname" type="text" class="form-control pull-left" placeholder="0~30位的中英文组成" style="width:250px;">
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">手机号：</label>
+                                    <input @focus="useSelect" v-model.trim="entity.phone" type="text" class="form-control pull-left" placeholder="手机号" style="width:250px;">
+                                </div>
+                                <div class="form-group clearfix mb0">
+                                    <div class="pull-left text-right mr5 fb" style="width:150px;">状态：</div>
+                                    <label class="radio-inline">
+                                        <input v-model.trim="entity.enabled" class="status_radio" type="radio" name="status" value="true"> <span class="c_success">启用</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input v-model.trim="entity.enabled" class="status_radio" type="radio" name="status" value="false"> <span class="c_danger">禁用</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="setBtn" type="button" class="btn btn-primary" @click="setAction">确 认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 删除模态框 -->
+                <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-describedby="{{ delTitle }}">
+                    <div class="modal-dialog" aria-hidden="true">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="delModalLabel">{{ delTitle }}</h4>
+                            </div>
+                            <div class="modal-body text-center c_danger">
+                                {{ delAlertText }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" @click="delAction">确 认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+    var req = basicRequest({
+        el: "#box",
+        data: {
+            queryPageUrl: ROUTE10015, //查询实体的URL
+
+            delUrl: ROUTE10014, //删除实体的URL
+            delTitle: "删除实体", //删除实体时的提示模态框标题
+            delAlertText: "确认删除所选实体？", //删除实体时的提示模态框内容
+
+            setUrl: ROUTE10016, //设置实体的URL
+            addTitle: "添加实体", //添加实体时的模态框标题
+            editTitle: "编辑实体", //编辑实体时的模态框标题
+            defaultEntity: { //默认实体
+                id: "",
+                username: "",
+                password: "",
+                cname: "",
+                phone: "",
+                enabled: true
+            },
+
+            switchUrl: ROUTE10017, //实体状态切换的URL
+        },
+        mounted: function () {
+            this.$nextTick(function() {
+                //时间选择框
+                jeDate("#startTimeInput",{
+                    theme:{bgcolor:"#0099CC",color:"#ffffff",pnColor:"#0086b3"},
+                    format: "YYYY-MM-DD hh:mm:ss",
+                    minDate: "2014-09-19 00:00:00",
+                    onClose: false,
+                    clearfun: function(elem, val) {
+                        req.queryParam.starttime = "";
+                    },
+                    donefun: function(obj) {
+                        req.queryParam.starttime = obj.val;
+                    }
+                });
+                jeDate("#endTimeInput",{
+                    theme:{bgcolor:"#0099CC",color:"#ffffff",pnColor:"#0086b3"},
+                    format: "YYYY-MM-DD hh:mm:ss",
+                    minDate: "2014-09-19 00:00:00",
+                    onClose: false,
+                    clearfun: function(elem, val) {
+                        req.queryParam.endtime = "";
+                    },
+                    donefun: function(obj) {
+                        req.queryParam.endtime = obj.val;
+                    }
+                });
+            });
+        },
+        methods: {
+            preSetAction: function() {
+                var usernameREG = /^\w{4,30}$/;
+                var passwordREG = /^[\w\W]{6,16}$/;
+                var cnameREG = /^[^<>]{0,30}$/;
+                var phoneREG = /^13[0-9]{9}$|14[0-9]{9}$|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$|16[0-9]{9}$|19[0-9]{9}$/;
+                if (!usernameREG.test(req.entity.username)) {
+                    alertModal("实体名由4~30位的英文字符或数字组成");
+                    return false;
+                }
+                if (!passwordREG.test(req.entity.password)) {
+                    alertModal("密码长度必须为6~16位");
+                    return false;
+                }
+                if (!cnameREG.test(req.entity.cname)) {
+                    alertModal("姓名由0~30位的中英文组成");
+                    return false;
+                }
+                if (!phoneREG.test(req.entity.phone)) {
+                    alertModal("请输入正确的手机号码");
+                    return false;
+                }
+                return true;
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

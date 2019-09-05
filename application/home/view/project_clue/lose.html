@@ -1,0 +1,25 @@
+{include file="base/header" /}
+<body style="background:#fff;">
+    {include file="base/dividend" /}
+    {include file="base/slide" /} 
+		<!-- 项目基本信息 -->
+		<div class="master" style="background-color: white;">
+			<div class="swidth" style="margin:100px 0 30px 0 ;"><img src="/static/home/css/img/pro_lose.png" width="100%"></div>
+			<div class="pro_body_btn">
+				<button type="button" id="pro-re-add" class="new_footer_btn" style="width:260px;color:#ffffff;">重新提交</button>
+			</div>
+		</div>
+<script>
+    $(document).ready(function(){
+        project_clue_url = "{:url('ProjectClue/add')}";
+        my_center_project_clue_url = "{:url('MyCenter/project_clue')}";
+        $("#pro-btn").click(function(){
+            location.href = my_center_project_clue_url;
+        });
+        $("#pro-re-add").click(function(){
+            location.href = project_clue_url;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">活动签到列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("ActivitySign/index")}')">活动签到列表</a></li>
+    {/if}
+    <a href="javascript:void(0);" style="float: right;" class="btn btn-link set" id="postData">导入活动数据</a>
+</ul>

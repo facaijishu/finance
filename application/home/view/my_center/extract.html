@@ -1,0 +1,49 @@
+{include file="base/header" /}
+    <body>
+        <div class="take-money">
+            <p>截止到{$time}，你的个人返点可提现金额为</p>
+            <strong>
+                {$balance} <small>元</small>
+            </strong>
+            <p class="take-t">申请提现金额：</p>
+            <input type="tel" name="fee">
+            <button>提交申请</button>
+        </div>
+        <script>
+            var balance = {$balance};
+            $("button").click(function(){
+                var fee = $("input").val();
+                if(fee == '' || fee == 0){
+                    alert("提现金额不能为空");
+                    return false;
+                }
+                if(fee > balance){
+                    alert("提现金额不能大于余额");
+                    return false;
+                }
+                if(fee < 1){
+                    alert("提现金额必须大于1元");
+                    return false;
+                }
+                var partten_fee = /^\d+(.\d{1})?(.\d{2})?$/;
+                if (partten_fee.exec(fee) == null) {
+                    alert('提现金额不正确', '提示框');
+                    return false;
+                }
+                $.ajax({
+                    url: "{:url('MyCenter/createExtract')}",
+                    data: {fee: fee},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            location.href = resp.data.url;
+//                            alert("申请提现成功");
+                        } else {
+                            alert(resp.msg, '提示框');
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

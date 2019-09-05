@@ -1,0 +1,15 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">合伙人详情</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Through/detail")}')">合伙人详情</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("Through/index")}')">返回</a>
+    {if condition="$info.status neq 1"}
+    <button class="btn btn-primary through-success" style="float: right;" type="button" data-id="{$info.t_id}"><i class="fa fa-save"></i>通过审核</button>
+    {/if}
+    {if condition="$info.status eq 0"}
+    <button class="btn btn-danger" style="float: right;" type="button" data-toggle="modal" data-target="#ModalFalse" data-id="{$info.uid}"><i class="fa fa-save"></i>不通过审核</button>
+    {/if}
+    
+</ul>

@@ -1,0 +1,10 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        {if condition="$info.question neq ''"}
+        <img class="img" style="width: 100%;" src="__UPLOAD__/{$info.question_url}">
+        {else /}
+        <img class="img" style="width: 100%;" src="__UPLOAD__/question1.png">
+        {/if}
+    </body>
+</html>

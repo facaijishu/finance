@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+
+<body id="box" class="mofh bg_gray" style="width:100%;">
+    <section class="bg_white" style="overflow:hidden;width:95%;margin: 5px auto 10px;">
+        <div class="clearfix" style="height: 60px;">
+            <div class="pull-left f20 ml10" style="line-height: 60px;">欣创环保</div>
+            <div class="pull-left f14 ml5" style="color:#007FED;line-height: 60px;">「<span class="c_gray f14">871890</span>」</div>
+            <div class="pull-right mr10 f12 ball pl5 pr5 mt20" style="border-color: #545AFF;color: #007FED;border-radius: 3px;">工业-商业和专业服务</div>
+        </div>
+        <div class="bg_gray" style="height: 10px;"></div>
+        <div class="clearfix bb1 ofh" style="height: 48px;">
+            <div class="pull-left f14 ml10" style="line-height: 48px;">计划募资 <span class="c_danger f18">20000.00 万元</span></div>
+            <div class="pull-right mr10 mt10">
+                <div class="pull-left porel">
+                    <img src="./images/parallel_blue.png" width="50">
+                    <span class="f12" style="position: absolute;top: 2.5px;left: 7px;color: #FFFFFF;">基础层</span>
+                </div>
+                <div class="pull-left porel">
+                    <img src="./images/parallel_red.png" width="50">
+                    <span class="f12" style="position: absolute;top: 2.5px;left: 13px;color: #FFFFFF;">做市</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix f12">
+            <div class="pull-left br1" style="width: 33.33%;">
+                <p style="color: #999999;line-height: 18px;">10.00元</p>
+                <p style="color: #333333;line-height: 18px;">定增价格</p>
+            </div>
+            <div class="pull-left br1" style="width: 33.33%;">
+                <p style="color: #999999;line-height: 18px;">10.00元</p>
+                <p style="color: #333333;line-height: 18px;">定增价格</p>
+            </div>
+            <div class="pull-left" style="width: 33.33%;">
+                <p style="color: #999999;line-height: 18px;">10.00元</p>
+                <p style="color: #333333;line-height: 18px;">定增价格</p>
+            </div>
+        </div>
+    </section>
+    <!-- 精选项目 -->
+    <section style="overflow:hidden;width:100%;">
+        <!-- 菜单 -->
+    </section>
+    <!-- 智能推荐 -->
+    <section style="overflow:hidden;width:100%;">
+    </section>
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="./index.html">
+                <img src="./images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_black">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./selectedProjects.html">
+                <img src="./images/sign-2-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./release-needs.html">
+                <img src="./images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./">
+                <img src="./images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./">
+                <img src="./images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $("#box").height($(window).height());
+    var vue = new Vue({
+        el: "#box",
+        data: {
+            id: getParams()["id"],
+            type: getParams()["type"],
+            projectDetail: {},
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                // 精选项目
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/require_detail_api/showProjectDetail',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            type: vue.type,
+                            id: vue.id,
+                        },
+                    })
+                    .done(function(res) {
+                        console.log(res)
+                        vue.projectDetail = res.data;
+                    });
+
+
+            });
+        },
+        methods: {
+
+        }
+    });
+    </script>
+</body>
+
+</html>

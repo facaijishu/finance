@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">项目推荐列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("ProjectHot/index")}')">项目推荐列表</a></li>
+    {/if}
+</ul>

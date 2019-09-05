@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <style>
+        .typeTagBox,.pfcTagBox,.scaleTagBox,.areaTagBox{border:1px solid #dddddd;color:#999999;width:98px;height:28px;line-height:26px;text-align:center;margin:0 8px 10px;float:left;}
+        .typeTagBox.active,.pfcTagBox.active,.scaleTagBox.active,.areaTagBox.active{color:#0076FF;border:1px solid #0076FF;}
+		.typeTagBox.show{display:block;}
+		.bigTagBox{border-radius: 16px; color:#0076FF;width:76px;height:22px;line-height:20px;text-align:center;margin:0 6px 8px;float:left;border:1px solid #0076FF;}
+		.bigTagBox.active{color:#ffffff; background-color:#0076FF;}
+		.to_bottom {
+            width: 0px;height: 0;margin-top:5px;border-top: 5px solid #0076FF;border-left: 5px solid transparent;border-right: 5px solid transparent;float:right;
+        }
+		.to_top {
+            width: 0px;height: 0;margin-top:5px;border-bottom: 5px solid #0076FF;border-left: 5px solid transparent;border-right: 5px solid transparent;float:right;
+        }
+		.all{font-size:12px;width: 35px;float:right}
+		.page-container {overflow: hidden;position: relative;margin: auto;}
+    </style>
+</head>
+
+<body>
+    <div id="box" class="bg_gray mofh">
+        <!-- 偏好选择 -->
+        <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+        <div id="preference" class="radius shadow bg_white mofh porel" style="position: absolute;top:20px;left:10px;">
+            <div class="f18 c_black fb" style="position: absolute;top:20px;left:20px;">精准匹配</div>
+            <a href="javascript:void(0);" class="pull-left" style="position: absolute;top:20px;right:20px;" @click="getServiceUrl">
+            <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:38px;">
+        </a>
+            <div class="f18 pl10 pb20" style="margin-top:30px;"></div>
+			<div class="panel-body clearfix pb0 pl0 pr0 pt10">
+				<div class="bigTagBox active tofh" id="bigTag1" @click="chooseBigTagAction1"> 业务细分</div>
+				<div class="bigTagBox tofh" id="bigTag2" @click="chooseBigTagAction2"> 行业细分</div>
+				<div class="bigTagBox tofh" id="bigTag3" @click="chooseBigTagAction3"> 投融规模</div>
+				<div class="bigTagBox tofh" id="bigTag4" @click="chooseBigTagAction4" >地域选择</div>
+			</div>
+			<!--业务细分-->
+            <div class="clearfix pb10 pl5 pr5" id="showTag1">
+                <div class="panel panel-default mb10" v-for="item in typeTag">
+                    <div class="panel-heading">
+                        <h3 class="panel-title f16">{{item.value}}<span class="all">全部<div :id="item.allname" @click="typeShow(item.id)" class="to_bottom"></div></span></h3>
+                    </div>
+                    <div class="panel-body clearfix pb0 pl0 pr0 pt10">
+                        <div :id="item.idname" class="typeTagBox tofh"v-for="(subs,index) in item.sub" v-show="index<3" @click="chooseTagAction" :sid="subs.id">
+							<span v-if="subs.id ==478"> 招商引资</span>
+							<span v-else> {{subs.value}} </span>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <!--行业细分-->
+            <div class="clearfix pb10 pl5 pr5" id="showTag2" style="display:none;">
+                <div class="panel panel-default mb10" v-for="item in pfcTag">
+                    <div class="panel-heading">
+                        <h3 class="panel-title f16">{{item.value}}<span class="all">全部<div :id="item.allname" @click="PfcShow(item.id)" class="to_bottom"></div></span></h3>
+                    </div>
+                    <div class="panel-body clearfix pb0 pl0 pr0 pt10">
+						<div :id="item.idname" class="pfcTagBox tofh"v-for="(subs,index) in item.sub" v-show="index<3" @click="chooseTagAction" :sid="subs.id">
+							<span> {{subs.value}}</span>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <!--投融规模</div>-->
+			<div class="f18 pl10 pb20" style="margin-top:5px;"></div>
+            <div class="clearfix pb10" id="showTag3" style="display:none;">
+                <div class="scaleTagBox" v-for="item in scaleTag" @click="chooseTagAction" :sid="item.id">{{item.value}}</div>
+            </div>
+            <!--地域选择</div>-->
+            <div class="clearfix pb10" id="showTag4" style="display:none;">
+                <div class="areaTagBox" v-for="item in areaTag" @click="chooseTagAction" :sid="item.id">{{item.value}}</div>
+            </div>
+
+            <div style="height:68px;line-height:68px;"></div>
+            <div style="width:355px;height:68px;position:fixed;bottom:5px;left:50%;margin-left:-178px;background:#ffffff;" id="finishbtn">
+                <div class="pl30 pr30 pb15 pt15">
+                    <div @click="submitAction" class="bg_primary c_white text-center f16" style="border-radius:19px;height: 38px;line-height:34px;border: 1px solid #dddddd;">完 成</div>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框 -->
+        <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+            <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+                <div class="modal-content" style="border:0;">
+                    <div class="modal-body text-center"></div>
+                </div>
+            </div>
+        </div>
+        <!-- loading -->
+        <div id='loading' class='loading-box hidden'>
+            <div class='css3-loading-shade'></div>
+            <div class='css3-loading-box'>
+                <div>歆宝科技</div>
+                <div class='css3-loading'>
+                    <div class='bounce1'></div>
+                    <div class='bounce2'></div>
+                    <div class='bounce3'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // 设置加载中...
+        $(document).ajaxStart(function() {
+            $("#loading").removeClass('hidden');
+        });
+        $(document).ajaxStop(function() {
+            $("#loading").addClass('hidden');
+        });
+    });
+    //提示框
+    function alertModal(msg) {
+        $("#alertModal").find('.modal-body').html(msg);
+        $("#alertModal").modal("show");
+        setTimeout(function() {
+            $("#alertModal").modal("hide");
+        }, msg.length / 7 * 1000);
+    }
+
+    // 初始窗口
+    var wh = $(window).height();
+    var ww = $(window).width();
+    $("#box").height(wh);
+    $("#preference").height(wh - 30);
+    $("#preference").width(ww - 20);
+    var s_url = "http://fin.jrfacai.com";
+    // VUE实例
+    var vue = new Vue({
+        el: "#box",
+        data: {
+            typeTag: {},
+            pfcTag: {},
+            scaleTag: {},
+            areaTag: {},
+            //历史标签
+            service_type: [],
+            industry: [],
+            size: [],
+            to_province: [],
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                vue.getTypeTag();
+                vue.getPfcTag();
+                vue.getScaleTag();
+                vue.getAreaTag();
+                //查询历史选中的标签
+                $.ajax({
+                        url: s_url+'/home/through_api/showMatchDict',
+                        type: 'GET',
+                        dataType: 'json',
+                    })
+                    .done(function(res) {
+                        vue.service_type = res.data.service_type;
+                        vue.industry	 = res.data.industry;
+                        vue.size		 = res.data.size;
+                        vue.to_province  = res.data.to_province;
+                        if (vue.service_type) {
+                            $(".typeTagBox").each(function(index, el) {
+                                var typeId = $(el).attr('sid');
+                                for (var i = 0; i < vue.service_type.length; i++) {
+                                    if (typeId == vue.service_type[i]) {
+                                        $(el).addClass('active');
+                                    }
+                                }
+                            });
+                        }
+                        if (vue.industry) {
+                            $(".pfcTagBox").each(function(index, el) {
+                                var pfcId = $(el).attr('sid');
+                                for (var i = 0; i < vue.industry.length; i++) {
+                                    if (pfcId == vue.industry[i].dict_id) {
+                                        $(el).addClass('active');
+                                    }
+                                }
+                            });
+                        }
+                        if (vue.size) {
+                            $(".scaleTagBox").each(function(index, el) {
+                                var scaleId = $(el).attr('sid');
+                                for (var i = 0; i < vue.size.length; i++) {
+                                    if (scaleId == vue.size[i].dict_id) {
+                                        $(el).addClass('active');
+                                    }
+                                }
+                            });
+                        }
+                        if (vue.to_province) {
+                            $(".areaTagBox").each(function(index, el) {
+                                var areaId = $(el).attr('sid');
+                                for (var i = 0; i < vue.to_province.length; i++) {
+                                    if (areaId == vue.to_province[i].dict_id) {
+										if(areaId==328){
+											$(".areaTagBox").addClass('bg_gray');
+											$(el).removeClass('bg_gray')
+										}
+                                        $(el).addClass('active');
+                                    }
+                                }
+                            });
+                        }
+                    });
+            });
+        },
+        methods: {
+            getServiceUrl: function() {
+                $.ajax({
+                        url: s_url+'/home/index_api/serviceUrl',
+                        type: 'GET',
+                        dataType: 'json',
+                    })
+                    .done(function(res) {
+                        window.location.href = res.data;
+                    });
+            },
+            getTypeTag: function() {
+                $.ajax({
+                        url: s_url+"/home/dict_api/getServiceTypeDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.typeTag = res.data;
+                        }
+                    });
+            },
+			typeShow: function(id) {
+				if($("div [id=all"+id+"]").hasClass('to_bottom')){
+					for (var i = 0; i < vue.typeTag.length; i++) {
+						if (id == vue.typeTag[i]['id']) {
+							$("div [id=type"+id+"]").each(function(index, el) {
+								$(el).css("display","block"); 
+							});
+						}
+					}
+					
+					$("div [id=all"+id+"]").removeClass('to_bottom');
+					$("div [id=all"+id+"]").addClass('to_top');
+				}else if($("div [id=all"+id+"]").hasClass('to_top')){
+					for (var i = 0; i < vue.typeTag.length; i++) {
+						if (id == vue.typeTag[i]['id']) {
+							var count = 0;
+							$("div [id=type"+id+"]").each(function(index, el) {
+								count ++;
+								if(count>3){
+									$(el).css("display","none"); 
+								}
+							});
+						}
+					}
+					$("div [id=all"+id+"]").removeClass('to_top');
+					$("div [id=all"+id+"]").addClass('to_bottom');
+				}
+
+			},
+            getPfcTag: function() {
+                $.ajax({
+                        url: s_url+"/home/dict_api/getIndustryDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.pfcTag = res.data;
+                        }
+                    });
+            },
+			PfcShow: function(id) {   
+				if($("div [id=all"+id+"]").hasClass('to_bottom')){
+					for (var i = 0; i < vue.pfcTag.length; i++) {
+						if (id == vue.pfcTag[i]['id']) {
+							$("div [id=type"+id+"]").each(function(index, el) {
+								$(el).css("display","block"); 
+							});
+						}
+					}
+					
+					$("div [id=all"+id+"]").removeClass('to_bottom');
+					$("div [id=all"+id+"]").addClass('to_top');
+				}else if($("div [id=all"+id+"]").hasClass('to_top')){
+					for (var i = 0; i < vue.pfcTag.length; i++) {
+						if (id == vue.pfcTag[i]['id']) {
+							var count = 0;
+							$("div [id=type"+id+"]").each(function(index, el) {
+								count ++;
+								if(count>3){
+									$(el).css("display","none"); 
+								}
+							});
+						}
+					}
+					$("div [id=all"+id+"]").removeClass('to_top');
+					$("div [id=all"+id+"]").addClass('to_bottom');
+				}
+
+			},
+            getScaleTag: function() {
+                $.ajax({
+                        url: s_url+"/home/dict_api/getSizeDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.scaleTag = res.data;
+                        }
+                    });
+            },
+            getAreaTag: function() {
+                $.ajax({
+                        url: s_url+"/home/dict_api/getToProvinceDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.areaTag = res.data;
+                        }
+                    });
+            },
+            // 选择
+            chooseTagAction: function(event) {
+                var ct = $(event.currentTarget);
+				if (ct.hasClass('bg_gray')) {
+					return;
+				}
+                if (ct.hasClass('active')) {
+					if (ct.html() == "全国") {
+						$(".areaTagBox").removeClass('bg_gray');
+						$(".areaTagBox").removeClass('active');
+					}
+					ct.removeClass('active')
+                } else {
+					if (ct.html() == "全国") {
+						$(".areaTagBox").addClass('bg_gray');
+						$(".areaTagBox").removeClass('active');
+						ct.removeClass('bg_gray')
+					}
+                    ct.addClass('active');
+                }
+            },
+			//选择业务
+            chooseBigTagAction1: function(event) {
+                var ct = $(event.currentTarget);
+                if (ct.hasClass('active')) {
+                    ct.removeClass('active')
+                } else {
+                    ct.addClass('active');
+					$("#showTag1").css("display","block");
+					$("#showTag2").css("display","none");
+					$("#showTag3").css("display","none");
+					$("#showTag4").css("display","none");
+					if($("#bigTag2").hasClass('active')){
+						$("#bigTag2").removeClass('active');
+					}
+					if($("#bigTag3").hasClass('active')){
+						$("#bigTag3").removeClass('active');
+					}
+					if($("#bigTag4").hasClass('active')){
+						$("#bigTag4").removeClass('active');
+					}
+                }
+            },
+			//选择行业
+			chooseBigTagAction2: function(event) {
+                var ct = $(event.currentTarget);
+                if (ct.hasClass('active')) {
+                    ct.removeClass('active')
+                } else {
+                    ct.addClass('active');
+					$("#showTag1").css("display","none");
+					$("#showTag2").css("display","block");
+					$("#showTag3").css("display","none");
+					$("#showTag4").css("display","none");
+					if($("#bigTag1").hasClass('active')){
+						$("#bigTag1").removeClass('active');
+					}
+					if($("#bigTag3").hasClass('active')){
+						$("#bigTag3").removeClass('active');
+					}
+					if($("#bigTag4").hasClass('active')){
+						$("#bigTag4").removeClass('active');
+					}
+                }
+            },
+			//选择投融规模
+			chooseBigTagAction3: function(event) {
+                var ct = $(event.currentTarget);
+                if (ct.hasClass('active')) {
+                    ct.removeClass('active')
+                } else {
+                    ct.addClass('active');
+					$("#showTag1").css("display","none");
+					$("#showTag2").css("display","none");
+					$("#showTag3").css("display","block");
+					$("#showTag4").css("display","none");
+
+					if($("#bigTag1").hasClass('active')){
+						$("#bigTag1").removeClass('active');
+					}
+					if($("#bigTag2").hasClass('active')){
+						$("#bigTag2").removeClass('active');
+					}
+					if($("#bigTag4").hasClass('active')){
+						$("#bigTag4").removeClass('active');
+					}
+                }
+            },
+			//选择地域
+			chooseBigTagAction4: function(event) {
+                var ct = $(event.currentTarget);
+                if (ct.hasClass('active')) {
+                    ct.removeClass('active');
+                } else {
+                    ct.addClass('active');
+					$("#showTag1").css("display","none");
+					$("#showTag2").css("display","none");
+					$("#showTag3").css("display","none");
+					$("#showTag4").css("display","block");
+					$("#finishbtn").css("display","block");
+					if($("#bigTag1").hasClass('active')){
+						$("#bigTag1").removeClass('active');
+					}
+					if($("#bigTag2").hasClass('active')){
+						$("#bigTag2").removeClass('active');
+					}
+					if($("#bigTag3").hasClass('active')){
+						$("#bigTag3").removeClass('active');
+					}
+                }
+            },
+
+            // 提交
+            submitAction: function(event) {
+                var type	= $(".typeTagBox.active");
+                var pfc		= $(".pfcTagBox.active");
+                var scale	= $(".scaleTagBox.active");
+                var area	= $(".areaTagBox.active");
+
+                //数据装配
+                var typeArr = new Array();
+                type.each(function(index, el) {
+                    typeArr.push(Number($(el).attr("sid")));
+                });
+                pfc.each(function(index, el) {
+                    typeArr.push(Number($(el).attr("sid")));
+                });
+                scale.each(function(index, el) {
+                    typeArr.push(Number($(el).attr("sid")));
+                });
+                area.each(function(index, el) {
+                    typeArr.push(Number($(el).attr("sid")));
+                });
+                typeArr = JSON.stringify(typeArr).substring(1, JSON.stringify(typeArr).length - 1);
+
+                //发送请求
+                $.ajax({
+                        url: s_url+'/home/through_api/exactMatchDict',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { id: typeArr },
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            alertModal("设置成功");
+                            setTimeout(function() {
+                                // window.location.href = "/static/frontend/index.html";
+                                window.history.go(-1);
+                            }, 1000);
+                        } else {
+                            alertModal(res.msg);
+                        }
+                    });
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

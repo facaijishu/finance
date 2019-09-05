@@ -1,0 +1,317 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-sm" id="ModalFalse" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="false_form" action="{:url('Through/throughFalse')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">审核失败原因</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="reason" class="control-label">拒绝理由:</label>
+                                    <div class="input-group col-lg-12">
+                                        <textarea name="reason" class="col-lg-12" rows="6" placeholder="请输入拒绝理由..." style="background-color: rgba(0,0,0,0);"></textarea>
+                                        <input class="hide" type="text" name="uid" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="introdece_img/modal" /}
+            {include file="through/tab_detail" /}
+            <div id="through_detail" data-id="{$info.t_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">用户id：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.uid}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">姓名：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.realName}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.status_des}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">微信ID：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.weixin_id}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">电话：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.phone}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">身份：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.role_type}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司简称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company_jc}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">职位：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.position}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司地址：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company_address}
+                        </div>
+                    </div>
+                    
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司网址：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.website}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">提交日期：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.createTime}
+                        </div>
+                    </div>
+                    
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">上级用户：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.superior}
+                        </div>
+                    </div>
+                     <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">个性标签：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.person_label}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">用户偏好标签：</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">业务类型：</label>  
+                            <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                               {if !empty($info.service_type)}
+                                    {foreach $info.service_type as $v}
+                                        {if isset($v['father'])}
+                                          {$v['father']}---{$v['service_name']}<br>
+                                        {else/}
+                                          {$v['service_name']}<br>
+                                        {/if}
+                                    {/foreach} 
+                               {/if}
+                            </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">行业偏好:</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {if !empty($info.industry)}
+                                {foreach $info.industry as $v}
+                                    {if isset($v['father'])}
+                                      {$v['father']}---{$v['industry_name']}<br>
+                                    {else/}
+                                      {$v['industry_name']}<br>
+                                    {/if}
+                                {/foreach} 
+                            {/if}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">投融资规模:</label>
+                           <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {if !empty($info.size)}
+                                {$info['size'][0]['size_name']}
+                            {/if}
+                           </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4"> 所在省份:</label>
+                           <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {if !empty($info.province)}
+                                {$info['province'][0]['province_name']}
+                            {/if}
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-1">名片：</label>
+                        
+                          <div class="form-group col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                            {if !empty($info.card)}
+                                {foreach($info.card as $v)}
+                            <img style="height: 100px;cursor: pointer;" src="__UPLOAD__/home/card/{$v}" data-toggle="modal" data-target="#ModalImg">
+                                {/foreach}
+                            {/if}
+                          </div>     
+                    </div>
+                </fieldset> -->
+                <div class="form-actions">
+                    {if condition="$info.status eq 1"}
+                    <div class="row">
+                        <fieldset>
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th style="text-align: center;">总拉新人数</th>
+                                            <th style="text-align: center;">上月拉新人数</th>
+                                            <th style="text-align: center;">本月拉新人数</th>
+                                            <th style="text-align: center;">昨日拉新人数</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {foreach name="$info.num" item="it"}
+                                        <tr>
+                                            <th>{$it[0]}</th>
+                                            <td>{$it[1]}</td>
+                                            <td>{$it[2]}</td>
+                                            <td>{$it[3]}</td>
+                                            <td>{$it[4]}</td>
+                                        </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                    {/if}
+                </div>
+                {if condition="$info.reason neq []"}
+                <fieldset>
+                    <legend>认证记录</legend>
+                    {foreach name="$info.reason" item="it"}
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12">{$it.reason}</div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">{$it.create_time}&nbsp;&nbsp;&nbsp;{$it.create_user}</div>
+                    </div>
+                    {/foreach}
+                </fieldset>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var through_success = '{:url("Through/throughSuccess")}';
+    $('#ModalFalse').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).attr("data-id");
+        $('#ModalFalse').find("input").val(id);
+        loadModule('bootstrapValidator', function () {
+            $('#false_form').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    reason: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入拒绝理由'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        });
+    }).on('hidden.bs.modal', function (e) {
+        $('#false_form').bootstrapValidator('destroy');
+        $('#false_form')[0].reset();
+    });
+    $(".nav-tabs").on('click','.through-success',function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定通过该用户的认证吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: through_success,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            location.reload();
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

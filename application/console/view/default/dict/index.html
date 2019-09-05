@@ -1,0 +1,423 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <!--//添加数据-->
+            <div class="modal fade bs-example-modal-sm" id="addModalData" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="add_dict_form" action="{:url('Dict/add')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加数据</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group myAdd">
+                                    <label for="type" class="control-label">数据归属:</label>
+                                    <div class="input-group col-lg-12">
+                                        <select class="form-control addType" name="type">
+                                            <option value="0">请选择数据类型</option>
+                                            {foreach name="dict_type_list" item="type"}
+                                            <option value="{$type.dt_id}">{$type.name}</option>
+                                            {/foreach}
+                                        </select>
+                                        <!--<input type="text" name="i_type" class="form-control" style="height: 0px;padding: 0px;border: 0px;" value="">-->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value" class="control-label">数据名称:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="value" placeholder="请输入数据名称..." class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="list_order" class="control-label">数据排序:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="list_order" value="0" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="des" class="control-label">描述:</label>
+                                    <div class="input-group col-lg-12">
+                                        <textarea name="des" class="col-lg-12" rows="6" placeholder="请输入数据描述..." style="background-color: rgba(0,0,0,0);"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary addDictType">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            <!--//修改数据类型-->
+            <div class="modal fade bs-example-modal-sm" id="editModalData" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="edit_dict_form" action="{:url('Dict/edit')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">修改数据</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group myEdit">
+                                    <label for="type" class="control-label">数据归属:</label>
+                                    <div class="input-group col-lg-12">
+                                        <select class="form-control typeEdit" name="type">
+                                            <option value="0">请选择数据类型</option>
+                                            {foreach name="dict_type_list" item="type"}
+                                            <option value="{$type.dt_id}">{$type.name}</option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value" class="control-label">数据名称:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="value" placeholder="请输入数据名称..." class="form-control edit-data">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="list_order" class="control-label">数据排序:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="list_order" value="0" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="des" class="control-label">描述:</label>
+                                    <div class="input-group col-lg-12">
+                                        <textarea name="des" class="col-lg-12" rows="6" placeholder="请输入数据描述..." style="background-color: rgba(0,0,0,0);"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="text" name="id" class="hide id">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary addDictType">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="dict/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="dict_form">
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label"> 数据名称：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="数据名称...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="form-group mySelect">
+                                    <label class="col-lg-3 control-label"> 数据类型: </label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control typeSelect ts" name="type">
+                                            <optgroup label="请选择数据类型">
+                                                <option value="">- - - 无 - - -</option>
+                                                {foreach name="dict_type_list" item="type"}
+                                                <option value="{$type.dt_id}">{$type.name}</option>
+                                                {/foreach}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-default" id="dict_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="dict" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> ID</th>
+                                <th> 数据名称</th>
+                                <th> 数据类型</th>
+                                <th> 创建时间</th>
+                                <th> 创建用户</th>
+                                <th> 状态</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".typeSelect").select2();
+    var dict_url = '{:url("Dict/read")}';
+    var dict_find_url = '{:url("Dict/find")}';
+    var dict_stop_url = '{:url("Dict/stop")}';
+    var dict_start_url = '{:url("Dict/start")}';
+    var dict_industry_url = '{:url("Dict/industry")}';
+    var dict_service_type_url = '{:url("Dict/serviceType")}'
+    var dict_industry_edit_url = '{:url("Dict/industryEdit")}';
+    var dict_service_type_edit_url = '{:url("Dict/serviceTypeEdit")}';
+</script>
+<!--添加数据时展示所属行业和业务类型一级标签-->
+<script type="text/javascript">
+    $(function(){
+        $('.addType').bind('change',function(){
+              var addTypeValue = $(this).find("option:selected").val();
+              //如果是所属行业
+              if (addTypeValue == 1) {
+                 var first_dict = $('.firstDict');
+                 var first_dict_length = first_dict.length;
+                 if(first_dict_length>0){
+                    first_dict.remove();
+                 }
+                 $.ajax({
+                    type:'POST',
+                    url:dict_industry_url,
+                    data:{dt_id:addTypeValue},
+                    dataType:'json',
+                    success:function(resp){
+                        if (resp) {
+                            var data = resp.data;
+                            var length = data.length;
+                            var str = '<option value="0">请选择一级标签(不选为添加一级标签)</option>';
+                            for(var i=0;i<length;i++){
+                               str+="<option value='"+data[i]['id']+"'>"+data[i]['value']+"</option>";
+                            }
+                            var allStr = '<div class="form-group firstDict"><label for="type"class="control-label">一级标签:</label><div class="input-group col-lg-12"><select class="form-control" name="firstType">'+str+'</select></div></div>';
+                            $(".myAdd").append(allStr);
+                        } else {
+                            var allStr = '<div class="form-group firstDict"><label for="type"class="control-label">一级标签:</label><div class="input-group col-lg-12"><select class="form-control" name="firstType"><option value="0">请选择一级标签(不选为添加一级标签)</option></select></div></div>';
+                            $(".myAdd").append(allStr);
+                        }
+                    }
+                 });
+              }else if(addTypeValue == 25){
+                 var first_dict = $('.firstDict');
+                 var first_dict_length = first_dict.length;
+                 if(first_dict_length>0){
+                    first_dict.remove();
+                 }
+                 $.ajax({
+                    type:'POST',
+                    url:dict_service_type_url,
+                    data:{dt_id:addTypeValue},
+                    dataType:'json',
+                    success:function(resp){
+                        if (resp) {
+                            var data = resp.data;
+                            var length = data.length;
+                            var str = '<option value="0">请选择一级标签(不选为添加一级标签)</option>';
+                            for(var i=0;i<length;i++){
+                               str+="<option value='"+data[i]['id']+"'>"+data[i]['value']+"</option>";
+                            }
+                            var allStr = '<div class="form-group firstDict"><label for="type"class="control-label">一级标签:</label><div class="input-group col-lg-12"><select class="form-control" name="firstType">'+str+'</select></div></div>';
+                            $(".myAdd").append(allStr);
+                        } else {
+                            var allStr = '<div class="form-group firstDict"><label for="type"class="control-label">一级标签:</label><div class="input-group col-lg-12"><select class="form-control" name="firstType"><option value="0">请选择一级标签(不选为添加一级标签)</option></select></div></div>';
+                            $(".myAdd").append(allStr);
+                        }
+                    }
+                 });
+              }else{
+                 var first_dict = $('.firstDict');
+                 var first_dict_length = first_dict.length;
+                 if(first_dict_length>0){
+                    first_dict.remove();
+                 }
+              }
+        });
+    });
+</script>
+<!-- 查询数据时展示所属行业和业务类型的一级标签-->
+<script type="text/javascript">
+    $(function(){
+        $(".ts").bind('change',function(){
+             var typeSelect = $(this).find('option:selected').val();
+             if(typeSelect == 1){
+                 var length = $(".firstDictSelect").length;
+                 if(length > 0){
+                   $(".firstDictSelect").remove();
+                 }
+                 $.ajax({
+                    type:'POST',
+                    url:dict_industry_url,
+                    data:{dt_id:typeSelect},
+                    dataType:'json',
+                    success:function(resp){
+                        if(resp){
+                            var data = resp.data;
+                            var length = data.length;
+                            var str = '<option value="0">请选择一级标签</option>';
+                            for(var i=0;i<length;i++){
+                               str+="<option value='"+data[i]['id']+"'>"+data[i]['value']+"</option>";
+                            }
+                            var allStr = '<div class="form-group firstDictSelect"><label class="col-lg-3 control-label"> 一级标签: </label><div class="col-lg-8"><select class="form-control typeSelect" name="firstTypeSelect"><optgroup label="请选择一级标签">'+str+'</optgroup></select></div></div>';
+                            $(".mySelect").append(allStr);
+                            $(".typeSelect").select2();
+                        }else{
+                            var allStr = '<div class="form-group firstDictSelect"><label class="col-lg-3 control-label"> 一级标签: </label><div class="col-lg-8"><select class="form-control typeSelect" name="firstTypeSelect"><optgroup label="请选择一级标签"><option value="0">请选择一级标签</option> </optgroup></select></div></div>';
+                            $(".mySelect").append(allStr);
+                            $(".typeSelect").select2();
+                        }
+                    }
+                 });
+             }else if(typeSelect == 25){
+                 var length = $(".firstDictSelect").length;
+                 if(length > 0){
+                    $(".firstDictSelect").remove();
+                 }
+                 $.ajax({
+                    type:'POST',
+                    url:dict_service_type_url,
+                    data:{dt_id:typeSelect},
+                    dataType:'json',
+                    success:function(resp){
+                        if(resp){
+                            var data = resp.data;
+                            var length = data.length;
+                            var str = '<option value="0">请选择一级标签</option>';
+                            for(var i=0;i<length;i++){
+                               str+="<option value='"+data[i]['id']+"'>"+data[i]['value']+"</option>";
+                            }
+                            var allStr = '<div class="form-group firstDictSelect"><label class="col-lg-3 control-label"> 一级标签: </label><div class="col-lg-8"><select class="form-control typeSelect" name="firstTypeSelect"><optgroup label="请选择一级标签">'+str+'</optgroup></select></div></div>';
+                            $(".mySelect").append(allStr);
+                            $(".typeSelect").select2();
+                        }else{
+                            var allStr = '<div class="form-group firstDictSelect"><label class="col-lg-3 control-label"> 一级标签: </label><div class="col-lg-8"><select class="form-control typeSelect" name="firstTypeSelect"><optgroup label="请选择一级标签"><option value="0">请选择一级标签</option> </optgroup></select></div></div>';
+                            $(".mySelect").append(allStr);
+                            $(".typeSelect").select2();
+                        }
+                    }
+                 });
+             }else{
+                var length = $(".firstDictSelect").length;
+                if(length>0){
+                    $(".firstDictSelect").remove();
+                }
+             }
+        });
+    });
+</script>
+<!--修改数据时如果修改的是所属行业和业务类型二级标签,就展示对应的一级标签-->
+<script type="text/javascript">
+    $(function(){
+       $(".typeEdit").bind('change',function(){
+          if($(".myEdit2").length>0){
+            $(".myEdit2").remove();  
+          }
+           dt_id = $(this).find("option:selected").val();
+           // console.log(dt_id);
+           if(dt_id == 1){
+                  var edit_data = $(".edit-data").val();
+                  //console.log(edit_data);
+                  $.ajax({
+                    type:'POST',
+                    url:dict_industry_edit_url,
+                    data:{dt_id:dt_id,value:edit_data},
+                    dataType:'json',
+                    success:function(resp){
+                        if(resp.data){
+                           var fid = resp.data;
+                           if($(".myEdit2").length>0){
+                              $(".myEdit2").remove();  
+                           }
+                           $.ajax({
+                              type:'POST',
+                              url:dict_industry_url,
+                              data:{dt_id:dt_id},
+                              dataType:'json',
+                              success:function(resp){
+                                var data = resp.data; 
+                                var length = data.length;
+                                var str = '<option value="0">请选择一级标签(不选为添加一级标签)</option>';
+                                for(var i=0;i<length;i++){
+                                    if(fid == data[i]['id']){
+                                        
+                                        str+="<option value='"+data[i]['id']+"' selected>"+data[i]['value']+"</option>";
+                                    }else{
+                                        
+                                        str+="<option value='"+data[i]['id']+"'>"+data[i]['value']+"</option>";
+                                    }    
+                                   
+                                }
+                                var allStr = '<div class="form-group myEdit2"><label for="type"class="control-label">一级标签:</label><div class="input-group col-lg-12"><select class="form-control" name="firstType2">'+str+'</select></div></div>';
+                                $(".myEdit").append(allStr);
+                                 
+                              }
+                            });
+                        }else{
+                          if($(".myEdit2").length>0){
+                                $(".myEdit2").remove();
+                             }
+                        }
+                    }
+                  });
+
+ }else if(dt_id == 25){
+                   var edit_data = $(".edit-data").val();
+                  //console.log(edit_data);
+                  $.ajax({
+                    type:'POST',
+                    url:dict_service_type_edit_url,
+                    data:{dt_id:dt_id,value:edit_data},
+                    dataType:'json',
+                    success:function(resp){
+                        if(resp.data){
+                           var fid = resp.data;
+                           if($(".myEdit2").length>0){
+                              $(".myEdit2").remove();  
+                           }
+                           $.ajax({
+                              type:'POST',
+                              url:dict_service_type_url,
+                              data:{dt_id:dt_id},
+                              dataType:'json',
+                              success:function(resp){
+                                var data = resp.data; 
+                                var length = data.length;
+                                var str = '<option value="0">请选择一级标签(不选为添加一级标签)</option>';
+                                for(var i=0;i<length;i++){
+                                    if(fid == data[i]['id']){
+                                        
+                                        str+="<option value='"+data[i]['id']+"' selected>"+data[i]['value']+"</option>";
+                                    }else{
+                                        
+                                        str+="<option value='"+data[i]['id']+"'>"+data[i]['value']+"</option>";
+                                    }    
+                                   
+                                }
+                                var allStr = '<div class="form-group myEdit2"><label for="type"class="control-label">一级标签:</label><div class="input-group col-lg-12"><select class="form-control" name="firstType2">'+str+'</select></div></div>';
+                                $(".myEdit").append(allStr);
+                                 
+                              }
+                            });
+                        }else{
+                          if($(".myEdit2").length>0){
+                                $(".myEdit2").remove();
+                             }
+                        }
+                    }
+                  });                
+            }else{
+                 if($(".myEdit2").length>0){
+                    $(".myEdit2").remove();
+                }
+            }
+       })
+       
+    })
+</script>
+<script src="__STATIC__/js/dict/dict_list.js"></script>

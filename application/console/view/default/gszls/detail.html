@@ -1,0 +1,272 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="gszls/tab_detail" /}
+            <div id="gszls_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4">企业ID：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="id" value="{$info.id}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-5 col-md-5 col-sm-5">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4">公司全称：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gsqc" value="{$info.gsqc}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4">最后更新时间：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="updated_at" value="{$info.updated_at}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4">股票名称：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="zqjc" value="{$info.zqjc}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-5 col-md-5 col-sm-5">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4">股票代码：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="neeq" value="{$info.neeq}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-4 col-md-4 col-sm-4">公司网址：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gswz" value="{$info.gswz}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-1 col-sm-1">注册地址：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="zcdz" value="{$info.zcdz}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-1 col-sm-1">办公地址：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="bgdz" value="{$info.bgdz}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-1 col-sm-1">主营业务：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <textarea class="form-control" rows="3" readonly="">{$info.zyyw}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">法定代表人：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="frdb" value="{$info.frdb}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">挂牌推荐机构：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="tjgpqs" value="{$info.tjgpqs}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">会计师事务所：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="hjsws" value="{$info.hjsws}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">律师事务所：</label>
+                            <div class="col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="lssws" value="{$info.lssws}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>股东名单</legend>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">名称</th>
+                                                <th style="text-align: center;">持股数</th>
+                                                <th style="text-align: center;">占比</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {if condition="$info.gdyjs neq []"}
+                                            {foreach name="$info.gdyjs" item="it"}
+                                            <tr>
+                                                <th>{$it['gdmc']}</th>
+                                                <td>{$it['cgsl']}</td>
+												<!--
+                                                <td>{$it['cgbl']}</td>
+												-->
+												<td>{if condition="$it.fen neq ''"}{$it.fen}%{/if}</td>
+                                            </tr>
+                                            {/foreach}
+                                            {else /}
+                                            <tr>
+                                                <td colspan="3">此无数据</td>
+                                            </tr>
+                                            {/if}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <br>
+                    <fieldset>
+                        <legend>高管名单</legend>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">姓名</th>
+                                                <th style="text-align: center;">职务</th>
+                                                <th style="text-align: center;">持股数</th>
+                                                <th style="text-align: center;">学历</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {if condition="$info.ggzls neq []"}
+                                            {foreach name="$info.ggzls" item="it"}
+                                            <tr>
+                                                <td>{$it['xm']}</td>
+                                                <td>{$it['zw']}</td>
+                                                <td>{$it['cgsl']}</td>
+                                                <td>{$it['xl']}</td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="4">{$it['jl']}</th>
+                                            </tr>
+                                            {/foreach}
+                                            {/if}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <br>
+                    <fieldset>
+                        <legend>增发融资</legend>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">编号</th>
+                                                <th colspan="3" style="text-align: center;">信息</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {if condition="$info.zfmxes neq []"}
+                                            {foreach name="$info.zfmxes" item="it"}
+                                            <tr>
+                                                <td>{$it['id']}-{$it['neeq']}</td>
+                                                <td colspan="3">{$it['sec_uri_tyshortname']}{$it['created_at']}定增</td>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>融资类型：定向增发</th>
+                                                <th>项目状态：{if condition="$it.zfmx_financing eq 0"}融资中{else /}融资结束{/if}</th>
+                                                <th>最后更新时间：{$it['updated_at']}</th>
+                                            </tr>
+                                            {/foreach}
+                                            {/if}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <br>
+                    <fieldset>
+                        <legend>大宗融资</legend>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">编号</th>
+                                                <th colspan="3" style="text-align: center;">信息</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {if condition="$info.zryxes neq []"}
+                                            {foreach name="$info.zryxes" item="it"}
+                                            <tr>
+                                                <td>{$it['id']}-{$it['neeq']}</td>
+                                                <td colspan="3">{$it['sec_uri_tyshortname']}{$it['create_time']}大宗</td>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>融资类型：大宗转让</th>
+                                                <th>项目状态：{if condition="$it.zryx_financing eq 0"}融资中{else /}融资结束{/if}</th>
+                                                <th>最后更新时间：{$it['update_time']}</th>
+                                            </tr>
+                                            {/foreach}
+                                            {/if}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

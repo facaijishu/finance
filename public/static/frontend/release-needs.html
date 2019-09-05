@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <style>
+        .areaTagBox,.industryBox{border:1px solid #dddddd;color:#999999;width:92px;height:28px;line-height:26px;text-align:center;margin:0 5px 10px;float:left;}
+		.typeTagBox,.pfcTagBox{border:1px solid #dddddd;color:#999999;width:97px;height:28px;line-height:26px;text-align:center;margin:0 10px 20px;float:left;}
+		.secondProBox,.secondFundsBox{border:1px solid #dddddd;color:#999999;width:97px;height:28px;line-height:26px;text-align:center;margin:0 5px 15px;float:left;}
+		.typeTagBox.active,.pfcTagBox.active,.areaTagBox.active,.industryBox.active,.secondFundsBox.active{color:#0076FF;border:1px solid #0076FF;}
+		.pcFirstBtn.active{color:#ffffff;background:#0076FF;}
+		.fund_typeBox,.invest_modeBox{border:1px solid #dddddd;color:#999999;width:97px;height:28px;line-height:26px;text-align:center;margin:0 5px 15px;float:left;}
+		.fund_typeBox.active,.invest_modeBox.active{color:#0076FF;border:1px solid #0076FF;}
+		.publicBox11{
+			float:right;
+			padding-right:10px;
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-position: left;
+			vertical-align: middle;color:#999999;width:67px;height:20px;line-height:20px;text-align:center;margin:0 5px 5px;float:left;
+			background-image: url('/static/frontend/images/unchecked.png');
+			background-size: 67px 20px;
+		}
+		.publicBox11.active{
+			color:#0076FF;
+			background-image: url('/static/frontend/images/checked.png');
+		}
+		.preBox,.coachBox,.recordBox,.stockholderBox,.bargainBox,.publicBox{
+			float:right;
+			padding-right:10px;
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-position: left;
+			vertical-align: middle;color:#999999;width:52px;height:20px;line-height:20px;text-align:center;margin:0 5px 5px;float:left;
+			background-image: url('/static/frontend/images/unchecked_no.png');
+			background-size: 52px 20px;
+		}
+		.preBox.active,.coachBox.active,.recordBox.active,.stockholderBox.active,.bargainBox.active,.publicBox.active{
+			color:#0076FF;
+			background-image: url('/static/frontend/images/checked_yes.png');
+		}
+		.checkv{display:block;text-align:right;}
+		.level_check,.trans_check,.financing_check,.period_check,.validity_check,.inc_check,.lc_type_check,.acceptor_check,.bill_type_check,.product_status_check,.investor_preference_check,
+		.contact_status_check{
+			color:#999999;text-align:center;border:1px solid #999999;height:32px;line-height:32px;margin:25px 38px 0px 38px;;border-radius:19px;background:#ffffff;font-weight:bold;
+		}
+		.level_check.active,.trans_check.active,.financing_check.active,.period_check.active,.validity_check.active,.inc_check.active,.lc_type_check.active,.acceptor_check.active,.bill_type_check.active,.product_status_check.active,
+		.investor_preference_check.active,.contact_status_check.active{
+			color:#0076ff;border:1px solid #0076FF;
+		}
+		.radius_commit{
+			font-size:16px;text-align:center;color:#ffffff;border:1px solid #0076FF;height:38px;line-height:38px;margin:25px 50px 0px 38px;border-radius:19px;background:#0076FF;
+		}
+		.swidth{width:178px;}
+		@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+		.swidth{width:148px;}
+		}
+		
+    </style>
+</head>
+
+<body id="box" class="bg_gray mofh">
+    <!-- 首选发布 -->
+    <div id="firstChooseContent">
+        <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+        <div id="releaseBox" class="radius shadow bg_white " style="position: absolute;top:20px;left:10px;">
+            <div class="f18 c_black fb" style="position: absolute;top:20px;left:20px;">发布中心</div>
+            <a href="http://fin.jrfacai.com/home/customer_service/index/id/14" class="pull-left" style="position: absolute;top:20px;right:20px;">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right noShow" style="height:38px;">
+            </a>
+            <div class="text-center porel" style="height: 346px; top:50%; margin-top:-173px;">
+                <div class="f18">业务发布</div>
+                <div id="publishProjectBtn" class="c_primary f16 pointer" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:35px 38px 25px 38px;border-radius:19px;">发布项目</div>
+                <div id="publishFundsBtn" class="c_primary f16 pointer" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:15px 38px 40px 38px;border-radius:19px;">发布资金</div>
+                <div class="f18">需求</div>
+                <div id="oneKeyRelease" class="c_white f16 pointer" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:25px 38px 0px 38px;border-radius:19px;background:#0076FF">一键发布</div>
+                <div class="c_primary f16 pointer" onclick="javascript:history.back(-1);" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:15px 38px 0px 38px;border-radius:19px;">取 消</div>
+            </div>
+        </div>
+    </div>
+    <!-- 项目发布 -->
+    <div id="publishProjectContent" class="dno">
+        <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+        <div id="releaseBox2" class="radius shadow bg_white mofh" style="position: absolute;top:20px;left:10px; z-index: 999;">
+            <div class="f18 c_black fb" id="publistTitle" style="position: absolute;top:20px;left:20px;"></div>
+            <a href="/static/frontend/service.html" class="pull-left" style="position: absolute;top:20px;right:20px;">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right noShow" style="height:38px;">
+            </a>
+            <div id="allFirstPro" class="text-center porel" style="margin-top:150px;">
+            </div>
+            <div style="height:15px;line-height:15px;"></div>
+        </div>
+    </div>
+    <!-- 项目二级选项 -->
+    <div class="modal fade" id="allSecondProModal" tabindex="-1" role="dialog" aria-labelledby="allSecondProModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true" style="position: absolute;bottom:300px;">
+            <div class="modal-content">
+                <div class="modal-header b0 pb5">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="allSecondProModalLabel" style="font-size:16px;font-weight:bold;"></h4>
+                </div>
+                <div class="modal-body clearfix pb10"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 发布表单 -->
+    <div id="formContent" class="dno">
+        <div id="formBox" class="radius shadow bg_white mofh" style="position: absolute;top:20px;left:10px; z-index: 999;">
+            <div class="f18 c_black fb" style="position: absolute;top:20px;left:20px;"><span id="top_dict_title"></span><span id="dict_title"></span></div>
+            <a href="/static/frontend/service.html" class="pull-left" style="position: absolute;top:20px;right:20px;">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right noShow" style="height:38px;">
+            </a>
+            <form id="form" class="dbk" style="margin:70px 10px 20px;"></form>
+            <div class="clearfix" style="width:300px;margin:20px auto 0px;">
+                <div class="c_primary f14 pointer text-center pull-left mr20" onclick="
+                $('.industryBox').removeClass('active');
+                $('.areaTagBox').removeClass('active');
+                $('.areaTagBox').removeClass('bg_gray');
+                $('#formContent').hide();
+                $('#publishProjectContent').hide();
+                $('#firstChooseContent').show();
+                " style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;">取 消</div>
+                <div id="formFinish" class="c_white f14 pointer text-center pull-left" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;background:#0076FF">发 布</div>
+            </div>
+            <div style="height:15px;line-height:15px;"></div>
+        </div>
+    </div>
+    <!-- 省份选择 -->
+    <div class="modal fade" id="areaModal" tabindex="-1" role="dialog" aria-labelledby="areaModalLabel" aria-describedby="所在省份">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="areaModalLabel">所在省份 <span class="f12">（<span class="chooseSign"></span>）</span></h4>
+                </div>
+                <div class="modal-body clearfix pb0">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block btn-block" data-dismiss="modal">确 认 选 择</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 行业标签 -->
+    <div class="modal fade" id="industryModal" tabindex="-1" role="dialog" aria-labelledby="industryModalLabel" aria-describedby="行业标签">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="industryModalLabel">选择行业标签</h4>
+                </div>
+                <div class="modal-body clearfix pb0">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block btn-block" data-dismiss="modal">确 认 选 择</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- 层级选择 -->
+	<div class="modal fade" id="levelModal" tabindex="-1" role="dialog" aria-labelledby="levelModalLabel" aria-describedby="所在层级" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="levelModalLabel">所属层级 <span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="level_check" sid="1">基础层</div>
+					<div class="level_check" sid="2">创新层</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="transModal" tabindex="-1" role="dialog" aria-labelledby="transModalLabel" aria-describedby="交易方式" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="transModalLabel">交易方式 <span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="trans_check" sid="1">做市</div>
+					<div class="trans_check" sid="2">竞价</div>
+				</div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="financingModal" tabindex="-1" role="dialog" aria-labelledby="financingModalLabel" aria-describedby="融资期限" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="financingModalLabel">融资期限<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="financing_check" sid="1">1年以内</div>
+					<div class="financing_check" sid="2">2年以内</div>
+					<div class="financing_check" sid="3">3年以内</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="periodModal" tabindex="-1" role="dialog" aria-labelledby="periodModalLabel" aria-describedby="融资期限" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="periodModalLabel">融资期限<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="period_check" sid="1">1年以内</div>
+					<div class="period_check" sid="2">2年以内</div>
+					<div class="period_check" sid="3">3年以内</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="validityModal" tabindex="-1" role="dialog" aria-labelledby="validityModalLabel" aria-describedby="业务有效期" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="validityModalLabel">业务有效期<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="validity_check" sid="1">30天</div>
+					<div class="validity_check" sid="2">60天</div>
+					<div class="validity_check" sid="3">90天</div>
+					<div class="validity_check" sid="4">180天</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="incModal" tabindex="-1" role="dialog" aria-labelledby="incModalLabel" aria-describedby="增信方式" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="incModalLabel">增信方式<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="inc_check" sid="1">抵押</div>
+					<div class="inc_check" sid="2">质押</div>
+					<div class="inc_check" sid="3">担保</div>
+					<div class="inc_check" sid="4">信用</div>
+					<div class="inc_check" sid="5">多重增信</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="lcTypeModal" tabindex="-1" role="dialog" aria-labelledby="lcTypeModalLabel" aria-describedby="上市公司类型" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="lcTypeModalLabel">上市公司类型<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+					<div class="lc_type_check" sid="1">主板</div>
+					<div class="lc_type_check" sid="2">中小板</div>
+					<div class="lc_type_check" sid="3">创业板</div>
+					<div class="lc_type_check" sid="4">其他</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="modal fade" id="acceptorModal" tabindex="-1" role="dialog" aria-labelledby="acceptorModalLabel" aria-describedby="承兑人" style="display:none;">
+			<div class="modal-dialog" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title" id="acceptorModalLabel">承兑人<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+					</div>
+					<div style="padding-bottom:20px;">
+						<div class="acceptor_check" sid="1">商票</div>
+						<div class="acceptor_check" sid="2">国股</div>
+						<div class="acceptor_check" sid="3">城商</div>
+						<div class="acceptor_check" sid="4">三农</div>
+						<div class="acceptor_check" sid="5">财票</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="billModal" tabindex="-1" role="dialog" aria-labelledby="billModalLabel" aria-describedby="票据类型" style="display:none;">
+			<div class="modal-dialog" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title" id="billModalLabel">票据类型<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+					</div>
+					<div style="padding-bottom:20px;">
+						<div class="bill_type_check" sid="1">商票</div>
+						<div class="bill_type_check" sid="2">银票</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-describedby="产品状态" style="display:none;">
+			<div class="modal-dialog" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title" id="productModalLabel">产品状态<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+					</div>
+					<div style="padding-bottom:20px;">
+						<div class="product_status_check" sid="1">预存期</div>
+						<div class="product_status_check" sid="2">存续中</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="investorModal" tabindex="-1" role="dialog" aria-labelledby="investorModalLabel" aria-describedby="资金方偏好" style="display:none;">
+			<div class="modal-dialog" aria-hidden="true">
+				<div class="modal-content">
+					<div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title" id="investorModalLabel">资金方偏好<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>
+					</div>
+					<div style="padding-bottom:20px;">
+						<div class="investor_preference_check" sid="1">上市公司</div>
+						<div class="investor_preference_check" sid="2">其他机构</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-describedby="联系人身份" style="display: none;">					
+			<div class="modal-dialog" aria-hidden="true">						
+				<div class="modal-content">							
+					<div class="modal-header" style="border-bottom:solid 1px #ffffff;">								
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">									
+							<span aria-hidden="true">×</span>								
+						</button>								
+						<h4 class="modal-title" id="contactModalLabel">联系人身份<span class="f12">（<span class="chooseSign">单选</span>）</span></h4>							
+					</div>							
+					<div style="padding-bottom:20px;">								
+						<div class="contact_status_check" id="contact1" style="display: none;" sid="1">融资方</div>								
+						<div class="contact_status_check" id="contact2" style="display: none;" sid="2">转让方</div>
+						<div class="contact_status_check" id="contact4" style="display: none;" sid="4">质押方</div>
+						<div class="contact_status_check" id="contact5" style="display: none;" sid="5">出售方</div>								
+						<div class="contact_status_check" id="contact6" style="display: none;" sid="6">票据方</div>
+						<div class="contact_status_check" id="contact7" style="display: none;" sid="7">资产方</div>								
+						<div class="contact_status_check" id="contact8" style="display: none;" sid="8">创业方</div>
+						<div class="contact_status_check" id="contact9" style="display: none;" sid="9">发起方</div>	
+						<div class="contact_status_check" id="contact3" style="display: none;" sid="3">代理方</div>	
+
+					</div>						
+				</div>					
+			</div>				
+		</div>
+
+    <!-- 需求发布 -->
+    <div id="oneKeyReleaseContent" class="dno">
+        <div class="f18 c_black fb" style="margin:20px 0 0 20px;">需求发布</div>
+        <div class="pl10 pr10 mt15 porel">
+            <textarea id="rcInput" maxSize="300" rows="8" class="form-control f12 rcInput" placeholder="例：有商劵渠道么？可以谈合作" style="width:100%;-webkit-box-shadow: inset 0 0px 0px;box-shadow: inset 0 0px 0px;border:0;"></textarea>
+            <div class="rcInputHint" style="position: absolute;bottom: 2px;right: 12px;">0/300</div>
+        </div>
+        <div class="f18 c_gray" style="margin:25px 0 15px 20px;">添加标签</div>
+        <div id="tagBox2" class="pl20 pr20 clearfix c_primary">
+            <div class="boxct"></div>
+            <div id="openModifyTagModal" class="f22 text-center pull-left" style="width:80px;height: 27px;border:1px solid #0076FF;line-height: 22px;">+</div>
+        </div>
+        <div class="f18 c_gray" style="margin:10px 0 15px 20px;">添加图片</div>
+        <div id="imgBox" class="pl20 pr20 clearfix c_primary">
+            <form id="fileForm" enctype="multipart/form-data">
+                <input type="text" name="origin" value="publish" class="sr-only">
+                <input id="fileInput" class="sr-only" name="file" type="file">
+            </form>
+            <div id="addImgBtn" class="f40 text-center pull-left" style="width:80px;height: 80px;border:1px solid #0076FF;line-height:73px;font-weight:300;">+</div>
+        </div>
+        <div class="clearfix" style="width:300px;margin:20px auto 0px;">
+            <div class="c_primary f14 pointer text-center pull-left mr20" onclick="$('#oneKeyReleaseContent').hide();$('#firstChooseContent').show();" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;">取 消</div>
+            <div id="oneKeyReleaseFinish" class="c_white f14 pointer text-center pull-left" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;background:#0076FF">完 成</div>
+        </div>
+        <!-- 编辑我的标签 -->
+        <div class="modal fade" id="modifyTagModal" tabindex="-1" role="dialog" aria-labelledby="modifyTagModalLabel" aria-describedby="选择标签">
+            <div class="modal-dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header b0 pb10">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-center" id="modifyTagModalLabel" style="font-size:18px;font-weight:bold;">选择标签</h4>
+                    </div>
+                    <div class="modal-body pl0 pr0 pt0 mofh porel">
+                        <div class="f18 pl10 pb20">业务类型</div>
+                        <div id="typeTagBoxCn" class="clearfix pb10">
+                        </div>
+                        <div class="f18 pl10 pb20">行业偏好</div>
+                        <div id="pfcTagBoxCn" class="clearfix pb10">
+                        </div>
+                        <div class="f18 pl10 pb20">添加标签</div>
+                        <div id="tagBox" class="pl10 pr10 clearfix c_primary">
+                        </div>
+                        <div id="openAddTagModal" class="c_primary text-center f16" style="width:320px;height:37px;border:1px solid #0076FF;border-radius:3px;line-height:37px;margin:10px auto 30px;">添加其他标签</div>
+                    </div>
+                    <div class="modal-footer">
+                        <div data-dismiss="modal" id="tagFinishBtn" class="bg_primary c_white text-center f16" style="border-radius:19px;height: 35px;line-height:33px;border: 1px solid #dddddd;margin:0 auto;width:182px;">确 定</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 添加标签 -->
+        <div class="modal fade" id="addTagModal" tabindex="-1" role="dialog" aria-labelledby="addTagModalLabel" aria-describedby="添加其他标签">
+            <div class="modal-dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header b0 pb10">
+                        <h4 class="modal-title text-center" id="addTagModalLabel">添加其他标签</h4>
+                        <div class="text-center f12 c_gray">最多添加6个标签</div>
+                    </div>
+                    <div class="modal-body pt0 pb0">
+                        <div class="form-group mb0">
+                            <input id="tagInput" type="text" class="form-control" placeholder="请输入标签">
+                        </div>
+                    </div>
+                    <div class="modal-footer b0">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 80px;">取消</button>
+                        <button id="addTagBtn" type="button" class="btn btn-primary" style="width: 80px;">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img  src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk noShow" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img  src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk noShow" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img  src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk noShow" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img  src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk noShow" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img  src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk noShow" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+            <div class="modal-content" style="border:0;">
+                <div class="modal-body text-center"></div>
+            </div>
+        </div>
+    </div>
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+    <!-- 认证模态框 -->
+    <div class="modal fade in" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-describedby="公众号二维码">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+                <div class="modal-body porel p0">
+                    <div style="width:290px;margin:0 auto;">
+                        <img src="/static/frontend/images/to_auth.png" width="290" alt="">
+                        <div id="closeAuthModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+                            <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+                        </div>
+                        <a href="javascript:void(0)" onclick="doreg()" style="position: absolute;top: 365px;left: 75px;width: 210px;height: 35px;line-height:30px;"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 完善模态框 -->
+        <div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="公众号二维码">
+            <div class="modal-dialog" aria-hidden="true">
+                <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+                    <div class="modal-body porel p0">
+                        <div style="width:290px;margin:0 auto;">
+                            <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+                            <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+                        	</div>
+                            <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+            //========================== 内容加载 ===============================
+            $("#closeAuthModal").click(function(event) {
+                $("#authModal").modal("hide");
+            });
+            $("#closeCmpInfoModal").click(function(event) {
+                $("#cmpInfoModal").modal("hide");
+            });
+
+            //公共变量
+            var allService = new Array();
+            var wh = $(window).height();
+            var ww = $(window).width();
+
+            function getSubService(id) {
+                for (var i = 0; i < allService.length; i++) {
+                    if (allService[i].id == id) {
+                        return allService[i].sub;
+                    }
+                }
+            }
+
+            $.ajax({
+                    url: "http://fin.jrfacai.com/home/dict_api/getServiceTypeDict",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        allService = res.data;
+                        var dt = res.data;
+                        for (var i = 0; i < dt.length; i++) {
+                            var el = "<div tagId=\"" + dt[i].id + "\" class=\"typeTagBox tofh\">" + dt[i].value + "</div>";
+                            $("#typeTagBoxCn").append(el);
+                            el = "<div tagId=\"" + dt[i].id + "\" class=\"c_primary f16 pointer pcFirstBtn\" style=\"border:1px solid #0076FF;height:38px;line-height:38px;margin:20px 38px 20px 38px;border-radius:19px;\">" + dt[i].value + "</div>";
+                            $("#allFirstPro").append(el);
+                        }
+                    }
+                });
+				$.ajax({
+                    url: "http://fin.jrfacai.com/home/dict_api/getIndustryDict",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        var dt = res.data;
+                        for (var i = 0; i < dt.length; i++) {
+                            var el = "<div tagId=\"" + dt[i].id + "\" class=\"pfcTagBox tofh\">" + dt[i].value + "</div>";
+                            $("#pfcTagBoxCn").append(el);
+
+                            // 发布详情
+                            var sub = dt[i].sub;
+                            var subel = "";
+                            if (sub) {
+                                for (var y = 0; y < sub.length; y++) {
+                                    subel += "<div sid=\"" + sub[y].id + "\" class=\"industryBox tofh\">" + sub[y].value + "</div>";
+                                }
+                            }
+                            var panel = "<div class=\"panel panel-default mb10\">\
+                            <div class=\"panel-heading\">\
+                            <h3 class=\"panel-title\">" + dt[i].value + "</h3>\
+                            </div>\
+                            <div class=\"panel-body pb0 pl5 pr5 pt10\">\
+                            " + subel + "\
+                            </div>\
+                        </div>";
+                            $("#industryModal .modal-body").append(panel);
+                        }
+                    }
+                });
+            $.ajax({
+                    url: "http://fin.jrfacai.com/home/dict_api/getToProvinceDict",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        var areaTag = res.data;
+                        for (var i = 0; i < areaTag.length; i++) {
+                            var el = "<div class=\"areaTagBox\" sid=\"" + areaTag[i].id + "\">" + areaTag[i].value + "</div>";
+                            $("#areaModal .modal-body").append(el);
+                        }
+                    }
+                });
+
+            //========================== 一键发布 ===============================
+            $(document).ready(function() {
+                // 设置加载中...
+                $(document).ajaxStart(function() {
+                    $("#loading").removeClass('hidden');
+                });
+                $(document).ajaxStop(function() {
+                    $("#loading").addClass('hidden');
+                });
+            });
+
+			function public_pic(){
+				var check = $("input:radio[name='is_public']:checked").val();
+				if (check==2)
+				{
+					$("#public_img").attr('src',"/static/frontend/images/unchecked.png");
+					$("input[name='is_public'][value=1]").attr("checked",true); 
+					$("input[name='is_public'][value=2]").attr("checked",false); 
+
+				}else{
+					$("#public_img").attr('src',"/static/frontend/images/checked.png");
+					$("input[name='is_public'][value=1]").attr("checked",false); 
+					$("input[name='is_public'][value=2]").attr("checked",true); 
+				}
+			}
+
+			function ipo_pic(){
+				var check = $("input:radio[name='is_pre_ipo']:checked").val();
+				alert(check);
+				if (check==2)
+				{
+					$("#ipo_img").attr('src',"/static/frontend/images/checked_yes.png");
+					$("input[name='is_pre_ipo'][value=1]").attr("checked",true); 
+					$("input[name='is_pre_ipo'][value=2]").attr("checked",false); 
+
+				}else{
+					$("#ipo_img").attr('src',"/static/frontend/images/unchecked_no.png");
+					$("input[name='is_pre_ipo'][value=1]").attr("checked",false); 
+					$("input[name='is_pre_ipo'][value=2]").attr("checked",true); 
+				}
+			}
+
+            //提示框
+            function alertModal(msg) {
+                $("#alertModal").find('.modal-body').html(msg);
+                $("#alertModal").modal("show");
+                setTimeout(function() {
+                    $("#alertModal").modal("hide");
+                }, msg.length / 7 * 1000);
+            }
+
+            // 初始窗口
+            $("#box").height(wh);
+            $("#releaseBox").height(wh - 110);
+            $("#releaseBox").width(ww - 20);
+            $("#releaseBox2").height(wh - 30);
+            $("#releaseBox2").width(ww - 20);
+            $("#formBox").height(wh - 30);
+            $("#formBox").width(ww - 20);
+
+            // 一键发布
+            $("#oneKeyRelease").click(function(event) {
+                if (ui.userType == 0) {
+                    $("#authModal").modal("show");
+                    return;
+                }
+                if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+                    $("#cmpInfoModal").modal("show");
+                    return;
+                }
+
+                $(".rcInput").trigger('keyup');
+                $("#firstChooseContent").hide();
+                $("#oneKeyReleaseContent").show();
+            });
+
+            //发布内容
+            $(".rcInput").keyup(function(event) {
+                var el = event.currentTarget;
+                // $(el).val($.trim($(el).val()));
+                $(el).val($(el).val());
+                var i = $(el).val().length;
+                var s = $(el).attr('maxSize');
+                if (i > parseInt(s)) {
+                    alertModal("此内容最多为" + s + "字");
+                    $(el).val($(el).val().substring(0, parseInt(s)));
+                    $(el).next().html(s + "/" + s);
+                } else {
+                    $(el).next().html(i + "/" + s);
+                }
+            });
+            $(".rcInput").blur(function(event) {
+                var el = event.currentTarget;
+                $(el).val($.trim($(el).val()));
+                var i = $(el).val().length;
+                var s = $(el).attr('maxSize');
+                if (i > parseInt(s)) {
+                    alertModal("此内容最多为" + s + "字");
+                    $(el).val($(el).val().substring(0, parseInt(s)));
+                    $(el).next().html(s + "/" + s);
+                } else {
+                    $(el).next().html(i + "/" + s);
+                }
+            });
+            //添加标签
+            $("#openAddTagModal").click(function(event) {
+                $("#addTagModal").modal("show");
+                $("#tagInput").focus();;
+            });
+            $("#tagBox").on('click', '.tagDel', function(event) {
+                $(this).parent().remove();
+            });
+            $("#tagBox2").on('click', '.tagDel', function(event) {
+                $(this).parent().remove();
+            });
+            $("#addTagBtn").click(function(event) {
+                var v = $.trim($("#tagInput").val());
+                if (v.length > 0) {
+                    if ($(".tagCt").length < 6) {
+                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                        <span class=\"tagCt\">" + v + "</span>\
+                        <img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                    </div>";
+                        $("#tagBox").prepend(n);
+                        $("#tagInput").val("");
+                        $("#addTagModal").modal("hide");
+                    } else {
+                        $("#addTagModal").modal("hide");
+                        setTimeout(function() {
+                            alertModal("最多添加6个标签");
+                        }, 400);
+                    }
+                } else {
+                    $("#addTagModal").modal("hide");
+                }
+                $("#addTagBtn").focus();
+            });
+            $("#tagInput").keydown(function(event) {
+                if (event.which == 13) {
+                    $("#addTagBtn").trigger('click');
+                }
+            });
+            $("#typeTagBoxCn").on('click', '.typeTagBox', function(event) {
+                var curr = $(event.currentTarget);
+                if (curr.hasClass('active')) {
+                    curr.removeClass('active')
+                } else {
+                    curr.addClass('active');
+                }
+            });
+            $("#pfcTagBoxCn").on('click', '.pfcTagBox', function(event) {
+                var curr = $(event.currentTarget);
+                if (curr.hasClass('active')) {
+                    curr.removeClass('active')
+                } else {
+                    curr.addClass('active');
+                }
+            });
+
+            //确定选择标签
+            var dict_id = new Array();
+            $("#tagFinishBtn").click(function(event) {
+                dict_id = new Array();
+                var tn = new Array();
+                $(".typeTagBox.active").each(function(index, el) {
+                    dict_id.push($(el).attr('tagId'));
+                    tn.push($(el).html());
+                });
+                $(".pfcTagBox.active").each(function(index, el) {
+                    dict_id.push($(el).attr('tagId'));
+                    tn.push($(el).html());
+                });
+                var tagboxhtml = "";
+                $("#tagBox .tagCt").each(function(index, el) {
+                    tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                        <span class=\"tagCt\">" + $(el).html() + "</span>\
+                        <img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                    </div>";
+                });
+                for (var i = 0; i < tn.length; i++) {
+                    tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                        <span class=\"tagCt\">" + tn[i] + "</span>\
+                        <img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                    </div>";
+                }
+                $("#tagBox2 .boxct").html(tagboxhtml);
+            });
+
+            //选择标签
+            $("#openModifyTagModal").click(function(event) {
+                $("#modifyTagModal").modal("show");
+            });
+            $("#modifyTagModal .modal-body").height(wh - 160);
+            $("#myTagBox").on('click', '.tagDel', function(event) {
+                $(this).parent().remove();
+            });
+
+            //添加图片
+            $("#addImgBtn").click(function(event) {
+                $("#fileInput").click();
+            });
+            $("#imgBox").on('click', '.imgDel', function(event) {
+                $(this).parent().remove();
+            });
+            $("#form").on('click', '.imgDel', function(event) {
+                $(this).parent().remove();
+                var imgids = "";
+                $("#addImgBox .imgCt").each(function(index, el) {
+                    imgids += $(el).attr('imgId') + ",";
+                });
+                imgids = imgids.substring(0, imgids.length - 1);
+                $("#addImgBox input").val(imgids);
+            });
+            $("#fileInput").change(function(event) {
+                var fn = $(this).val();
+                //判断图片格式
+                var suffixIndex = fn.lastIndexOf(".");
+                var suffix = fn.substring(suffixIndex + 1).toUpperCase();
+                if (suffix != "BMP" && suffix != "JPG" && suffix != "JPEG" && suffix != "PNG" && suffix != "GIF") {
+                    alertModal("图片格式错误(请上传BMP、JPG、JPEG、PNG、GIF)");
+                    return;
+                }
+
+                //上传图片操作
+                var fileForm = new FormData($("#fileForm").get(0));
+                $.ajax({
+                        url: "http://fin.jrfacai.com/home/base_api/upload",
+                        type: "POST",
+                        data: fileForm,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            var imgUrl = "http://fin.jrfacai.com/uploads/" + res.data.url;
+                            imgUrl = imgUrl.replace("\/", "/");
+                            var n = "<div class=\"pull-left mr10 mb10 porel\" style=\"width:80px;height: 80px;\">\
+                                <img imgId=\"" + res.data.id + "\" class=\"imgCt\" src=\"" + imgUrl + "\" style=\"width:80px;height:80px;\">\
+                                <img class=\"imgDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                            </div>";
+                            $("#imgBox").prepend(n);
+                            $("#addImgBox").prepend(n);
+                            if ($("#addImgBox input").length <= 0) {
+                                $("#addImgBox").append("<input type=\"text\" name=\"" + $("#addImgBox").attr("fieldsName") + "\" class=\"sr-only\">");
+                            }
+                            var imgids = "";
+                            $("#addImgBox .imgCt").each(function(index, el) {
+                                imgids += $(el).attr('imgId') + ",";
+                            });
+                            imgids = imgids.substring(0, imgids.length - 1);
+                            $("#addImgBox input").val(imgids);
+                            $("#addImgBox").show();
+                        } else {
+                            alertModal(res.msg);
+                        }
+                    });
+            });
+
+            //完成
+            $("#oneKeyReleaseFinish").click(function(event) {
+                var ctL = $("#rcInput").val().length;
+                var tagL = $("#tagBox2 .tagCt").length;
+                var imgL = $(".imgCt").length;
+                var s = parseInt($("#rcInput").attr("maxSize"));
+                if (ctL > s) {
+                    alertModal("发布的内容最多为" + s + "字");
+                    return;
+                }
+                if (tagL > 6) {
+                    alertModal("最多添加6个标签");
+                    return;
+                }
+
+                //添加操作
+                var tagArr = new Array();
+                var imgArr = new Array();
+                $("#tagBox2 .tagCt").each(function(index, el) {
+                    tagArr.push($(el).html());
+                });
+                $(".imgCt").each(function(index, el) {
+                    imgArr.push($(el).attr('imgId'));
+                });
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/publish_api/addPublish',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            "content": $("#rcInput").val(),
+                            "img_id": JSON.stringify(imgArr).substring(1, JSON.stringify(imgArr).length - 1),
+                            "tag_name": JSON.stringify(tagArr).substring(1, JSON.stringify(tagArr).length - 1)
+                        },
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            alertModal(res.msg);
+                            setTimeout(function() {
+                                // history.back(-1);
+                                window.location.href = 'http://fin.jrfacai.com/static/frontend/find.html';
+                            }, 2200);
+                        } else {
+                            console.log(res);
+                        }
+                    });
+            });
+
+            //========================== 发布项目 ===============================   
+            var formType = 1; //表单类型 1项目 2资金
+            //单位固定
+            function getTextHtml(isNeed, name, title, desc) {
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+                }
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>" + title + "：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\"" + name + "\" name=\"" + name + "\" need=\"" + isNeed + "\" type=\"text\" class=\"pull-left text-right inputBox1\" style=\"border:0;height:20px;\"><span style=\"position:absolute;right:2px;top:15px;\">" + desc + "</span>\
+                    " + needSign + "\
+                </div>";
+                return tmp;
+            }
+            
+            function getTextHtmlPlaceholder(isNeed, name, title, placeholder) {
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+                }
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>" + title + "：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\"" + name + "\" name=\"" + name + "\" need=\"" + isNeed + "\" type=\"text\" class=\"pull-left text-right inputBox\" placeholder=\"" + placeholder + "\" style=\"border:0;height:20px;\">\
+                    " + needSign + "\
+                </div>";
+                return tmp;
+            }
+
+            function getSellStockHtml(isNeed, title, desc) {
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+                }
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>" + title + "：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\"sell_stock_min\" name=\"sell_stock_min\" need=\"" + isNeed + "\" type=\"text\" class=\"pull-left text-center inputBox\" style=\"border:0;height:20px;\"><span class=\"pull-left\">" + desc + "</span>\
+                    <span class=\"pull-left text-right\" style=\"width:20px;\">-</span>\
+                    <input id=\"sell_stock_max\" name=\"sell_stock_max\" need=\"" + isNeed + "\" type=\"text\" class=\"pull-left text-center inputBox\"  style=\"border:0;height:20px;\"><span class=\"pull-left\">" + desc + "</span>\
+                    " + needSign + "\
+                </div>";
+                return tmp;
+            }
+
+            function getCheckBoxHtml(isNeed, name, values, title) {
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+                }
+                var cbhtml = "";
+                for (var i = 0; i < values.length; i++) {
+                    if (i == 0) {
+                        cbhtml += "<label class=\"checkbox-inline\">\
+                            <input type=\"checkbox\" name=\"" + name + "_m\" value=\"" + values[i].value + "\" checked=\"checked\"> " + values[i].name + "\
+                        </label>";
+                    } else {
+                        cbhtml += "<label class=\"checkbox-inline\">\
+                            <input type=\"checkbox\" name=\"" + name + "_m\" value=\"" + values[i].value + "\"> " + values[i].name + "\
+                        </label>";
+                    }
+                }
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>" + title + "：</span><span>&nbsp;&nbsp;</span></span>\
+                    <div class=\"pull-left inputBox\">\
+                        " + cbhtml + "\
+                    </div>\
+                    " + needSign + "\
+                </div>";
+                return tmp;
+            }
+
+            function getRadioHtml(classname,isNeed, name, values, title) {
+				if(classname==""){
+					classname = "radio-inline";
+				}
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+                }
+                var cbhtml = "";
+                for (var i = 0; i < values.length; i++) {
+                    if (i == 0) {
+                        cbhtml += "<label class=\""+classname+"\">\
+                            <input type=\"radio\" name=\"" + name + "\" value=\"" + values[i].value + "\" checked=\"checked\" hidden> " +"<span class=\"checkv\">"+ values[i].name +"</span>"+ "\
+                        </label>";
+                    } else {
+                        cbhtml += "<label class=\""+classname+"_un\">\
+                            <input type=\"radio\" name=\"" + name + "\" value=\"" + values[i].value + "\" hidden> " +"<span class=\"checkv\">"+ values[i].name +"</span>"+ "\
+                        </label>";
+                    }
+                }
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>" + title + "：</span><span>&nbsp;&nbsp;</span></span>\
+                    <div class=\"pull-left inputBox\">\
+                        " + cbhtml + "\
+                    </div>\
+                    " + needSign + "\
+                </div>";
+                return tmp;
+            }
+
+            function getTextAreaHtml(isNeed, name, title, desc, minSize, maxSize) {
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+                }
+                var tmp = "<div class=\"pt15 pb15 porel\">\
+                    <div class=\"clearfix\">\
+                        " + needSign + "<span class=\"fb pull-left\">" + title + "：</span>\
+                    </div>\
+                    <textarea name=\"" + name + "\" textTitle=\"" + title + "\" textMinSize=\"" + minSize + "\" textMaxSize=\"" + maxSize + "\" need=\"" + isNeed + "\" rows=\"8\" class=\"form-control f12 rcInput\" placeholder=\"" + desc + "\" style=\"width:100%;-webkit-box-shadow: inset 0 0px 0px;box-shadow: inset 0 0px 0px;border:0;\"></textarea>\
+                    <div class=\"rcInputHint f12\" style=\"position: absolute;bottom: 10px;right: 16px;\"></div>\
+                </div>";
+                return tmp;
+            }
+
+            function getModalChooseHtml(isNeed, name, alias, title, desc) {
+                var needSign = "";
+                if (isNeed) {
+                    needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+                }
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>" + title + "：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\"" + alias + "_t" + "\" name=\"" + name + "_t" + "\" need=\"" + isNeed + "\" type=\"text\" class=\"pull-left text-right inputBox\" placeholder=\"" + desc + "\" style=\"border:0;height:20px;\">\
+                    " + needSign + "\
+                    <input id=\"" + name + "\" type=\"text\" name=\"" + name + "\" value=\"\" class=\"sr-only\">\
+                </div>";
+                return tmp;
+            }
+
+            function getProDataHtml() {
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <div class=\"fb\">项目资料：</div>\
+                    <div class=\"f12 c_gray\">如有详细资料，请微信添加FA財哥（微信号：jrfacaige）</div>\
+                    <div class=\"f12 c_gray\">备注：发布需求</div>\
+                </div>";
+                return tmp;
+            }
+
+            function getAddImgHtml(name, title) {
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <div class=\"fb mb5\">" + title + "：</div>\
+                    <div fieldsName=\"" + name + "\" id=\"addImgBox\" class=\"pull-left mr5 dno\"></div>\
+                    <div id=\"addImgBtn2\" class=\"f40 text-center pull-left\" style=\"width:80px;height: 80px;border:1px solid #eeeeee;line-height:73px;font-weight:300;\">+</div>\
+                </div>";
+                return tmp;
+            }
+
+            // 图片添加
+            $("#form").on('click', '#addImgBtn2', function(event) {
+                $("#fileInput").click();
+            });
+
+			// 层级选择
+            $("#form").on('click', '#level_t', function(event) {
+                $("#levelModal").modal("show");
+            });
+            $("#levelModal").on('click', '.level_check', function(event) {
+				$(".level_check").removeClass('active');
+				$(this).addClass('active');
+				$("#level_t").val($(this).html());
+				$("#level").val($(this).attr('sid'));
+				$("#levelModal").modal("hide");
+                
+            });
+
+			// 交易方式选择
+            $("#form").on('click', '#trans_mode_t', function(event) {
+                $("#transModal").modal("show");
+            });
+            $("#transModal").on('click', '.trans_check', function(event) {
+				$(".trans_check").removeClass('active');
+				$(this).addClass('active');
+				$("#trans_mode_t").val($(this).html());
+				$("#trans_mode").val($(this).attr('sid'));
+				$("#transModal").modal("hide");
+                
+            });
+
+			//
+            $("#form").on('click', '#financing_period_t', function(event) {
+                $("#financingModal").modal("show");
+            });
+            $("#financingModal").on('click', '.financing_check', function(event) {
+				$(".financing_check").removeClass('active');
+				$(this).addClass('active');
+				$("#financing_period_t").val($(this).html());
+				$("#financing_period").val($(this).attr('sid'));
+				$("#financingModal").modal("hide");
+                
+            });
+			
+			//融资期限
+			$("#form").on('click', '#period_t', function(event) {
+                $("#periodModal").modal("show");
+            });
+            $("#periodModal").on('click', '.period_check', function(event) {
+				$(".period_check").removeClass('active');
+				$(this).addClass('active');
+				$("#period_t").val($(this).html());
+				$("#period").val($(this).attr('sid'));
+				$("#periodModal").modal("hide");
+                
+            });
+
+			//业务有效期
+			$("#form").on('click', '#validity_period_t', function(event) {
+                $("#validityModal").modal("show");
+            });
+            $("#validityModal").on('click', '.validity_check', function(event) {
+				$(".validity_check").removeClass('active');
+				$(this).addClass('active');
+				$("#validity_period_t").val($(this).html());
+				$("#validity_period").val($(this).attr('sid'));
+				$("#validityModal").modal("hide");
+                
+            });
+
+			//增信方式
+			$("#form").on('click', '#inc_credit_way_t', function(event) {
+                $("#incModal").modal("show");
+            });
+            $("#incModal").on('click', '.inc_check', function(event) {
+				$(".inc_check").removeClass('active');
+				$(this).addClass('active');
+				$("#inc_credit_way_t").val($(this).html());
+				$("#inc_credit_way").val($(this).attr('sid'));
+				$("#incModal").modal("hide");
+                
+            });
+
+			//上市公司
+			$("#form").on('click', '#lc_type_t', function(event) {
+                $("#lcTypeModal").modal("show");
+            });
+            $("#lcTypeModal").on('click', '.lc_type_check', function(event) {
+				$(".lc_type_check").removeClass('active');
+				$(this).addClass('active');
+				$("#lc_type_t").val($(this).html());
+				$("#lc_type").val($(this).attr('sid'));
+				$("#lcTypeModal").modal("hide");
+                
+            });
+
+			//承兑人
+			$("#form").on('click', '#acceptor_t', function(event) {
+                $("#acceptorModal").modal("show");
+            });
+            $("#acceptorModal").on('click', '.acceptor_check', function(event) {
+				$(".acceptor_check").removeClass('active');
+				$(this).addClass('active');
+				$("#acceptor_t").val($(this).html());
+				$("#acceptor").val($(this).attr('sid'));
+				$("#acceptorModal").modal("hide");
+                
+            });
+
+			//票据类型
+			$("#form").on('click', '#bill_type_t', function(event) {
+                $("#billModal").modal("show");
+            });
+            $("#billModal").on('click', '.bill_type_check', function(event) {
+				$(".bill_type_check").removeClass('active');
+				$(this).addClass('active');
+				$("#bill_type_t").val($(this).html());
+				$("#bill_type").val($(this).attr('sid'));
+				$("#billModal").modal("hide");
+                
+            });
+
+			//产品状态
+			$("#form").on('click', '#product_status_t', function(event) {
+                $("#productModal").modal("show");
+            });
+            $("#productModal").on('click', '.product_status_check', function(event) {
+				$(".product_status_check").removeClass('active');
+				$(this).addClass('active');
+				$("#product_status_t").val($(this).html());
+				$("#product_status").val($(this).attr('sid'));
+				$("#productModal").modal("hide");
+                
+            });
+
+			//资金方偏好
+			$("#form").on('click', '#investor_preference_t', function(event) {
+                $("#investorModal").modal("show");
+            });
+            $("#investorModal").on('click', '.investor_preference_check', function(event) {
+				$(".investor_preference_check").removeClass('active');
+				$(this).addClass('active');
+				$("#investor_preference_t").val($(this).html());
+				$("#investor_preference").val($(this).attr('sid'));
+				$("#investorModal").modal("hide");
+                
+            });
+
+			//联系人
+			$("#form").on('click', '#contact_status_t', function(event) {
+                $("#contactModal").modal("show");
+            });
+            $("#contactModal").on('click', '.contact_status_check', function(event) {
+				$(".contact_status_check").removeClass('active');
+				$(this).addClass('active');
+				$("#contact_status_t").val($(this).html());
+				$("#contact_status").val($(this).attr('sid'));
+				$("#contactModal").modal("hide");
+                
+            });
+			
+			
+
+            // 省份选择
+            $("#form").on('click', '#province_id_t', function(event) {
+                if (formType == 2) {
+                    $(".chooseSign").html("多选");
+                } else {
+                    $(".chooseSign").html("单选");
+                }
+                $("#areaModal").modal("show");
+            });
+            $("#areaModal").on('click', '.areaTagBox', function(event) {
+                if (formType == 2) {
+                    if ($(this).hasClass('bg_gray')) {
+                        return;
+                    }
+                    if ($(this).hasClass('active')) {
+                        if ($(this).html() == "全国") {
+                            $(".areaTagBox").removeClass('bg_gray');
+                            $(".areaTagBox").removeClass('active');
+                        }
+                        $(this).removeClass('active');
+                    } else {
+                        if ($(this).html() == "全国") {
+                            $(".areaTagBox").addClass('bg_gray');
+                            $(".areaTagBox").removeClass('active');
+                            $(this).removeClass('bg_gray');
+                        }
+                        $(this).addClass('active');
+                    }
+                    var valHtml = "";
+                    var sids = "";
+                    $("#areaModal .areaTagBox.active").each(function(index, el) {
+                        valHtml += $(el).html() + ",";
+                        sids += $(el).attr('sid') + ",";
+                    });
+                    valHtml = valHtml.substring(0, valHtml.length - 1);
+                    sids = sids.substring(0, sids.length - 1);
+                    $("#province_id_t").val(valHtml);
+                    $("#province_id").val(sids);
+                    $("#province").val(sids);
+                } else {
+                    $(".areaTagBox").removeClass('active');
+                    $(this).addClass('active');
+                    $("#province_id_t").val($(this).html());
+                    $("#province_id").val($(this).attr('sid'));
+                    $("#province").val($(this).attr('sid'));
+                    $("#areaModal").modal("hide");
+                }
+            });
+
+            // 行业选择
+            $("#form").on('click', '#industry_t', function(event) {
+                $("#industryModal").modal("show");
+            });
+            $("#industryModal").on('click', '.industryBox', function(event) {
+                if (formType == 2) {
+                    if ($(this).hasClass('active')) {
+                        $(this).removeClass('active');
+                    } else {
+                        $(this).addClass('active');
+                    }
+                    var valHtml = "";
+                    var sids = "";
+                    $("#industryModal .industryBox.active").each(function(index, el) {
+                        valHtml += $(el).html() + ",";
+                        sids += $(el).attr('sid') + ",";
+                    });
+                    valHtml = valHtml.substring(0, valHtml.length - 1);
+                    sids = sids.substring(0, sids.length - 1);
+                    $("#industry_t").val(valHtml);
+                    $("#industry").val(sids);
+                    $("#top_industry_id").val(sids);
+                    $("#industry_id").val(sids);
+                } else {
+                    $(".industryBox").removeClass('active');
+                    $(this).addClass('active');
+                    $("#industry_t").val($(this).html());
+                    $("#industry").val($(this).attr('sid'));
+                    $("#top_industry_id").val($(this).attr('sid'));
+                    $("#industry_id").val($(this).attr('sid'));
+                    $("#industryModal").modal("hide");
+                }
+            });
+
+            // 输入框大小
+            function reloadBox() {
+                $(".inputBox").each(function(index, el) {
+                    $(el).width(ww - 50 - $(el).prev().width());
+                });
+                $(".inputBox1").each(function(index, el) {
+                    $(el).width(ww - 50 - 30 - $(el).prev().width());
+                });
+                var sell = ww - 50 - 20 - 40 - $("#sell_stock_min").prev().width();
+                $("#sell_stock_min").width(sell / 2);
+                $("#sell_stock_max").width(sell / 2);
+            }
+
+            var textShowFlag = true;
+            $("#formBox").scroll(function(event) {
+                var y = $("textarea:eq(0)").offset().top - $(window).scrollTop() - $(window).height();
+                if (y < 0) {
+                    if (textShowFlag) {
+                        $("textarea").focus();
+                        $("textarea").blur();
+                    }
+                    textShowFlag = false;
+                } else {
+                    textShowFlag = true;
+                }
+                console.log(textShowFlag);
+            });
+
+            // 项目一级菜单
+            $("#allFirstPro").on('click', '.pcFirstBtn', function(event) {
+                var el = event.currentTarget;;
+                var subs = getSubService($(el).attr('tagId'));
+                var modalHtml = "";
+                for (var i = 0; i < subs.length; i++) {
+					modalHtml += "<div tagId=\"" + subs[i].id + "\" class=\"secondProBox tofh\">" + subs[i].value + "</div>";
+                }
+                $("#allFirstPro .pcFirstBtn").removeClass('active');
+                $(el).addClass('active');
+                $("#allSecondProModalLabel").html($(el).html());
+                $("#allSecondProModal .modal-body").html(modalHtml);
+                $("#top_dict_title").html($(el).html())
+                if (formType == 2) {
+                    $(".secondProBox").eq(1).trigger('click');
+                } else {
+                    $("#allSecondProModal").modal("show");
+                }
+            });
+            // 资金二级多选菜单
+            function getfundsSecondMenuHtml(subs) {
+                var menuHtml = "";
+                for (var i = 0; i < subs.length; i++) {
+					if(formType==2 && subs[i].id==478){
+						menuHtml += "<div tagId=\"" + subs[i].id + "\" class=\"secondFundsBox tofh\">招商落户</div>";
+					}else{
+						menuHtml += "<div tagId=\"" + subs[i].id + "\" class=\"secondFundsBox tofh\">" + subs[i].value + "</div>";
+					}
+                }
+                var needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+                var tmp = "<div class=\"pt15 porel\">\
+                    <div class=\"clearfix\">\
+                        " + needSign + "<span class=\"fb pull-left\">请选择业务细分领域<span class=\"f12 c_gray\">(可多选)</span></span>\
+                    </div>\
+                    <div class=\"clearfix pt15\">\
+                        " + menuHtml + "\
+                    </div>\
+                    <input id=\"fundsSecondDid\" type=\"text\" name=\"dict_id\" value=\"\" class=\"sr-only\">\
+                    <div class=\"rcInputHint f12\" style=\"position: absolute;bottom: 10px;right: 16px;\"></div>\
+                </div>";
+                return tmp;
+            }
+            $("#form").on('click', '.secondFundsBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+                $(".secondFundsBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId') + ",";
+                });
+                vals = vals.substring(0, vals.length - 1);
+                $("#fundsSecondDid").val(vals);
+            });
+
+			//资金类型
+			function getfundTypeHtml() {
+                var menuHtml = "";
+				menuHtml += "<div tagId=\"1\" class=\"fund_typeBox tofh\">非金融机构</div>";
+				menuHtml += "<div tagId=\"2\" class=\"fund_typeBox tofh\">金融机构</div>";
+				menuHtml += "<div tagId=\"3\" class=\"fund_typeBox tofh\">个人投资机构</div>";
+				
+                var needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+                var tmp = "<div class=\"pt15 porel\">\
+                    <div class=\"clearfix\">\
+                        " + needSign + "<span class=\"fb pull-left\">资金类型<span class=\"f12 c_gray\">(可多选)</span></span>\
+                    </div>\
+                    <div class=\"clearfix pt15\">\
+                        " + menuHtml + "\
+                    </div>\
+                    <input id=\"fundTypeDid\" type=\"text\" name=\"fund_type\" value=\"\" class=\"sr-only\">\
+                    <div class=\"rcInputHint f12\" style=\"position: absolute;bottom: 10px;right: 16px;\"></div>\
+                </div>";
+                return tmp;
+            }
+			$("#form").on('click', '.fund_typeBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+                $(".fund_typeBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId') + ",";
+                });
+                vals = vals.substring(0, vals.length - 1);
+                $("#fundTypeDid").val(vals);
+            });
+
+			//投资方式
+			function getinvestModeHtml() {
+                var menuHtml = "";
+				menuHtml += "<div tagId=\"1\" class=\"invest_modeBox tofh\">优先级</div>";
+				menuHtml += "<div tagId=\"2\" class=\"invest_modeBox tofh\">劣后级</div>";
+				menuHtml += "<div tagId=\"3\" class=\"invest_modeBox tofh\">夹层</div>";
+				menuHtml += "<div tagId=\"4\" class=\"invest_modeBox tofh\">平层</div>";
+				menuHtml += "<div tagId=\"5\" class=\"invest_modeBox tofh\">其他</div>";
+                var needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+                var tmp = "<div class=\"pt15 porel\">\
+                    <div class=\"clearfix\">\
+                        " + needSign + "<span class=\"fb pull-left\">投资方式<span class=\"f12 c_gray\">(可多选)</span></span>\
+                    </div>\
+                    <div class=\"clearfix pt15\">\
+                        " + menuHtml + "\
+                    </div>\
+                    <input id=\"investModeDid\" type=\"text\" name=\"invest_mode\" value=\"\" class=\"sr-only\">\
+                    <div class=\"rcInputHint f12\" style=\"position: absolute;bottom: 10px;right: 16px;\"></div>\
+                </div>";
+                return tmp;
+            }
+			$("#form").on('click', '.invest_modeBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+                $(".invest_modeBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId') + ",";
+                });
+                vals = vals.substring(0, vals.length - 1);
+                $("#investModeDid").val(vals);
+            });
+
+			
+			//是否公开
+			function getpublicHtml() {
+                var menuHtml = "";
+				menuHtml += "<div tagId=\"2\" class=\"publicBox tofh\"></div>";
+				
+                var needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                        " + needSign + "<span class=\"pull-left fb\">是否公开:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class=\"pull-left swidth fb\">&nbsp;</span>\
+						" + menuHtml + "\
+                    <input id=\"publicDid\" type=\"text\" name=\"is_public\" value=\"2\" class=\"sr-only\">\
+                </div>";
+                return tmp;
+            }
+			$("#form").on('click', '.publicBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+				var vals = "";
+				var flg  = "";
+                $(".publicBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId');
+					if(vals==2){//yes
+						flg = 1;
+					}else{
+						flg = 2;
+					}
+                });
+				
+                $("#publicDid").val(flg);
+
+            });
+
+			
+			//是否控件
+			function getyesHtml(name,title,idname) {
+				var did = idname+"Did";
+                var menuHtml = "";
+				menuHtml += "<div tagId=\"2\" class="+idname+"\Box tofh\"></div>";
+				
+                var needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+                var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                        " + needSign + "<span class=\"pull-left fb\">" + title + "：</span><span class=\"pull-left swidth fb\">&nbsp;</span>\
+						" + menuHtml + "\
+					<input id="+did+"\ type=\"text\" name="+name+"\  value=\"2\" class=\"sr-only\">\
+                </div>";
+                return tmp;
+            }
+			//是否pre-IPO
+			$("#form").on('click', '.preBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+				var flg  = "";
+                $(".preBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId');
+					if(vals==2){//yes
+						flg = 1;
+					}else{
+						flg = 2;
+					}
+                });
+				
+                $("#preDid").val(flg);
+            });
+
+			//是否报辅导
+			$("#form").on('click', '.coachBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+				var flg  = "";
+                $(".coachBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId');
+					if(vals==2){//yes
+						flg = 1;
+					}else{
+						flg = 2;
+					}
+                });
+                $("#coachDid").val(flg);
+            });
+
+			//是否备案
+			$("#form").on('click', '.recordBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+				var flg  = "";
+                $(".recordBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId');
+					if(vals==2){//yes
+						flg = 1;
+					}else{
+						flg = 2;
+					}
+                });
+                $("#recordDid").val(flg);
+            });
+
+			//是否为大股东
+			$("#form").on('click', '.stockholderBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+				var flg  = "";
+                $(".stockholderBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId');
+					if(vals==2){//yes
+						flg = 1;
+					}else{
+						flg = 2;
+					}
+                });
+                $("#stockholderDid").val(flg);
+            });
+
+			//是否可议价
+			$("#form").on('click', '.bargainBox', function(event) {
+                var curr = event.currentTarget;
+                if ($(curr).hasClass('active')) {
+                    $(curr).removeClass('active')
+                } else {
+                    $(curr).addClass('active');
+                }
+                var vals = "";
+				var flg  = "";
+                $(".bargainBox.active").each(function(index, el) {
+                    vals += $(el).attr('tagId');
+					if(vals==2){//yes
+						flg = 1;
+					}else{
+						flg = 2;
+					}
+                });
+				
+                $("#bargainDid").val(flg);
+            });
+		
+
+
+			
+
+            // 发布项目、发布资金按钮
+            $("#publishProjectBtn").click(function(event) {
+                if (ui.userType == 0) {
+                    $("#authModal").modal("show");
+                    return;
+                }
+                if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+                    $("#cmpInfoModal").modal("show");
+                    return;
+                }
+                $("#firstChooseContent").hide();
+                $("#publishProjectContent").show();
+                $("#publistTitle").html("发布项目");
+                formType = 1;
+            });
+            $("#publishFundsBtn").click(function(event) {
+                if (ui.userType == 0) {
+                    $("#authModal").modal("show");
+                    return;
+                }
+                if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+                    $("#cmpInfoModal").modal("show");
+                    return;
+                }
+
+                $("#firstChooseContent").hide();
+                $("#publishProjectContent").show();
+                $("#publistTitle").html("发布资金");
+                formType = 2;
+            });
+
+            // 项目二级菜单
+            $("#allSecondProModal").on('click', '.secondProBox', function(event) {
+                if (formType == 1) {
+                    $("#dict_title").html("-" + $(this).html());
+                } else {
+                    $("#dict_title").html("");
+                }
+                $("#allSecondProModal").modal("hide");
+                $("#formContent").show();
+                var top_dict_id = $(".pcFirstBtn.active").attr('tagId');
+                var dict_id = $(this).attr('tagId');
+                var req = {
+                    "top_dict_id": top_dict_id,
+                    "dict_id": dict_id
+                };
+                var postUrl = 'http://fin.jrfacai.com/home/project_require_api/showProjectRequireForm';
+                if (formType == 2) {
+                    postUrl = 'http://fin.jrfacai.com/home/organize_require_api/showOrganizeRequireForm';
+                }
+                $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: req,
+                    })
+                    .done(function(res) {
+                        var formHtml	= "";
+						var mselectHtml = "";
+                        var obj = res.data;
+                        var resData = new Array();
+                        for (var i in obj) {
+                            if (i == "validity_period" && formType == 1) {
+                                resData.push({ "name": "pro_data", "title": "项目资料" })
+                            }
+                            var e = {
+                                "name": i,
+                                "title": obj[i]
+                            };
+                            resData.push(e);
+                        }
+                        if (formType == 2) {
+                            formHtml += getfundsSecondMenuHtml(getSubService(top_dict_id));
+                        }
+                        for (var i = 0; i < resData.length; i++) {
+                            var name  = resData[i].name;
+                            var title = resData[i].title;
+                            switch (name) {
+                                case "name":
+                                    formHtml += getTextHtmlPlaceholder(true, name, title, "请输入");
+                                    break;
+                                case "business_des":
+                                    formHtml += getTextHtmlPlaceholder(true, name, title, "请输入，不少于6个字");
+                                    break;
+                                case "stock_code":
+                                    formHtml += getTextHtmlPlaceholder(true, name, title, "请输入");
+                                    break;
+                                case "is_public":
+                                	title     = "是否公开";
+                                	idname	  = "public";
+                                	formHtml += getpublicHtml();
+									//formHtml += getyesHtml(name,title,idname);
+                                    break;
+                                case "is_pre_ipo":
+									idname	  = "pre";
+									formHtml += getyesHtml(name,title,idname);
+                                    break;
+                                case "lc_type":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "level":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+
+                                    break;
+                                case "is_coach":
+									idname	  = "coach";
+									formHtml += getyesHtml(name,title,idname);
+                                    break;
+                                case "trans_mode":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "province_id":
+                                    formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "province":
+                                    formHtml += getModalChooseHtml(true, name, "province_id", title, "请选择");
+                                    break;
+                                case "product_issuer":
+                                    formHtml += getTextHtmlPlaceholder(true, name, title, "请输入");
+                                    break;
+                                case "is_record":
+									idname	  = "record";
+									formHtml += getyesHtml(name,title,idname);
+                                    break;
+                                case "sub_amount":
+                                    formHtml += getTextHtmlPlaceholder(true, name, title, "（不少于）");
+                                    break;
+                                case "product_status":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "industry":
+                                    formHtml += getModalChooseHtml(true, name, name, title, "请选择行业标签");
+                                    break;
+                                case "top_industry_id":
+                                    formHtml += getModalChooseHtml(true, name, "industry", title, "请选择行业标签");
+                                    break;
+                                case "industry_id":
+                                    formHtml += getModalChooseHtml(true, name, "industry", title, "请选择行业标签");
+                                    break;
+                                case "acceptor":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "bill_type":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "coupon_finance":
+                                    formHtml += getTextHtml(true, name, title, "万元");
+                                    break;
+                                case "days_remain":
+                                    formHtml += getTextHtml(true, name, title, "天");
+                                    break;
+                                case "sell_stock_min":
+                                    formHtml += getSellStockHtml(true, "拟出让股份范围", "%");
+                                    break;
+                                case "sell_stock_max":
+                                    break;
+                                case "general_capital":
+                                    formHtml += getTextHtml(true, name, title, "万股");
+                                    break;
+                                case "trans_stock_num":
+                                    formHtml += getTextHtml(true, name, title, "万股");
+                                    break;
+                                case "valuation":
+                                    formHtml += getTextHtml(true, name, title, "万元");
+                                    break;
+                                case "financing_scale":
+                                    formHtml += getTextHtml(true, name, title, "万元");
+                                    break;
+                                case "invest_scale":
+                                    formHtml += getTextHtml(true, name, title, "万元");
+                                    break;
+                                case "remain_period":
+                                    formHtml += getTextHtml(false, name, title, "月");
+                                    break;
+                                case "expected_return":
+                                    formHtml += getTextHtml(false, name, title, "万元");
+                                    break;
+                                case "allocation_ratio":
+                                    formHtml += getTextHtml(true, name, title, "倍");
+                                    break;
+                                case "total_trade_num":
+                                    formHtml += getTextHtml(false, name, title, "万元");
+                                    break;
+                                case "trade_period":
+                                    formHtml += getTextHtml(true, name, title, "月");
+                                    break;
+                                case "mirc":
+                                    formHtml += getTextHtml(false, name, title, "%");
+                                    break;
+                                case "financing_period":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "period":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "rate_cap":
+                                    formHtml += getTextHtml(false, name, title, "%");
+                                    break;
+                                case "inc_credit_way":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "fund_type":
+									formHtml += getfundTypeHtml();
+                                    break;
+                                case "invest_mode":
+                                    formHtml += getinvestModeHtml();
+                                    break;
+                                case "business_income":
+                                    formHtml += getTextHtml(true, name, title, "万元");
+                                    break;
+                                case "debt_ratio":
+                                    formHtml += getTextHtml(false, name, title, "%");
+                                    break;
+                                case "is_stockholder":
+									idname	  = "stockholder";
+									formHtml += getyesHtml(name,title,idname);
+                                    break;
+                                case "ltv_ratio":
+                                    formHtml += getTextHtml(false, name, title, "%");
+                                    break;
+                                case "price":
+                                    if (dict_id == "335") {
+                                        formHtml += getTextHtml(true, name, title, "元");
+                                    } else {
+                                        formHtml += getTextHtml(false, name, title, "元/股");
+                                    }
+                                    break;
+                                case "discount_rate":
+                                    formHtml += getTextHtml(true, name, title, "%");
+                                    break;
+                                case "is_bargain":
+									idname	  = "bargain";
+									formHtml += getyesHtml(name,title,idname);
+                                    break;
+                                case "mortgage_rate":
+                                    formHtml += getTextHtml(false, name, title, "%");
+                                    break;
+                                case "pe_ratio":
+                                    formHtml += getTextHtml(false, name, title, "");
+                                    break;
+                                case "ly_net_profit":
+                                    formHtml += getTextHtml(true, name, title, "万元");
+                                    break;
+                                case "ty_net_profit":
+                                    formHtml += getTextHtml(false, name, title, "万元");
+                                    break;
+                                case "investor_preference":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "invest_phase":
+                                    formHtml += getTextAreaHtml(false, name, title, "", "0", "50");
+                                    break;
+                                case "invest_target":
+                                    formHtml += getTextAreaHtml(true, name, title, "请简要说明对投资的筛选标准，包括但不限于地区、财务要求、团队背景等，不少于10个字", "10", "300");
+                                    break;
+                                case "financing_purpose":
+                                    formHtml += getTextAreaHtml(false, name, title, "请简要说明本次融资的资金使用计划，不少于10个字", "10", "100");
+                                    break;
+                                case "pro_highlight":
+                                    formHtml += getTextAreaHtml(true, name, title, "请简要说明融资企业的关键投资亮点，包括但不限于市场机会、行业地位、产品/服务与商业模式、运营状况、增长策略、团队实力、和财务亮点等，不少于10个字", "10", "300");
+                                    break;
+                                case "pay_source":
+                                    formHtml += getTextAreaHtml(true, name, title, "请简要说明还款来源，不少于10个字", "10", "300");
+                                    break;
+                                case "img_id":
+                                    formHtml += getAddImgHtml(name, title);
+                                    break;
+                                case "pro_data":
+                                    formHtml += getProDataHtml();
+                                    break;
+                                case "validity_period":
+									formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                case "contact_status":
+                                    var values;
+                                    if (formType == 2) {
+										$("#contact9").show();
+										$("#contact3").show();
+										$("#contact1").hide();
+										$("#contact2").hide();
+										$("#contact4").hide();
+										$("#contact5").hide();
+										$("#contact6").hide();
+										$("#contact7").hide();
+										$("#contact8").hide();
+                                    } else {
+										//融资方
+										if (dict_id == "235" || dict_id == "242" || dict_id == "245"|| dict_id == "246"|| dict_id == "247"|| dict_id == "248"|| dict_id == "249"|| dict_id == "251"|| dict_id == "255"|| dict_id == "257"|| dict_id == "260"|| dict_id == "263"|| dict_id == "267"|| dict_id == "268"|| dict_id == "269") {
+											$("#contact1").show();
+											$("#contact3").show();
+
+											$("#contact2").hide();
+											$("#contact4").hide();
+											$("#contact5").hide();
+											$("#contact6").hide();
+											$("#contact7").hide();
+											$("#contact8").hide();
+											$("#contact9").hide();
+										}else if(dict_id == "238"|| dict_id == "264"){//质押方
+											$("#contact4").show();
+											$("#contact3").show();
+
+											$("#contact1").hide();
+											$("#contact2").hide();
+											$("#contact5").hide();
+											$("#contact6").hide();
+											$("#contact7").hide();
+											$("#contact8").hide();
+											$("#contact9").hide();
+										}else if(dict_id == "240"){//出售方
+											$("#contact5").show();
+											$("#contact3").show();
+
+											$("#contact1").hide();
+											$("#contact2").hide();
+											$("#contact4").hide();
+											$("#contact6").hide();
+											$("#contact7").hide();
+											$("#contact8").hide();
+											$("#contact9").hide();
+										}else if(dict_id == "477" ||dict_id == "265"|| dict_id == "479"|| dict_id == "236"){//转让方
+											$("#contact2").show();
+											$("#contact3").show();
+
+											$("#contact1").hide();
+											$("#contact4").hide();
+											$("#contact5").hide();
+											$("#contact6").hide();
+											$("#contact7").hide();
+											$("#contact8").hide();
+											$("#contact9").hide();
+
+										}else if(dict_id == "258"||dict_id == "259"){//票据方
+											$("#contact6").show();
+											$("#contact3").show();
+
+											$("#contact1").hide();
+											$("#contact2").hide();
+											$("#contact4").hide();
+											$("#contact5").hide();
+											$("#contact7").hide();
+											$("#contact8").hide();
+											$("#contact9").hide();
+										}else if(dict_id == "272"){//资产方
+											$("#contact7").show();
+											$("#contact3").show();
+
+											$("#contact1").hide();
+											$("#contact2").hide();
+											$("#contact4").hide();
+											$("#contact5").hide();
+											$("#contact6").hide();
+											$("#contact8").hide();
+											$("#contact9").hide();
+										}else if(dict_id == "272"|| dict_id == "274"|| dict_id == "275"|| dict_id == "478"){//创业方
+											$("#contact8").show();
+											$("#contact3").show();
+
+
+											$("#contact1").hide();
+											$("#contact2").hide();
+											$("#contact4").hide();
+											$("#contact5").hide();
+											$("#contact6").hide();
+											$("#contact7").hide();
+											$("#contact9").hide();
+										}else{
+											$("#contact9").show();
+											$("#contact3").show();
+
+											$("#contact1").hide();
+											$("#contact2").hide();
+											$("#contact4").hide();
+											$("#contact5").hide();
+											$("#contact6").hide();
+											$("#contact7").hide();
+											$("#contact8").hide();
+										}
+                                    }
+									formHtml	+= getModalChooseHtml(true, name, name, title, "请选择");
+                                    break;
+                                default:
+                                    console.log(JSON.stringify(resData[i]));
+                                    break;
+                            }
+                        }
+                        formHtml += "<input type=\"text\" name=\"top_dict_id\" value=\"" + top_dict_id + "\" class=\"sr-only\">";
+                        if (formType != 2) {
+                            formHtml += "<input type=\"text\" name=\"dict_id\" value=\"" + dict_id + "\" class=\"sr-only\">";
+                        }
+                        $("#form").html(formHtml);
+                        $("textarea").trigger('click');
+                        reloadBox();
+                    });
+
+
+            });
+
+            $("#formFinish").click(function(event) {
+                var postUrl = "http://fin.jrfacai.com/home/project_require_api/addProjectRequire";
+                if (formType == 2) {
+                    postUrl = "http://fin.jrfacai.com/home/organize_require_api/addOrganizeRequire";
+                }
+
+                /*if ($("input[name='fund_type_m']").length > 0) {
+                    var fundTypeVal = "";
+                    $("input[name='fund_type_m']:checked").each(function(index, el) {
+                        fundTypeVal += $(el).val() + ",";
+                    });
+                    fundTypeVal = fundTypeVal.substring(0, fundTypeVal.length - 1);
+                    if ($("input[name='fund_type']").length > 0) {
+                        $("input[name='fund_type']").val(fundTypeVal);
+                    } else {
+                        $("#form").append("<input type=\"text\" name=\"fund_type\" value=\"" + fundTypeVal + "\" class=\"sr-only\">");
+                    }
+                }
+
+                if ($("input[name='invest_mode_m']").length > 0) {
+                    var investModeVal = "";
+                    $("input[name='invest_mode_m']:checked").each(function(index, el) {
+                        investModeVal += $(el).val() + ",";
+                    });
+                    investModeVal = investModeVal.substring(0, investModeVal.length - 1);
+                    if ($("input[name='invest_mode']").length > 0) {
+                        $("input[name='invest_mode']").val(investModeVal);
+                    } else {
+                        $("#form").append("<input type=\"text\" name=\"invest_mode\" value=\"" + investModeVal + "\" class=\"sr-only\">");
+                    }
+                }*/
+
+                console.log($("#form").serialize());
+                $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: $("#form").serialize(),
+                    })
+                    .done(function(res) {
+                        alertModal(res.msg);
+                        if (res.code == 200) {
+                            setTimeout(function() {
+                                // history.back(-1);
+                                window.location.href = 'http://fin.jrfacai.com/static/frontend/myBusiness.html';
+                            }, 2200);
+                        } else {
+                            console.log(res);
+                        }
+                    });
+            });
+
+            if (getParams().needs == "1") {
+                $("#oneKeyRelease").trigger('click');
+            }
+            $("body").on('click', 'img', function(event) {
+                var el = event.currentTarget;
+                if ($(el).hasClass('noShow')) {
+                    return;
+                }
+                wx.previewImage({
+                    current: $(el).attr('src'), // 当前显示图片的http链接
+                    urls: [$(el).attr('src')] // 需要预览的图片http链接列表
+                });
+            });
+
+            var appId = "";
+            var noncestr = "";
+            var signature = "";
+            var timestamp = "";
+            var share = {};
+
+            // 加载微信配置
+            $.ajax({
+                    url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    async: false,
+                    data: { "link": window.location.href },
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        appId = res.data.appId;
+                        noncestr = res.data.noncestr;
+                        signature = res.data.signature;
+                        timestamp = res.data.timestamp;
+                    }
+                });
+
+            share = {
+                "title": "FA財-发布中心",
+                "desc": "需求一键发布 快速对接",
+                "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+            };
+
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                "appId": appId, // 必填，公众号的唯一标识
+                "timestamp": timestamp, // 必填，生成签名的时间戳
+                "nonceStr": noncestr, // 必填，生成签名的随机串
+                "signature": signature, // 必填，签名
+                "jsApiList": ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+            });
+
+            var shareLink = window.location.href;
+            if (ui.userType == 1 || ui.userType == 2) {
+                shareLink = "http://fin.jrfacai.com/static/frontend/release-needs.html?superior=" + ui.uid;
+            }
+
+            wx.ready(function() { //需在用户可能点击分享按钮前就先调用
+                wx.onMenuShareAppMessage({
+                    title: share.title, // 分享标题
+                    desc: share.desc, // 分享描述
+                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: share.imgUrl, // 分享图标
+                    success: function() {
+                        // 设置成功
+                    }
+                });
+                wx.onMenuShareTimeline({
+                    title: share.title, // 分享标题
+                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: share.imgUrl, // 分享图标
+                    success: function() {
+                        // 设置成功
+                    }
+                });
+            });
+            
+            function doreg(){
+    			if(ui.is_follow==1){
+            		window.location.href = '/static/frontend/reg.html';
+            	}else{
+            		window.location.href = '/static/frontend/followtab.html';
+            	}
+    		}
+    		
+    		function doinfo(){
+    			if(ui.is_follow==1){
+            		window.location.href = '/static/frontend/basic-info.html';
+            	}else{
+            		window.location.href = '/static/frontend/followtab.html';
+            	}
+    		}
+ 		</script>
+</body>
+</html>

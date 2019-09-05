@@ -1,0 +1,52 @@
+{include file="base/header" /}
+    <body>
+         <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}"> 
+        <div class="kfLogo">      
+        	<img src="__HOME__/images/kefu.png" class="kfLogo-img">      
+        </div>
+        </a>
+        <!--客服--> 
+        {include file="base/dividend" /}
+        {if condition="$list neq []"}
+        {foreach name="$list" item="it"}
+        <div class="ac-list" data-id="{$it.a_id}" style="cursor: pointer;">
+            <div class="activity">
+                <img src="__UPLOAD__/{$it.top_img_url}" alt="头图">
+                {if condition="$it.icon_name eq '未开始' "}
+                <div class="stat">{$it.icon_name}</div>
+				{else/}
+				<div class="stat stat-red">{$it.icon_name}</div>
+				{/if}
+                <h3>{$it.act_name}</h3>
+                <div class="text">
+                    {$it.introduce}
+                </div>
+                <div class="time">
+                    {if condition="$it.fee eq 0"}
+                    <span class="fr gray">免费</span>
+                    {else /}
+                    <span class="fr red">￥{$it.fee}</span>
+                    {/if}活动时间：{$it.start_time}～{$it.end_time}
+                </div>
+            </div>
+        </div>
+        {/foreach}
+        {else /}
+        <div class="text-over">没有啦~~~</div>
+        {/if}
+    </body>
+    <script>
+        $("body").on('click','.ac-list',function(){
+            var id = $(this).attr("data-id");
+            $.ajax({
+                url: "{:url('Activity/judge')}",
+                type: 'POST',
+                data: {id:id},
+                success: function(resp){
+                    location.href = resp.data;
+                }
+            });
+        });
+    </script>
+</html>

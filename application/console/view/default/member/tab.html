@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">用户列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Member/index")}')">用户列表</a></li>
+    {/if}
+    <button class="btn btn-danger" style="float: right;" type="button"><a href="javascript:void(0);" onclick="loadURL('{:url("Member/count")}')">查看统计</a></button>
+    &nbsp;&nbsp;
+    <button class="btn btn-success" style="float: right;" type="button"><i class="fa fa-download"></i><a href="http://fin.jrfacai.com/console/member/downLoadMember" target="_black">下载合伙人统计</a></button>
+    &nbsp;&nbsp;
+    <button class="btn btn-success export" style="float: right;" type="button"><i class="fa fa-download"></i><a target="_black">下载会员明细</a></button>
+</ul>

@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {if condition="$result eq 'true'"}
+            {include file="dividend/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <table id="dividend" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> 月份</th>
+                                <th> 参与分红总积分</th>
+                                <th> 积分比率</th>
+                                <th> 分红总金额</th>
+                                <th> 参与分红人数</th>
+                                <th> 核算状态</th>
+                                <th> 发放状态</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {else /}
+            	分红数据结算错误,请联系管理员
+            {/if}
+        </div>
+    </div>
+</div>
+<script>
+    var dividend_url = '{:url("Dividend/read")}';
+    var dividend_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/dividend/dividend_list.js"></script>

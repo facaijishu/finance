@@ -1,0 +1,13 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="industry">
+            {foreach name="spoiler" item="it"}
+            <div class="i-box">
+                <a href="{:url('Spoiler/index',['id' => $it.sp_id])}">{$it.title}</a>
+                <span class="time">{$it.release_date}</span><span class="from">{$it.source}</span>
+            </div>
+            {/foreach}
+        </div>
+    </body>
+</html>

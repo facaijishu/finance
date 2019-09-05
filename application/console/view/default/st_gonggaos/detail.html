@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="st_gonggaos/tab_detail" /}
+            <div id="gonggaos_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">标题：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="title" value="{$info.title}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">公告编号：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="ggid" value="{$info.ggid}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>公告详情</legend>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <textarea rows="26" class="form-control">{$info.text}</textarea>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var gonggaos_examine_url = '{:url("StGonggaos/examine")}';
+    var gonggaos_examinefail_url = '{:url("StGonggaos/examinefail")}';
+    $(".examine").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定审核通过该公告吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: gonggaos_examine_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".examinefail").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定审核不通过该公告吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: gonggaos_examinefail_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>

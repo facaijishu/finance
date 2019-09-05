@@ -1,0 +1,499 @@
+
+{include file="base/header" /}
+<style>
+    .b-scroll,.b-scroll body{overflow: hidden;position: absolute;}
+    .la-jx{border: 1px solid #fa0606;
+        background: #fa0606;
+        color: #fff;
+        border-radius: 3px;
+        font-size: 12px;
+        padding: 3px 4px;
+        margin: 0 5px 0 0;}
+    .seach_list,.result_list{
+        cursor: pointer;
+    }
+	.attorn-box li {
+		padding:10px 15px;
+		border-bottom: 1px solid #efefef;
+	}
+    .carousel-indicators .active{
+       opacity: 0.5;
+       width:10px;
+       height:10px;
+       margin:1px;
+    }
+    /*.kfLogo {
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        z-index: 9999;
+        top: 11rem;
+        left: 19rem;     
+    }
+    .kfLogo-img {
+      width: 68px;
+    }*/
+    .news-box {
+      margin-bottom: 23px;
+    }
+</style>
+<a href="http://webscan.360.cn/index/checkwebsite/url/fin.jrfacai.com" name="c47de28af00f66abdec2f9d706fc12f6">网站安全检测平台</a>
+    <body>
+        {include file="base/dividend" /}
+        <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}">
+           <div class="kfLogo">
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">
+           </div>
+        </a>
+        <!--客服--> 
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                {foreach name="carousel_figure" key="k" item="it"}
+                {if condition="$k eq 0"}
+                <li data-target="#carousel-example-generic" data-slide-to="{$k}" class="active"></li>
+                {else /}
+                <li data-target="#carousel-example-generic" data-slide-to="{$k}"></li>
+                {/if}
+                {/foreach}
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner banner" role="listbox">
+                {foreach name="carousel_figure" key="k" item="it"}
+                {if condition="$k eq 0"}
+                <div class="item active">
+                    {if condition="$it.url eq ''"}<a href="#">{else /}<a href="{$it.url}">{/if}
+                        <img src="__UPLOAD__/{$it.img_url}" alt="{$it.title}">
+                    </a>
+                </div>
+                {else /}
+                <div class="item">
+                    {if condition="$it.url eq ''"}<a href="#">{else /}<a href="{$it.url}">{/if}
+                        <img src="__UPLOAD__/{$it.img_url}" alt="{$it.title}">
+                        </a>
+                </div>
+                {/if}
+                {/foreach}
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <!--搜索-->
+        <div class="serach" id="search_1">
+            <div>
+               <input id="s-input" type="text" name="search" placeholder="输入股票代码、项目名称" onfocus="this.placeholder=''" onblur="this.placeholder='输入股票代码、项目名称'">
+            </div>
+            <button type="button">返回</button>
+        </div>
+        <!--搜索-->
+        <div class="default-t" style="text-align: center;background-color: #EFEFEF;display: none;overflow: scroll;padding: 50px 0 0 0;">
+
+            <span style='color:#ccc;display: none;'>暂无内容</span>
+
+            <div class="seach_result">
+                <div class="seach_header">
+                    <span class="seach_banner">
+                        <img src="__CSS__/img/link.png">
+                        <strong class="seach_font1">相关项目</strong>
+                    </span>
+                    <span class="seach_font2">1个结果</span>
+                </div>
+                <div class="seach_ul"></div>
+            </div>
+            <!--详细结果-->
+            <div class="result_seach"></div>
+        </div>
+        <div class="index-box">
+            <a href="{:url('Zfmxes/conlist')}" class="a-1">定向增发</a>	
+            <a href="{:url('Zryxes/conlist')}" class="a-2">大宗转让</a>
+            <a href="{:url('RoadShow/index')}" class="a-3">路演天下</a>
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage" class="a-4">学习中心</a>
+        </div>
+        <div class="index-box">
+            <a href="{:url('Spoiler/index')}" class="a-5">剧透中心</a>	
+            <a href="{:url('Activity/index')}" class="a-6">活动中心</a>
+            {if condition="$through eq null || $through.status neq 1"}
+              <a class="a-7 disRead">项目投递</a>
+            {else}
+              <a class="a-7">项目投递</a>
+            {/if}
+            {if condition="$through eq null || $through.status neq 1"}
+              <a class="a-8 disRead">机构中心</a>
+            {else}
+              <a class="a-8">机构中心</a>
+            {/if}
+        </div>
+<!--        <div class="index-box">
+            <a href="{:url('Project/index')}" class="a-1">项目中心</a>
+            <a href="{:url('RoadShow/index')}" class="a-2">路演中心</a>
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage" class="a-3">学习中心</a>
+            {if condition="$through neq null && $through.status eq 1"}
+            {if condition="$study neq null && $study.status eq 1"}
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage&userType=2&study=true" class="a-3">学习中心</a>
+            {else /}
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage&userType=2&study=false" class="a-3">学习中心</a>
+            {/if}
+            {else /}
+            {if condition="$through eq null"}
+            {if condition="$study neq null && $study.status eq 1"}
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage&userType=0&study=true" class="a-3">学习中心</a>
+            {else /}
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage&userType=0&study=false" class="a-3">学习中心</a>
+            {/if}
+            {else /}
+            {if condition="$study neq null && $study.status eq 1"}
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage&userType=1&study=true" class="a-3">学习中心</a>
+            {else /}
+            <a href="http://read.jrfacai.com/app/index.php?i=3&c=entry&do=payred_index&m=dg_articlemanage&userType=1&study=false" class="a-3">学习中心</a>
+            {/if}
+            {/if}
+            {/if}
+            <a href="{:url('Spoiler/index')}" class="a-4">剧透中心</a>
+        </div>
+        <div class="index-box">
+            <a href="{:url('Activity/index')}" class="a-5">活动中心</a>
+            <a href="{:url('ProjectClue/index')}" class="a-6">项目提交</a>
+            <a href="{:url('MyCenter/index')}" class="a-7">个人中心</a>
+            <a href="{:url('PlatForm/index')}" class="a-8">我的平台</a>
+        </div>-->
+        <div class="index-t">
+            <a href="{:url('Project/index')}" class="more">更多&nbsp;></a><i class="fa fa-star-o"></i>项目精选
+        </div>
+        <div class="index-pro">
+            {foreach name="project" item="it"}
+             {if condition="$through eq null || $through.status neq 1"}
+             <a class="index-pro-box disRead" data-id="{$it.pro_id}"> 
+             {else}
+             <a class="index-pro-box" data-id="{$it.pro_id}">
+             {/if}
+		<img src="__UPLOAD__/{$it.index_img_compress}" alt="首页头图">
+		<div class="index-pro-c">
+                    <strong>
+                        {$it.stock_name}
+                    </strong>
+                    <div class="label">
+                        <!--<label for="capital_plan">{$it.capital_plan}</label>-->
+                        <span class="brage">{$it['inc_industry'][0]}</span>
+                    </div>
+                    <p>{$it.introduction}......
+                        <span class="look">查看详情>></span>
+                    </p>
+					<!--
+                    <div class="btn-center"><button>投资优势</button></div>
+					-->
+		</div>
+            </a>
+            {/foreach}
+        </div>
+        
+        <div class="index-t">
+            <a href="{:url('Zfmxes/conlist')}" class="more">更多&nbsp;></a><i class="fa fa-line-chart"></i>定向增发
+        </div>
+        <div class="seos-box">
+            <ul>
+                {foreach name="$zfmxes" item="it"}
+                <li>
+                    <a href="{:url('ZfmxesInfo/index',['neeq' => $it.neeq ,'plannoticeddate' => $it.plannoticeddate])}">
+                        <div class="seos-t">
+                            <i class="ico-yz">融资中</i>
+                            <i class="ico-shi">{if condition="$it.trademethod eq '协议'"}竞{else /}市{/if}</i>
+                            <strong>{$it.sec_uri_tyshortname} <small>【{$it.neeq}】</small></strong>
+
+                            {if condition="$it.stick eq 1"}<span class="la-3 la-jx">精选</span>{/if}
+                        </div>
+                        <div class="seos-c">
+                            <div class="each">
+                                <span class="red">{$it.raise_money}</span><small>万元</small><br />
+                                <div>计划募资</div>
+                            </div>
+                            <div class="each">
+                                {$it.additional_num}<small>万股</small><br />
+                                <div>增发数量</div>
+                            </div>
+                            <div class="each">
+                                {$it.increase_price}<small>元</small><br />
+                                <div>定增价格</div>
+                            </div>
+                        </div>
+                        <p><label>净利润：</label>{if condition="$it.write_lirun == ''"}{$it.lirun}{else /}{$it.write_lirun}{/if}</p>
+                        <p><a href="{:url('ZfmxesInfo/index',['neeq' => $it.neeq ,'plannoticeddate' => $it.plannoticeddate])}" class="more">查看详情>></a><label>董事会公告日：</label>{$it.announcement_date}</p>
+                    </a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        
+        <div class="index-t">
+            <a href="{:url('Zryxes/conlist')}" class="more">更多&nbsp;></a><i class="fa fa-pie-chart"></i>大宗转让
+        </div>
+        <div class="attorn-box">
+            <ul>
+                {foreach name="$zryxes" item="it"}
+                <li>
+                    <a href="{:url('ZryxesEffectInfo/index' , ['id' => $it.id])}">
+                        <div class="attorn-t">
+                            <div class="pull-right"><label>是否可议价：</label>{$it.isdiscount}</div>
+                            <strong>{$it.sec_uri_tyshortname} <small>【{$it.neeq}】</small></strong>
+                            {if condition="$it.direction eq '买入'"}<span class="la-2">{$it.direction}</span>{else /}<span class="la-1">{$it.direction}</span>{/if}
+                            {if condition="$it.stick eq 1"}<span class="la-3">精选</span>{/if}
+                        </div>
+                        <div class="attorn-c">
+                            <div class="each">
+                                <label>意向价格：</label><span class="price">{$it.price}元/股</span>
+                            </div>
+                            <div class="each">
+                                <label>{if condition="$it.direction eq '买入'"}求购数量{else /}卖出数量{/if}：</label>{$it.num}股
+                            </div>
+							<div class="each">
+                                <a style="display:block;padding-top:1.75rem;text-align:right;color:#CBA054;" href="{:url('ZryxesEffectInfo/index' , ['id' => $it.id])}">查看详情>></a>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        
+        <div class="index-t rementoutiao">
+            <a href="{:url('Consultation/conlist')}" class="more">更多&nbsp;></a>热门头条
+        </div>
+        <div class="news-box">
+            <div class="list">
+                <ul>
+                    {foreach name="consultation" item="it"}
+                    <li>
+                        <img src="__UPLOAD__/{$it.top_img_compress}" alt="头图">
+                        <div class="li-box">
+                            <a href="{:url('Consultation/index',['id' => $it.con_id])}" class="list-t">{$it.title}</a>
+                            <span>{$it.source}</span><span>{$it.release_date}</span>
+                        </div>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+
+        <div class="bar-box">
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var pro_url = "{:url('Project/index')}";
+                var road_url = "{:url('RoadShow/index')}";
+                var hh = document.documentElement.clientHeight;
+                var ww = document.documentElement.clientWidth;
+                $(".default-t").css({"height":hh,"width":ww});
+                $(".index-pro").on('click','.index-pro-box',function(){
+                    if($(this).hasClass('disRead')){
+                        $(".msg-dialog").css("display","block");
+                    }else{
+                        var id = $(this).attr("data-id");
+                        $.ajax({
+                            url: "{:url('Project/detail')}",
+                            type: 'POST',
+                            data: {id:id},
+                            success: function(resp){
+                                location.href = resp.data;
+                            }
+                        });
+                    }
+                    
+                });
+                $("#s-input").focus(function () {
+                    $('.serach button').css({width: '40px'});
+                    $(".default-t").css({"display":"block"});
+                    $("html").addClass("b-scroll");
+                    $(".bar").css("display","none");
+                    $("#carousel-example-generic").hide();
+                    $("#search_1").css("margin-top",'12%');
+                    if ($(this).val() == '') {
+                        $(".default-t > span").show();
+						$(".result_seach").hide();
+                        $(".seach_result").hide();
+                    }
+                });
+                $("#s-input").blur(function () {
+                    if ($(this).val() == '') {
+                        $('.serach button').css({width: '0'});
+                    }
+                });
+                $(".serach button").on('click',function(){
+                    $("#search_1").css("margin-top",0);
+                    $("#carousel-example-generic").show();
+                    $("#s-input").val('');
+                    $("#s-input").blur();
+                    $(".default-t").css("display",'none');
+                    $(".result_seach").hide();
+                    $(".seach_result").hide();
+                    $("html").removeClass("b-scroll");
+                    $(".bar").css("display","-webkit-box");
+                    //$(".default-t").html("<span style='color:#ccc;'>暂无内容</span>");
+                });
+                
+                //新的搜索功能
+                $("#s-input").bind('input propertychange', function() {
+                    var value = $(this).val();
+                    value = value.replace(/\s/g,'');
+                    if(value == ''){
+                        $(".default-t > span").show();
+                        $(".result_seach").hide();
+                        $(".seach_result").hide();
+                        $(this).val('');
+                        return false;
+                    }else{
+                        if(value != ''){
+                            $.ajax({
+                                url: "{:url('Index/search2')}",
+                                type: 'POST',
+                                data: {value:value},
+                                success: function(resp){
+                                    $(".default-t > span").hide();
+                                    var data = resp.data;
+                                    var num = data.length;
+                                    if(num>=10){num = 10;}
+                                    if(data == ""){num = 0;}
+                                    $(".seach_font2").html(num+"个结果");
+                                    var str = '';
+                                    for(var i=0;i<num;i++){
+                                        str+='<div class="seach_list">' +
+                                            '<div class="seach_left">' +
+                                            '<span class="seach_title">'+data[i].msg+'</span>' +
+                                            '<span class="seach_title2">'+data[i].name+'</span>' +
+                                            '</div>' +
+                                            '<div class="seach_center">'+data[i].neeq+'</div>' +
+                                            '<div class="seach_right">详情>></div>' +
+                                            '</div>';
+                                    }
+                                    $(".seach_ul").html(str);
+                                    $(".result_seach").hide();
+                                    $(".seach_result").show();
+                                }
+                            });
+                        }
+                    }
+                });
+               
+                $("body").on("click",".seach_list",function(){
+				    var name = $(this).find(".seach_title2").text();
+                    var txt = $(this).find(".seach_center").text();
+					var val = name+"("+txt+")";
+					$("#s-input").val(val);
+					$.ajax({
+					    url: "{:url('Index/search3')}",
+						type: 'POST',
+						data: {value:val},
+						success: function(resp){
+							//$(".default-t > span").hide();
+							$(".seach_result").hide();
+							var data = resp.data;
+							console.log(data);
+							var num = data.length;
+							if(data == ""){
+                                $(".result_seach").hide();
+                                $(".default-t > span").show();
+                                return false;
+                            }
+							var str = '';
+							for(var i=0;i<num;i++){
+								if(data[i].type=="项目精选"){
+									str+='<div data-href="'+data[i].url+'" class="result_list">'+
+											'<div class="result_top">'+
+												'<div class="result_title">'+data[i].name+'('+data[i].neeq+')'+'</div>'+
+												'<div class="result_logo">'+data[i].type+'</div>'+
+												'<div class="result_link">详情<span> > > </span></div>'+
+											'</div>'+
+											'<div class="result_bottom">'+data[i].introduction+'</div>'+
+										'</div>';
+								}else if(data[i].type=="大宗转让"){
+								    str+='<div data-href="'+data[i].url+'" class="result_list">' +
+                                        '                    <div class="result_top">' +
+                                        '                        <div class="result_title">'+data[i].name+'('+data[i].neeq+')'+'</div>' +
+                                        '                        <div class="result_logo">'+data[i].type+'</div>' +
+                                        '                        <div class="result_link">详情<span> > > </span></div>' +
+                                        '                    </div>' +
+                                        '                    <div class="result_bottom">' +
+                                        '                        <span class="result_font on">买卖方向：<strong>'+data[i].introduction.fee+'</strong></span>' +
+                                        '                    </div>' +
+                                        '                    <div class="result_bottom">' +
+                                        '                        <span class="result_font on1">意向价格：<strong>'+data[i].introduction.money+'元/股</strong></span>' +
+                                        '                        <span class="result_font on2">卖出数量：<strong>'+(data[i].introduction.number)/10000+'</strong><strong>万股</strong></span>' +
+                                        '                    </div>' +
+                                        '                </div>';
+                                }else if(data[i].type=="定向增发"){
+								    str+='<div data-href="'+data[i].url+'" class="result_list">' +
+                                        '                    <div class="result_top">' +
+                                        '                        <div class="result_title">'+data[i].name+'('+data[i].neeq+')'+'</div>' +
+                                        '                        <div class="result_logo">'+data[i].type+'</div>' +
+                                        '                        <div class="result_link">详情<span> > > </span></div>' +
+                                        '                    </div>' +
+                                        '                    <div class="result_bottom">' +
+                                        '                        <span class="result_font on1">计划募资：<strong>'+data[i].introduction.resize+'</strong><strong>万元</strong></span>' +
+                                        '                        <span class="result_font on2">定增价格：<strong>'+data[i].introduction.jiage+'</strong><strong>元</strong></span>' +
+                                        '                    </div>' +
+                                        '                </div>';
+                                }else if(data[i].type=="企业"){
+								    str+='<div data-href="'+data[i].url+'" class="result_list">' +
+                                        '                    <div class="result_top">' +
+                                        '                        <div class="result_title">'+data[i].name+'('+data[i].neeq+')'+'</div>' +
+                                        '                        <div class="result_logo">'+data[i].type+'</div>' +
+                                        '                        <div class="result_link">详情<span> > > </span></div>' +
+                                        '                    </div>' +
+                                        '                    <div class="result_bottom">' +
+                                        '                        <span class="result_font on3">公司全称：<strong>'+data[i].introduction+'</strong></span>' +
+                                        '                    </div>' +
+                                        '                </div>';
+                                }
+							}
+							$(".result_seach").html(str);
+							$(".result_seach").show();
+							//$(".seach_result").hide();
+						}
+					})
+                })
+                $("body").on("click",".result_list",function(){
+                    $("#s-input").val('');
+                    var url = $(this).attr("data-href");
+                    location.href=url;
+                });
+                //点击机构中心判断是否认证
+                $(".index-box").on('click','.a-8',function(){
+                    if($(this).hasClass('disRead')){
+                        $(".msg-dialog").css('display','block');
+                    }else{
+                        $.ajax({
+                            url:"{:url('Organize/OrganizeApi')}",
+                            data:null,
+                            type:'POST',
+                            success:function(resp){
+                              location.href = resp.data;
+                            }
+                        });
+                    }
+                });
+                //点击项目投递判断是否认证
+                $(".index-box").on('click','.a-7',function(){
+                    if($(this).hasClass('disRead')){
+                        $(".msg-dialog").css('display','block');
+                    }else{
+                        $.ajax({
+                            url:"{:url('ProjectClue/ProjectClueApi')}",
+                            data:null,
+                            type:'POST',
+                            success:function(resp){
+                              location.href = resp.data;
+                            }
+                        });
+                    }
+                });
+
+            });
+
+        </script>
+{include file="base/footer" /}

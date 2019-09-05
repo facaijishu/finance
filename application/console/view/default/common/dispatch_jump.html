@@ -1,0 +1,87 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>跳转提示</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-skins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/smartadmin-rtl.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__STATIC__/css/dispatch_jump.css">
+    <link rel="shortcut icon" href="__COMMON__/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="__COMMON__/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="__COMMON__/img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="__COMMON__/img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="__COMMON__/img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="__COMMON__/img/splash/touch-icon-ipad-retina.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-startup-image" href="__COMMON__/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="__COMMON__/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="__COMMON__/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+    <script>
+        var ctx = "__COMMON__";
+        var static = "__STATIC__";
+        var sound_path = "__COMMON__/sound/";
+    </script>
+</head>
+<body class="smart-style-0">
+    <div id="content">
+        <!--[if IE 9]>
+        <style>
+            .error-text { color: #333 !important; }
+            .particle { display:none; }
+        </style>
+        <![endif]-->
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="text-center error-box">
+                            <?php switch ($code) {?>
+                            <?php case 1:?>
+                            <h1>:)</h1>
+                            <p class="success"><?php echo(strip_tags($msg));?></p>
+                            <?php break;?>
+                            <?php case 0:?>
+                            <h1 class="error-text-2 bounceInDown animated"> 出错啦
+                                <span class="particle particle--c"></span>
+                                <span class="particle particle--a"></span>
+                                <span class="particle particle--b"></span>
+                            </h1>
+                            <h2 class="font-xl"><strong><i class="fa fa-fw fa-warning fa-lg text-warning"></i> <?php echo(strip_tags($msg));?> </strong></h2>
+                            <?php break;?>
+                            <?php } ?>
+                            <p class="lead detail"></p>
+                            <br />
+                            <p class="font-md jump">
+                                页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait);?></b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function(){
+            var wait = document.getElementById('wait'),
+                    href = document.getElementById('href').href;
+            var interval = setInterval(function(){
+                var time = --wait.innerHTML;
+                if(time <= 0) {
+                    location.href = href;
+                    clearInterval(interval);
+                };
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>

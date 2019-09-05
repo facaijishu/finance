@@ -1,0 +1,245 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="zryxes/tab_detail" /}
+            <div id="zryxes_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">项目ID：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="id" value="{$info.id}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">项目名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="project_name" value="{$info.sec_uri_tyshortname}{$date}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">采集时间：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="created_at" value="{$info.created_at}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票代码：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="secucode" value="{$info.secucode}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">企业名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="sec_uri_tyshortname" value="{$info.sec_uri_tyshortname}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="msecucode_name" value="{$info.sec_uri_tyshortname}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">转让类型：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="trademethod" value="{$info.trademethod}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属层级：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="sublevel" value="{$info.sublevel}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">资本计划：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="jihua" value="大宗转让" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属行业：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="xyfl" value="{$info.gszls.xyfl}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属地域：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="zcdz" value="{$info.gszls.zcdz}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">董秘姓名：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gsdm" value="{$info.gszls.gsdm}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系电话：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gsdh" value="{$info.gszls.gsdh}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">买卖方向：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="direction" value="{$info.direction}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">最新收盘价：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="new" value="{$info.new}" readonly=""/>
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">意向价格：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="price" value="{$info.price}" readonly=""/>
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">意向数量：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="num" value="{$info.num}" readonly=""/>
+                                    <span class="input-group-addon">股</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">截止时间：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="enddate" value="{$info.enddate}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">是否可议价：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="isdiscount" value="{$info.isdiscount}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系人：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="name" value="{$info.name}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系方式：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="content" value="{$info.contact}：{$info.accountment}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">分享描述：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="share_des" value="{$info.share_des}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                     <!--大宗头图-->
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">头图：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <img src="{$info.img_url}" style="width:200px;height:200px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--大宗头图-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var zryxes_use_url = '{:url("Zryxes/release")}';
+    $(".use").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定发布该大宗项目吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: zryxes_use_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('发布成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('发布失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>

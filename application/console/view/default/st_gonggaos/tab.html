@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">公告列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("StGonggaos/index")}')">公告列表</a></li>
+    {/if}
+<!--    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">待审核</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("StGonggaos/index")}')">待审核</a></li>
+    {/if}
+    {if condition="$Request.action eq 'successexamine' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">已审核</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("StGonggaos/successExamine")}')">已审核</a></li>
+    {/if}
+    {if condition="$Request.action eq 'failexamine' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">审核失败</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("StGonggaos/failExamine")}')">审核失败</a></li>
+    {/if}-->
+</ul>

@@ -1,0 +1,152 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="st_yanbaos/tab_detail" /}
+            <div id="yanbaos_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">标题：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="title" value="{$info.title}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">相关品种：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="codename" value="{$info.codename}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">机构：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="org" value="{$info.org}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">作者：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="authors" value="{$info.authors}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">评级：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="rate" value="{$info.rate}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">变动：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="change" value="{$info.change}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">发布日期：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="report_date" value="{$info.report_date}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">相关企业：</label>
+                            <div class="col-lg-8 col-sm-7 col-md-7 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="relation" value="{$info.relation}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>研报详情</legend>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            <textarea rows="26" class="form-control" readonly="">{$info.text}</textarea>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var yanbaos_exhibition_true_url = '{:url("StYanbaos/exhibition_true")}';
+    var yanbaos_exhibition_false_url = '{:url("StYanbaos/exhibition_false")}';
+    $(".exhibition_true").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定展示该研报吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: yanbaos_exhibition_true_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".exhibition_false").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定隐藏该研报吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: yanbaos_exhibition_false_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>

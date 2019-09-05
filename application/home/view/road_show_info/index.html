@@ -1,0 +1,74 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        <div class="ly-video">
+           <video poster="__UPLOAD__/{$info.top_img_url}" controls="controls" x5-playsinline="" playsinline="" webkit-playsinline="" x-webkit-airplay="allow" width="100%" height="100%" style="object-fit: fill;">
+                <source src="__UPLOAD__/{$info.video_url}" type="video/mp4">
+            </video> 
+        </div>
+        <div class="ly-center">
+            <!--<video poster="__UPLOAD__/{$info.top_img_url}" controls="controls" x5-playsinline="" playsinline="" webkit-playsinline="" x-webkit-airplay="allow" width="100%" height="100%" style="object-fit: fill;">
+                <source src="__UPLOAD__/{$info.video_url}" type="video/mp4">
+            </video>-->
+            <h3>{$info.road_name}</h3>
+            <div class="type">
+                <span class="fa fa-clock-o">{$info.duration}</span>类型：{$info.type}
+            </div>
+            {foreach name="$info.road_introduce" item="it"}
+            <p style="line-height: 30px;text-indent: 2em;">{$it}</p>
+            {/foreach}
+        </div>
+        <div class="news-tab">
+            <a class="actived">路演详情</a>
+            <a>商业计划书</a>
+        </div>
+        <div class="ly-news" >
+            <div class="ly-t">项目简介</div>
+            <div class="ly-text">
+                {foreach name="$info.road_detail" item="it"}
+                <p style="line-height: 30px;text-indent: 2em;">{$it}</p>
+                {/foreach}
+            </div>
+            {if condition="$info.speaker_introduce neq null"}
+            <div class="ly-t">主讲人介绍</div>
+            <div class="ly-teach">
+                {if condition="$info.speaker_url neq ''"}
+                <img src="__UPLOAD__/{$info.speaker_url}" alt="主讲人介绍">
+                {/if}
+                <strong>主讲人</strong>
+                {foreach name="$info.speaker_introduce" item="it"}
+                <p style="line-height: 30px;text-indent: 2em;">{$it}</p>
+                {/foreach}
+            </div>
+            {/if}
+            {if condition="$info.review neq null"}
+            <div class="ly-t">机构点评</div>
+            <div class="ly-text">
+                <strong>机构名称</strong>
+                {foreach name="$info.review" item="it"}
+                <p style="line-height: 30px;text-indent: 2em;">{$it}</p>
+                {/foreach}
+            </div>
+            {/if}
+        </div>
+        <div class="ly-news" style="display:none;">
+            <div class="ly-text">
+                {$info.content}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var width = document.documentElement.clientWidth; 
+                var hh = width*9/16;
+                $("video").css({"height":hh+'px'});
+                $(".news-tab a").on("click", function () {
+                    $(".news-tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".ly-news").hide();
+                    $(".ly-news").eq($(this).index()).show();
+                });
+            });
+        </script>
+    </body>
+</html>

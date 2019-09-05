@@ -1,0 +1,64 @@
+{include file="base/header" /}
+<body>
+	<div>请输入您的联系电话验证机构信息</div>
+	<form id="organize_info" action="{:url('organize_info/index')}" method="post">
+        <div class="form-box">
+            <ul>
+                <li>
+                    <input type="text" name="mobile" id="mobile" />
+                </li>
+                
+            </ul>
+        </div>
+
+        
+        <input type="hidden" name="id" value="{$id}">
+        <div class="bar-btn">
+            <button class="confirm" type="submit" id="tijiao">
+                提交认证信息
+            </button>
+        </div>
+    </form>
+</body>
+<script type="text/javascript">
+	$(function(){
+        var action = $("#myFormId").attr("action", "{:url('organize_info/index')}");
+        var id = $("#id").val();
+
+         // $('#organize_info').on('submit',function(event){event.preventDefault();});
+
+            $("#tijiao").on('click',function(){
+            	 var mobile = $("#mobile").val();
+	            
+	            var pattern = /^1\d{10}$/;
+	            if (mobile == '') {
+	                alert('联系电话不能为空', '提示框');
+	                return false;
+	            }
+	            if(pattern.exec(mobile) == null){
+	                alert('联系电话输入格式不对', '提示框');
+	                return false;
+	            }
+	           
+            	$.ajax({
+                        url: "{:url('OrganizeInfo/doVerify')}",
+                        type: 'POST',
+                        data: {"tel":mobile},
+                        dataType: 'json',
+                        success: function (resp) {
+                            
+                            if(resp.code){
+                                alert(resp.msg);
+                            }else{
+                                alert(resp.msg);
+                                
+                            }
+                        }
+                    });
+            });
+            
+            
+        
+	});
+	
+</script>

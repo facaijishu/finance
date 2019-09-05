@@ -1,0 +1,15 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">项目列表（未审核）</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Zfmxes/index")}')">项目列表（未审核）</a></li>
+    {/if}
+    {if condition="$Request.action eq 'already' "}
+    <li role="presentation" class="active ov"><a href="javascript:void(0);">项目列表（已审核）</a></li>
+    {else /}
+    <li role="presentation" class="ov"><a href="javascript:void(0);" onclick="loadURL('{:url("Zfmxes/already")}')">项目列表（已审核）</a></li>
+    {/if}
+	{if condition="$Request.action eq 'already' "}
+	   <button class="btn btn-success export" style="float: right;" type="button"><i class="fa fa-download"></i><a target="_black">下载定增审核统计</a></button>
+    {/if}
+</ul>

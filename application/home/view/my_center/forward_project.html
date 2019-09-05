@@ -1,0 +1,32 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        {if condition="$list neq ''"}
+        {foreach name="list" item="it"}
+        <div class="my-pro">
+            <a href="{:url('ProjectInfo/index' , ['id' => $it.pro_id])}">
+                <div class="pro-t">{$it.pro_name}{if condition="$it.stock_code neq ''"}<small>（{$it.stock_code}）</small>{/if}</div>
+                <div class="pro-label">
+                    {foreach name="$it.inc_industry" item="industry"}
+                    <span>{$industry}</span>
+                    {/foreach}
+                    <label for="transfer_type" class="red">{$it.transfer_type}</label>
+                    <label for="hierarchy" class="orange">{$it.hierarchy}</label>
+                </div>
+                <div class="pro-box">
+                    <img src="__UPLOAD__/{$it.top_img}" alt="头图">
+                    <p>{$it.introduction}</p>
+                </div>
+            </a>
+        </div>
+        {/foreach}
+        <div class="text-over">
+            没有啦~~~
+        </div>
+        {else /}
+        <div class="text-over">
+            暂无项目
+        </div>
+        {/if}
+    </body>
+</html>

@@ -1,0 +1,46 @@
+{include file="base/header" /}
+<body>
+    <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}"> 
+        <div class="kfLogo">      
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">      
+        </div>
+        </a>
+    <!--客服-->
+    {include file="base/dividend" /}
+    <div class="home-price-all" style="margin-bottom: 1px;">
+        <div class="all-b">
+            <style>
+                .question{width: 12px;margin-left: 3px;margin-bottom: 2px;}
+            </style>
+            	当月成交<a href="{:url('MyCenter/question')}"><img class="question" src="__IMG__/question.png"></a><strong>{$money['day']['total_amount']}<small>万元</small></strong>
+        </div>
+        <div class="all-b">
+            	当月分红<a href="{:url('MyCenter/question')}"><img class="question" src="__IMG__/question.png"></a><strong>{$money['day']['amount']}<small>元</small></strong>
+        </div>
+        <div class="all-b">
+            	我的当月分红<a href="{:url('MyCenter/question')}"><img class="question" src="__IMG__/question.png"></a><strong>{$last_dividend}<small>元</small></strong>
+        </div>
+    </div>
+
+    <div class="home-chart"><span style="margin-right:10xp;">我的累计分红:</span><span style="color: #CBA054;font-size: 20px;">{$total}元</span></div>
+    <div class="home-chart"><span style="color: #ccc;">当月拉新:</span><span style="color: #CBA054;">{$num}人</span></div>
+
+    <div class="home-price-detail">
+        	当前可提现余额为
+        <strong></strong>
+        <strong>{$balance}<small>元</small></strong>
+        <span class="text-orange">未审核金额：{$yue} 元</span><br>
+        <a href="{:url('MyCenter/extract')}"><button class="actived">申请提现</button></a>
+        <a href="{:url('MyCenter/present_record_list')}"><button>查看记录</button></a>
+        <br>
+        <!--<span class="text-gray">截止2017-7-8日，您的个人返点共计金额为：23230元</span><br>-->
+        <span class="text-error">
+            <span>
+                {foreach name="$money.month" item="mon"}
+                <em>{$mon.content}</em>
+                {/foreach}
+            </span>
+        </span>
+        <span style="display: block;margin-top: 15px;"><a style="color: #CBA054;" href="{:url('MyCenter/policy')}">查看分红政策</a></span>
+    </div>

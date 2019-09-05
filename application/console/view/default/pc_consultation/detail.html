@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="pc_consultation/tab_detail" /}
+            <div id="consultation_detail" data-id="{$info.con_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">标题：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.title}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">添加时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">来源：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.source}
+                        </div>
+                    </div>
+<!--                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">排序号：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.list_order}
+                        </div>
+                    </div>-->
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">分类：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.type}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">作者：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.create_uid}
+                        </div>
+                    </div>
+                </fieldset>
+<!--                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">头图：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                            <img style="height: 100px;" src="__UPLOAD__/{$info.top_img}">
+                        </div>
+                    </div>
+                </fieldset>-->
+                <fieldset>
+                    <legend>项目简介</legend>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        {$info.content}
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+<!--                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">项目简介：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12 bordered">
+                            {$info.content}
+                        </div>
+                    </div>-->
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

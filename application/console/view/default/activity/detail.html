@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="activity/tab_detail" /}
+            <div id="activity_detail" data-id="{$info.a_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">活动标题：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">{$info.act_name}</div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">{$info.show_desc}</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">活动时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12"> {$info.start_time} / {$info.end_time}</div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">活动地址：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">{$info.address} </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">报名时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12"> {$info.sign_start_time} / {$info.sign_end_time}</div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">报名费用：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">{$info.fee}元</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">创建时间：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12">{$info.create_time}</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>已报名成员</legend>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        {if condition="$list eq []"}
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">暂无报名用户</div>
+                                        {else /}
+                                        {foreach name="$list" item="it"}
+                                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="padding: 5px 0px;border: 1px solid #ccc;box-shadow: 3px 3px 1px rgba(0,0,0,.2);">
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
+                                                <img style="border-radius: 180px;width: 100%;" src="{$it.img}">
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-9 col-xs-8" style="">
+                                                <div>姓名：{$it.name}</div>
+                                                <div>电话：{$it.phone}</div>
+                                                <div>说明：{$it.introduce}</div>
+                                            </div>
+                                        </div>
+                                        {/foreach}
+                                        {/if}
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>活动详情</legend>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        {$info.content}
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var activity_stop_url = '{:url("Activity/stop")}';
+    var activity_start_url = '{:url("Activity/start")}';
+    var activity_show_url = '{:url("Activity/showDisabled")}';
+    $("body").on('click','.stop-sign-up',function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定下架该活动吗？', function (){
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: activity_stop_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            location.reload();
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $("body").on('click','.start-sign-up',function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定上架该活动吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: activity_start_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            location.reload();
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $("body").on('click','.show-disabled',function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定将该活动下线吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: activity_show_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            location.reload();
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>

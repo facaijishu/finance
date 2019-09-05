@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">邀请明细</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Member/detail")}')">邀请明细</a></li>
+    {/if}
+</ul>

@@ -1,0 +1,248 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="spoiler/tab_edit" /}
+            <div>
+                <form id="editSpoilerForm" action="{:url('Spoiler/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">标题： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="title" value="{$info.title}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">来源： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="source" value="{$info.source}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">作者： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="author" value="{$info.author}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">发布日期： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="release_date" placeholder="发布日期" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd" value="{$info.release_date}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">关键词： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="keyword" value="{$info.keyword}"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">关键词请以，隔开</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">文件(图片/pdf)： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="file" multiple type="file" class="file" name="file">
+                                    <input type="text" class="hide" name="img" value="{$str}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">正文： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div id="summernote"></div>
+                                <input type="text" class="hide" name="summernote" value="{:htmlentities($info.content)}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="text" name="sp_id" value="{$info.sp_id}" class="hide">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script>
+    $(function() {
+        loadModule('bootstrapValidator', function () {
+            $('#editSpoilerForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    img: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传图片/pdf'
+                            }
+                        }
+                    },
+                    summernote: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入正文'
+                            }
+                        }
+                    },
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                var data = $form.serialize();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        var content = $("input[name='summernote']").val();
+        var thiss = $("#file");
+        initFileInput('editSpoilerForm', thiss, 'spoiler', ['jpg', 'jpeg', 'png', 'gif','pdf'], '{:url("Publics/upload")}', 10, '', {$url}, {$config});
+//        $("#file").fileinput({
+//            uploadUrl: '{:url("Publics/upload")}', 
+//            allowedFileExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+//            overwriteInitial: false,
+//            showRemove : false,
+//            maxFilesNum: 10,
+//            uploadExtraData:{type:'spoiler'},
+//            initialPreviewAsData: true,
+//            initialPreview: {$url},
+//            initialPreviewConfig: {$config},
+//            slugCallback: function (filename) {
+//                return filename.replace('(', '_').replace(']', '_');
+//            }
+//        }).on("fileuploaded", function(event, data , previewId, index) {
+//            if (data.response.code) {
+//                var img = $("input[name='img']").val()+data.response.data.id+'-'+data.response.data.name+',';
+//                $("input[name='img']").val(img);
+//            }else {
+//                Dialog.error(data.response.msg+',请删除并重新上传');
+//            }
+//        }).on("filesuccessremove", function(event, previewId){
+//            var name = $("#"+previewId).find(".file-footer-caption").attr("title");
+//            var str = $("input[name='img']").val();
+//            var arr = str.split(',');
+//            for(var i = 0 ; i < arr.length ; i ++ ){
+//                var title = arr[i].split('-');
+//                if(name == title[1]){
+//                    arr.splice(i , 1);
+//                }
+//            }
+//            str = arr.join(',');
+//            $("input[name='img']").val(str);
+//        }).on("filedeleted", function(event, previewId){
+//            var key = 'init_'+previewId;
+//            var str = $("input[name='img']").val();
+//            var arr = str.split(',');
+//            for(var i = 0 ; i < arr.length ; i ++ ){
+//                var title = arr[i].split('-');
+//                if(key == title[1]){
+//                    arr.splice(i , 1);
+//                }
+//            }
+//            str = arr.join(',');
+//            $("input[name='img']").val(str);
+//        }); 
+        $("#summernote").summernote({
+            height: 400,
+            focus: true,   
+            lang:'zh-CN',
+            toolbar: [
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['insert', ['link', 'picture']],
+            ],
+            callbacks:{
+                onImageUpload: function(files, editor, $editable) {
+                    sendFile(files[0],editor,$editable);  
+                },
+                onChange: function() {
+                    var content = $(this).summernote("code");
+                    $(this).siblings("input[name='summernote']").val(content);
+                    $("#content form").data("bootstrapValidator").updateStatus('summernote', 'NOT_VALIDATED', null).validateField('summernote');
+                }
+            }
+        });
+        $('#summernote').summernote("code" , content);
+        function sendFile(file, editor, $editable) { 
+            var data = new FormData();  
+            data.append("file", file);  
+            $.ajax({
+                data : data,  
+                type : "POST",  
+                url : '{:url("Spoiler/uploads")}', //图片上传出来的url，返回的是图片上传后的路径，http格式  
+                cache : false,  
+                contentType : false,  
+                processData : false,  
+                dataType : "json",  
+                success: function(data) {
+                    $('#summernote').summernote('insertImage', data.data.url , data.data.name);  
+                },  
+                error:function(){  
+                    alert("上传失败");  
+                }  
+            });  
+        }
+        
+    })
+</script>

@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="road_show_ces/tab_detail" /}
+            <div id="project_detail" data-id="{$info.rs_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">项目名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.road_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">添加时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">企业名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company_name}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">路演形式：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.type}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">时长：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.duration}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">项目简介：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                            {$info.road_introduce}
+                        </div>
+                    </div>
+                </fieldset>
+                {if condition="$info.speaker_introduce neq ''"}
+                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">主讲人介绍：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                            {$info.speaker_introduce}
+                        </div>
+                    </div>
+                </fieldset>
+                {/if}
+                {if condition="$info.review neq ''"}
+                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">机构点评：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                            {$info.review}
+                        </div>
+                    </div>
+                </fieldset>
+                {/if}
+                <fieldset>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#roadshow_video" aria-controls="roadshow_video" role="tab" data-toggle="tab">视频播放</a></li>
+                            <li role="presentation"><a href="#roadshow_content" aria-controls="roadshow_content" role="tab" data-toggle="tab">商业计划书</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="roadshow_video">
+                                <video controls="" poster="__UPLOAD__/{$info.top_img_url}" style="width: 100%;">
+                                    <source src="__UPLOAD__/{$info.video_url}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="roadshow_content">
+                                <div class="col-lg-10">
+                                    {$info.content}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

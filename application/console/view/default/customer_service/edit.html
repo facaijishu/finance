@@ -1,0 +1,153 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="customer_service/tab_edit" /}
+            <div>
+                <form id="editCustomerServiceForm" action="{:url('CustomerService/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服账号： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="kf_account" value="{$info.kf_account}" readonly=""/>
+                                            <span class="input-group-addon">@{$weixin}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">账号无法更改</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服昵称： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="kf_nick" value="{$info.kf_nick}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服头像： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{$info.kf_headimgurl_url}"/>
+                                    <input type="text" class="hide" name="kf_headimgurl" value="{$info.kf_headimgurl}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服二维码： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{$info.kf_qr_code_url}"/>
+                                    <input type="text" class="hide" name="kf_qr_code" value="{$info.kf_qr_code}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="text" name="cs_id" value="{$info.cs_id}" class="hide">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.file-upload').each(function() {
+            var name = $(this).attr("data-value");
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            $(this).fileinput({
+                language: 'zh',
+                uploadUrl: '{:url("Publics/upload")}',
+                showUpload: false,
+//                maxFileSize:2000,
+//                maxFileCount:1,
+                uploadExtraData:{type:'customer_service'},
+                allowedFileExtensions:type,
+                initialCaption:name,
+            }).on("filebatchselected", function() {
+                $(this).fileinput("upload");  
+            }).on("fileuploaded", function(event, data , previewId, index) {
+                $(this).parents(".file-input").siblings("input[class='hide']").attr({"value":data.response.data.id});
+            }); 
+        });
+        loadModule('bootstrapValidator', function () {
+            $('#editCustomerServiceForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    kf_account: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入客服账号'
+                            },
+                            regexp: {
+                                regexp: /^[0-9a-zA-Z_]{1,10}$/,
+                                message: '请输入正确的融资金额'
+                            }
+                        }
+                    },
+                    kf_nick: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入客服昵称'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                if($("input[name='kf_headingurl']").val() == ''){
+                    Dialog.error('请添加客服头像');
+                    return false;
+                }
+                if($("input[name='kf_qr_code']").val() == ''){
+                    Dialog.error('请添加客服二维码');
+                    return false;
+                }
+                e.preventDefault();
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        });
+    });
+
+</script>

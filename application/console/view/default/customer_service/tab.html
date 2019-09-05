@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">客服列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("CustomerService/index")}')">客服列表</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("CustomerService/add")}')">添加客服</a>
+    <a class="btn btn-link synchronization" style="float: right;">同步客服</a>
+</ul>

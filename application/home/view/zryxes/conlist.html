@@ -1,0 +1,612 @@
+{include file="base/header" /}
+    <style>
+        .more-text{
+            height: 50px;
+            line-height: 50px;
+            background-color: #E3E3E3;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .canDone{
+            background-color: #DDDDDD;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+<style type="text/css">
+    .header-title{
+        overflow:hidden;
+        padding-top:10px;
+        line-height:0px;
+    }
+    .left{
+        float:left;
+        width:17%;
+        margin-top:0.6rem;
+    }
+    .left .icon{
+        width:1rem;
+        height:1rem;
+    }
+    .left .miti{
+        font-size:14px;
+    }
+    .right{
+        width:47%;
+        float:right;
+    }
+    .ioon{
+        width:100%;
+        height:2rem;
+        background-color:#CBA054;
+        border-radius:20px;
+        padding: 1px 0px 1px 1px;
+        position:relative;
+    }
+    .ioon input[name='gupiao']{
+        width:72.6%;
+        height:100%;
+        outline:none;
+        background-color:#fff;
+        border-radius:20px;
+        padding:2px 5px 2px 25px;
+        margin-left:-0.75rem;
+    }
+    @media screen and (max-width: 320px){
+        .ioon input[name='gupiao']{
+            width:59.6%;
+        }
+        .right{
+            width:41%;
+            float:right;
+        }
+        .over-top {width:40%;}
+    }
+    @media screen and (max-width: 375px) and (min-width: 330px) {
+        .ioon input[name='gupiao']{
+            width:69.6%;
+        }
+    }
+    .ioon .sou{
+        color:#fff;
+        cursor:pointer;
+        margin-left:4px;
+    }
+    .ioon .ser{
+        width:1rem;
+        height:1rem;
+        position:absolute;
+        left:0.4rem;
+        top:0.48rem;
+        /*z-index:100;*/
+    }
+</style>
+    <body>
+        <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}">
+        <div class="kfLogo">
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">
+        </div>
+        </a>
+        <!--客服-->
+        {include file="base/slide" /}  
+        {include file="base/dividend" /}
+        <!--
+        <div class="head-fixed">
+            <div class="header-title">
+                <div class="pull-left">
+                    <a href="javascript:history.back(-1)"><i class="fa fa-angle-left"></i></a>
+                </div>
+                <h1>转让列表</h1>
+            </div>
+            <div class="over-top">
+                <div class="over-tab" data-text="">
+                    <a data-text="" class="actived">全部</a>
+                    <a data-text="买入">买入</a>
+                    <a data-text="卖出">卖出</a>
+                </div>
+                <div class="serach2">
+                    <div>
+                        <input id="s-input" type="text" placeholder="股票名称/代码">
+                    </div>
+                    <button>搜索</button>
+                </div>
+            </div>
+        </div>
+        -->
+        <div class="header-title">
+            <div class="over-top">
+                <div class="over-tab" data-text="">
+                    <a data-text="" class="actived">全部</a>
+                    <a data-text="买入">买入</a>
+                    <a data-text="卖出">卖出</a>
+                </div>
+                <!--
+                <div class="serach2">
+                    <div>
+                        <input id="s-input" type="text" placeholder="股票名称/代码">
+                    </div>
+                    <button>搜索</button>
+                </div>
+                -->
+            </div>
+            <div class="left">
+                <img src="__CSS__/img/miti.png" class="icon" />
+                <span class="miti">筛选</span>
+            </div>
+            <div class="right">
+                <form id="ioon" class="ioon" method="" name="" action="">
+                    <input class="in" type="text" name="gupiao" placeholder="股票名称,代码" style="font-size:12px;" />
+                    <span class="sou">搜索</span>
+<!--                    <input type="text" name="raise_money" style="display: none;">
+                    <input type="text" name="xmsz" style="display: none;">
+                    <input type="text" name="xmsz1" style="display: none;">
+                    <input type="text" name="sublevel" style="display: none;">
+                    <input type="text" name="road" style="display: none;">-->
+                    <img src="__CSS__/img/icon-search1.png" class="ser" />
+                </form>
+            </div>
+        </div>
+        <div class="more-box">
+            <form action="{:url('Zryxes/sproject')}" method="post" id="project_select">
+                <input class="in" type="text" name="gupiao" style="display: none;" />
+                <dl>
+                    <dt>买卖方向</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">买入</span>
+                        <span data-id="2">卖出</span>
+                    </dd>
+                </dl>
+                <input class="road" type="road" name="road" style="display: none;">
+                <dl>
+                    <dt>融资金额</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">1000万以下</span>
+                        <span data-id="2">1000～3000万</span>
+                        <span data-id="3">3000～5000万</span>
+                        <span data-id="4">5000万以上</span>
+                    </dd>
+                </dl>
+                <input class="raise_money" type="text" name="raise_money" style="display: none;">
+
+                <dl>
+                    <dt>净利润</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">500万以下</span>
+                        <span data-id="2">500～2000万</span>
+                        <span data-id="3">2000～5000万</span>
+                        <span data-id="4">5000万以上</span>
+                    </dd>
+                </dl>
+                <input class="xmsz" type="text" name="xmsz" style="display: none;">
+                <dl>
+                    <dt>年营业收入</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">500万以下</span>
+                        <span data-id="2">500～2000万</span>
+                        <span data-id="3">2000～5000万</span>
+                        <span data-id="4">5000～1亿</span>
+                        <span data-id="5">1亿～2亿</span>
+                        <span data-id="6">2亿以上</span>
+                    </dd>
+                </dl>
+                <input class="xmsz1" type="text" name="xmsz1" style="display: none;">
+
+                <dl>
+                    <dt>层级</dt>
+                    <dd class="dd-3">
+                        {foreach name="hierarchy" item="hier"}
+                        <span data-id="{$hier.id}">{$hier.value}</span>
+                        {/foreach}
+                    </dd>
+                </dl>
+                <input class="sublevel" type="text" name="sublevel" style="display: none;">
+                <div class="bar-box">
+
+                </div>
+                <div class="bar-btn">
+                    <button class="btn-white" type="button">取消</button>
+                    <button class="submit" type="button">确定</button>
+                </div>
+            </form>
+        </div>
+        <div class="attorn-box attorn-pd-top" data-num="{$num}">
+            <ul>
+                {foreach name="$zryxes" item="it"}
+                <li>
+                    <a href="{:url('ZryxesEffectInfo/index' , ['id' => $it.id])}">
+                        <div class="attorn-t">
+                            <div class="pull-right"><label>是否可议价：</label>{$it.isdiscount}</div>
+                            <strong>{$it.sec_uri_tyshortname} <small>【{$it.neeq}】</small></strong>
+                            {if condition="$it.direction eq '买入'"}<span class="la-2">{$it.direction}</span>{else /}<span class="la-1">{$it.direction}</span>{/if}
+                            {if condition="$it.boutique eq 1"}<span class="la-3">精选</span>{/if}
+                        </div>
+                        <div class="attorn-c">
+                            <div class="each">
+                                <label>意向价格：</label><span class="price">{$it.price}元/股</span>
+                            </div>
+                            <div class="each">
+                                <label>{if condition="$it.direction eq '买入'"}求购数量{else /}卖出数量{/if}：</label>{$it.num}股
+                            </div>
+                            <div class="each">
+                                <a style="display:block;padding-top:1.75rem;text-align:right;color:#CBA054;" href="{:url('ZryxesEffectInfo/index' , ['id' => $it.id])}">查看详情>></a>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        {if condition="$num lt 10"}
+        <div id="text-none" class="text-over">
+            没有啦~~~
+        </div>
+        {else /}
+        <div id="canDone" class="more-text canDone">加载更多</div>
+        {/if}
+        <script>
+            $(function(){
+                $("#ioon .in").bind('input propertychange', function() { 
+                    var value = $(this).val();
+                    $("#project_select .in").val(value);
+                })
+                $(".attorn-box li:even").addClass("even");
+                $(".over-tab").on("click", 'a', function(){
+                    //清除所有条件
+                    $(".more-box").find("input").val('');
+                    $(".in").val('');
+                    $(".more-box span").removeClass("actived");
+                    $(".over-tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    var text = $(this).attr("data-text");
+                    $(".over-tab").attr("data-text" , text);
+                    $("#s-input").val('');
+                    $.ajax({
+                        url: "{:url('Zryxes/selectDirection')}",
+                        data: {text : text},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if(resp.code){
+                                var data = resp.data;
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    if(data[i]['boutique'] == 1){
+                                        var boutique = '<span class="la-3">精选</span>';
+                                    }else{
+                                        var boutique = '';
+                                    }
+                                    if(data[i]['direction'] == '买入'){
+                                        var direction = '<span class="la-2">'+data[i]['direction']+'</span>';
+                                        var shuzi = '求购数量';
+                                    }else{
+                                        var direction = '<span class="la-1">'+data[i]['direction']+'</span>';
+                                        var shuzi = '卖出数量';
+                                    }
+                                    str += '<li><a href="'+data[i]['url']+'"><div class="attorn-t"><div class="pull-right"><label>是否可议价：</label>'+data[i]['isdiscount']+'</div><strong>'+data[i]['sec_uri_tyshortname']+' <small>【'+data[i]['neeq']+'】</small></strong>'+direction+boutique+'</div><div class="attorn-c"><div class="each"><label>意向价格：</label><span class="price">'+data[i]['price']+'元/股</span></div><div class="each"><label>'+shuzi+'：</label>'+data[i]['num']+'股</div>'+
+                                        '<div class="each">'+
+                                        '<a style="display:block;padding-top:1.75rem;text-align:right;color:#CBA054;" href="'+data[i]['url']+'">查看详情>></a>'+
+                                        '</div>'+
+                                        '</div></a></li>';
+                                }
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    } 
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    } 
+                                }
+                                $(".attorn-box").attr("data-num" , length);
+                                $(".attorn-box ul").html(str);
+                                $(".attorn-box li:even").addClass("even");
+                            }else{
+                                $(".attorn-box").attr("data-num" , 0);
+                                $(".attorn-box ul").html('');
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                } 
+                            }
+                        }
+                    });
+                });
+                /*****
+                $(".serach2 button").click(function(){
+                    var direction = $(".over-tab").attr("data-text");
+                    var text = $("#s-input").val();
+                    $.ajax({
+                        url: "{:url('Zryxes/selectText')}",
+                        data: {direction : direction ,text : text},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if(resp.code){
+                                var data = resp.data;
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    if(data[i]['boutique'] == 1){
+                                        var boutique = '<span class="la-3">精选</span>';
+                                    }else{
+                                        var boutique = '';
+                                    }
+                                    if(data[i]['direction'] == '买入'){
+                                        var direction = '<span class="la-2">'+data[i]['direction']+'</span>';
+                                        var shuzi = '求购数量';
+                                    }else{
+                                        var direction = '<span class="la-1">'+data[i]['direction']+'</span>';
+                                        var shuzi = '卖出数量';
+                                    }
+                                    str += '<li><a href="'+data[i]['url']+'"><div class="attorn-t"><div class="pull-right"><label>是否可议价：</label>'+data[i]['isdiscount']+'</div><strong>'+data[i]['sec_uri_tyshortname']+' <small>【'+data[i]['neeq']+'】</small></strong>'+direction+boutique+'</div><div class="attorn-c"><div class="each"><label>意向价格：</label><span class="price">'+data[i]['price']+'元/股</span></div><div class="each"><label>'+shuzi+'：</label>'+data[i]['num']+'股</div></div></a></li>';
+                                }
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    } 
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    } 
+                                }
+                                $(".attorn-box").attr("data-num" , length);
+                                $(".attorn-box ul").html(str);
+                                $(".attorn-box li:even").addClass("even");
+                            }else{
+                                $(".attorn-box").attr("data-num" , 0);
+                                $(".attorn-box ul").html('');
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                } 
+                            }
+                        }
+                    });
+                });
+                ****/
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                $(".left").click(function(){
+                    $(".more-box").fadeIn();
+                    $(".attorn-box").hide();
+                });
+                //$(".all-l.more").on("click", function () {
+                //    $(".more-box").fadeIn();
+                //});
+                //点击取消
+                $(".more-box .btn-white").on("click", function () {
+                    $(".more-box").fadeOut();
+                    $(".attorn-box").show();
+                    $(".more-box span").removeClass("actived");
+                    var txt = "";
+                    $(".more-box span").parents("dl").next("input").val(txt);
+                });
+                $(".more-box").on('click' , 'span' , function(){
+                    if($(this).hasClass("actived")){
+                        var txt = "";
+                        $(this).removeClass("actived");
+                        $(this).parents("dl").next("input").val(txt);
+                    }else{
+                        $(this).parent().find("span").removeClass("actived");
+                        $(this).addClass("actived");
+                        var id = $(this).attr("data-id");
+                        $(this).parents("dl").next("input").val(id);
+                    }
+                    var t = $(".text").val();
+                    $(".in").val(t);
+                });
+                /**
+                 * 点击加载更多
+                 * */
+                $("body").on('click' , ".canDone" , function(){
+                    var num = $(".attorn-box").attr("data-num");
+                    //var direction = $(".over-tab").attr("data-text");
+                    //var text = $("#s-input").val();
+                    var gupiao = $(".in").val();
+                    var raise_money = $(".raise_money").val();
+                    var xmsz = $(".xmsz").val();
+                    var xmsz1 = $(".xmsz1").val();
+                    var sublevel = $(".sublevel").val();
+                    var road = $(".road").val() == '' ? $(".over-tab").attr("data-text") == '' ? '' : $(".over-tab").attr("data-text") == '买入' ? 1 : 2 : $(".road").val();
+                    $.ajax({
+                        url: "{:url('Zryxes/sproject')}",
+                        data: {id:num,raise_money:raise_money,gupiao:gupiao,xmsz:xmsz,xmsz1:xmsz1,sublevel:sublevel,road:road},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if(resp.code){
+                                var data = resp.data;
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    if(data[i]['boutique'] == 1){
+                                        var boutique = '<span class="la-3">精选</span>';
+                                    }else{
+                                        var boutique = '';
+                                    }
+                                    if(data[i]['direction'] == '买'){
+                                        var direction = '<span class="la-2">'+data[i]['direction']+'</span>';
+                                        var shuzi = '求购数量';
+                                    }else{
+                                        var direction = '<span class="la-1">'+data[i]['direction']+'</span>';
+                                        var shuzi = '卖出数量';
+                                    }
+                                    str += '<li><a href="'+data[i]['url']+'"><div class="attorn-t"><div class="pull-right"><label>是否可议价：</label>'+data[i]['isdiscount']+'</div><strong>'+data[i]['sec_uri_tyshortname']+' <small>【'+data[i]['neeq']+'】</small></strong>'+direction+boutique+'</div><div class="attorn-c"><div class="each"><label>意向价格：</label><span class="price">'+data[i]['price']+'元/股</span></div><div class="each"><label>'+shuzi+'：</label>'+(data[i]['num']/10000)+'万股</div>'+
+                                        '<div class="each">'+
+                                        '<a style="display:block;padding-top:1.75rem;text-align:right;color:#CBA054;" href="'+data[i]['url']+'">查看详情>></a>'+
+                                        '</div>'+
+                                        '</div></a></li>';
+                                }
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                $(".attorn-box").attr("data-num" , parseInt($(".attorn-box").attr("data-num"))+parseInt(length));
+                                $(".attorn-box ul").append(str);
+                                $(".attorn-box li:even").addClass("even");
+                            }else{
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                            }
+                        }
+                    });
+                });
+                /***
+                 * 确定按钮
+                 */
+                $("#project_select").on('click','.submit',function(){
+                    $(".attorn-box").show();
+                    $(".over-tab a").removeClass("actived");
+                    $(".over-tab a:eq(0)").addClass("actived");
+                    $(".over-tab").attr("data-text" , '');
+//                    $(".more-box span").removeClass("actived");
+                    var form = document.getElementById("project_select");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Zryxes/sproject')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (resp) {
+                            $(".more-box").fadeOut();
+                            $(".all-no").removeClass("actived");
+                            $(".all-no[data-id='']").addClass("actived");
+                            //请求成功后要清除之前表单存留的数据
+                            //var txt = "";
+                            //$(".more-box span").parents("dl").next("input").val(txt);
+                            addProject(resp);
+                        }
+                    });
+                    //改变点击返回按钮默认的历史url
+                    returnUrl("{:url('zryxes/conlist')}");
+                });
+                /**
+                 * 搜索按钮
+                 */
+                $(".sou").on('click',function(){
+                    $(".attorn-box").show();
+                    $(".more-box span").removeClass("actived");
+                    var form = document.getElementById("project_select");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Zryxes/sproject')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (resp) {
+                            $(".more-box").fadeOut();
+                            $(".all-no").removeClass("actived");
+                            $(".all-no[data-id='']").addClass("actived");
+                            addProject(resp);
+                        }
+                    });
+                   //改变点击返回按钮默认的历史url
+                    returnUrl("{:url('zryxes/conlist')}");
+                });
+
+                function addProject(resp){
+                    var data = resp.data;
+                    //const list = Object.keys(data1).map((item, index) => ({key: item, value:data1[item]}))
+                    var length = data.length;
+                    if(resp.code){
+                        var str = '';
+                        for(var i = 0 ; i < length ; i ++){
+                            if(data[i]['boutique'] == 1){
+                                var boutique = '<span class="la-3">精选</span>';
+                            }else{
+                                var boutique = '';
+                            }
+                            if(data[i]['direction'] == '买入'){
+                                var direction = '<span class="la-2">'+data[i]['direction']+'</span>';
+                                var shuzi = '求购数量';
+                            }else{
+                                var direction = '<span class="la-1">'+data[i]['direction']+'</span>';
+                                var shuzi = '卖出数量';
+                            }
+                            str += '<li><a href="'+data[i]['url']+'"><div class="attorn-t"><div class="pull-right"><label>是否可议价：</label>'+data[i]['isdiscount']+'</div><strong>'+data[i]['sec_uri_tyshortname']+' <small>【'+data[i]['neeq']+'】</small></strong>'+direction+boutique+'</div><div class="attorn-c"><div class="each"><label>意向价格：</label><span class="price">'+data[i]['price']+'元/股</span></div><div class="each"><label>'+shuzi+'：</label>'+(data[i]['num']/10000)+'万股</div>'+
+                                '<div class="each">'+
+                                    '<a style="display:block;padding-top:1.75rem;text-align:right;color:#CBA054;" href="'+data[i]['url']+'">查看详情>></a>'+
+                                '</div>'+
+                                '</div></a></li>';
+                        }
+                        if(length < 10){
+                            if(document.getElementById("canDone")){
+                                $(".more-text").remove();
+                                $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                            }
+                        }else{
+                            if(document.getElementById("text-none")){
+                                $(".text-over").remove();
+                                $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                            }
+                        }
+//                        $(".attorn-box").attr("data-num" , parseInt($(".attorn-box").attr("data-num"))+parseInt(length));
+                        $(".attorn-box").attr("data-num" , length);
+                        $(".attorn-box ul").html(str);
+                        $(".attorn-box li:even").addClass("even");
+                    }else{
+                        $(".attorn-box").attr("data-num" , 0);
+                        $(".attorn-box ul").html('');
+                        if(document.getElementById("canDone")){
+                            $(".more-text").remove();
+                            $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                        }
+                    }
+                    //$("#ul").html(industry);
+                }
+                //点击浏览器返回按钮返回到指定url
+                function returnUrl(url)
+                {
+                    pushHistory();
+                    window.addEventListener("popstate", function(e) {
+                        window.location = url;
+                    }, false);
+                }
+                //历史url
+                function pushHistory() {
+                    var state = {
+                        title: "title",
+                        url: "#"
+                    };
+                    window.history.pushState(state, state.title, state.url);
+                 }
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                var flat = $(".flat");
+                if(flat.length>0){
+                    var guding = $("<div />",{
+                        class:"guding"
+                    });
+                    $(".flat,.header-title").wrapAll(guding);
+                    $(".flat").css("margin-bottom",0);
+                    $(".flat").css("position","relative");
+                    $(".more-box").css({"top":"92px","height": "110%"});
+                    $(".guding").css({"width":"100%","display":"block","position":"fixed","z-index":"9999"});
+                }else{
+                    $(".header-title").css({"position":"fixed","z-index":"9999"});
+                }
+                
+            })
+        </script>
+    </body>
+</html>

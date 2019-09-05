@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+</head>
+
+<body class="mofh bg_gray">
+<div id="box">
+    <!-- 个人中心 -->
+    <div class="back_index">
+		<a href="./index.html" id="ad">返回首页</a>
+	</div>
+	<img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:66px;">
+    <div id="pcHeader" class="radius shadow bg_white porel" style="position:absolute;top:15px;left:10px;z-index:999;">
+        <div style="padding:10px 5px 15px;">
+            <div class="clearfix">
+                <img id="headerImg" class="pull-left" :src="ui.userPhoto" width="46" height="46" style="border-radius:2px;margin-right:13px;">
+                <div class="pull-left" style="width:186px;">
+                    <div class="clearfix">
+                        <span class="pull-left f16 tofh" style="margin-top:-5px;width:86px;">{{(ui.realName.length > 0) ? ui.realName : ui.userName}}</span>
+                    </div>
+                    <template v-if="ui.userType == 0">
+                        <a class="dbk" href="javascript:void(0)" onclick="doreg()" style="margin-top:4px;">
+                            <img src="/static/frontend/images/nonAuth.png" height="20">
+                        </a>
+                    </template>
+                    <template v-else-if="ui.userType == 1">
+                        <a class="dbk c_primary" href="javascript:void(0)" onclick="doinfo()"  style="margin-top:8px;">去完善个人信息 ></a>
+                    </template>
+                    <template v-else>
+                        <div class="c_gray" style="margin-top:8px;">{{ui.company_jc}} | {{ui.position}}</div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="overflow:hidden;width:100%;margin-top: 30px;">
+        <div class="pl15 pt10 pb10 f16 bg_white">我的发布</div>
+        <div class="ml5 mr5 bg_white clearfix mt5 pt10 bb1 radius_t">
+            <div style="width:50%;" class="pull-left text-center porel">
+                <div class="navName pb10 c_primary">我的业务</div>
+                <div class="navSign bg_primary" style="height: 3px;line-height: 3px;border-radius: 2px;width: 32px;margin: -1px 0 0 -16px;position: absolute;left: 50%;"></div>
+            </div>
+            <div style="width:50%;" class="pull-left text-center porel">
+                <div class="navName pb10">我的需求</div>
+                <div class="navSign bg_primary dno" style="height: 3px;line-height: 3px;border-radius: 2px;width: 32px;margin: -1px 0 0 -16px;position: absolute;left: 50%;"></div>
+            </div>
+        </div>
+        <div class="ml5 mr5 mb5 bg_white radius_b" style="height:10px;"></div>
+        <div id="busBox">
+            <div id="busBoxContent"></div>
+            <div id="moreBus" style="height:15px;line-height:15px;"></div>
+        </div>
+        <div id="needsBox" class="dno">
+            <div id="needsBoxContent"></div>
+            <div id="moreNeeds" style="height:15px;line-height:15px;"></div>
+        </div>
+    </div>
+
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+      <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+        <div class="modal-content" style="border:0;">
+          <div class="modal-body text-center"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="confirmModalLabel">提示信息</h4>
+                </div>
+                <div class="modal-body text-center">
+                    确认删除此业务？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="delBusBtn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="confirm2Modal" tabindex="-1" role="dialog" aria-labelledby="confirm2ModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="confirm2ModalLabel">提示信息</h4>
+                </div>
+                <div class="modal-body text-center">
+                    确认删除此需求？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="delNeedsBtn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // 设置加载中...
+            $(document).ajaxStart(function() {
+                $("#loading").removeClass('hidden');
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        //提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/5*1000);
+        }
+
+        // 初始窗口
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#pcHeader").width(ww-20);
+        $("body").height(wh);
+
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                ui: {},
+                page: 1,
+                page2: 1,
+                pageFlag: true,
+                page2Flag: true,
+                delThisBus: {},
+                delThisNeed: {},
+                uid: 0,
+                appId: "",
+                noncestr: "",
+                signature: "",
+                timestamp: "",
+                share: {}
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    if (getParams().uid) {
+                        vue.uid = getParams().uid;
+                        $.ajax({
+                            url: 'http://fin.jrfacai.com/home/member_api/showMemberDetail',
+                            type: 'GET',
+                            dataType: 'json',
+                            async: false,
+                            data: {"uid": vue.uid},
+                        })
+                        .done(function(res) {
+                            if (res.code == 200) {
+                                vue.ui = res.data;
+                            }
+                        });
+                    }else {
+                        vue.ui = ui;
+                    }
+
+                    vue.loadBusiness();
+                    vue.loadNeeds();
+
+                    // 加载微信配置
+                    $.ajax({
+                        url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                        type: 'GET',
+                        dataType: 'JSON',
+                        async: false,
+                        data: {"link": window.location.href},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.appId = res.data.appId;
+                            vue.noncestr = res.data.noncestr;
+                            vue.signature = res.data.signature;
+                            vue.timestamp = res.data.timestamp;
+                        }
+                    });
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: vue.appId, // 必填，公众号的唯一标识
+                        timestamp: vue.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: vue.noncestr, // 必填，生成签名的随机串
+                        signature: vue.signature,// 必填，签名
+                        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+                    });
+
+                    var shareLink = window.location.href;
+                    if (ui.userType == 1 || ui.userType == 2) {
+                        shareLink = "http://fin.jrfacai.com/static/frontend/othersBusiness.html?uid="+vue.ui.uid+"&type=0&superior="+ui.uid;
+                    }
+                    
+                    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                        wx.onMenuShareAppMessage({ 
+                            title: vue.ui.realName, // 分享标题
+                            desc: "FA財名片", // 分享描述
+                            link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: vue.ui.userPhoto, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        });
+                        wx.onMenuShareTimeline({ 
+                            title: vue.ui.realName, // 分享标题
+                            link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: vue.ui.userPhoto, // 分享图标
+                            success: function () {
+                              // 设置成功
+                            }
+                        });
+                    });
+
+                    setTimeout(function() {
+                        $(document).scroll(function(){
+                            if (vue.pageFlag) {
+                                var y=$("#moreBus").offset().top-$(window).scrollTop()-$(window).height();
+                                if(y<80 && !$("#moreBus").parent().hasClass('dno')){
+                                    vue.page = vue.page+1;
+                                    vue.loadBusiness();
+                                }
+                            }
+                        });
+
+                        $(document).scroll(function(){
+                            if (vue.page2Flag) {
+                                var y=$("#moreNeeds").offset().top-$(window).scrollTop()-$(window).height();
+                                if(y<80 && !$("#moreNeeds").parent().hasClass('dno')){
+                                    vue.page2 = vue.page2+1;
+                                    vue.loadNeeds();
+                                }
+                            }
+                        });
+
+                        $("#busBox").on('click', '.openDelBus', function(event) {
+                            vue.delThisBus = $(event.currentTarget);
+                            $("#confirmModal").modal("show");
+                        });
+
+                        $("#needsBox").on('click', '.openNeedBtn', function(event) {
+                            vue.delThisNeed = $(event.currentTarget);
+                            $("#confirm2Modal").modal("show");
+                        });
+
+                        $("#delBusBtn").click(function(event) {
+                            var ct = vue.delThisBus;
+                            $.ajax({
+                                url: 'http://fin.jrfacai.com/home/my_center_api/delMyBusiness',
+                                type: 'GET',
+                                dataType: 'json',
+                                data: {
+                                    type: ct.attr("pro"),
+                                    id: ct.attr("sid")
+                                },
+                            })
+                            .done(function(res) {
+                                if (res.code == 200) {
+                                    $("#confirmModal").modal("hide");
+                                    ct.parent().parent().remove();
+                                }
+                            });
+                        });
+
+                        $("#delNeedsBtn").click(function(event) {
+                            var ct = vue.delThisNeed;
+                            $.ajax({
+                                url: 'http://fin.jrfacai.com/home/my_center_api/delMyPublish',
+                                type: 'GET',
+                                dataType: 'json',
+                                data: {
+                                    id: ct.attr("sid")
+                                },
+                            })
+                            .done(function(res) {
+                                if (res.code == 200) {
+                                    $("#confirm2Modal").modal("hide");
+                                    ct.parent().parent().remove();
+                                }
+                            });
+                        });
+
+                        $(".navName").click(function(event) {
+                            $(".navName").removeClass('c_primary');
+                            $(".navSign").hide();
+                            var e = $(event.currentTarget);
+                            e.addClass('c_primary');
+                            e.next().show();
+                            if ($(".navName").index(e) == 0) {
+                                $("#busBox").removeClass('dno');
+                                $("#needsBox").addClass('dno');
+                            }else {
+                                $("#busBox").addClass('dno');
+                                $("#needsBox").removeClass('dno');
+                            }
+                        });
+
+                        var param = getParams();
+                        if (param["types"] == "1") {
+                            $(".navName").eq(1).trigger('click');
+                        }
+                    }, 800);
+                });
+            },
+            methods: {
+                loadBusiness: function () {
+                    var postUrl = "http://fin.jrfacai.com/home/my_center_api/getMyBusiness";
+                    var postData = {"page": vue.page};
+                    if (vue.uid != 0) {
+                        postUrl = "http://fin.jrfacai.com/home/member_api/getOtherBusiness";
+                        postData = {"uid":vue.uid,"page": vue.page};
+                    }
+                    $.ajax({
+                        url: postUrl,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: postData
+                    })
+                    .done(function(res) {
+                        var bus = res.data;
+                        if (bus.length <= 0) {
+                            vue.pageFlag = false;
+                        }
+                        for (var i = 0; i < bus.length; i++) {
+                            var tg = bus[i].tag_name.split(",");
+                            if (tg.length > 3) {
+                                var arr = new Array();
+                                for (var y = 0; y < 3; y++) {
+                                    arr.push(tg[y]);
+                                }
+                                tg = arr;
+                            }
+                            var tgStr = "";
+                            for (var z = 0; z < tg.length; z++) {
+                                tgStr += "<div style=\"height:20px;line-height:18px;\" class=\"pl10 pr10 f12 mr5 pull-left ball\">"+tg[z]+"</div>";
+                            }
+                            var typeStr = "";
+                            var linkUrl = "";
+                            if (bus[i].type == 'project_require') {
+                                typeStr += "<div class=\"c_white text-center f12 pl5\" style=\"position:absolute;right:0;top:0;background-size: 48px 26px;background-image: url(/static/frontend/images/pro-sign.png);width:48px;height:26px;line-height:24px;\">项目</div>";
+                                linkUrl = "http://fin.jrfacai.com/static/frontend/detailsShowProject.html?id="+bus[i].id+"&type=project_require";
+                            }
+                            if (bus[i].type == 'organize_require') {
+                                typeStr += "<div class=\"c_white text-center f12 pl5\" style=\"position:absolute;right:0;top:0;background-size: 48px 26px;background-image: url(/static/frontend/images/fund-sign.png);width:48px;height:26px;line-height:24px;\">资金</div>";
+                                linkUrl = "http://fin.jrfacai.com/static/frontend/detailsShowFunds.html?id="+bus[i].id+"&type=organize_require";
+                            }
+                            if (bus[i].type == 'project_clue') {
+                                typeStr += "<div class=\"c_white text-center f12 pl5\" style=\"position:absolute;right:0;top:0;background-size: 48px 26px;background-image: url(/static/frontend/images/toudi-sign.png);width:48px;height:26px;line-height:24px;\">投递</div>";
+                                linkUrl = "http://fin.jrfacai.com/home/my_center/project_clue_info/id/"+bus[i].id;
+                            }
+
+                            var expStr = "";
+                            if (bus[i].expire == "进行中") {
+                                expStr = "<span class=\"c_gray pull-left\">状态：</span><span class=\"c_primary pull-left\">"+bus[i].expire+"</span>";
+                            }else {
+                                expStr = "<span class=\"c_gray pull-left\">状态：</span><span class=\"c_gray pull-left\">"+bus[i].expire+"</span>";
+                            }
+                            if (bus[i].type != 'project_clue') {
+                                expStr += "<img sid=\""+bus[i].id+"\" pro=\""+bus[i].type+"\" class=\"openDelBus\" src=\"/static/frontend/images/del-sign-2.png\" width=\"20\" height=\"20\" style=\"position: absolute;right:0;top:0;\">";
+                            }
+
+                            var n = "<div class=\"ml5 mr5 mb10 dbk p10 radius\" style=\"background:#ffffff;\">\
+                                    <div class=\"clearfix porel\" style=\"margin-bottom:8px;\">\
+                                        "+expStr+"\
+                                    </div>\
+                                    <a href=\""+linkUrl+"\" class=\"clearfix porel dbk\">\
+                                        <img src=\""+bus[i].userPhoto+"\" alt=\"\" style=\"width:50px;height:50px;\" class=\"pull-left\">\
+                                        <div style=\"position: absolute;width:100%;height:50px;left:65px;top:0;\">\
+                                            <div class=\"f16 c_black dbk tofh proTitle\" style=\"position: absolute;top: -4px;left: 0;\">"+bus[i].name+"</div>\
+                                            <div class=\"c_gray clearfix ofh\" style=\"position: absolute;bottom: 0;left: 0;\">\
+                                                "+tgStr+"\
+                                            </div>\
+                                        </div>\
+                                        <div class=\"pull-right porel\" style=\"height:50px;width:50%;\">\
+                                            "+typeStr+"\
+                                            <div class=\"f12 c_gray text-right\" style=\"position:absolute;right:3px; bottom:0;\">"+bus[i].view_num+"</div>\
+                                        </div>\
+                                    </a>\
+                                    <a href=\""+linkUrl+"\" class=\"clearfix porel mt10 dbk\">\
+                                        <div class=\"pull-left c_black tofh mr5\" style=\"width:60px;\">"+bus[i].realName+"</div>\
+                                        <div class=\"pull-left c_gray tofh\" style=\"width:230px;\">"+bus[i].des+"</div>\
+                                        <div class=\"pull-right c_primary\" style=\"position:absolute;right:0;bottom:0;\">更多</div>\
+                                    </a>\
+                                </div>";
+                            $("#busBoxContent").append(n);
+                        }
+
+                        setTimeout(function() {
+                            $(".proTitle").width(ww-165);
+                        }, 400);
+                    });
+                },
+                loadNeeds: function () {
+                    var postUrl = "http://fin.jrfacai.com/home/my_center_api/getMyPublish";
+                    var postData = {"page": vue.page2};
+                    if (vue.uid != 0) {
+                        postUrl = "http://fin.jrfacai.com/home/member_api/getOtherPublish";
+                        postData = {"uid":vue.uid,"page": vue.page2};
+                    }
+                    $.ajax({
+                        url: postUrl,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: postData
+                    })
+                    .done(function(res) {
+                        var needs = res.data;
+                        if (needs.length <= 0) {
+                            vue.page2Flag = false;
+                        }
+                        for (var i = 0; i < needs.length; i++) {
+                            var imgStr = "";
+                            var img = needs[i].img_url;
+                            for (var y = 0; y < img.length; y++) {
+                                imgStr += "<img src=\"http://fin.jrfacai.com/uploads/"+img[y].url+"\" width=\"100\" height=\"100\" class=\"pull-left mr5\">";
+                            }
+                            if (imgStr.length>0) {
+                                imgStr = "<a href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\" class=\"clearfix mb10 dbk\">\
+                                    "+imgStr+"\
+                                </a>";
+                            }
+
+                            var tagStr = "";
+                            var tag = needs[i].all_tag.split(",");
+                            for (var y = 0; y < tag.length; y++) {
+                                tagStr += "<div class=\"pull-left tofh text-center mr5 c_gray mb5\" style=\"border:1px solid #eeeeee;border-radius:2px;padding:2px 8px;font-size:10px;\">"+tag[y]+"</div>";
+                            }
+                            if (tagStr.length>0) {
+                                tagStr = "<a href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\" class=\"clearfix mb10 dbk c_gray\">\
+                                    "+tagStr+"\
+                                </a>";
+                            }
+
+                            var n = "<div class=\"ml5 mr5 mb10 bg_white\" style=\"padding:10px 5px;border-radius:3px;\">\
+                                <div class=\"clearfix porel\">\
+                                    <img class=\"pull-left\" src=\""+needs[i].userPhoto+"\" width=\"46\" height=\"46\" style=\"border-radius:2px;margin-right:13px;\">\
+                                    <div class=\"pull-left\" style=\"width:186px;\">\
+                                        <div class=\"clearfix\">\
+                                            <span class=\"pull-left tofh\" style=\"margin-top:-5px;width:86px;\">"+needs[i].realName+"</span>\
+                                        </div>\
+                                        <div class=\"c_gray f12\" style=\"margin-top:8px;\">"+needs[i].company_jc+" | "+needs[i].position+"</div>\
+                                    </div>\
+                                    <img sid=\""+needs[i].id+"\" class=\"openNeedBtn\" src=\"/static/frontend/images/del-sign-2.png\" width=\"20\" height=\"20\" style=\"position: absolute;right:0;top:-4px;\">\
+                                </div>\
+                                <a href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\" class=\"mt10 mb10 dbk c_black\">"+needs[i].content+"</a>\
+                                "+imgStr+"\
+                                "+tagStr+"\
+                                <div class=\"clearfix c_gray\" style=\"font-size:10px;\">\
+                                    <div class=\"pull-left\">"+needs[i].create_time+"</div>\
+                                    <div class=\"pull-right\">\
+                                        <a class=\"pull-left\" href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\">\
+                                        <img src=\"/static/frontend/images/like-0.png\" class=\"pull-left mr5\" width=\"16\" height=\"16\">\
+                                        <span class=\"pull-left mr10 c_gray\">"+needs[i].point_num+"</span>\
+                                        </a>\
+                                        \
+                                        <a class=\"pull-left\" href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\">\
+                                        <img src=\"/static/frontend/images/msg-0.png\" class=\"pull-left mr5\" width=\"16\" height=\"16\">\
+                                        <span class=\"pull-left c_gray\">"+needs[i].comment_num+"</span>\
+                                        </a>\
+                                    </div>\
+                                </div>\
+                            </div>";
+                            $("#needsBoxContent").append(n);
+                        }
+                    });
+                }
+            }
+        })
+        
+        function doreg(){
+			if(ui.is_follow==1){
+        		window.location.href = '/static/frontend/reg.html';
+        	}else{
+        		window.location.href = '/static/frontend/followtab.html';
+        	}
+		}
+		
+		function doinfo(){
+			if(ui.is_follow==1){
+        		window.location.href = '/static/frontend/basic-info.html';
+        	}else{
+        		window.location.href = '/static/frontend/followtab.html';
+        	}
+		}
+    </script>
+</body>
+
+</html>

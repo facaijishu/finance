@@ -1,0 +1,32 @@
+{include file="base/header" /}
+<style>
+img{
+   pointer-events:auto !important;
+}
+</style>
+<body class="pro_body">
+{include file="base/dividend" /}
+<div class="sumbit-success clearfix">
+    <div class="pro_tips"><img src="__HOME__/images/success.png" class="pro_img_tip"></div>
+    <div class="pro_success through_info">您的资料已提交 ！</div>
+
+</div>
+<div class="pro_five">合伙人注册流程</div>
+<div class="pro_five_img through_img">
+    <img src="__HOME__/images/through.png" class="pro_five_tip">
+</div>
+<p class="fast-through">快速通过认证</p>
+<img src="__HOME__/images/fage.png" class="fage">
+<p class="through-tip">无须24小时</p>
+<p class="through-tip" style="margin-top: 1px;">只要扫描FA財哥二维码,立马审核,即可享受合伙人权益</p>
+<button class="pro-btn through-btn">完成</button>
+<script>
+    $(document).ready(function(){
+        my_center_index_url = "{:url('MyCenter/index')}";
+        $(".pro-btn").click(function(){
+            location.href = my_center_index_url;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cn">
+        <meta charset="UTF-8">
+        <title>{$title0} {$title}</title>
+		<!--禁止缓存-->
+            <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+            <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
+            <meta HTTP-EQUIV="Expires" CONTENT="0">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="referrer" content="never">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <script type="text/javascript" src="__COMMON__/js/libs/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__COMMON__/js/libs/jquery.cookie.js"></script>
+        <!--<script src="__HOME__/js/jquery.drag.js"></script>-->
+        {if condition="$address.controller eq 'ZfmxesInfo' || $address.controller eq 'ZryxesEffectInfo'"}
+        <link rel="stylesheet" href="__HOME__/css/swiper.min.css" />
+        <script src="__HOME__/js/Chart.bundle.js"></script>
+        <script src="__HOME__/js/readmore.js"></script>
+        <!--<script src="__HOME__/js/echarts.min.js"></script>-->
+        {else /}
+        <!--<link rel="stylesheet" href="__COMMON__/css/bootstrap.min.css"  >-->
+        <script src="__COMMON__/js/bootstrap/bootstrap.min.js" ></script>
+        {/if}
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <link rel="stylesheet" href="__HOME__/faicon/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__COMMON__/css/bootstrap.min.css"  >
+		<link rel="stylesheet" href="__HOME__/css/swiper.min.css">
+		<script src="__HOME__/js/swiper.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="__NEWCJ__/css/h5app.css">
+        <link rel="stylesheet" type="text/css" href="__NEWCJ__/fonts/iconfont.css?v=2016070717">
+        <script src="__NEWCJ__/js/dist/flexible/flexible_css.debug.js"></script>
+        <script src="__NEWCJ__/js/dist/flexible/flexible.debug.js"></script>
+
+        <script>
+            var controller = '{$address.controller}';
+            var action = '{$address.action}';
+            var title = '{$title0} {$title}';
+            var link = '{$wx.url}';
+            var imgURL = '{$img}';
+            if(imgURL === ''){
+                imgURL = '{$wx.root_path}__COMMON__/LOGO.png';
+            }else if(imgURL.indexOf("http")>=0){
+                imgURL = imgURL;
+            }else{
+                imgURL = '{$wx.root_path}/uploads/'+imgURL;
+            }
+            var desc = '{$des}';
+            //通过config接口注入权限验证配置
+            wx.config({
+              debug : false,
+              appId : '{$wx.appId}',
+              timestamp : '{$wx.timestamp}',
+              nonceStr : '{$wx.noncestr}',
+              signature : '{$wx.signature}',
+              jsApiList : ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+            });
+            wx.ready(function () {
+                //朋友圈
+                wx.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    link: link, // 分享链接
+                    imgUrl: imgURL, // 分享图标
+                    desc: desc, // 分享图标
+                    success: function () {
+                        if(controller == 'ProjectInfo' && action == 'index'){
+                            var url = window.location.href;
+                            var arr = url.split('/');
+                            var length = arr.length;
+                            var m = 0;
+                            for(var i = 0 ; i < length ; i ++){
+                                if(arr[i] == 'id'){
+                                    m = i+1;
+                                }
+                            }
+                            $.ajax({
+                                url: "{:url('ProjectInfo/forward_project')}",
+                                data: {id : arr[m]},
+                                dataType: 'json',
+                                success: function (resp) {
+                                    if (resp.code == 0) {
+                                        alert('转发收藏失败');
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {}
+                });
+                //微信好友
+                wx.onMenuShareAppMessage({
+                    imgUrl: imgURL,
+                    desc : desc,//摘要,如果分享到朋友圈的话，不显示摘要。
+                    title : title,//分享卡片标题
+                    link: link,//分享出去后的链接，这里可以将链接设置为另一个页面。
+                    success:function(){
+                        if(controller == 'ProjectInfo' && action == 'index'){
+                            var url = window.location.href;
+                            var arr = url.split('/');
+                            var length = arr.length;
+                            var m = 0;
+                            for(var i = 0 ; i < length ; i ++){
+                                if(arr[i] == 'id'){
+                                    m = i+1;
+                                }
+                            }
+                            $.ajax({
+                                url: "{:url('ProjectInfo/forward_project')}",
+                                data: {id : arr[m]},
+                                dataType: 'json',
+                                success: function (resp) {
+                                    if (resp.code == 0) {
+                                        alert('转发收藏失败');
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function (){}
+                });
+                //QQ好友
+                wx.onMenuShareQQ({
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接
+                    imgUrl: imgURL, // 分享图标
+                    success: function () {},
+                    cancel: function () {}
+                });
+                //腾讯微博
+                wx.onMenuShareWeibo({
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接
+                    imgUrl: imgURL, // 分享图标
+                    success: function () {},
+                    cancel: function () {}
+                });
+            });
+            document.write("<link rel='stylesheet' href='__HOME__/css/style.css?v=1022&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='__NEWCJ__/css/themes.css?v=2017129&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='__NEWCJ__/css/chat_list.css?random=" + Math.random() + "' />");
+        </script>
+        <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?7fcfdddf9172fe3c90899bbaf1b17cb4";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+    </head>
+    

@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="bonus/tab_add" /}
+            <div>
+                <form id="addBonusForm" action="{:url('Bonus/addMonth')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-2">公告内容： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="content" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+<!--                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-2">月份： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="time" placeholder="月份" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-2">共分红： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="total_amount" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-2">最高获得： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="amount" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>-->
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addBonusForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    content:{
+                        validators: {
+                            notEmpty: {
+                                message:'请输入公告内容'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                var data = $form.serialize();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                location.reload();
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+    })
+</script>

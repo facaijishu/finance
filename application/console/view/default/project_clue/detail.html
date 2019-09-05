@@ -1,0 +1,179 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-sm" id="Modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="false_form" action="{:url('ProjectClue/complete')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加备注</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="content" class="control-label">备注:</label>
+                                    <div class="input-group col-lg-12">
+                                        <textarea name="content" class="col-lg-12" rows="6" placeholder="请输入备注..." style="background-color: rgba(0,0,0,0);"></textarea>
+                                        <input class="hide" type="text" name="pc_id" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="project_clue/tab_detail" /}
+            <div id="project_detail" data-id="{$info.clue_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.pro_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {if condition="$info.status eq 0"}
+                            未处理
+                            {else /}
+                            已处理
+                            {/if}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">企业名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.company_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">添加时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">资本计划：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.capital_plan}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">融资金额：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.financing_amount}万
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">股票代码：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.stock_code}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目来源：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.pro_origin}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系人：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.contacts}（{$info.contacts_tel} , {$info.contacts_email}）
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">项目简介：</label>
+                        <div class="form-group col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                            {$info.introduction}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    {if condition="$info.img neq ''"}
+                        {foreach name="$info.img" item="img"}
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            {foreach name="img" item="list"}
+                            <div class="col-lg-2 col-md-5 col-sm-5 col-xs-12"><img style="width: 100%;" src="__UPLOAD__/home/project_clue/{$list}"></div>
+                            {/foreach}
+                        </div>
+                        {/foreach}
+                    {/if}
+                </fieldset>
+                <div class="form-actions"></div>
+                {if condition="$info.list neq []"}
+                <fieldset>
+                    <legend>备注记录</legend>
+                    {foreach name="$info.list" item="it"}
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12">{$it.content}</div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">{$it.create_time}&nbsp;&nbsp;&nbsp;{$it.create_user}</div>
+                    </div>
+                    {/foreach}
+                </fieldset>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#Modal').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).attr("data-id");
+        $('#Modal').find("input").val(id);
+        loadModule('bootstrapValidator', function () {
+            $('#false_form').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    content: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入备注'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        });
+    }).on('hidden.bs.modal', function (e) {
+        $('#false_form').bootstrapValidator('destroy');
+        $('#false_form')[0].reset();
+    });
+</script>

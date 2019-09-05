@@ -1,0 +1,333 @@
+{include file="base/header" /}
+    <body>
+        <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}">
+        <div class="kfLogo">
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">
+        </div>
+        </a>
+        <!--客服-->
+        {include file="base/dividend" /}
+        <div class="hide-search">
+            <div class="serach">
+                <div>
+                    <input id="s-input" type="text">
+                </div>
+                <button>取消</button>
+            </div>
+            <div class="search-hot">
+                {if condition="$search_hot neq []"}
+		<strong>热门搜索</strong>
+		<p>
+                    {foreach name="search_hot" item="it"}
+                    <a>{$it.content}</a>
+                    {/foreach}
+		</p>
+                {/if}
+                {if condition="$pro_search neq ''"}
+		<strong>搜索历史</strong>
+		<p>
+                    {foreach name="pro_search" item="it"}
+                    <a>{$it}</a>
+                    {/foreach}
+		</p>
+                {/if}
+            </div>
+        </div>
+        <div class="all-tab">
+            <div class="all-l all-no actived" data-id="">精选</div>
+            <div class="all-l all-no" data-id="14" onclick="location.href='/home/zfmxes/conlist'">定增</div>
+            <div class="all-l all-no" data-id="15" onclick="location.href='/home/zryxes/conlist'">大宗</div>
+            <!--
+            {foreach name="sign" item="list"}
+            {if condition="$list.id eq 14"}
+            <div class="all-l all-no" data-id="{$list.id}" onclick="location.href='/home/zfmxes/conlist'">{$list.value}</div>
+            {elseif condition="$list.id eq 15"/}
+            <div class="all-l all-no" data-id="{$list.id}" onclick="location.href='/home/zryxes/conlist'">{$list.value}</div>
+            {/if}
+            {/foreach}
+            -->
+            <div class="all-l all-no more">更多
+                <!--
+                <i class="glyphicon glyphicon-option-vertical"></i>
+                -->
+            </div>
+            <!--
+            <div class="all-l all-search"></div>
+            -->
+            <div class="sou">
+                <form id="sousuo" action="" method="" name="">
+                    <input class="fetch" type="text" name="enterprise" placeholder="输入企业名称...">
+                    <input type="text" name="capital_plan" style="display: none;">
+                    <input type="text" name="financing_amount" style="display: none;">
+                    <input type="text" name="corporate_valuation" style="display: none;">
+                    <input type="text" name="net_profit" style="display: none;">
+                    <input type="text" name="annual_revenue" style="display: none;">
+                    <input type="text" name="transfer_type" style="display: none;">
+                    <input type="text" name="hierarchy" style="display: none;">
+                </form>
+                <i class="icon_img all-search"></i>
+            </div>
+        </div>
+        <div id="project_list">
+            {foreach name="project" item="list"}
+                {if condition="$through eq null || $through.status neq 1"}
+                <div class="center-box disRead" data-id="{$list.pro_id}">
+                {else}
+                <div class="center-box" data-id="{$list.pro_id}">
+                {/if}
+                <img src="__UPLOAD__/{$list.top_img}" alt="{$list.pro_name}" style="width: 100%;">
+                <!--<video src="__UPLOAD__/{$list.roadshow_url}" poster="__UPLOAD__/{$list.top_img}"></video>-->
+                <div class="my-pro" style="margin-top: 5px;">
+                    <div class="pro-t">{$list.pro_name}<small>（{$list.stock_code}）</small></div>
+                    <div class="pro-label">
+                        {foreach name="$list.inc_industry" item="industry"}
+                        <span>{$industry}</span>
+                        {/foreach}
+                        <label for="transfer_type" class="red">{$list.transfer_type}</label>
+                        <label for="hierarchy" class="orange">{$list.hierarchy}</label>
+                    </div>
+                    <div class="pro-box padding-0">
+                        <p>{$list.introduction}</p>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+        <div class="more-box">
+            <form action="{:url('Project/sproject')}" method="post" id="project_select">
+                <input class="fetch" type="text" name="enterprise" placeholder="输入企业名称..." style="display: none;">
+                <dl>
+                    <dt>资本计划</dt>
+                    <dd class="dd-4">
+                        {foreach name="capital_plan" item="plan"}
+                        <span data-id="{$plan.id}">{$plan.value}</span>
+                        {/foreach}
+                    </dd>
+                </dl>
+                <input class="capital_plan" type="text" name="capital_plan" style="display: none;">
+                <dl>
+                    <dt>融资金额</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">1000万以下</span>
+                        <span data-id="2">1000～3000万</span>
+                        <span data-id="3">3000～5000万</span>
+                        <span data-id="4">5000万以上</span>
+                    </dd>
+                </dl>
+                <input class="financing_amount" type="text" name="financing_amount" style="display: none;">
+                <dl>
+                    <dt>公司估值</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">1亿以下</span>
+                        <span data-id="2">1～5亿</span>
+                        <span data-id="3">5～10亿</span>
+                        <span data-id="4">10亿以上</span>
+                    </dd>
+                </dl>
+                <input class="corporate_valuation" type="text" name="corporate_valuation" style="display: none;">
+                <dl>
+                    <dt>净利润</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">500万以下</span>
+                        <span data-id="2">500～2000万</span>
+                        <span data-id="3">2000～5000万</span>
+                        <span data-id="4">5000万以上</span>
+                    </dd>
+                </dl>
+                <input class="net_profit" type="text" name="net_profit" style="display: none;">
+                <dl>
+                    <dt>年营业收入</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">500万以下</span>
+                        <span data-id="2">500～2000万</span>
+                        <span data-id="3">2000～5000万</span>
+                        <span data-id="4">5000～1亿</span>
+                        <span data-id="5">1亿～2亿</span>
+                        <span data-id="6">2亿以上</span>
+                    </dd>
+                </dl>
+                <input class="annual_revenue" type="text" name="annual_revenue" style="display: none;">
+                <dl>
+                    <dt>转让类型</dt>
+                    <dd class="dd-3">
+                        {foreach name="transfer_type" item="type"}
+                        <span data-id="{$type.id}">{$type.value}</span>
+                        {/foreach}
+                    </dd>
+                </dl>
+                <input class="transfer_type" type="text" name="transfer_type" style="display: none;">
+                <dl>
+                    <dt>层级</dt>
+                    <dd class="dd-3">
+                        {foreach name="hierarchy" item="hier"}
+                        <span data-id="{$hier.id}">{$hier.value}</span>
+                        {/foreach}
+                    </dd>
+                </dl>
+                <input class="hierarchy" type="text" name="hierarchy" style="display: none;">
+                <div class="bar-box">
+                </div>
+                <div class="bar-btn">
+                    <button class="btn-white" type="button">取消</button>
+                    <button class="submit" type="button">确定</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bar-box">
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                /**
+                 * 点击跳转进入详情页
+                 * */
+                $("#project_list").on('click','.center-box',function(){
+                   if($(this).hasClass('disRead')){
+                        $(".msg-dialog").css("display","block");
+                    }else{
+                    var id = $(this).attr("data-id");
+                    $.ajax({
+                        url: "{:url('Project/detail')}",
+                        type: 'POST',
+                        data: {id:id},
+                        success: function(resp){
+                            location.href = resp.data;
+                        }
+                    });
+                   }
+                });
+                $(".more-box").on('click' , 'span' , function(){
+                    if($(this).hasClass("actived")){
+                        var txt = "";
+                        $(this).removeClass("actived");
+                        $(this).parents("dl").next("input").val(txt);
+                    }else{
+                        $(this).parent().find("span").removeClass("actived");
+                        $(this).addClass("actived");
+                        var id = $(this).attr("data-id");
+                        $(this).parents("dl").next("input").val(id);
+                    }
+                });
+                /***
+                 * 点击搜索
+                 * */
+                 $(".sou .icon_img").on('click',function(){
+                     $("#project_list").show();
+                     var form = document.getElementById("sousuo");
+                     var formData = new FormData(form);
+                     $.ajax({
+                         url: "{:url('Project/sproject')}",
+                         type: 'POST',
+                         data: formData,
+                         cache: false,
+                         processData: false,
+                         contentType: false,
+                         success: function (resp) {
+                             $(".more-box").fadeOut();
+                             var data = resp.data;
+                             $(".all-no").removeClass("actived");
+                             $(".all-no[data-id='']").addClass("actived");
+                             addProject(data);
+                         }
+                     });
+                 });
+                /**
+                 * 点击确认按钮
+                 * */
+                $("#project_select").on('click','.submit',function(){
+                    $("#project_list").show();
+                    var form = document.getElementById("project_select");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Project/sproject')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (resp) {
+                            $(".more-box").fadeOut();
+                            var data = resp.data;
+                            $(".all-no").removeClass("actived");
+                            $(".all-no[data-id='']").addClass("actived");
+                            addProject(data);
+                        }
+                    });
+                });
+                /**
+                 * 点击搜索框旋转
+                 * **/
+                //$(".all-search").on("click", function () {
+                //    $(".hide-search").css({transform: "rotateX(0deg)"})
+                //});
+                $(".all-l.more").on("click", function () {
+                    $(".more-box").fadeIn();
+                    $("#project_list").hide();
+                });
+                $(".more-box .btn-white").on("click", function () {
+                    $(".more-box").fadeOut();
+                    $("#project_list").show();
+                    $(".more-box span").removeClass("actived");
+                    var txt = "";
+                    $(".more-box span").parents("dl").next("input").val(txt);
+                });
+                $("#s-input").focus(function () {
+                    $('.serach button').html("搜索");
+                });
+                $(".hide-search button").on("click", function () {
+                    if ($(this).html() == "取消") {
+                        $(".hide-search").css({transform: "rotateX(90deg)"})
+                    }else{
+                        var text = $("#s-input").val();
+                        $.ajax({
+                            url: "{:url('Project/ctext')}",
+                            data: {text:text},
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function(resp){
+                                var data = resp.data;
+                                addProject(data);
+                            }
+                        });
+                        $(".hide-search").css({transform: "rotateX(90deg)"})
+                    }
+                });
+                $(".search-hot a").on('click',function(){
+                    $("#s-input").val($(this).text());
+                    $("#s-input").focus();
+                    $('.serach button').html("搜索");
+                })
+                /***
+                $(".all-tab").on('click','.all-no',function(){
+                    $(".all-no").removeClass("actived");
+                    $(this).addClass("actived");
+                    var sign = $(this).attr("data-id");
+                    $.ajax({
+                        url: "{:url('Project/csign')}",
+                        data: {sign:sign},
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(resp){
+                            var data = resp.data;
+                            addProject(data);
+                        }
+                    });
+                });
+                 ***/
+            });
+            function addProject(data){
+                var str = '';
+                var length = data.length;
+                for(var i = 0 ; i < length ; i++){
+                    var industry = '';
+                    for(var j = 0 ; j < data[i]['inc_industry'].length ; j++){
+                        industry += '<span>'+data[i]['inc_industry'][j]+'</span>';
+                    }
+                    str += '<div class="center-box" data-id="'+data[i]['pro_id']+'"><img src="__UPLOAD__/'+data[i]['top_img']+'" alt="'+data[i]['pro_name']+'" style="width: 100%;"><div class="my-pro" data-id="'+data[i]['pro_id']+'"><div class="pro-t">'+data[i]['pro_name']+'<small>（'+data[i]['stock_code']+'）</small></div><div class="pro-label">'+industry+'<label for="transfer_type" class="red">'+data[i]['transfer_type']+'</label><label for="hierarchy" class="orange">'+data[i]['hierarchy']+'</label></div><div class="pro-box padding-0"><p>'+data[i]['introduction']+'</p></div></div></div>';
+                }
+                $("#project_list").html(str);
+            }
+        </script>
+{include file="base/footer" /}

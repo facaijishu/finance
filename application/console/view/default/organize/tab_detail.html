@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">机构详情</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Organize/detail")}')">机构详情</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("Organize/index")}')">返回</a>
+    
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("Organize/edit" , ['org_id' => $info.org_id])}')">修改</a>
+    
+</ul>

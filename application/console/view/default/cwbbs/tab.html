@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">财报列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Cwbbs/index")}')">财报列表</a></li>
+    {/if}
+<!--    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">待审核</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Earnings/index")}')">待审核</a></li>
+    {/if}
+    {if condition="$Request.action eq 'examine' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">已审核</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Earnings/examine")}')">已审核</a></li>
+    {/if}
+    {if condition="$Request.action eq 'failexamine' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">未通过审核</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Earnings/failexamine")}')">未通过审核</a></li>
+    {/if}-->
+</ul>

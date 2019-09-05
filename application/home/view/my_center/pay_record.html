@@ -1,0 +1,140 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="tab pay-tab">
+            <a class="actived">活动中心</a>
+            <a>学习中心</a>
+        </div>
+        <div class="pay_list">
+            <div class="record-list">
+                {if condition="$list eq []"}
+                <div class="text-over">
+                暂无记录
+                </div>
+                {else /}
+                {foreach name="$list" item="it"}
+                <div class="record">
+                    <div class="record-c">
+                        订单号：{$it.out_trade_no}<br>
+                        下单时间：{$it.create_time}<br>
+                        订单信息：{$it.name}（{$it.phone}）<br>
+                        {if condition="$it.is_pay eq 0"}未支付{else /}已支付{/if}：微信支付<br>
+                        商品名称【{if condition="$it.type eq 'activity'"}活动中心{else /}学习中心{/if}】：{$it.body}
+                    </div>
+                    <div class="record-m">
+                        {$it.total_fee} 元
+                    </div>
+                </div>
+                {/foreach}
+                <div class="text-over">
+                    没有啦~~~
+                </div>
+                {/if}
+            </div>
+        </div>
+        <div class="pay_list" style="display: none;">
+            <div class="tab stydy-tab">
+                <a class="actived">打赏订单</a>
+                <a>付费订单</a>
+                <a>会员订单</a>
+            </div>
+            <div class="pay_list_list">
+                <div class="record-list">
+                    {if condition="$list1 eq []"}
+                    <div class="text-over">
+                    暂无记录
+                    </div>
+                    {else /}
+                    {foreach name="$list1" item="it"}
+                    <div class="record">
+                        <div class="record-c">
+                            订单号：{$it.out_trade_no}<br>
+                            下单时间：{$it.pay_time}<br>
+                            订单信息：{$it.name}（{$it.phone}）<br>
+                            已支付：微信支付<br>
+                            商品名称【学习中心】：{$it.title}
+                        </div>
+                        <div class="record-m">
+                            {$it.pay_money} 元
+                        </div>
+                    </div>
+                    {/foreach}
+                    <div class="text-over">
+                        没有啦~~~
+                    </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="pay_list_list" style="display: none;">
+                <div class="record-list">
+                    {if condition="$list2 eq []"}
+                    <div class="text-over">
+                    暂无记录
+                    </div>
+                    {else /}
+                    {foreach name="$list2" item="it"}
+                    <div class="record">
+                        <div class="record-c">
+                            订单号：{$it.out_trade_no}<br>
+                            下单时间：{$it.rec_time}<br>
+                            订单信息：{$it.name}（{$it.phone}）<br>
+                            已支付：微信支付<br>
+                            商品名称【学习中心】：{$it.month}个月
+                        </div>
+                        <div class="record-m">
+                            {$it.recharge} 元
+                        </div>
+                    </div>
+                    {/foreach}
+                    <div class="text-over">
+                        没有啦~~~
+                    </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="pay_list_list" style="display: none;">
+                <div class="record-list">
+                    {if condition="$list3 eq []"}
+                    <div class="text-over">
+                    暂无记录
+                    </div>
+                    {else /}
+                    {foreach name="$list3" item="it"}
+                    <div class="record">
+                        <div class="record-c">
+                            订单号：{$it.out_trade_no}<br>
+                            下单时间：{$it.shang_time}<br>
+                            订单信息：{$it.name}（{$it.phone}）<br>
+                            已支付：微信支付<br>
+                            商品名称【学习中心】：{$it.title}
+                        </div>
+                        <div class="record-m">
+                            {$it.shang_money} 元
+                        </div>
+                    </div>
+                    {/foreach}
+                    <div class="text-over">
+                        没有啦~~~
+                    </div>
+                    {/if}
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".pay-tab a").on("click", function () {
+                    $(".pay-tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".pay_list").hide();
+                    $(".pay_list").eq($(this).index()).show();
+                });
+                $(".stydy-tab a").on("click", function () {
+                    $(".stydy-tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".pay_list_list").hide();
+                    $(".pay_list_list").eq($(this).index()).show();
+                });
+            });
+        </script>
+    </body>
+</html>

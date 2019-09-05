@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+
+            {include file="project/tab_detail2" /}
+
+            <div id="project_detail" data-id="{$info.pro_id}" data-upload="__UPLOAD__" style="text-align: center">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">用户ID：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12" >
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <!--<input type="textarea" class="form-control uid" style="text-align:left;wdith:800px;height:200px;" name="uid" value="" />  -->
+                                    <textarea class="form-control uid" name="uid"></textarea>
+                                </div>
+                            </div>
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6"></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12" style="color:#cb3b50;font-weight:bold;padding-top:5px;text-align:left;">
+                            	注：<br/>
+                            	1）若用户ID填写优先发送该内容里的对象<br/>
+                            	2）发送多个用户请用英文逗号","分隔
+                            </div>             
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend></legend>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-lg-3 col-md-2 col-sm-2 control-label"> 身份选择： </label>
+                                    <div class="radio-inline col-lg-14 col-sm-8 col-md-8">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="userType" name="userType" value="99" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="userType" name="userType" value="0">
+                                            <span> 游客 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="userType" name="userType" value="1">
+                                            <span> 绑定用户 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="userType" name="userType" value="2">
+                                            <span> 认证合伙人 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">项目联系人：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control cex" name="id" value="" />
+                                </div>
+                            </div>
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6"></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12" style="color:#cb3b50;font-weight:bold;padding-top:5px;text-align:left;">
+                            	不填写则默认取项目中维护的联系人+手机号码信息；<br/>若填写则此次发送内容为填写内容,<br/>格式如“X先生/女士（130XXXXXXXX）”
+                            </div> 
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <a href="javascript:void(0);" class="btn btn-xs btn-danger cale" data-action="sendinfo" data-id="{$id}"><i class="fa fa-search"></i>推送消息</a>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(".btn-success").hide();
+    });
+    var upload = $("#project_detail").attr("data-upload");
+    var ye = '<div class="divMessageBox animated fadeIn fast zidingyi" id="MsgBoxBack"><div class="MessageBoxContainer animated fadeIn fast" id="Msg1"><div class="MessageBoxMiddle" style="text-align:center;"><span class="MsgTitle">推送中</span><img src="'+upload+'/loading.gif" style="width:50px;"></div></div></div>';
+    var project_sendinfo_url = "{:url('project/sendinfo')}";
+    $(".btn-danger").click(function(){
+        var _this = $(this);
+        //获取编号
+        var uid 	 = $(".uid").val();
+        //获取身份
+        var userType = $("input[name='userType']:checked").val();
+        //获取输入的姓名
+        var name 		= $(".cex").val();
+        
+        if (uid!=""){  
+            var p = /[，]/i; 
+            var pe = /[a-z]/i; 
+            var pc = /[\u4E00-\u9FA5]/i; 
+            if(p.test(uid)){
+                Dialog.error('用户ID填写含有中文逗号');
+            	return false;
+            }
+            if(pe.test(uid)){
+            	Dialog.error('用户ID不能填写英文');
+            	return false;
+            }
+            
+            if(pc.test(uid)){
+            	Dialog.error('用户ID不能填写中文');
+            	return false;
+            }
+        }
+        
+        Dialog.confirm('操作提示', '确定要推送吗？'+uid, function () {
+            var id = _this.attr("data-id");
+            $("body").append(ye);
+            $.ajax({
+                url: project_sendinfo_url,
+                type: 'post',
+                //data: {id: id,uid:uid,openId:openId,userType:userType,name:name},
+                data: {id:id,uid:uid,userType:userType,name:name},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code == 1) {
+                        $("body .zidingyi").remove();
+                        Dialog.success('微信推送请求成功', resp.msg, 2000, function () {
+                         location.reload();
+                        });
+                    } else {
+                        Dialog.error('微信推送请求失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>

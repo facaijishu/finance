@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="index/inc/system_notice_list" /}
+        </div>
+    </div>
+</div>
+{include file="system_notice/inc/system_notice_view" /}
+<script>
+    var get_notice_url = '{:url("SystemNotice/getNotice")}';
+    var view_notice_url = '{:url("SystemNotice/viewNotice")}';
+</script>
+<script src="__STATIC__/js/system_notice.js"></script>

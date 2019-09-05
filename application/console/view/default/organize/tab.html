@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">机构列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Organize/index")}')">机构列表</a></li>
+    {/if}
+
+    <a class="btn btn-success" style="float: right;" onclick="loadURL('{:url("Organize/add")}')">添加机构</a>
+	{if condition="$Request.action eq 'index' "}
+	    <button class="btn btn-success export" style="float: right;" type="button"><i class="fa fa-download"></i><a target="_black">导出机构中心统计</a></button>
+	{/if}
+</ul>

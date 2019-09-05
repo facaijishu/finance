@@ -1,0 +1,24 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        <div class="industry-view">
+            <h3>{$info.title}</h3>
+            <div class="time-box">
+                <span class="time">{$info.create_time}</span>
+                {if condition="$info.source neq ''"}
+                {$info.source}
+                {/if}
+                {if condition="$info.author neq ''"}
+                <span class="writer">作者/{$info.author}</span>
+                {/if}
+            </div>
+            <div class="industry-con">
+                {$info.content}
+            </div>
+        </div>
+        <div class="text-over">
+            全文完
+        </div>
+    </body>
+</html>

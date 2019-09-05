@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+
+<body>
+<div id="box" class="mofh bg_gray">
+    <!-- 我的关注 -->
+    <div class="f16 p15">我的关注</div>
+    <div id="contentBox" class="">
+        <div v-if="!focusList || focusList.length < 1" class="ml5 mr5 mb10 bg_white c_black dbk clearfix text-center" style="padding:10px 5px;border-radius:3px;">
+            暂无相关信息！
+        </div>
+        <div v-for="item in focusList" class="ml5 mr5 mb10 bg_white c_black clearfix" style="padding:10px 5px;border-radius:3px;">
+            <a class="clearfix pull-left" :href="'/static/frontend/othersBusiness.html?uid='+item.uid+'&type=0'">
+                <img id="headerImg" class="pull-left" :src="item.userPhoto" width="46" height="46" style="border-radius:2px;margin-right:13px;">
+                <div class="pull-left" style="width:186px;">
+                    <div class="clearfix">
+                        <span class="pull-left tofh" style="margin-top:-5px;width:120px;">{{item.realName}}</span>
+                    </div>
+                    <div class="c_gray f12" style="margin-top:8px;">{{item.company_jc}} | {{item.position}}</div>
+                </div>
+            </a>
+            <img class="pull-right mt10" @click="doFollow(item)" v-if="item.is_follow == '已关注'" src="/static/frontend/images/focused-sign.png" width="66">
+            <img class="pull-right mt10" @click="doFollow(item)" v-if="item.is_follow == '关注'" src="/static/frontend/images/non-focus-sign.png" width="66">
+            <img class="pull-right mt10" @click="doFollow(item)" v-if="item.is_follow == '已互关'" src="/static/frontend/images/both-focus.png" width="66">
+        </div>
+        <div id="more" class="mt10 mb10 bg_white ofh" style="height:30px;">
+            <div class="bb1 pt15"></div>
+            <div class="text-center f12 c_gray bg_white center-block" style="position: relative;margin-top:-10px;width: 205px;">找不到想要的？去发布您的需求吧！</div>
+        </div>
+    </div>
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+      <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+        <div class="modal-content" style="border:0;">
+          <div class="modal-body text-center"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        //提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/5*1000);
+        }
+
+        // 初始窗口
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#box").height(wh);
+
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                ui: {},
+                focusList: [],
+                pageFlag: true,
+                page: 1
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    vue.ui = ui;
+                    vue.loadFocusList();
+
+                    // 加载更多
+                    $("#box").scroll(function(){
+                        if (vue.pageFlag) {
+                            var y=$("#more").offset().top-$(window).scrollTop()-$(window).height();
+                            if(y<80){
+                                vue.page = vue.page+1;
+                                vue.loadFocusList();
+                            }
+                        }
+                    });
+                });
+            },
+            methods: {
+                loadFocusList: function () {
+                    vue.pageFlag = false;
+                    $("#loading").removeClass('hidden');
+                    $.ajax({
+                        url: 'http://fin.jrfacai.com/home/my_center_api/showMyFollow',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            page: vue.page
+                        },
+                    })
+                    .done(function(res) {
+                        var tmp = res.data;
+                        if (tmp && tmp.length > 0) {
+                            for (var i = 0; i < tmp.length; i++) {
+                                vue.focusList.push(tmp[i]);
+                            }
+                            vue.pageFlag = true;
+                        }
+                        $("#loading").addClass('hidden');
+                    });
+                    
+                },
+                doFollow: function (item) {
+                    $.ajax({
+                        url: 'http://fin.jrfacai.com/home/follow_user_api/doFollowUser',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {"uid": item.uid},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            if (item.is_follow == '已关注' || item.is_follow == '已互关') {
+                                item.is_follow = '关注';
+                                alertModal("已取消关注");
+                            }else {
+                                alertModal("已关注");
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 1200);
+                            }
+                        }
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+{include file="base/header" /}
+    <body>
+        <div class="clause">
+            <span class="red">感谢您对于金融知识的分享，请您明确了解以下内容后点击确认按钮</span>
+            <p>《用户协议》（以下简称“协议”）是用户（即通过在橙子魔方网站实名注册、登入、使用或浏览橙子魔方网站服务的自然人、法人或组织）与上海惠居网络科技有限公司之间关于橙子魔方网站（www.chengzimofang.com）及H5移动网站所提供的产品、服务等所订立的协议。</p>
+            <strong>1、用户协议的生效</strong>
+            <p>橙 子魔方提醒用户在注册之前认真阅读、充分理解本协议中各条款内容，包括免除或限制橙子魔方的免责条款及对用户权利限制条款等。若用户不接受本协议所有条 款，则无权注册、登入或使用本协议所涉及的相关服务。用户的注册、登入、使用等行为即视为对本协议的接受，并同意接受本协议所有条款的约束，本用户协议生 效。</p>
+        </div>
+
+        <div class="bar-box">
+        </div>
+        <div class="bar-btn">
+            <button data-openid="{$openid}">
+                我确定申请成为老师
+            </button>
+        </div>
+        <script>
+            $("button").click(function(){
+                var openid = $(this).attr("data-openid");
+                $.ajax({
+                    url: "{:url('Study/sendSuccess')}",
+                    type: 'POST',
+                    data: {openid:openid},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if(resp.code){
+                            location.href = "{:url('Study/succeed')}";
+                        }else{
+                            alert(resp.msg);
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

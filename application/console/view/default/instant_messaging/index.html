@@ -1,0 +1,331 @@
+<style>
+    #member_list li{padding: 5px;}
+    #member_list a{display: block;border: 1px solid white;box-shadow: 5px 5px 3px white;cursor: pointer;}
+    #member_list img{height: 60px;margin-right: 10px;}
+    #member_list button{border-radius: 20px;float: right;}
+    .liactived{background-color: lightsteelblue;}
+    .message_l{margin:15px 0 0;}
+    .message_l img{width:40px;float: left;}
+    .message_l .message_c{text-align: left;float: left;max-width: 80%;}
+    .message_l .message_c .jiantou{width: 40px;position: absolute;border-top: 18px solid #fff;border-left: 18px solid transparent;}
+    .message_l .message_c p{word-break: break-all; white-space: pre-wrap;margin-left: 18px;padding: 10px;background-color: white;color: black;border-radius: 5px;position: relative;word-break: break-all;text-align: left;}
+    .message_l .message_c img{width: 100px;}
+    .message_l .message_c em{font-size:12px;margin: 0 0 0 20px;}
+    .message_r{margin:15px 0 0;}
+    .message_r img{width:40px;float: right;}
+    .message_r .message_c{text-align: right;float: right;max-width: 80%;position: relative;}
+    .message_r .message_c .jiantou{width: 40px;position: absolute;right: 0;border-top: 18px solid #fff;border-right: 18px solid transparent;}
+    .message_r .message_c p{word-break: break-all; white-space: pre-wrap;margin-right: 18px;padding: 10px;background-color: white;color: black;border-radius: 5px;position: relative;word-break: break-all;text-align: left;}
+    .message_r .message_c img{width: 100px;}
+    .message_r .message_c em{font-size:12px;margin: 0 20px 0 0;}
+    .clear{clear: both;}
+    .different_time{text-align: center;padding: 0 100px;}
+    .file-input .progress {display:none;}
+    .img{cursor: pointer;}
+    .message_r .message_c p:after{clear: both;content: '.';display: block;width: 0;height: 0;visibility: hidden;}
+    .message_l .message_c p:after{clear: both;content: '.';display: block;width: 0;height: 0;visibility: hidden;}
+</style>
+{include file="introdece_img/modal" /}
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <table id="InstantMessaging" class="table table-striped table-bordered" width="100%">
+                        <tr>
+                            <td class="col-lg-3 col-md-4 col-sm-4">
+                                <ul class="nav nav-pills nav-stacked" id="member_list" data-uid="" data-min="" data-max="">
+                                    {foreach name="list" item="it"}
+                                    <li role="presentation" data-uid="{$it.m_uid}">
+                                        <a>
+                                            <img src="{$it.userPhoto}">
+                                            {$it.userName}
+                                            {if condition="$it.is_read neq 0"}
+                                            <button type="button" class="btn btn-danger">{$it.is_read}</button>
+                                            {/if}
+                                        </a>
+                                    </li>
+                                    {/foreach}
+                                </ul>
+                            </td>
+                            <td class="col-lg-9 col-sm-8 col-md-8">                    
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="min-height: 80px;padding: 5px;border: 1px solid white;box-shadow: 5px 5px 3px white;">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <img class="userPhoto" src="__COMMON__/LOGO.png" style="width: 70px;">
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <div class="col-lg-12" style="padding-bottom: 3px;height: 20px;">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">UID：<span class="uid">150</span></div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">姓名：<span class="userName">成长、需要沉淀</span></div>
+                                        </div>
+                                        <div class="col-lg-12" style="padding-bottom: 3px;height: 20px;">
+                                            <div class="col-lg-6 col-md-12 col-sm-12">openId：<span class="openId">osmRL1rKGLDGFHSUPiIHgSLulf50</span></div>
+                                            <div class="col-lg-6 col-md-12 col-sm-12">创建时间：<span class="create_time">2017-06-11 12:12:12</span></div>
+                                        </div> 
+                                        <div class="col-lg-12" style="padding-bottom: 3px;height: 20px;">
+                                            <div class="col-lg-4 col-md-6 col-sm-6">性别：<span class="sex">男</span></div>
+                                            <div class="col-lg-4 col-md-6 col-sm-6">角色：<span class="type">金融合伙人</span></div>
+                                            <div class="col-lg-4 col-md-6 col-sm-6">上级合伙人：<span class="superior">再来一杯</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="min-height: 600px;padding: 5px;border: 1px solid white;box-shadow: 5px 5px 3px white;margin-top: 10px;">
+                                    <div class="col-lg-6 M_l" style="border: 1px solid white;height: 600px;position: relative;padding: 15px;left: 0;overflow-y: scroll;"></div>
+                                    <div class="col-lg-6 M_r" style="border: 1px solid white;height: 600px;position: relative;padding: 15px;right:  0;overflow-y: scroll;"></div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="height: 200px;padding: 5px;border: 1px solid white;box-shadow: 5px 5px 3px white;margin-top: 10px;">
+                                    <form id="instant_messaging">
+                                        <div class="col-lg-12"><input class="file-uploads" type="file" name="file" data-show-preview="false"></div>
+                                        <div class="col-lg-12"><textarea class="form-control" name="content" rows="6"></textarea></div>
+                                        <div class="col-lg-12"><button type="button" class="btn btn-primary" style="float: right;">回复</button></div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/show/introduce_img.js"></script>
+<script>
+//    $(document).ready(function () {
+        var tmid = window.setInterval("setTimeGetMemberList()", 5000);
+        var time = window.setInterval("getMemberNewInfo()", 3000);
+//        $(".picture").click(function(){
+//            $(this).siblings("input").click();
+//        });
+        document.onkeydown=function(e){
+            if(e.keyCode == 13 && e.ctrlKey){
+                document.getElementById("a").value += "\n";
+            }else if(e.keyCode == 13){
+                e.preventDefault();
+                sendReply();
+            }
+        }
+        $("#member_list").on('click','li',function(){
+            $(this).siblings("li").find("a").removeClass("liactived");
+            $(this).find("a").addClass("liactived");
+            var uid = $(this).attr("data-uid");
+            $("#member_list").attr("data-uid" , uid);
+            getMemberInfo();
+            setTimeGetMemberList();
+            clearInterval(time);
+            time = window.setInterval("getMemberNewInfo()", 3000);
+        });
+        $("#InstantMessaging").on('click' , '.fa-rss' , function(){
+            $(this).siblings("audio")[0].play();
+        });
+        $("#member_list li:eq(0)").click();
+        $("#instant_messaging button").click(function(){
+            sendReply();
+        });
+        function sendReply(){
+            var content = $("#instant_messaging").find("textarea").val();
+            if(content != ''){
+                $("#instant_messaging").find("textarea").val('');
+                var uid = $("#member_list").attr("data-uid");
+                var max = $("#member_list").attr("data-max");
+                getMemberNewInfo();
+                $.ajax({
+                    url: "{:url('InstantMessaging/add')}",
+                    type: 'POST',
+                    data: {uid:uid , content:content , max:max},
+                    success: function (resp) {
+                        if (resp.code) {
+                            var data = resp.data;
+                            var content = '';var str = '';
+                            max = data.km_id;
+                            $("#member_list").attr("data-max",max);
+                            if(data.type == 'text'){
+                                content = data.content;
+                            }else if(data.type == 'image'){
+                                content = '<img data-toggle="modal" data-target="#ModalImg" src="'+data.content+'"><span style="clear:both;"></span>';
+                            }else{
+                                content = '<span class="fa fa-rss" data-id="'+data.content+'"></span><audio id="musicBox" src="/'+data.content+'" preload=""></audio>';
+                            }
+                            str += '<div class="message_r"><img src="__UPLOAD__/'+data.url_thumb+'"><div class="message_c"><div class="jiantou"></div><p>'+content+'</p><em>'+data.time+'</em></div><div class="clear"></div></div>';
+                            $(".M_l").append(str);
+                        } else {
+                            alert(resp.msg);
+                        }
+                    }
+                });
+            }
+        }
+        function getMemberNewInfo(){
+            var uid = $("#member_list").attr("data-uid");
+            var max = $("#member_list").attr("data-max");
+            $.ajax({
+                url: "{:url('InstantMessaging/selectNewInfo')}",
+                type: 'POST',
+                data: {uid:uid , max:max},
+                success: function (resp) {
+                    if (resp.code) {
+                        var data = resp.data;
+                        var length = data.length;
+                        var str = '';
+                        var content = '';
+                        for(var i = 0 ; i < length ; i++){
+                            if(data[i]['km_id'] > max){
+                                if(i > 0 && data[i]['day'] != data[i-1]['day']){
+                                    str += '<div class="different_time">'+data[i]['create_time']+'</div>';
+                                }
+                                if(data[i]['type'] == 'text'){
+                                    content = data[i]['content'];
+                                }else if(data[i]['type'] == 'image'){
+                                    content = '<img data-toggle="modal" data-target="#ModalImg" src="'+data[i]['content']+'"><span style="clear:both;"></span>';
+                                }else{
+                                    content = '<span class="fa fa-rss" data-id="'+data[i]['content']+'"></span><audio id="musicBox" src="/'+data[i]['content']+'" preload=""></audio>';
+                                }
+                                if(data[i]['direction'] == '-->'){
+                                    str += '<div class="message_l"><img src="'+data[i]['userPhoto']+'"><div class="message_c"><div class="jiantou"></div><p>'+content+'</p><em>'+data[i]['time']+'</em></div><div class="clear"></div></div>';
+                                }else{
+                                    str += '<div class="message_r"><img src="__UPLOAD__/'+data[i]['url_thumb']+'"><div class="message_c"><div class="jiantou"></div><p>'+content+'</p><em>'+data[i]['time']+'</em></div><div class="clear"></div></div>';
+                                }
+                            }
+                        }
+                        $(".M_l").append(str);
+                        max = data[length-1]['km_id'];
+                        $("#member_list").attr("data-max",max);
+                    } else {
+                        console.log(resp.msg);
+                    }
+                }
+            });
+        }
+        function getMemberInfo(){
+            var uid = $("#member_list").attr("data-uid");
+            $.ajax({
+                url: "{:url('InstantMessaging/getMemberInfo')}",
+                data:{uid:uid},
+                type: 'POST',
+                success: function (resp) {
+                    var data = resp.data;
+                    var length_n = data.new.length;
+                    if(length_n == 0){
+                        var str_n = '<div class="different_time">暂无新信息</div>';
+                    }else{
+                        var str_n = '';
+                    }
+                    var content_n = '';
+                    var length_o = data.old.length;
+                    if(length_o == 0){
+                        var str_o = '<div class="different_time">暂无旧信息</div>';
+                    }else{
+                        var str_o = '';
+                    }
+                    var content_o = '';
+                    $("#member_list").attr({"data-min":data.min , "data-max":data.max})
+                    $(".userPhoto").attr("src",data.userPhoto);
+                    $(".uid").text(data.uid);
+                    $(".userName").text(data.userName);
+                    $(".openId").text(data.openId);
+                    $(".create_time").text(data.CREATE_TIME);
+                    $(".sex").text(data.userSex);
+                    $(".type").text(data.userType);
+                    $(".superior").text(data.superior);
+                    for(var i = 0 ; i < length_n ; i++){
+                        if(i == 0){
+                            str_n += '<div class="different_time">'+data['new'][i]['create_time']+'</div>';
+                        }
+                        if(i > 0 && data['new'][i]['day'] != data['new'][i-1]['day']){
+                            str_n += '<div class="different_time">'+data['new'][i]['create_time']+'</div>';
+                        }
+                        if(data['new'][i]['type'] == 'text'){
+                            content_n = data['new'][i]['content'];
+                        }else if(data['new'][i]['type'] == 'image'){
+                            content_n = '<img data-toggle="modal" data-target="#ModalImg" src="'+data['new'][i]['content']+'"><span style="clear:both;"></span>';
+                        }else{
+                            content_n = '<span class="fa fa-rss" data-id="'+data['new'][i]['content']+'"></span><audio id="musicBox" src="/'+data['new'][i]['content']+'" preload=""></audio>';
+                        }
+                        str_n += '<div class="message_l"><img src="'+data.userPhoto+'"><div class="message_c"><div class="jiantou"></div><p>'+content_n+'</p><em>'+data['new'][i]['time']+'</em></div><div class="clear"></div></div>';
+                    }
+                    $(".M_l").html(str_n);
+                    for(var j = 0 ; j < length_o ; j++){
+                        if(j == 0){
+                            str_o += '<div class="different_time">'+data['old'][j]['create_time']+'</div>';
+                        }
+                        if(j > 0 && data['old'][j]['day'] != data['old'][j-1]['day']){
+                            str_o += '<div class="different_time">'+data['old'][j]['create_time']+'</div>';
+                        }
+                        if(data['old'][j]['type'] == 'text'){
+                            content_o = data['old'][j]['content'];
+                        }else if(data['old'][j]['type'] == 'image'){
+                            content_o = '<img data-toggle="modal" data-target="#ModalImg" src="'+data['old'][j]['content']+'"><span style="clear:both;"></span>';
+                        }else{
+                            content_o = '<span class="fa fa-rss" data-id="'+data['old'][j]['content']+'"></span><audio id="musicBox" src="/'+data['old'][j]['content']+'" preload=""></audio>';
+                        }
+                        if(data['old'][j]['direction'] == '-->'){
+                            str_o += '<div class="message_l"><img src="'+data.userPhoto+'"><div class="message_c"><div class="jiantou"></div><p>'+content_o+'</p><em>'+data['old'][j]['time']+'</em></div><div class="clear"></div></div>';
+                        }else{
+                            str_o += '<div class="message_r"><img src="__UPLOAD__/'+data['old'][j]['url_thumb']+'"><div class="message_c"><div class="jiantou"></div><p>'+content_o+'</p><em>'+data['old'][j]['time']+'</em></div><div class="clear"></div></div>';
+                        }
+                    }
+                    $(".M_r").html(str_o);
+                }
+            });
+        }
+        function setTimeGetMemberList(){
+            var uid = $("#member_list").attr("data-uid");
+            $.ajax({
+                url: "{:url('InstantMessaging/selectMemberList')}",
+                type: 'POST',
+                success: function (resp) {
+                    if (resp.code) {
+                        var data = resp.data;
+                        var length = data.length;
+                        var str = '';
+                        var button = '';
+                        for(var i = 0 ; i < length ; i++){
+                            if(data[i]['is_read'] != 0){
+                                button = '<button type="button" class="btn btn-danger">'+data[i]['is_read']+'</button>';
+                            }else{
+                                button = '';
+                            }
+                            if(data[i]['m_uid'] == uid){
+                                str += '<li role="presentation" data-uid="'+data[i]['m_uid']+'"><a class="liactived"><img src="'+data[i]['userPhoto']+'">'+data[i]['userName']+button+'</a></li>'
+                            }else{
+                                str += '<li role="presentation" data-uid="'+data[i]['m_uid']+'"><a><img src="'+data[i]['userPhoto']+'">'+data[i]['userName']+button+'</a></li>'
+                            }
+                        }
+                        $("#member_list").html(str);
+                    } else {
+                        console.log(resp.msg);
+                    }
+                }
+            });
+        }
+        $('.file-uploads').each(function() {
+            $(this)
+            var uid = $("#member_list").attr("data-uid");
+            var max = $("#member_list").attr("data-max");
+            $(this).fileinput({
+                language : 'zh',
+                uploadUrl: '{:url("InstantMessaging/upload")}', 
+                allowedFileExtensions: ['jpg','jpeg','png','gif'],
+                overwriteInitial: false,
+                showRemove : false,
+                showUpload: false,
+                showCaption : false,  
+                showCancel : false,
+                maxFileSize: 2048,
+                maxFilesNum: 10,
+                uploadExtraData:{type:'instant_messaging' , uid:uid , max:max},
+                slugCallback: function (filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            }).on("filebatchselected", function() {
+                $(this).fileinput("upload");  
+            }).on("fileuploaded", function(event, data , previewId, index) {
+                if(data.response.code){
+                    var str = '<div class="message_r"><img src="__UPLOAD__/'+data.response.data.url_thumb+'"><div class="message_c"><div class="jiantou"></div><p><img data-toggle="modal" data-target="#ModalImg" src="'+data.response.data.content+'"><span style="clear:both;"></span></p><em>'+data.response.data.time+'</em></div><div class="clear"></div></div>';
+                    $(".M_l").append(str);
+                }else{
+                    Dialog.error('上传失败', data.response.msg);
+                }
+            }); 
+        });
+//    });
+    </script>

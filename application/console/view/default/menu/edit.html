@@ -1,0 +1,220 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="menu/tab" /}
+            <div>
+                <form id="editMenuForm" action="{:url('menu/edit')}" class="form-horizontal" method="post" onclick="return false;">
+                    <fieldset>
+                        <legend>菜单信息</legend>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">上级菜单 <sup>*</sup></label>
+
+                            <div class="col-lg-4 selectContainer">
+                                <select class="form-control" name="pid">
+                                    <option value="0">作为一级菜单</option>
+                                    {$select_option}
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">菜单名称 <sup>*</sup></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="name" value="{$menu.name}" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">图标</label>
+                            <div class="col-lg-4">
+                                <button class="btn btn-default iconpicker" data-icon="{$menu.icon}" data-label-header="第{0} / {1}页" data-search-text="搜索图标" data-iconset="fontawesome" data-label-footer="当前{0} - {1} 共 {2}" role="iconpicker"></button>
+                                <input type="hidden" class="form-control" name="icon" value="{$menu.icon}" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">模块 <sup>*</sup></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="module" value="{$menu.module}" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">控制器 <sup>*</sup></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="controller" value="{$menu.controller}" />
+                                <p class="note">英文单词全部小写，单词之间用下划线分隔，例:system_config</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">方法 <sup>*</sup></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="action" value="{$menu.action}" />
+                                <p class="note">只有一个词的全小写；多个词的第一个词首字母小写，后面的词首字母大写，例:viewNotice</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">参数</label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="param"  value="{$menu.param}"  />
+                                <p class="note">请输入参数，例:group_id=1&type=2</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">备注</label>
+                            <div class="col-lg-4">
+                                <textarea class="form-control" name="remark" placeholder="备注" rows="4">{$menu.remark}</textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">是否显示</label>
+                            <div class="col-lg-4">
+                                <span class="onoffswitch">
+                                    <input type="checkbox" name="status" class="onoffswitch-checkbox" id="st3"  {if condition="$menu.status == 1"} checked {/if}>
+                                    <label class="onoffswitch-label" for="st3">
+                                        <span class="onoffswitch-inner" data-swchon-text="是" data-swchoff-text="否"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">类型 <sup>*</sup></label>
+                            <div class="col-lg-4 selectContainer">
+                                <select class="form-control" name="type">
+                                    <option value="0"  {if condition=" $menu.type neq 1 "} selected {/if} >只作为菜单</option>
+                                    <option value="1" {if condition=" $menu.type eq 1 "} selected {/if} >权限认证+菜单</option>
+                                </select>
+                                <p class="note">注意：“权限认证+菜单”表示加入后台权限管理，纯粹是菜单项请不要选择此项。</p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="hidden" name="id" value="{$menu.id}">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        loadModule(['bootstrapValidator', 'iconpicker'], function () {
+            $('#editMenuForm').bootstrapValidator({
+                feedbackIcons : {
+                    valid : 'glyphicon glyphicon-ok',
+                    invalid : 'glyphicon glyphicon-remove',
+                    validating : 'glyphicon glyphicon-refresh'
+                },
+                fields : {
+                    pid : {
+                        validators : {
+                            notEmpty : {
+                                message : '请选择上级菜单'
+                            },
+                            digits : {
+                                message : '请选择上级菜单'
+                            }
+                        }
+                    },
+                    name : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入菜单名称'
+                            },
+                            stringLength: {
+                                min: 2,
+                                max: 50,
+                                message: '菜单名称长度必须在2到50位之间'
+                            }
+                        }
+                    },
+                    module : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入模块名'
+                            }
+                        }
+                    },
+                    controller : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入控制器名'
+                            }
+                        }
+                    },
+                    action : {
+                        validators : {
+                            notEmpty : {
+                                message : '请输入方法名'
+                            }
+                        }
+                    },
+                    type : {
+                        validators : {
+                            notEmpty : {
+                                message : '请选择菜单类型'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.form.bv', function(e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if(resp.code){
+                            Dialog.success('操作提示', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        }else{
+                            Dialog.error('操作提示', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+            $(".iconpicker").iconpicker()
+            .on('change', function (e) {
+                var icon = e.icon;
+                $("input[name='icon']").val(icon);
+            });
+        });
+    })
+</script>

@@ -1,0 +1,31 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        {if condition="$list neq ''"}
+        {foreach name="$list" item="it"}
+        <div class="my-pro">
+            <a href="{:url('RoadShowInfo/index' , ['id' => $it.rs_id])}">
+                <div class="pro-t">{$it.road_name}<small></small></div>
+                <div class="luyan">
+                    类型：{$it.type}
+                    <span class="time">{$it.duration}</span>
+                </div>
+                <div class="pro-box">
+                    <img src="__UPLOAD__/{$it.top_img_url}" alt="头图">
+                    {foreach name="$it.road_introduce" item="text"}
+                    <p>{$text}</p>
+                    {/foreach}
+                </div>
+            </a>
+        </div>
+        {/foreach}
+        <div class="text-over">
+            没有啦~~~
+        </div>
+        {else /}
+        <div class="text-over">
+            暂无项目
+        </div>
+        {/if}
+    </body>
+</html>

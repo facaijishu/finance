@@ -1,0 +1,247 @@
+{include file="base/header" /}
+<body>
+{include file="base/dividend" /}
+    <link rel="stylesheet" href="__HOME__/css/financial.css">
+    <div class="headear_title">
+	    <div class="header_font"><span style="font-size:70%;">{$title2}-资产负债表</span></div>
+		<div class="header_icon"></div>
+	</div>
+	<div class="header_nav" style="display:none;">
+	    <a class="header_li" href="/home/financial/index/name/{$title2}/neeq/{$neeq}">
+		     <span class="header_li_font">利润表</span>
+		</a>
+		<a class="header_li" href="/home/financial/index2/name/{$title2}/neeq/{$neeq}">
+		     <span class="header_li_font">资产负债表</span>
+			 <i class="header_ion fa fa-check" aria-hidden="true"></i>
+		</a>
+		<a class="header_li" href="/home/financial/index3/name/{$title2}/neeq/{$neeq}">
+		     <span class="header_li_font">现金流量表</span>
+		</a>
+	</div>
+	<div class="info-content" style="display: block;position: relative;left: 0;">
+		<div class="list-1">
+            <div class="list-head">
+                <strong>{$title2}</strong>
+				<i class="neeq" style="display:none;">{$neeq}</i>
+            </div>
+            <ul class="list4 li">
+				{foreach name = "$info.cwbbs1" item = "it"}
+					{if condition="($it.name == '流动资产：') OR ($it.name == '流动资产合计(元)') OR ($it.name == '非流动资产：') OR ($it.name == '非流动资产合计(元)') OR ($it.name == '资产总计(元)') OR ($it.name == '流动负债：') OR ($it.name == '流动负债合计(元)') OR ($it.name == '非流动负债：') OR ($it.name == '负债合计(元)') OR ($it.name == '所有者权益（或股东权益）：') OR ($it.name == '归属于母公司股东权益合计(元)') OR ($it.name == '股东权益合计(元)') OR ($it.name == '负债和股东权益合计(元)')"}
+					<li class="red" style="font-size:12px;"><div class="linner" style="width:55%;"><span style="font-size:12px;">{$it.name}</span></div></li>
+					{else /}
+					<li><div class="linner" style="width:55%;"><span style="font-size:12px;">{$it.name}</span></div></li>
+					{/if}
+				{/foreach}
+            </ul>
+            <div class="swiper-container">			
+                <div class="swiper-wrapper">
+					{foreach name = "$info.data" item = "it"}
+						<div class="swiper-slide" style="width:100px;">
+							<span class="year">{$it.key}</span>
+							<ul class="list4">
+							{foreach name = "$it.value" item = "on"}
+							    <li style="font-size:80%;">{if condition="isset($on)"}{$on}{else /}-{/if}</li>
+							{/foreach}
+							</ul>		            	         	
+						</div>
+					{/foreach}
+                </div>
+                <div class="list-pg">					
+                    <div class="swiper-button-prev"><i class="fa fa-caret-left"></i></div>
+                    <div class="swiper-button-next"><i class="fa fa-caret-right"></i></div>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div style="width:100%;height:60px;"></div>
+	<div class="header_footer">
+	    <div class="header_con">
+			<div class="footer_left line_footer bg" style="font-size:80%" data-id="3">最新</div>
+			<div class="footer_center line_footer" style="font-size:80%" data-id="1">年报</div>
+			<div class="footer_right line_footer" style="font-size:80%" data-id="2">中报</div>
+		</div>
+	</div>
+	<!--阴影层-->
+	<div class="shadow" style="display:none;"></div>
+</body>
+<script type="text/javascript">
+    $(function(){
+		function size(over){  
+			var j = over[0];
+			for (var i=1;i<over.length ;i++ ){ 
+				if(over[i]<j){  
+					j = i;  
+				}  
+			}  
+			return j;  
+		}
+		/***
+		   @param:将所有为0.00的给筛选写出来,封装在全局变量listen中，listen做为一个数据存储对象(数据源)
+		**/
+		var listen;
+		!function mon(){
+			var index2 = [];
+			var open = [];
+			$(".swiper-slide").each(function(i,e){
+			  var index1 = [];
+			  var _this = $(this);
+			  $(".swiper-slide").eq(i).find("li").each(function(){
+				if($(this).text() == "0.00"){
+				   index1.push($(this).index());
+				}
+			  });
+			  index2.push(index1);
+			});
+			var ent = index2.length;
+			for(var i=0;i<ent;i++){
+			   open.push(index2[i].length);
+			}
+			var n = size(open);
+			listen = index2[n];
+			child_hide();
+		}()
+		/**
+		  @param:根据全局变量listen数据源对象，进行将为0.00的数值根据对象索引隐藏
+		**/
+		function child_hide(){
+		    for(var j=0;j<listen.length;j++){
+			    $(".list4").each(function(){
+				   $(this).children().eq(listen[j]).addClass("none");
+			    });
+			}
+		}
+		/**
+		  @param:1：主要实现隐藏后的li，进行隔行变色
+		         2：特殊标题为红色，只要有固定的索引就可以直接循环进行
+		**/
+		var arr = [];
+		var arr2 = [];
+		$(".li li").each(function(){
+		    if($(this).hasClass("red")){
+		       var num = $(this).index();
+			   arr.push(num);
+		    }
+			if(!$(this).hasClass("none")){
+			   var num2 = $(this).index();
+			   arr2.push(num2);
+			}
+		});
+		for(var i=0;i<arr.length;i++){
+		   $(".list4").each(function(){
+			  $(this).children().eq(arr[i]).addClass("red");
+		   });
+		}
+		//隔行变色
+		for(var i=0;i<arr2.length;i++){
+		   if(i%2 == 0){
+			  $(".li li").eq(arr2[i]).addClass("even");
+		   }
+		}
+		
+		//控制字体大小
+		$(".li li").each(function(){
+			var self = $(this);
+			var len = self.find(".linner").text().length;
+			if(len > 15){
+			   self.find(".linner").css({"line-height":"17px","font-size": "80%"});
+			}else if(len >= 12 && len <= 15){
+			   self.find(".linner").css({"line-height":"17px"});
+			}
+		});
+		//点击弹出弹出框
+		$(".header_font,.header_icon").on("click",function(){
+		    var top = $(document).scrollTop();
+			$(document).on('scroll.unable',function (e) {
+				$(window).scrollTop(top);
+			});
+		   $(".shadow").show();
+		   $(".header_nav").show();
+		});
+		$(".shadow").on("click",function(){
+		   $(document).unbind("scroll.unable");
+		   $(".shadow").hide();
+		   $(".header_nav").hide();
+		});
+		$(".header_li").on("click",function(){
+		    $(this).append(function(){
+			   if($(this).children().length < 2){
+			     return '<i class="header_ion fa fa-check" aria-hidden="true"></i>';
+			   }
+			}).siblings().find("i").remove();
+		});
+		$(window).scroll(function(){
+		   var top = $(window).scrollTop();
+		   if(top >= 100){
+		      $(".header_footer").animate({
+			    "bottom":0
+			  },300);
+		   }
+		});
+		/**
+		  滚动
+		**/
+	    var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev',
+			paginationClickable: true,
+			slidesPerView: 2,
+			observer: true,
+			observeParents: true
+		});
+		/**
+		   点击底部切换,请求对应的内容
+		**/
+		var a = 3;
+		$(".line_footer").on("click",function(){
+		    $(this).addClass("bg").siblings().removeClass("bg");
+			var t = $(this).attr("data-id");
+            if(t == 3){
+                window.location.reload();
+            }
+			if(t != a){
+			   a = t;
+			   var neeq = $(".neeq").text();
+			   $.post("/home/financial/getCodezhai",{neeq:neeq,id:t},function(data){
+					var data = data.data;
+					var nux = data.length;
+					var str = "";
+					if(nux == 0){
+					    str+='<div class="swiper-slide" style="width:100px;">'+
+									 '<span class="year"></span>'+
+									 '<ul class="list4">';
+							 for(var i=0;i<22;i++){
+							   str+='<li style="font-size:80%">-</li>';
+							 }
+						str+='</ul>'+
+							'</div>';
+						$(".swiper-wrapper").html(str);	
+					    return false;
+					}
+					if(nux != 0){
+					   for(var i=0;i<nux;i++){
+							str+='<div class="swiper-slide" style="width:100px;">'+
+									 '<span class="year">'+data[i]['key']+'</span>'+
+									 '<ul class="list4">';
+							var dataArray = eval(data[i].value);
+							for(var j in dataArray)
+							{
+								str+='<li style="font-size:80%">'+dataArray[j]+'</li>';
+							}
+							str+='</ul>'+	            	         	
+						'</div>';
+						}						
+					}
+					$(".swiper-wrapper").html(str);
+					for(var i=0;i<arr.length;i++){
+					   $(".list4").each(function(){
+						  $(this).children().eq(arr[i]).addClass("red");
+					   });
+					}
+					child_hide();
+			   });
+			}
+		});
+	});
+</script>
+</html>

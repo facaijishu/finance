@@ -1,0 +1,99 @@
+{include file="base/header" /}
+<script>
+    $(document).ready(function () {
+        $("#binding_form").on('click', '.send', function () {
+            var phone = $(this).siblings("input[name='phone']").val();
+            $.ajax({
+                url: "{:url('Through/getNumber')}",
+                data: {phone: phone},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code == 0) {
+                        settime(60);
+                    } else {
+                        alert(resp.msg, '提示框');
+                    }
+                }
+            });
+        });
+        function settime(countdown) {
+            if (countdown == 0) {
+                $(".send").attr({"disabled": false});
+                $(".send").text('发送验证码');
+                $(".send").css({"background-color": "#CBA054"});
+                countdown = 60;
+            } else {
+                $(".send").attr({"disabled": true});
+                $(".send").text("重新发送(" + countdown + ")");
+                $(".send").css({"background-color": "#D6D6D6"});
+                countdown--;
+                setTimeout(function () {
+                    settime(countdown)
+                }, 1000);
+            }
+        }
+    });
+</script>
+<body>
+    {include file="base/dividend" /}
+    <div class="home">
+        <div class="home-m">
+            <p></p>
+            手机号绑定
+        </div>
+    </div>
+    <form id="binding_form" action="{:url('Binding/add')}" method="post" enctype="multipart/form-data">
+        <div class="form-box">
+            <ul>
+                <li>
+                    <label for="phone">手机号码</label><input type="text" value="" name="phone" placeholder="请输入手机号码"><button type="button" class="send">发送验证码</button>
+                </li>
+                <li>
+                    <label for="code">验证码</label><input type="text" name="code" placeholder="请输入验证码">
+                </li>
+            </ul>
+            <div class="form-btn">
+                <button type="submit">
+                    同意协议并绑定
+                </button>
+            </div>
+            <div class="user-clause"><a href="{:url('Index/agreenment')}">《金融合伙人注册认证协议书》</a></div>
+        </div>
+    </form>
+    <script>
+        $("button[type='submit']").click(function (e) {
+            e.preventDefault();
+            var result = sendCode();
+            if (result) {
+                var supplier = document.getElementById("binding_form");
+                var formData = new FormData(supplier);
+                var url = $("#binding_form").attr("action");
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    cache: false,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resp) {
+                        if (resp.code) {
+                            location.href = resp.data.url;
+                        } else {
+                            alert(resp.msg);
+                        }
+                    }
+                });
+            }
+        });
+        function sendCode() {
+            var phone = $("#binding_form").find("input[name='phone']").val();
+            var partten_phone = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/;
+            if (partten_phone.exec(phone) == null || phone == '') {
+                alert('手机号码不正确', '提示框');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

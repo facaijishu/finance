@@ -1,0 +1,26 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="sumbit-success">
+            绑定成功
+            <p>您已成功绑定手机号。如有疑问请拨打客服电话：</p>
+            <span class="fa">400-685-2585</span>
+            <button class="href_prev">返回上一页</button>
+            <button><a href="{:url('MyCenter/index')}">返回个人中心</a></button>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $(".href_prev").click(function(){
+                    $.ajax({
+                        url: "{:url('Binding/judge')}",
+                        type: "POST",
+                        dataType: "json",
+                        success: function(resp){
+                            location.href = resp.data.url;
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

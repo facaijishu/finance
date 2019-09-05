@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="self_customer_service/tab_add" /}
+            <div>
+                <form id="addSelfCustomerServiceForm" action="{:url('SelfCustomerService/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">绑定用户： <sup>*</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach name="list" key="k" item="ind"}
+                                    <label class="radio radio-inline">
+                                        {if condition="$k eq 0"}
+                                        <input type="radio" class="radiobox" name="uid" value="{$ind.uid}" checked="">
+                                        {else /}
+                                        <input type="radio" class="radiobox" name="uid" value="{$ind.uid}">
+                                        {/if}
+                                        <span> {$ind.real_name} </span> 
+                                    </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服账号： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="kf_account" />
+                                            <span class="input-group-addon">@金融合伙人</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服昵称： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="kf_nick" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">客服头像： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false"/>
+                                    <input type="text" class="hide" name="kf_headimgurl" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addSelfCustomerServiceForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    kf_account: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入客服账号'
+                            },
+                            regexp: {
+                                regexp: /^[0-9a-zA-Z_]+$/,
+                                message: '请输入正确的客服账号'
+                            }
+                        }
+                    },
+                    kf_nick: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入客服昵称'
+                            }
+                        }
+                    },
+                    kf_headimgurl: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传头图'
+                            }
+                        }
+                    },
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $(".radiobox").change(function(){
+            $("input[name='kf_account']").val('admin_'+$(this).val());
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this)
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('addSelfCustomerServiceForm', thiss, 'customer_service', type, '{:url("Publics/upload")}', 1);
+        });        
+    });
+</script>

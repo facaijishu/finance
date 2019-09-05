@@ -1,0 +1,352 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="activity/tab_add" /}
+            <div>
+                <form id="addActivityForm" action="{:url('Activity/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">活动名称： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="act_name" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">活动时间： <sup>*</sup></label>
+                            <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="start_time" placeholder="开始时间" id="start_time" style="z-index:400" class="form-control datetimepicker">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="end_time" placeholder="结束时间" id="end_time" style="z-index:400" class="form-control datetimepicker">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">报名时间： <sup>*</sup></label>
+                            <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="sign_start_time" placeholder="开始时间" id="sign_start_time" style="z-index:400" class="form-control datetimepicker">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="sign_end_time" placeholder="结束时间" id="sign_end_time" style="z-index:400" class="form-control datetimepicker">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                           <label class="control-label col-lg-1"> 活动状态：<sup>*</sup> </label>
+                           <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12 radio-inline">
+                               <label>
+                                   <input type="radio" class="radiobox" id="type" name="is_show" value="0" checked="">
+                                   <span>不显示（下架）</span> 
+                               </label>
+                               <label>
+                                   <input type="radio" class="radiobox" id="type" name="is_show" value="1">
+                                   <span>显示（上架） </span> 
+                               </label>
+                           </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">地点： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="address" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">费用： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="fee" value="0.00"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">人数上限： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="max_people" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">排序： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="list_order" value="0"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">简介： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="introduce" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头图： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false"/>
+                                    <input type="text" class="hide" name="top_img" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">详情：<sup>*</sup></label>
+                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                <div id="summernote"></div>
+                                <input type="text" class="hide" name="summernote" value=""/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit" onclick="sc()"><i class="fa fa-save"></i>发布</button>
+                                <!-- <button class="btn btn-primary" type="submit" onclick="aa()"><i class="fa fa-save"></i>保存为草稿</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script src="__STATIC__/js/summernote_common.js"></script>
+<script>
+    var a;
+    function aa(){
+       a = 2;
+    }
+    function sc(){
+       a = 1;
+    }
+    var send_file_url = "{:url('Activity/uploads')}";
+    $(function () {	    
+        loadModule('bootstrapValidator', function () {
+            $('#addActivityForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    act_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入活动标题'
+                            }
+                        }
+                    },
+                    start_time: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入开始时间'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/,
+                                message: '请输入正确的开始时间'
+                            }
+                        }
+                    },
+                    end_time: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入结束时间'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/,
+                                message: '请输入正确的开始时间'
+                            }
+                        }
+                    },
+                    sign_start_time: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入报名开始时间'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/,
+                                message: '请输入正确的报名开始时间'
+                            }
+                        }
+                    },
+                    sign_end_time: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入报名结束时间'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/,
+                                message: '请输入正确的报名结束时间'
+                            }
+                        }
+                    },
+                    address: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入活动地址'
+                            }
+                        }
+                    },
+                    fee: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入费用'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的费用'
+                            }
+                        }
+                    },
+                    max_people: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入人数上限'
+                            },
+                            regexp: {
+                                regexp: /^\d+$/,
+                                message: '请输入有效的人数上限'
+                            }
+                        }
+                    },
+                    list_order: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入排序号'
+                            },
+                            regexp: {
+                                regexp: /^\d+$/,
+                                message: '请输入有效的排序号'
+                            }
+                        }
+                    },
+                    introduce: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入活动简介'
+                            }
+                        }
+                    },
+
+                    top_img: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传头图'
+                            }
+                        }
+                    },
+
+                    summernote: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入正文'
+                            }
+                        }
+                    },
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                
+                var $form = $(e.target);
+                var data = $form.serialize();
+                if(a == 1){
+                   //发布
+                   var url = "{:url('Activity/add')}";
+                }else{
+                   //草稿
+                   var url = "{:url('Activity/add')}"+"/id/1";
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 2000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $("#start_time").on('change', function() {
+            $('#addActivityForm').data('bootstrapValidator').updateStatus('start_time', 'NOT_VALIDATED', null).validateField('start_time'); 
+        });
+        $("#end_time").on('change', function() {
+            $('#addActivityForm').data('bootstrapValidator').updateStatus('end_time', 'NOT_VALIDATED', null).validateField('end_time'); 
+        });
+        $("#sign_start_time").on('change', function() {
+            $('#addActivityForm').data('bootstrapValidator').updateStatus('sign_start_time', 'NOT_VALIDATED', null).validateField('start_time'); 
+        });
+        $("#sign_end_time").on('change', function() {
+            $('#addActivityForm').data('bootstrapValidator').updateStatus('sign_end_time', 'NOT_VALIDATED', null).validateField('end_time'); 
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this);
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('addActivityForm', thiss, 'activity', type, '{:url("Publics/upload")}', 1);
+        });
+    });
+</script>

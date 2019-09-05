@@ -1,0 +1,537 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="project_require/tab_detail" /}
+            <div id="project_require_detail" data-id="{$data['pr_id']}" data-resource="1">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布项目id：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['pr_id']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布人id：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['uid']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布人：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['realName']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['create_time']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务类型：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['top_dict']}{$data['dict']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务描述：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['business_des']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">企业/项目/产品名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['name']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属行业：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['top_industry']}{$data['industry']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所在省份：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['province']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">展示状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['is_show']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['status']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                {if $data['stock_code']}
+	                <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">股票代码：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['stock_code']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['is_pre_ipo']}
+	                <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">是否Pre-ipo：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['is_pre_ipo']|YesOrNo}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['is_coach']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">是否报辅导：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['is_coach']|YesOrNo}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['level']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所在层级：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['level']|level}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['trans_mode']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">交易方式：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['trans_mode']|trans_mode}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['financing_scale'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">融资规模/交易规模/产品规模/所需资金/投入本金(万元)：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['financing_scale']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['period']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">融资/管理期限：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['period']|period}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['price'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">价格(元)：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['price']}
+	                        </div>
+	                </div>
+                {/if}
+
+                {if $data['pe_ratio'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">市盈率(%)：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['pe_ratio']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['ly_net_profit'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">去年净利润(万元)：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['ly_net_profit']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['ty_net_profit'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">今年净利润(万元)：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['ty_net_profit']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['financing_purpose']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">融资用途：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['financing_purpose']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['pro_highlight']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目亮点：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['pro_highlight']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['validity_period']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务有效期：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['validity_period']|validity_period}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['contact_status']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系人身份：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['contact_status']|contact_status}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['general_capital']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">总股本(万股)：</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['general_capital']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['trans_stock_num']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">可转让股数(万股):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['trans_stock_num']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['is_bargain']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">是否可议价:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['is_bargain']|YesOrNo}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['investor_preference']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资者偏好:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['investor_preference']|investor_preference}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['is_stockholder']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">是否为大股东:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['is_stockholder']|YesOrNo}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['ltv_ratio'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">质押率(%):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['ltv_ratio']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['mortgage_rate'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">抵押率(%):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['mortgage_rate']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['trans_stock_num']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">可出售/转让股数(万股):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['trans_stock_num']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['sell_stock_min'] != 0.0000 && $data['sell_stock_max'] != 0.0000}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">拟出让股份(%):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['sell_stock_min']} - {$data['sell_stock_max']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['inc_credit_way']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">增信方式:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['inc_credit_way']|inc_credit_way}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['pay_source']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">还款来源(300字以内):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['pay_source']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['business_income'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">营业收入(万元):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['business_income']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['acceptor']}
+
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">承兑人:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['acceptor']|acceptor}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['bill_type']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">票据类型:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['bill_type']|bill_type}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['coupon_finance'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">票面金融(万元):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['coupon_finance']|coupon_finance}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['days_remain']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">剩余天数:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['days_remain']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['lc_type']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">上市公司类型:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['lc_type']|lc_type}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['discount_rate'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">折扣率(%):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['discount_rate']}
+	                        </div>
+	                </div>
+                {/if}
+                
+
+                
+                {if $data['expected_return'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">预期收益(万元):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['expected_return']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['expected_return'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">预期收益(万元):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['expected_return']}
+	                        </div>
+	                </div>
+                {/if}
+                
+                {if $data['remain_period'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">剩余期限(月):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['remain_period']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['img_id']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">添加图片:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['img_id']}
+	                        </div>
+	                </div>
+                {/if}
+
+                {if $data['allocation_ratio'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">配资比例(3倍):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['allocation_ratio']}
+	                        </div>
+	                </div>
+                {/if}
+               
+                {if $data['trade_period']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">总操盘周期(月):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['trade_period']}
+	                        </div>
+	                </div>
+                {/if}
+                
+                {if $data['total_trade_num'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">总操盘金额(万元):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['total_trade_num']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['mirc'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">月利率上限(%/月):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['mirc']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['product_issuer']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">产品发行机构:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['product_issuer']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['is_record']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">是否备案:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['is_record']|YesOrNo}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['sub_amount'] != 0.00}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">认购金额(万股):</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['sub_amount']}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['product_status']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">产品状态:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['product_status']|product_status}
+	                        </div>
+	                </div>
+                {/if}
+                {if $data['product_status']}
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+	                        <label class="control-label col-lg-3 col-md-3 col-sm-4">产品状态:</label>
+	                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+	                            {$data['product_status']|product_status}
+	                        </div>
+	                </div>
+                {/if}
+                </fieldset>
+                <fieldset>
+                    <form id="editProjectRequireForm" action="{:url('ProjectRequire/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                        <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-3 col-md-3 col-sm-4">内部客服ID：</label>
+                            <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                                 <input type="text" class="form-control" name="inner_cs" value="{$data['inner_cs']}"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                            <button class="btn btn-primary edit_inner_cs" type="submit">
+                                <i class="fa fa-save"></i>
+                                修改内部客服id
+                            </button>
+                            <input type="hidden" name="pr_id" value="{$data['pr_id']}"> 
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/show/introduce_img.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#editProjectRequireForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                   
+                    inner_cs: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入内部客服id'
+                            },
+                            regexp: {
+                                regexp: /^\d+$/,
+                                message: '内部客服id必须为数字'
+                            },
+                        }
+                    },
+                   
+                }
+            }).on('click', '.edit_inner_cs', function (e) {
+
+                
+                var form = $("form");
+                $.ajax({
+                    url: "{:url('ProjectRequire/edit')}",
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('修改成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('修改失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+            });
+            
+        });
+        
+
+    });
+</script>

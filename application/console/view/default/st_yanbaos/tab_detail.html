@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">研报详情</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("StYanbaos/detail")}')">研报详情</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("StYanbaos/index")}')">返回</a>
+    <a class="btn btn-success" style="float: right;" onclick="loadURL('{:url("StYanbaos/edit" , ['id' => $info.id])}')">修改</a>
+    {if condition="$info.examine eq 0"}
+    <a href="javascript:void(0);" style="float: right;" class="btn btn-success exhibition_true" data-id="{$info.id}">展示</a>
+    {else /}
+    <a href="javascript:void(0);" style="float: right;" class="btn btn-danger exhibition_false" data-id="{$info.id}">隐藏</a>
+    {/if}
+</ul>

@@ -1,0 +1,159 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="introdece_img/modal" /}
+            {include file="zfmxes/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="zfmxes_form">
+                            <!--开始-->
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 日期筛选：</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date1" placeholder="开始时间" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date2" placeholder="结束时间" id="end_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--结束-->
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 股票代码：</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="neeq" id="neeq">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 审核状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_examine" name="zfmx_examine" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_examine" name="zfmx_examine" value="0">
+                                            <span> 待审核 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_examine" name="zfmx_examine" value="1">
+                                            <span> 已审核 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 展示状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_exhibition" name="zfmx_exhibition" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_exhibition" name="zfmx_exhibition" value="1">
+                                            <span> 展示 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_exhibition" name="zfmx_exhibition" value="0">
+                                            <span> 隐藏 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 融资状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_financing" name="zfmx_financing" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_financing" name="zfmx_financing" value="0">
+                                            <span> 融资中 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_financing" name="zfmx_financing" value="1">
+                                            <span> 融资结束 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 签约状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_sign" name="zfmx_sign" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_sign" name="zfmx_sign" value="1">
+                                            <span> 是 </span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zfmx_sign" name="zfmx_sign" value="0">
+                                            <span> 否 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-lg btn-default" id="zfmxes_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="zfmxes" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> ID</th>
+                                <th> 企业名称</th>
+                                <th> 股票代码</th>
+                                <th> 项目二维码</th>
+                                <th> 审核状态</th>
+                                <th> 展示状态</th>
+                                <th> 置顶状态</th>
+                                <th> 融资状态</th>
+                                <th> 签约状态</th>
+                                <th> 预案公告日</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var zfmxes_url = '{:url("Zfmxes/alreadyread")}';
+    var root_path_url = $("#zfmxes").attr("data-path");
+    var zfmxes_detail_url = '{:url("Zfmxes/detail")}';
+    var zfmxes_show_url = '{:url("Zfmxes/exhibition_true")}';
+    var zfmxes_hide_url = '{:url("Zfmxes/exhibition_false")}';
+    var zfmxes_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/zfmxes/zfmxes1_list.js"></script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

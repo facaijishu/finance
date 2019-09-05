@@ -1,0 +1,24 @@
+<div class="bar">
+    {if condition="$Request.controller eq 'Index' "}
+    <a href="{:url('Index/index')}" class="bar-1 actived">首页</a>
+    {else /}
+    <a href="{:url('Index/index')}" class="bar-1">首页</a>
+    {/if}
+    {if condition="$Request.controller eq 'Project' "}
+    <a href="{:url('Project/index')}" class="bar-2 actived">项目</a>
+    {else /}
+    <a href="{:url('Project/index')}" class="bar-2">项目</a>
+    {/if}
+    {if condition="$Request.controller eq 'Service' "}
+    <a href="{:url('Service/index')}" class="bar-3 actived">服务</a>
+    {else /}
+    <a href="{:url('Service/index')}" class="bar-3">服务</a>
+    {/if}
+    {if condition="$Request.controller eq 'MyCenter' "}
+    <a href="{:url('MyCenter/index')}" class="bar-4 actived">我的</a>
+    {else /}
+    <a href="{:url('MyCenter/index')}" class="bar-4">我的</a>
+    {/if}
+</div>
+</body>
+</html>

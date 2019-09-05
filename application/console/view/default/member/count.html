@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="member/tab_count" /}
+            <div id="member_detail">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-8">当前注册总人数：</label>
+                        <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            {$all_member}人
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-8">认证合伙人：</label>
+                        <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            {$all_through}人
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-8">其中推荐注册：</label>
+                        <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            {$all_superior}人
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-8">本月注册总人数：</label>
+                        <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            {$all_month.0.num}人
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                        <label class="control-label col-lg-8 col-md-8 col-sm-8">认证合伙人：</label>
+                        <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            {$all_month.0.through}人
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>月份</th>
+                                    <th>注册总人数</th>
+                                    <th>认证合伙人</th>
+                                </tr>
+                            </thead>
+                            <tbody data-id="{$i = 1;}">
+                                {foreach name="$all_month" item="it"}
+                                <tr>
+                                    <th>{$i++;}</th>
+                                    <td>{$it.day}</td>
+                                    <td>{$it.num}</td>
+                                    <td>{$it.through}</td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

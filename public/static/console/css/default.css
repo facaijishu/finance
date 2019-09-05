@@ -1,0 +1,158 @@
+/* 公共部分 */
+.form-actions{text-align: center;}
+.dt-bootstrap .custom-toolbar{background: transparent; border-bottom: none;}
+/*搜索表单外层*/
+.search-well{margin-bottom: -8px;}
+/*原样显示textarea内容*/
+.origin-show{word-break: break-all; white-space: pre-wrap;}
+
+/* 公共部分 */
+
+.upload-state-done:after {
+    content:"\f00c";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 50px;
+    position: absolute;
+    bottom: 0px;
+    left: 110px;
+    color: #4cae4c;
+    z-index: 99;
+}
+.logo_span{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 30px;
+    margin-top: -30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+    background-color: #7E7C79;
+}
+.FreightFrame-default{
+    margin-bottom: 0px;
+    margin-left: 25px;
+    width: 80px;
+    border: 0px;
+    font-size: 14px;
+    text-align: center;
+    display: block;
+}
+.FreightFrame-fieldset{
+    border: 1px dashed red;
+}
+/*.fix-div{
+    width: 500px;
+    min-height: 0px;
+    border: 1px solid #ccc;
+    position: absolute;
+    left: 300px;
+    top: 500px;
+    z-index: 9999;
+    display: none;
+}
+.fix-title{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #DEF0F5;
+}
+.fix-title div{
+    float: right;
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+}
+.fix-title span{
+    float: left;
+    width: 90px;
+    text-align: center;
+    font-size: 16px;
+}
+.fix-content{
+    width: 100%;
+    min-height: 0px;
+    background-color: white;
+}*/
+.province{
+    width: 33.3%;
+    height: 30px;
+    float: left;
+}
+.province input{
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 10px;
+    float: left;
+}
+.province span{
+    font-size: 16px;
+    margin-left: 5px;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.province i{
+    height: 30px;
+    line-height: 30px;
+    margin-left: 25px;
+}
+.city{
+    width: 250px;
+    min-height: 25px;
+    background-color: red;
+    position: absolute;
+    z-index: 9;
+    display: none;
+}
+.fix-submit{
+    width: 100%;
+    height: 40px;
+    background-color: #E8F2F5;
+    float: right;
+}
+.fix-submit div{
+    margin: 4px 10px;
+    float: right;
+}
+
+
+
+/*订单类*/
+.line_info{
+    font-family: Arial, "微软雅黑";
+    padding: 0px;
+}
+.line_info_title{
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.line_edit{
+    padding: 0px;
+    line-height: 24px;
+    text-align: right;
+}
+.line_send{
+    padding: 0px;
+    line-height: 32px;
+    text-align: right;
+}
+
+
+
+label.required:before {
+    content: '* ';
+    color: #e20000;
+}
+.cale{
+    margin: 0px 5px;
+}

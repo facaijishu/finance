@@ -1,0 +1,181 @@
+{include file="base/header" /}
+<style type="text/css">
+    .form-box li button{
+       margin: 8px -25px 0;
+       border:none;
+    }
+    .form-check label{
+        width: 122px;
+        height: 20px;
+    }
+</style>
+    <body>
+        {include file="base/dividend" /}
+        <div class="header-title2">
+            <div class="pull-left">
+                <a href="javascript:history.back(-1)"><i class="fa fa-angle-left" style="color: white;"></i></a>
+            </div>
+            <h2>我有意向</h1>
+        </div>
+        <form id="intention_form" action="{:url('ZfmxesIntention/add')}" method="post" enctype="multipart/form-data">
+            <div class="form-con">
+                <div class="form-box">
+                    <ul>
+                        <li>
+                            <label for="pro_name">项目名称：<span class="c1">&nbsp;</span></label>{$info.sec_uri_tyshortname}
+                        </li>
+                        <li>
+                            <label for="shares">股票代码：<span class="c1">&nbsp;</span></label>{$info.neeq}
+                        </li>
+                        <li>
+                            <label for="num">意向股数：<span class="c1">*</span></label><input type="text" id="num" name="num" data-num="{$info.num}" placeholder="最多提交{$info.num}股" data-realnum="{$info.real_num}" class="input_2"/><span class="fw">股</span>
+                        </li>
+                        <li>
+                            <label class="price" for="price" data-price="{$info.add.increase_price}">单价：<span class="c1">&nbsp;</span></label>{$info.add.increase_price}元
+                        </li>
+                        <li>
+                            <label for="money">意向金额：<span class="c1">&nbsp;</span></label><input type="text" name="money" class="input_2"/><span class="fw">元</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-tit">请填写以下联系信息</div>
+                <div class="form-box">
+                    <ul>
+                        <li>
+                            <label for="company">名称：<span class="c1">&nbsp;</span></label><input type="text" name="company" class="input_2"/>
+                        </li>
+                        <li>
+                            <label for="phone">手机号码：<span class="c1">*</span></label><input type="text" name="phone" class="input_2"/><button type="button" class="send" style="border-radius: 3px;">发送验证码</button>
+                        </li>
+                        <li>
+                            <label for="code">验证码：<span class="c1">*</span></label><input type="text" name="code" class="input_2"/>			
+                        </li>
+                    </ul>
+                </div>
+                <div class="c1 text-right" style="margin-right: 15px;">注：加“*”为必填选项</div>
+            </div>
+            <div class="form-check cd-form">
+                <ul class="cd-form-list">
+                    <li><input id="check" name="check" type="checkbox"><label for="check">我已阅读并同意</label><a class="c1" href="{:url('Index/agreenment')}">《FA財条款》</a></li>
+                </ul>
+            </div>
+            <div class="form-btn">
+                <input type="text" name="neeq" value="{$info.neeq}" class="hide">
+                <input type="text" name="plannoticeddate" value="{$info.plannoticeddate}" class="hide">
+                <button type="submit" style="background: #D6D6D6;" disabled="">
+                    提交
+                </button>
+            </div>
+        </form>
+        <script>
+            var all_num = $("input[name='num']").attr("data-num");
+            var real_num = $("input[name='num']").attr("data-realnum");
+            var price = $(".price").attr("data-price");
+            $("#num").bind('input propertychange', function() { 
+                var value = $(this).val();
+                value = value.replace(/\s/g,'');
+                if(value == ''){
+                    $("input[name='money']").val('');
+                }else{
+                    var partten_num = /^[0-9]+$/;
+                    if (partten_num.exec(value) == null || parseInt(value)>parseInt(real_num)) {
+                        alert('意向股数不正确', '提示框');
+                        $("input[name='num']").val('');
+                        $("input[name='money']").val('');
+                    }else{
+                        var all = price*value;
+                        $("input[name='money']").val(all);
+                    }
+                }
+            })
+            $("button[type='submit']").click(function(e){
+                e.preventDefault();
+                var result = readySend(e);
+                if(result){
+                    var supplier = document.getElementById("intention_form");
+                    var formData = new FormData(supplier);
+                    var url = $("#intention_form").attr("action");
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        cache: false,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (resp) {
+                            if(resp.code){
+                                location.href = resp.data.url;
+                            }else{
+                                alert(resp.msg);
+                            }
+                        }
+                    });
+                }
+            });
+            $(document).ready(function () {
+                $("input[name='check']").attr({"checked": false});
+                $("#intention_form").on('click', '.send', function () {
+                    var phone = $(this).siblings("input[name='phone']").val();
+                    $.ajax({
+                        url: "{:url('Through/getNumber')}",
+                        data: {phone: phone},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if (resp.code == 0) {
+                                settime(60);
+                            } else {
+                                alert(resp.msg, '提示框');
+                            }
+                        }
+                    });
+                });
+                function settime(countdown) {
+                    if (countdown == 0) {
+                        $(".send").attr({"disabled": false});
+                        $(".send").text('发送验证码');
+                        $(".send").css({"background-color": "#CBA054"});
+                        countdown = 60;
+                    } else {
+                        $(".send").attr({"disabled": true});
+                        $(".send").text("重新发送(" + countdown + ")");
+                        $(".send").css({"background-color": "#D6D6D6","padding":0});
+                        countdown--;
+                        setTimeout(function () {
+                            settime(countdown)
+                        }, 1000);
+                    }
+                }
+                $(".form-check label,input[name='check']").click(function () {
+                    if ($("input[name='check']").is(":checked") == true) {
+                        $("button[type='submit']").attr({'disabled': false});
+                        $("button[type='submit']").css({"background-color": "#CBA054"});
+                    } else {
+                        $("button[type='submit']").attr({'disabled': true});
+                        $("button[type='submit']").css({"background-color": "#D6D6D6"});
+                    }
+                });
+            });
+            function readySend(e) {
+                var num = $("#intention_form").find("input[name='num']").val();
+                var phone = $("#intention_form").find("input[name='phone']").val();
+                var code = $("#intention_form").find("input[name='code']").val();
+                var partten_num = /^[1-9][0-9]{0,10}$/;
+                if (partten_num.exec(num) == null || num == '' || num > real_num) {
+                    alert('意向股数不正确', '提示框');
+                    return false;
+                }
+                var partten_phone = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/;
+                if (partten_phone.exec(phone) == null || phone == '') {
+                    alert('手机号码不正确', '提示框');
+                    return false;
+                }
+                var partten_code = /^[1-9][0-9]{5}$/;
+                if (partten_code.exec(code) == null || code == '') {
+                    alert('验证码不正确', '提示框');
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>

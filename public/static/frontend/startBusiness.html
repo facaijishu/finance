@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+</head>
+
+<body class="mofh bg_gray" style="width:100%;">
+    <div id="box">
+        <section class="bg_white mb10" style="overflow:hidden;width:100%;">
+            <!-- 搜索 -->
+            <div class="search-box pt15 pl15 pr15 clearfix porel">
+                <input type="text" class="form-control pull-left bg_gray" placeholder="输入项目、资金、需求" style="width:85%;" @click="searchModal">
+                <a href="#" class="pull-left" style="width: 15%;" @click="getServiceUrl">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:34px;">
+            </a>
+                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 74%;top: 24px;z-index: 999;" alt="">
+        </div>
+                <!-- 菜单 -->
+                <div class="clearfix bb1 pl15 pr15 mt10 mb5">
+                    <a href="/static/frontend/selectedProjects.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">精选</span>
+            </a>
+                    <a href="/static/frontend/stockRights.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">股权</span>
+            </a>
+                    <a href="/static/frontend/creditorRights.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">债权</span>
+            </a>
+                    <a href="/static/frontend/startBusiness.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_primary">创业</span>
+                <span class="bg_primary dbk" style="width:21px;height:4px;border-radius:2px;position:relative;margin:-2px auto 0;"></span>
+
+            </a>
+                    <a href="/static/frontend/market.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">上市</span>
+            </a>
+                    <a href="/static/frontend/other.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">其他</span>
+            </a>
+                </div>
+        </section>
+        <!-- 精选项目 -->
+        <section style="overflow:hidden;width:100%;">
+            <div v-for="(item,index) in projectList">
+                <a class="ml5 mr5 mb10 dbk pt10 pb10 pl10 radius" style="background:#ffffff;" @click="getDetail(item.id,item.type)">
+                    <div class="clearfix porel mt0">
+                        <img  :src="item.url" alt="" style="width:50px;height:50px;" class="pull-left">
+                        <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                            <div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;">{{item.top}}</div>
+                            <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                                <div style="height:20px;line-height:18px;" class="pl5 pr5 f12 mr5 mb5 pull-left ball" v-for="l in item.label">{{l}}</div>
+                            </div>
+                        </div>
+                        <div class="pull-right porel" style="height:50px;width:50%;">
+                            <div class="c_white text-center f12 pl5"  v-if="item.type_label=='精选资金'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(/static/frontend/images/fund-filter-sign.png);width:74px;height:26px;line-height:24px;">{{item.type_label}}</div>
+                            <div class="c_white text-center f12 pl5"  v-if="item.type_label=='资金'" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(/static/frontend/images/fund-sign.png);width:50px;height:26px;line-height:24px;">{{item.type_label}}</div>
+                            <div v-if="item.type_label=='项目'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(/static/frontend/images/pro-sign.png);width:50px;height:26px;line-height:24px;">{{item.type_label}}</div>
+                            <div v-if="item.type == 'project' || item.type == 'zfmxes_add' || item.type == 'zryxes_effect' || item.type_label=='精选项目'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(/static/frontend/images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">{{item.type_label}}</div>
+                            <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
+                        </div>
+                    </div>
+                    <div class="clearfix porel mt10 mr10">
+                        <div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
+                        <div class="pull-left c_gray tofh dbk" style="width:230px;">简介：{{item.bottom}}</div>
+                        <div class="pull-right c_primary" style="position:absolute;right:0;bottom:0;">更多</div>
+                    </div>
+                </a>
+                <a href="/static/frontend/intelligentMatch.html" v-show="(index+1)%6==0" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(/static/frontend/images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
+            </div>
+            <div id="more" class="mt10 mb10 bg_white ofh" style="height:30px;">
+                <div class="bb1 pt15"></div>
+                <div class="text-center f12 c_gray bg_white center-block" style="position: relative;margin-top:-10px;width: 205px;">找不到想要的？去发布您的需求吧！</div>
+            </div>
+        </section>
+        <!-- 底部菜单 -->
+        <div style="height:80px;line-height:80px;"></div>
+        <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+            <div style="width: 100%;height: 50px;" class="clearfix">
+                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img src="/static/frontend/images/sign-2-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_black">市场</div>
+            </a>
+                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $("#box").height($(window).height());
+    $(".rightDiv").width($(window).width() - 20 - 50 - 50 - 10 - 10);
+    var vue = new Vue({
+        el: "#box",
+        data: {
+            projectList: [],
+            pageFlag: true,
+            page: 1,
+            ui: {},
+            appId: "",
+            noncestr: "",
+            signature: "",
+            timestamp: "",
+            share: {}
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                vue.loadPro();
+
+                // 加载更多
+                $(document).scroll(function(){
+                    if (vue.pageFlag) {
+                        var y=$("#more").offset().top-$(window).scrollTop()-$(window).height();
+                        if(y<80){
+                            vue.page = vue.page+1;
+                            vue.loadPro();
+                        }
+                    }
+                });
+
+                vue.ui = ui;
+                // 加载微信配置
+                $.ajax({
+                    url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    async: false,
+                    data: {"link": window.location.href},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        vue.appId = res.data.appId;
+                        vue.noncestr = res.data.noncestr;
+                        vue.signature = res.data.signature;
+                        vue.timestamp = res.data.timestamp;
+                    }
+                });
+
+                vue.share = {
+                    "title": "FA財-市场中心",
+                    "desc": "好项目 好资金 一网打尽",
+                    "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+                };
+
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: vue.appId, // 必填，公众号的唯一标识
+                    timestamp: vue.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: vue.noncestr, // 必填，生成签名的随机串
+                    signature: vue.signature,// 必填，签名
+                    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+                });
+
+                var shareLink = window.location.href;
+                if (ui.userType == 1 || ui.userType == 2) {
+                    shareLink = "http://fin.jrfacai.com/static/frontend/startBusiness.html?superior="+ui.uid;
+                }
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.onMenuShareAppMessage({ 
+                        title: vue.share.title, // 分享标题
+                        desc: vue.share.desc, // 分享描述
+                        link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vue.share.imgUrl, // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+                    wx.onMenuShareTimeline({ 
+                        title: vue.share.title, // 分享标题
+                        link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vue.share.imgUrl, // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+                });
+            });
+        },
+        methods: {
+            loadPro: function () {
+                vue.pageFlag = false;
+                $("#loading").removeClass('hidden');
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/require_market_api/getChuangYeMarketList',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            // type: "zhaiquan",
+                            page: vue.page,
+                        },
+                    })
+                    .done(function(res) {
+                        var tmp = res.data;
+                        if (tmp && tmp.length > 0) {
+                            for (var i = 0; i < tmp.length; i++) {
+                                vue.projectList.push(tmp[i]);
+                            }
+                            vue.pageFlag = true;
+                        }
+                        $("#loading").addClass('hidden');
+                    });
+            },
+            getServiceUrl: function() {
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/index_api/serviceUrl',
+                        type: 'GET',
+                        dataType: 'json'
+                    })
+                    .done(function(res) {
+                        window.location.href = res.data;
+                    });
+
+            },
+            getDetail: function(id, type) {
+                if (type == "project") {
+                    window.location.href = '/home/project_info/index/id/' + id;
+                } else if (type == 'organize') { //精选项目
+                    window.location.href = '/static/frontend/detailsShowSelectedFunds.html?id=' + id + '&type=' + type;
+                } else if (type == 'organize_require') {
+                    window.location.href = '/static/frontend/detailsShowFunds.html?id=' + id + '&type=' + type;
+                } else if (type == "project_require") {
+                    window.location.href = '/static/frontend/detailsShowProject.html?id=' + id + '&type=' + type;
+                } else if (type == "zfmxes_add") {
+                    //精选定增项目http://fin.jrfacai.com/home/zfmxes_info/index/neeq/$neeq/plannoticeddate/$plannoticeddate;
+                    window.location.href = '/home/zfmxes_info/index/neeq' + id + '/plannoticeddate/' + type;
+                } else if (type == "zryxes_effect") {
+                    //精选大宗转让项目http://fin.jrfacai.com/home/zryxes_effect_info/index/id/$id
+                    window.location.href = '/home/zryxes_effect_info/index/id/' + id;
+                }
+            },
+            searchModal: function() {
+                window.location.href = '/static/frontend/search.html';
+            },
+
+        }
+    });
+    </script>
+</body>
+
+</html>

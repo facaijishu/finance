@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <script type="text/javascript" src="../router.js"></script>
+    <script type="text/javascript" src="./js/common.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/component.js"></script>
+</head>
+
+<body id="box" class="mofh bg_gray" style="width:100%;">
+    <section style="padding: 10px 7px;">
+        <div class="bg_white" style="padding: 9px 7px;">
+            <img src="./images/index-banner-2.png" alt="" style="width:100%;">
+            <div class="mt10">
+                <p style="font-size: 18px;color: #1E1E1E;line-height: 25px;">太湖金谷新三板董事会秘书实务研修班限时报名</p>
+                <div class="clearfix mb15">
+                    <p class="pull-left" style="font-size: 10px;line-height: 14px;margin-top: 6px;"><span style="color: #999999;">活动时间：</span><span style="color: #007FED;">2018-07-27  13:00 -  17:00</span></p>
+                    <p class="pull-right" style="font-size: 14px;color: #ED2C2C;line-height: 20px;
+                    ">免费</p>
+                </div>
+                <div style="font-size: 12px;line-height: 17px;color: #1E1E1E;">
+                    <p class="mb10 mt10"><img src="./images/act-position.png" alt="" width="15" style="vertical-align: bottom;margin-right: 13px;"><span>苏州市高新区678号</span></p>
+                    <div style="border: 1px solid #F1F1F1;"></div>
+                    <p class="mb10 mt10"><img src="./images/act-apply.png" alt=""  width="18" class="mr10" style="vertical-align: bottom;"><span>已报名18人/不限名额</span></p>
+                    <div style="border: 1px solid #F1F1F1;"></div>
+                </div>
+                <!-- 报名 -->
+                <div class="mt10 mb5 porel text-center">
+                    <img src="./images/act-applyBtn.png" alt="" width="100" class="">
+                    <div style="color: #FFFFFF;font-size: 16px;line-height: 22px;width: 100%;position: absolute;top: 7px;left: 0;text-align: center;">报名</div>
+                </div>
+                <!-- 已结束 -->
+                <div>
+                    <div style="color: #333333;font-size: 16px;line-height: 30px;width: 100px;height: 30px;background: #F0F0F0;border-radius: 15px;text-align: center;margin: 10px auto 5px;display: none;">已结束</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg_white mt10" style="padding: 13px 0;border-radius: 4px;">
+            <p style="font-size: 16px;line-height: 22px;color: #1E1E1E;margin-left: 7px;margin-bottom: 15px;">活动详情</p>
+            <img src="./images/index-banner-2.png" alt="" style="width:100%;">
+        </div>
+    </section>
+
+    
+    
+    <!-- 底部菜单 -->
+    <div style="height:70px;line-height:70px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width:275px;height: 50px;margin: 0 auto;" class="clearfix">
+            <div class="pull-left">
+                <img src="./images/pro-share.png" alt="" width="24">
+                <p style="font-size: 12px;">转发</p>
+            </div>
+            <div class="pull-left porel" style="margin-left: 45px;margin-right: 45px;">
+                <img src="./images/pro-chat.png" alt="" width="133">
+                <span style="color: #FFFFFF;line-height: 18px;position: absolute;top: 7px;left:38px;" class="f13">和TA聊天</span>
+            </div>
+            <div class="pull-left">
+                <img src="./images/pro-collect.png" alt="" width="24">
+                <p style="font-size: 12px;">收藏</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // 设置加载中...
+            $(document).ajaxStart(function() {
+                $("#loading").removeClass('hidden');
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        //提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/7*1000);
+        }
+
+        // 初始窗口
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#box").height(wh);
+        $("#pcHeader").width(ww-20);
+        $(".secContent").width(ww-15);
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    vue.ui = ui;
+                });
+            },
+            methods: {
+                actApply: function () {
+                    location.href = "./activityDetails.html";
+                }
+            }
+        })
+        
+    </script>
+</body>
+
+</html>

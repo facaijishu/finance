@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-lg" id="myModalAddMessage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="add_message" action="{:url('Message/add')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加留言备注</h4>
+                            </div>
+                            <div class="modal-body">
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">备注：</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <textarea rows="6" class="form-control" name="content"></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {include file="message/tab_detail" /}
+            <div id="project_detail" data-id="{$info.m_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">留言主体：</label>
+                        <div class="form-group col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                            {$info.pro_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">留言内容：</label>
+                        <div class="form-group col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                            {$info.content}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-2 col-md-6 col-sm-6">留言用户：<span>{$info.create_uid}</span></label>
+                        <label class="control-label col-lg-2 col-md-6 col-sm-6">留言时间：<span>{$info.create_time}</span></label>
+                        <a class="btn btn-md btn-default" style="float: right;" data-id="{$info.m_id}" data-toggle="modal" data-target="#myModalAddMessage">处理</a>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend></legend>
+                    {foreach name="$info.list" item="list"}
+                    <div class="col-lg-11 col-sm-12 col-md-12">
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">备注内容：</label>
+                            <div class="form-group col-lg-11 col-sm-10 col-md-10 col-xs-12">
+                                {$list.content}
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-2 col-md-6 col-sm-6">备注用户：<span>{$list.create_user}</span></label>
+                            <label class="control-label col-lg-2 col-md-6 col-sm-6">备注时间：<span>{$list.create_time}</span></label>
+                        </div>
+                    </div>
+                    {/foreach}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#myModalAddMessage').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).attr("data-id");
+        loadModule('bootstrapValidator', function () {
+            $('#add_message').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    content: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入备注内容'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.preventDefault();
+                var content = $("#add_message").find("textarea").val();
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: {id:id , content:content},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        });
+    }).on('hidden.bs.modal', function (e) {
+        $('#add_message').bootstrapValidator('destroy');
+        $('#add_message')[0].reset();
+    });
+</script>

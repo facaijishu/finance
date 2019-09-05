@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">未审核</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Through/index")}')">未审核</a></li>
+    {/if}
+    {if condition="$Request.action eq 'repulse' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">打回调整</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Through/repulse")}')">打回调整</a></li>
+    {/if}
+    {if condition="$Request.action eq 'audited' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">已审核</a></li>
+    <button class="btn btn-success export" style="float: right;" type="button"><i class="fa fa-download"></i><a target="_black">导出已审核统计</a></button>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Through/audited")}')">已审核</a></li>
+    {/if}
+    {if condition="$Request.action eq 'termination' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">终止</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Through/termination")}')">终止</a></li>
+    {/if}
+</ul>

@@ -1,0 +1,76 @@
+<div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+		<div class="well well-sm well-light">
+			{include file="menu/tab" /}
+			<div>
+				<form class="form-horizontal" >
+					<table class="table table-hover" id="menuList">
+						<thead>
+						<tr>
+							<th class="col-md-1">排序</th>
+							<th class="col-md-1">ID</th>
+							<th class="col-md-4">菜单名称</th>
+							<th class="col-md-1">图标</th>
+							<th class="col-md-2">状态</th>
+							<th class="col-md-3">管理操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						{$menu}
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+var menu_del_url = "{:url('menu/delete')}";
+var edit_order = "{:url('menu/order')}";
+$(document).ready(function () {
+	$("#menuList").on('click', ".js-menu-del", function (e) {
+		var _this = $(this);
+		Dialog.confirm('操作提示', '确定删除该菜单吗？', function () {
+			var id = _this.attr("data-menu-id");
+			$.ajax({
+				url: menu_del_url,
+				type: 'post',
+				data: { id:id },
+				dataType: 'json',
+				success: function (resp) {
+					if(resp.code){
+						Dialog.success('操作成功', resp.msg, 2000, function () {
+							_this.parents('tr').remove();
+						});
+					}else{
+						Dialog.error('操作失败', resp.msg);
+					}
+				}
+
+			})
+		});
+	});
+	$("#menuList input[name='list_order']").change(function (e) {
+		var id = $(this).attr("data-id");
+		var o_order = e.target.defaultValue;
+		var n_order = $(this).val();
+		if(isNaN(n_order)) {
+			$(this).val(o_order);
+			Dialog.error('出错提示', '请输入数字');
+		}
+		$.ajax({
+			url: edit_order,
+			type: "post",
+			data: {id: id, order: n_order},
+			success: function (resp) {
+				if(resp.code){
+					Dialog.success('成功提示', resp.msg, 2000, function () {
+					});
+				}else{
+					Dialog.error('失败提示', resp.msg);
+				}
+			}
+		})
+	});
+});
+</script>

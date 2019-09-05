@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+
+<body>
+<img src="/static/frontend/images/mycent_img1.png" style="width:100%;">
+</body>
+<script type="text/javascript">
+// VUE实例
+var vue = new Vue({
+    el: "#box",
+    data: {
+        ui: {},
+        publishList: [],
+        reportId: '',
+        pageFlag: true,
+        page: 1,
+        reportItem: {},
+        appId: "",
+        noncestr: "",
+        signature: "",
+        timestamp: "",
+        share: {}
+    },
+    mounted: function () {
+        this.$nextTick(function() {
+            vue.ui = ui;
+            
+         	// 加载微信配置
+            $.ajax({
+                url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                type: 'GET',
+                dataType: 'JSON',
+                async: false,
+                data: {"link": window.location.href},
+            })
+            .done(function(res) {
+                if (res.code == 200) {
+                    vue.appId = res.data.appId;
+                    vue.noncestr = res.data.noncestr;
+                    vue.signature = res.data.signature;
+                    vue.timestamp = res.data.timestamp;
+                }
+            });
+            vue.share = {
+                    "title": "FA財-使用指南",
+                    "desc": "玩转FA財，信息变现",
+                    "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+                };
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: vue.appId, // 必填，公众号的唯一标识
+                timestamp: vue.timestamp, // 必填，生成签名的时间戳
+                nonceStr: vue.noncestr, // 必填，生成签名的随机串
+                signature: vue.signature,// 必填，签名
+                jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+            });
+
+            var shareLink = window.location.href;
+            if (ui.userType == 1 || ui.userType == 2) {
+                shareLink = "http://fin.jrfacai.com/static/frontend/guide.html?superior="+ui.uid;;
+            }
+            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                wx.onMenuShareAppMessage({ 
+                    title: vue.share.title, // 分享标题
+                    desc: vue.share.desc, // 分享描述
+                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: vue.share.imgUrl, // 分享图标
+                    success: function () {
+                      // 设置成功
+                    }
+                });
+                wx.onMenuShareTimeline({ 
+                    title: vue.share.title, // 分享标题
+                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: vue.share.imgUrl, // 分享图标
+                    success: function () {
+                      // 设置成功
+                    }
+                });
+            });
+        });
+    },
+    methods: {
+        disableBtn: function () {
+            alertModal("功能尚未开放！");
+        }
+    }
+})
+</script>
+</html>

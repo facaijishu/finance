@@ -1,0 +1,510 @@
+{include file="base/header" /}
+    <style>
+        .more-text{
+            height: 50px;
+            line-height: 50px;
+            background-color: #E3E3E3;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .canDone{
+            background-color: #DDDDDD;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+	<style type="text/css">
+	    .header-title{
+		    overflow:hidden;
+			padding-top:10px;
+			line-height:0px;
+		}
+		.left{
+			float:left;
+			width:20%;
+			margin-top:0.5rem;
+		}
+		.left .icon{
+		    width:1.2rem;
+			height:1.2rem;
+		}
+		.left .miti{
+		    font-size:16px;
+		}
+		.right{
+		    width:76%;
+			float:right;
+		}
+		.ioon{
+		    width:100%;
+			height:2rem;
+			background-color:#CBA054;
+			border-radius:20px;
+            padding: 1px 10px 1px 1px;
+			position:relative;
+		}
+		.ioon .text{
+		    width:80.6%;
+			height:100%;
+			outline:none;
+			background-color:#fff;
+			border-radius:20px;
+			padding:2px 5px 2px 30px;
+			margin-left:-0.75rem;
+		}
+        @media screen and (max-width: 320px){
+            .ioon .text{
+                width:73.6%;
+            }
+        }
+        @media screen and (max-width: 375px) and (min-width: 330px) {
+            .ioon .text{
+                width:78.6%;
+            }
+        }
+		.ioon .sou{
+		    color:#fff;
+			cursor:pointer;
+			margin-left:10px;
+		}
+		.ioon .ser{
+		    width:1.1rem;
+			height:1.1rem;
+			position:absolute;
+			left:0.4rem;
+			top:0.48rem;
+			/*z-index:100;*/
+		}
+                .seos-box ul {
+                    padding: 51px 15px;
+                }
+	</style>
+    <body>
+        <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}">
+        <div class="kfLogo">
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">
+        </div>
+        </a>
+        <!--客服-->
+        {include file="base/slide" /}  
+        {include file="base/dividend" /}
+        <div class="header-title">
+		    <!--
+            <div class="pull-left">
+                <a href="javascript:history.back(-1)"><i class="fa fa-angle-left"></i></a>
+            </div>
+            <h1>定向增发</h1>
+			-->
+			<div class="left">
+			    <img src="__CSS__/img/miti.png" class="icon" />
+				<span class="miti">筛选</span>
+			</div>
+			<div class="right">
+			    <form id="ioon" class="ioon" method="" name="" action="">
+				    <input class="text" type="text" name="gupiao" placeholder="请输入股票名称,代码" style="font-size:12px;" />
+					<span class="sou">搜索</span>
+					<input type="text" name="raise_money" style="display: none;">
+					<input type="text" name="xmsz" style="display: none;">
+					<input type="text" name="xmsz1" style="display: none;">
+					<input type="text" name="sublevel" style="display: none;">
+					<img src="__CSS__/img/icon-search1.png" class="ser" />
+				</form>
+			</div>
+        </div>
+		<div class="more-box">
+            <form action="{:url('Zfmxes/sproject')}" method="post" id="project_select">
+                <input class="in" type="text" name="gupiao" style="display: none;" />
+                <dl>
+                    <dt>融资金额</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">1000万以下</span>
+                        <span data-id="2">1000～3000万</span>
+                        <span data-id="3">3000～5000万</span>
+                        <span data-id="4">5000万以上</span>
+                    </dd>
+                </dl>
+                <input class="raise_money" type="text" name="raise_money" style="display: none;">
+                
+                <dl>
+                    <dt>净利润</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">500万以下</span>
+                        <span data-id="2">500～2000万</span>
+                        <span data-id="3">2000～5000万</span>
+                        <span data-id="4">5000万以上</span>
+                    </dd>
+                </dl>
+                <input class="xmsz" type="text" name="xmsz" style="display: none;">
+                <dl>
+                    <dt>年营业收入</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">500万以下</span>
+                        <span data-id="2">500～2000万</span>
+                        <span data-id="3">2000～5000万</span>
+                        <span data-id="4">5000～1亿</span>
+                        <span data-id="5">1亿～2亿</span>
+                        <span data-id="6">2亿以上</span>
+                    </dd>
+                </dl>
+                <input class="xmsz1" type="text" name="xmsz1" style="display: none;">
+                
+                <dl>
+                    <dt>层级</dt>
+                    <dd class="dd-3">
+                        {foreach name="hierarchy" item="hier"}
+                        <span data-id="{$hier.id}">{$hier.value}</span>
+                        {/foreach}
+                    </dd>
+                </dl>
+                <input class="sublevel" type="text" name="sublevel" style="display: none;">
+                <div class="bar-box">
+				
+                </div>
+                <div class="bar-btn">
+                    <button class="btn-white" type="button">取消</button>
+                    <button class="submit" type="button">确定</button>
+                </div>
+            </form>
+        </div>
+		
+        <div class="seos-box" data-num="{$num}">
+            <ul id="ul">
+                {foreach name="$zfmxes" item="it"}
+                <li>
+                    <a href="{:url('ZfmxesInfo/index',['neeq' => $it.neeq ,'plannoticeddate' => $it.plannoticeddate])}">
+                        <div class="seos-t">
+                            <i class="ico-yz">融资中</i>
+                            {if condition="$it.trademethod eq '协议'"}<i class="ico-shi" style="border-radius:2px;">竞</i>{else /}<i class="ico-shi" style="background:red;border-radius:2px;">市</i>{/if}
+                            <strong>{$it.sec_uri_tyshortname} <small>【{$it.neeq}】</small></strong>
+                        </div>
+                        <div class="seos-c">
+                            <div class="each">
+                                <span class="red">{$it.raise_money}</span><small>万元</small><br />
+                                <div>计划募资</div>
+                            </div>
+                            <div class="each">
+                                {$it.additional_num}<small>万股</small><br />
+                                <div>增发数量</div>
+                            </div>
+                            <div class="each">
+                                {$it.increase_price}<small>元</small><br />
+                                <div>定增价格</div>
+                            </div>
+                        </div>
+                        <p><label>净利润：</label>{$it.lirun}</p>
+                        <p><a href="{:url('ZfmxesInfo/index',['neeq' => $it.neeq ,'plannoticeddate' => $it.plannoticeddate])}" class="more">查看详情>></a><label>董事会公告日：</label>{$it.announcement_date}</p>
+                    </a>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+        {if condition="$num lt 10"}
+        <div id="text-none" class="text-over">
+            没有啦~~~
+        </div>
+        {else /}
+        <div id="canDone" class="more-text canDone">加载更多</div>
+        {/if}
+        <script type="text/javascript">
+            /***
+             * 点击加载更多
+             */
+            $("body").on('click','.more-text',function(){
+                var id = $(".seos-box").attr("data-num");
+                var gupiao = $(".in").val();
+                var raise_money = $(".raise_money").val();
+                var sublevel = $(".sublevel").val();
+                var xmsz = $(".xmsz").val();
+                var xmsz1 = $(".xmsz1").val();
+                //if($(this).hasClass("canDone")){
+                    $.ajax({
+                        type:"post",
+                        url: "{:url('Zfmxes/sproject')}",
+                        data: {id : id,gupiao:gupiao,raise_money:raise_money,sublevel:sublevel,xmsz:xmsz,xmsz1:xmsz1},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if(resp.code){
+                                var data = resp.data;
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    if(data[i]['trademethod'] == '竞'){
+                                        var trademethod = '<i class="ico-shi" style="border-radius:2px;">竞</i>';
+                                    }else{
+                                        var trademethod = '<i class="ico-shi" style="border-radius:2px;background:red;">市</i>';
+                                    }
+                                    str += '<li><a href="'+data[i]['url']+'"><div class="seos-t"><i class="ico-yz">融资中</i>'+trademethod+'<strong>'+data[i]['sec_uri_tyshortname']+'<small>【'+data[i]['neeq']+'】</small></strong></div><div class="seos-c"><div class="each"><span class="red">'+data[i]['raise_money']+'</span><small>万元</small><br /><div>计划募资</div></div><div class="each">'+data[i]['additional_num']+'<small>万股</small><br /><div>增发数量</div></div><div class="each">'+data[i]['increase_price']+'<small>元</small><br /><div>定增价格</div></div></div><p><label>净利润：</label>'+data[i]['lirun']+'</p><p><a href="'+data[i]['url']+'" class="more">查看详情>></a><label>董事会公告日：</label>'+data[i]['announcement_date']+'</p></a></li>';
+                                }
+                                $(".seos-box ul").append(str);
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                // if(length < 10){
+                                //     $(".more-text").remove();
+                                //     $("body").append('<div class="text-over">没有啦~~~</div>');
+                                // }
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                            }else{
+                                $(".more-text").remove();
+                                $("body").append('<div class="text-over">没有啦~~~</div>');
+                            }
+                        }
+                    });
+                //}
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                /***
+                 * 点击确认，取消，每一个选项元素
+                 */
+                $(".left").click(function(){
+                    $(".more-box").fadeIn();
+                    $(".seos-box").hide();
+                });
+                $(".all-l.more").on("click", function () {
+                    $(".more-box").fadeIn();
+                    $(".seos-box").hide();
+                });
+                $(".more-box .btn-white").on("click", function () {
+                    $(".seos-box").show();
+                    $(".more-box").fadeOut();
+                    $('body').css("overflow", "auto");
+                    $(".more-box span").removeClass("actived");
+                    var txt = "";
+                    $(".more-box span").parents("dl").next("input").val(txt);
+                });
+                $(".more-box").on('click' , 'span' , function(){
+                    if($(this).hasClass("actived")){
+                        var txt = "";
+                        $(this).removeClass("actived");
+                        $(this).parents("dl").next("input").val(txt);
+                    }else{
+                        $(this).parent().find("span").removeClass("actived");
+                        $(this).addClass("actived");
+                        var id = $(this).attr("data-id");
+                        $(this).parents("dl").next("input").val(id);
+                    }
+                    var t = $(".text").val();
+                    $(".in").val(t);
+                });
+                /**
+                 * 点击提交确认
+                 * */
+                $("#project_select").on('click','.submit',function(){
+                    $(".seos-box").show();
+                    $(".seos-box").attr("data-num" , 0);
+                    $(".seos-box ul").html("");
+                    $(".more-box").fadeOut();
+                    $(".more-box span").removeClass("actived");
+                    var form = document.getElementById("project_select");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Zfmxes/sproject')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success:function(resp){
+                            $(".more-box").fadeOut();
+                            //请求成功后要清除之前表单存留的数据
+                            //var txt = "";
+                            //$(".more-box span").parents("dl").next("input").val(txt);
+                            $(".all-no").removeClass("actived");
+                            $(".all-no[data-id='']").addClass("actived");
+                            if(resp.code){
+                                var data = resp.data;
+                                //var data = Object.keys(data1).map((item, index) => ({key: item, value:data1[item]}))
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    //console.log(data[i]['value']['trademethod'])
+                                    if(data[i]['trademethod'] == '竞'){
+                                        var trademethod = '<i class="ico-shi" style="border-radius:2px;">竞</i>';
+                                    }else{
+                                        var trademethod = '<i class="ico-shi" style="border-radius:2px;background:red;">市</i>';
+                                    }
+                                    str += '<li><a href="'+data[i]['url']+'"><div class="seos-t"><i class="ico-yz">融资中</i>'+trademethod+'<strong>'+data[i]['sec_uri_tyshortname']+'<small>【'+data[i]['neeq']+'】</small></strong></div><div class="seos-c"><div class="each"><span class="red">'+data[i]['raise_money']+'</span><small>万元</small><br /><div>计划募资</div></div><div class="each">'+data[i]['additional_num']+'<small>万股</small><br /><div>增发数量</div></div><div class="each">'+data[i]['increase_price']+'<small>元</small><br /><div>定增价格</div></div></div><p><label>净利润：</label>'+data[i]['lirun']+'</p><p><a href="'+data[i]['url']+'" class="more">查看详情>></a><label>董事会公告日：</label>'+data[i]['announcement_date']+'</p></a></li>';
+                                }
+                                /***
+                                $(".seos-box ul").html(str);
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                if(length < 10){
+                                    $(".more-text").remove();
+                                    //$("body").append('<div class="text-over">没有啦~~~</div>');
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                 ***/
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                $(".seos-box ul").html(str);
+                                $(".seos-box li:even").addClass("even");
+                            }else{
+                                /***
+                                $(".seos-box ul").html("");
+                                //$("body").append('<div class="text-over">没有啦~~~</div>');
+                                $(".seos-box").attr("data-num" , 0);
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    //$("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                                 ***/
+                                $(".seos-box").attr("data-num" , 0);
+                                $(".seos-box ul").html('');
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                            }
+                        }
+                    });
+                    //改变点击返回按钮默认的历史url
+                    returnUrl("{:url('zfmxes/conlist')}");
+                });
+                /**
+                 * 点击搜索
+                 */
+                $(".sou").on('click',function(){
+                    $(".seos-box").show();
+                    $(".seos-box ul").html("");
+                    var form = document.getElementById("ioon");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Zfmxes/sproject')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (resp) {
+                            $(".more-box").fadeOut();
+                            $(".all-no").removeClass("actived");
+                            $(".all-no[data-id='']").addClass("actived");
+                            if(resp.code){
+                                var data = resp.data;
+                                //var data = Object.keys(data1).map((item, index) => ({key: item, value:data1[item]}))
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    if(data[i]['trademethod'] == '竞'){
+                                        var trademethod = '<i class="ico-shi" style="border-radius:2px;">竞</i>';
+                                    }else{
+                                        var trademethod = '<i class="ico-shi" style="border-radius:2px;background:red;">市</i>';
+                                    }
+                                    str += '<li><a href="'+data[i]['url']+'"><div class="seos-t"><i class="ico-yz">融资中</i>'+trademethod+'<strong>'+data[i]['sec_uri_tyshortname']+'<small>【'+data[i]['neeq']+'】</small></strong></div><div class="seos-c"><div class="each"><span class="red">'+data[i]['raise_money']+'</span><small>万元</small><br /><div>计划募资</div></div><div class="each">'+data[i]['additional_num']+'<small>万股</small><br /><div>增发数量</div></div><div class="each">'+data[i]['increase_price']+'<small>元</small><br /><div>定增价格</div></div></div><p><label>净利润：</label>'+data[i]['lirun']+'</p><p><a href="'+data[i]['url']+'" class="more">查看详情>></a><label>董事会公告日：</label>'+data[i]['announcement_date']+'</p></a></li>';
+                                }
+                                /***
+                                $(".seos-box ul").html(str);
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                if(length < 10){
+                                    $(".more-text").remove();
+                                    //$("body").append('<div class="text-over">没有啦~~~</div>');
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                 ****/
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                $(".seos-box ul").html(str);
+                            }else{
+                                /***
+                                $(".seos-box ul").html("");
+                                //$("body").append('<div class="text-over">没有啦~~~</div>');
+                                $(".attorn-box").attr("data-num" , 0);
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    //$("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                                 ***/
+                                $(".seos-box").attr("data-num" , 0);
+                                $(".seos-box ul").html('');
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                            }
+                        }
+                    });
+                    //改变点击返回按钮默认的历史url
+                    returnUrl("{:url('zfmxes/conlist')}");
+                });
+                //点击浏览器返回按钮返回到指定url
+                function returnUrl(url)
+                {
+                    pushHistory();
+                    window.addEventListener("popstate", function(e) {
+                        window.location = url;
+                    }, false);
+                }
+                //历史url
+                function pushHistory() {
+                    var state = {
+                        title: "title",
+                        url: "#"
+                    };
+                    window.history.pushState(state, state.title, state.url);
+                 }
+            });
+            
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                var flat = $(".flat");
+                if(flat.length>0){
+                    var guding = $("<div />",{
+                        class:"guding"
+                    });
+                    $(".flat,.header-title").wrapAll(guding);
+                    $(".flat").css("margin-bottom",0);
+                    $(".flat").css("position","relative");
+                    $(".guding").css({"width":"100%","display":"block","position":"fixed","z-index":"9999"});
+                }else{
+                    $(".header-title").css({"position":"fixed","z-index":"9999"});
+                }
+                
+            })
+        </script>
+    </body>
+</html>

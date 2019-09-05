@@ -1,0 +1,51 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        <div class="my-pro">
+            <a href="">
+                <div class="pro-t">{$info.pro_name}<small>（{$info.stock_code}）</small></div>
+                <div class="pro-label">
+                    {foreach name="$info.inc_industry" item="industry"}
+                    <span>{$industry}</span>
+                    {/foreach}
+                    <label for="transfer_type" class="red">{$info.transfer_type}</label>
+                    <label for="hierarchy" class="orange">{$info.hierarchy}</label>
+                </div>
+                <div class="pro-box padding-0">
+                    <p>{$info.introduction}</p>
+                </div>
+            </a>
+        </div>
+        <div class="feedback">
+            <textarea name="content" rows="8" cols="80"></textarea>
+            <button>提交留言</button>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $("textarea").val('');
+                $("button").click(function(){
+                    var content = $("textarea").val();
+                    if(content == ''){
+                        alert("请输入留言内容");
+                        return false;
+                    }else{
+                        $.ajax({
+                            url: "{:url('Message/add')}",
+                            data: {content:content},
+                            type: "POST",
+                            dataType: "json",
+                            success: function(resp){
+                                if(resp.code){
+                                    location.href = resp.data.url;
+                                }else{
+                                    alert(resp.msg);
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

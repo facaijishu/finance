@@ -1,0 +1,37 @@
+{include file="base/header" /}
+    <body>
+        <div class="header-title">
+            <div class="pull-left">
+                <a href="javascript:history.back(-1)"><i class="fa fa-angle-left"></i></a>
+            </div>
+            <h1>公告</h1>
+        </div>
+        <div class="notice-tab">
+            <a class="actived">文本格式</a>
+            <a>PDF</a>
+        </div>
+        <div class="notice-con">
+            <div class="notice-text">
+                <p>
+                    {$info.text}
+                </p>
+            </div>
+        </div>
+        <div class="notice-con" style="display: none;">
+            <div class="notice-each">
+                <p>{$info.title}</p>
+                <a href="__UPLOAD__{$info.file_path}" class="btn1">PDF下载</a>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                $(".notice-tab a").on("click", function () {
+                    $(".notice-tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".notice-con").hide();
+                    $(".notice-con").eq($(this).index()).show();
+                });
+            })
+        </script>
+    </body>
+</html>

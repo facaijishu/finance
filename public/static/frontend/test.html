@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+</head>
+<body>
+    <div class="form-group">
+        <input id="testInput" type="text" class="form-control" placeholder="请输入值" style="width:250px;">
+    </div>
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+      <div class="modal-dialog" aria-hidden="true" style="margin-top: 10%;">
+        <div class="modal-content bg_black" style="border:0;">
+          <div class="modal-body text-center c_white"></div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+    $("#testInput").trigger('click');
+    //提示框
+    function alertModal(msg) {
+      $("#alertModal").find('.modal-body').html(msg);
+      $("#alertModal").modal("show");
+      setTimeout(function() {
+        $("#alertModal").modal("hide");
+      }, 2500);
+    }
+
+    // 需要同时绑定两个事件来完成回车的效果
+    $("#testInput").on('keydown', function(event) {
+        if (event.which == 13) {
+            alertModal("执行成功");
+            //执行同样的搜索请求逻辑
+        }
+    });
+    $("#testInput").on('blur', function(event) {
+        alertModal("执行成功");
+        //执行同样的搜索请求逻辑
+    });
+    </script>
+</body>
+</html>

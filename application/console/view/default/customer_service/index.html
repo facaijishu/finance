@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-sm" id="ModalBinding" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="binding_customer_form" action="{:url('CustomerService/binding')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">邀请绑定</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="kf_account" class="control-label">客服账号:</label>
+                                    <div class="input-group col-lg-12">
+                                        <select class="form-control" name="kf_account">
+                                            {foreach name="list" item="it"}
+                                            <option value="{$it.kf_account}">{$it.kf_account}</option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="kf_wx" class="control-label">微信号:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="kf_wx" placeholder="请输入微信号..." class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary addDictType">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="introdece_img/modal" /}
+            {include file="customer_service/tab" /}
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="customer_service_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 客服昵称 </label>
+                                    <div class="col-lg-6 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="kf_nick" id="road_name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-default" id="customer_service_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="customer_service" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th data-hide="phone"> 客服ID</th>
+                                <th data-class="expand"> 客服账号</th>
+                                <th data-hide="phone"> 绑定用户</th>
+                                <th data-hide="phone"> 客服头像</th>
+                                <th data-hide="phone"> 客服昵称</th>
+                                <th data-hide="phone"> 客服微信</th>
+                                <th data-hide="phone"> 客服二维码</th>
+                                <th data-hide="phone"> 创建时间</th>
+                                <th data-hide="phone"> 状态</th>
+                                <th data-hide="phone,tablet">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var customer_service_url = '{:url("CustomerService/read")}';
+    var customer_service_delete_url = '{:url("CustomerService/delete")}';
+    var customer_service_synchronization_url = '{:url("CustomerService/synchronization")}';
+    var root_path_url = $("#customer_service").attr("data-path");
+    var customer_service_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/customer_service/customer_service_list.js"></script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

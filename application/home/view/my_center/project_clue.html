@@ -1,0 +1,32 @@
+{include file="base/header" /}
+    <body>
+        <a id="allhome" href="http://fin.jrfacai.com/static/frontend/index.html" class="go-index fa fa-home"><span>返回首页</span></a>
+        {include file="base/dividend" /}
+        {if condition="$list neq null"}
+        {foreach name="$list" item="it"}
+        <div class="my-pro">
+            <a href="{:url('MyCenter/project_clue_info' , ['id' => $it.clue_id])}">
+                <div class="pro-t">
+                    {if condition="$it.status eq 0"}
+                    <span class="stat1">待处理</span>{$it.pro_name}
+                    {else /}
+                    <span class="stat2">已处理</span>{$it.pro_name}
+                    {/if}
+                </div>
+                <div class="pro-box">
+                    <!--<img src="images/news.png" alt="">-->
+                    <p>{$it.introduction}</p>
+                </div>
+            </a>
+        </div>
+        {/foreach}
+        <div class="text-over">
+            没有啦~~~
+        </div>
+        {else /}
+        <div class="text-over">
+            暂无项目
+        </div>
+        {/if}
+    </body>
+</html>

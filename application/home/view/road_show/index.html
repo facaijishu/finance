@@ -1,0 +1,119 @@
+{include file="base/header"/}
+    <body>
+        {include file="base/dividend"/}
+        <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}"> 
+        <div class="kfLogo">      
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">      
+        </div>
+        </a>
+        <!--客服--> 
+        <div class="serach">
+            <div>
+                <input id="s-input" type="text" placeholder="搜索路演" >
+            </div>
+            <button>搜索</button>
+        </div>
+        <div id="road_show" style="padding: 0 0 30px 0;">
+            {foreach name="$list" item="it"}
+            {if condition="$through eq null || $through.status neq 1"}
+            <div class="ly-center disRead" data-id="{$it.rs_id}">
+            {else /}
+            <div class="ly-center" data-id="{$it.rs_id}">
+            {/if}
+                <img src="__UPLOAD__/{$it.top_img_url}" alt="头图">
+                <h3>{$it.road_name}</h3>
+                <div class="type">
+                    <span class="fa fa-clock-o">{$it.duration}</span>类型：{$it.type}
+                </div>
+                {foreach name="$it.road_introduce" item="it"}
+                <p style="text-indent: 2em;">{$it}</p>
+                {/foreach}
+            </div>
+            {/foreach}
+        </div>
+
+        <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+	<script type="text/javascript">
+ 		$(document).ready(function () {
+        	$(".msg-dialog").css("display","none");
+            $("#s-input").focus(function () {
+				$('.serach button').css({ width: '40px' })
+			});
+			$("#s-input").blur(function () {
+				if ($(this).val() == '') {
+					$('.serach button').css({ width: '0' })
+				}
+			});
+            $("#road_show").on("click",".ly-center",function(){
+	 			var id = $(this).attr("data-id");
+	            $.ajax({
+	                 url: "{:url('RoadShow/detail')}",
+	                 type: 'POST',
+	                 data: {id:id},
+	                 success: function(resp){
+	                     location.href = resp.data;
+	                 }
+	             });
+             });
+             $(".tab-select li").on("click", function () {
+                 $(".tab-select li span").removeClass("fa-check-circle");
+                 $(this).find("span").addClass("fa-check-circle");
+             });
+             $(".all-tab .fa:eq(0)").on("click", function () {
+                 $(".all-tab .fa").removeClass("actived");
+                 $(this).toggleClass("show-up actived");
+                 if ($(this).attr("class").indexOf("show-up") > 0) {
+                     $(".model").show();
+                     $(".tab-select:eq(0)").addClass("select-show");
+                 } else {
+                     $(".tab-select:eq(0)").removeClass("select-show");
+                     $(".model").hide();
+                 }
+             });
+             $(".all-tab .fa:eq(1)").on("click", function () {
+                 $(".all-tab .fa").removeClass("actived");
+                 $(this).toggleClass("show-up actived");
+                 if ($(this).attr("class").indexOf("show-up") > 0) {
+                     $(".model").show();
+                     $(".tab-select:eq(1)").addClass("select-show");
+                 } else {
+                     $(".tab-select:eq(1)").removeClass("select-show");
+                     $(".model").hide();
+                 }
+             });
+               $(".all-search").on("click", function () {
+                   $(".hide-search").css({transform: "rotateX(0deg)"})
+               });
+               $(".hide-search button").on("click", function () {
+                   if ($(this).html() == "取消") {
+                       $(".hide-search").css({transform: "rotateX(90deg)"})
+                   }
+               });
+            });
+        </script>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <style>
+        .typeTagBox,.pfcTagBox{border:1px solid #dddddd;color:#999999;width:97px;height:28px;line-height:26px;text-align:center;margin:0 10px 20px;float:left;}
+        .typeTagBox.active,.pfcTagBox.active{color:#0076FF;border:1px solid #0076FF;}
+    </style>
+</head>
+
+<body>
+    <div id="box" class="bg_gray mofh">
+        <!-- 个人中心 -->
+        <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:66px;">
+        <div id="pcHeader" class="radius shadow bg_white porel" style="position: absolute;top:15px;left:10px;z-index:700;position: relative;margin-top: -70px;">
+            <div class="p15">
+                <div class="clearfix">
+                    <img id="headerImg" class="pull-left" :src="ui.userPhoto" width="46" height="46" style="border-radius:30px;margin-right:13px;">
+                    <span id="addImgBtn" class="pull-right f12 mt15 c_primary">变更头像 ></span>
+                    <form id="fileForm" enctype="multipart/form-data">
+                        <input type="text" name="origin" value="member" class="sr-only">
+                        <input id="fileInput" class="sr-only" name="file" type="file">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix" style="margin:50px 0 20px;padding:0 15px 0;">
+            <span class="pull-left f18">基本信息填写</span>
+        </div>
+        <div class="pt15 bg_white" style="border-radius:3px;margin:0 7px 20px;">
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">角色选择&nbsp;&nbsp;：</span>
+                <label class="radio-inline">
+                    <input type="radio" name="role_type" v-if="ui.role_type == 1" checked="checked" value="1"> 我是资金方
+                    <input v-else type="radio" name="role_type" value="1"> 我是资金方
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="role_type"  v-if="ui.role_type == 2" checked="checked" value="2"> 我是项目方
+                    <input type="radio" name="role_type"  v-else value="2"> 我是项目方
+                </label>
+                <span class="c_primary" style="position:absolute;left:62px;top:18px;">*</span>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">姓名&nbsp;&nbsp;：</span>
+                <input id="real_name" type="text" class="pull-left basicInfoInput" placeholder="请输入" style="border:0;height:20px;" :value="ui.realName">
+                <span class="c_primary" style="position:absolute;left:34px;top:18px;">*</span>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">职务&nbsp;&nbsp;：</span>
+                <input id="position" type="text" class="pull-left basicInfoInput" placeholder="请输入" style="border:0;height:20px;" :value="ui.position">
+                <span class="c_primary" style="position:absolute;left:34px;top:18px;">*</span>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">手机&nbsp;&nbsp;：</span>
+                <input @keyup="changePhoneAct" id="phone" name="phone" type="text" class="pull-left basicInfoInput" placeholder="请输入" style="border:0;height:20px;" :value="ui.userPhone">
+                <span class="c_primary" style="position:absolute;left:34px;top:18px;">*</span>
+                <div id="sendAuthCode" class="bg_primary c_white f12 text-center changePhone dno" style="width:85px;height:32px;border-radius:16px;line-height:32px;position:absolute;right:5px;top:9px;">发送验证码</div>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1 changePhone dno">
+                <span class="pull-left c_gray">验证码&nbsp;&nbsp;：</span>
+                <input id="code" type="text" class="pull-left basicInfoInput" placeholder="请输入验证码" style="border:0;height:20px;" value="">
+                <span class="c_primary" style="position:absolute;left:48px;top:18px;">*</span>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">公司&nbsp;&nbsp;：</span>
+                <input id="company" type="text" class="pull-left basicInfoInput" placeholder="请输入" style="border:0;height:20px;" :value="ui.company">
+                <span class="c_primary" style="position:absolute;left:34px;top:18px;">*</span>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">公司简称&nbsp;&nbsp;：</span>
+                <input id="company_jc" type="text" class="pull-left basicInfoInput" placeholder="请输入" style="border:0;height:20px;" :value="ui.company_jc">
+                <span class="c_primary" style="position:absolute;left:62px;top:18px;">*</span>
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">微信：</span>
+                <input id="weixin_id" type="text" class="pull-left basicInfoInput" placeholder="（选填）" style="border:0;height:20px;" :value="ui.weixin">
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">邮箱：</span>
+                <input id="email" type="text" class="pull-left basicInfoInput" placeholder="（选填）" style="border:0;height:20px;" :value="ui.email">
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15 bb1">
+                <span class="pull-left c_gray">公司地址：</span>
+                <input id="company_address" type="text" class="pull-left basicInfoInput" placeholder="（选填）" style="border:0;height:20px;" :value="ui.company_address">
+            </div>
+            <div class="clearfix porel pl5 pr5 pt15 pb15">
+                <span class="pull-left c_gray">公司网站：</span>
+                <input id="website" type="text" class="pull-left basicInfoInput" placeholder="（选填）" style="border:0;height:20px;" :value="ui.website">
+            </div>
+        </div>
+        <div class="pt15 pb15 bg_white" style="border-radius:3px;margin:0 7px 20px;">
+            <div class="pb10 fb pl5 pr5 bb1 mb20">我的标签<span class="f12 c_gray">（用于我的名片展示）</span></div>
+            <div id="myTagBox" class="pl10 pr10 clearfix c_primary">
+                
+            </div>
+            <div id="openModifyTagModal" class="c_primary text-center f16" style="width:320px;height:37px;border:1px solid #0076FF;border-radius:3px;line-height:37px;margin:0 auto;">编辑我的标签</div>
+
+            <div style="height:75px;line-height:75px;"></div>
+            <div class="pb20 pt20 shadow" style="width:100%;position:fixed;left:0;bottom:0;background:#ffffff;z-index:999;">
+                <div @click="submitAction" class="bg_primary c_white text-center f16" style="border-radius:19px;height: 35px;line-height:33px;border: 1px solid #dddddd;margin:0 auto;width:182px;">完 成</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑我的标签模态框 -->
+    <div class="modal fade" id="modifyTagModal" tabindex="-1" role="dialog" aria-labelledby="modifyTagModalLabel" aria-describedby="选择标签">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header b0 pb10">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="modifyTagModalLabel" style="font-size:18px;font-weight:bold;">选择标签</h4>
+                    <div class="text-center f12 c_gray">最多添加6个标签</div>
+                </div>
+                <div class="modal-body pl0 pr0 pt0 mofh porel">
+                    <div class="f18 pl10 pb20">业务类型</div>
+                    <div id="typeTagBoxCn" class="clearfix pb10">
+                    </div>
+
+                    <div class="f18 pl10 pb20">行业偏好</div>
+                    <div id="pfcTagBoxCn" class="clearfix pb10">
+                    </div>
+
+                    <div class="f18 pl10 pb20">添加标签</div>
+                    <div id="tagBox" class="pl10 pr10 clearfix c_primary">
+                    </div>
+                    <div id="openAddTagModal" data-toggle="modal" data-target="#addTagModal" class="c_primary text-center f16" style="width:320px;height:37px;border:1px solid #0076FF;border-radius:3px;line-height:37px;margin:10px auto 30px;">添加其他标签</div>
+                </div>
+                <div class="modal-footer">
+                    <div data-dismiss="modal" id="tagFinishBtn" class="bg_primary c_white text-center f16" style="border-radius:19px;height: 35px;line-height:33px;border: 1px solid #dddddd;margin:0 auto;width:182px;">确 定</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加标签模态框 -->
+    <div class="modal fade" id="addTagModal" tabindex="-1" role="dialog" aria-labelledby="addTagModalLabel" aria-describedby="添加其他标签">
+        <div class="modal-dialog" aria-hidden="true" style="margin:-76px 20px 0px;top:50%;">
+            <div class="modal-content">
+                <div class="modal-header b0 pb10">
+                    <h4 class="modal-title text-center" id="addTagModalLabel">添加其他标签</h4>
+                </div>
+                <div class="modal-body pt0 pb0">
+                    <div class="form-group mb0">
+                        <input id="tagInput" type="text" class="form-control" placeholder="请输入标签">
+                    </div>
+                </div>
+                <div class="modal-footer b0">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 80px;">取消</button>
+                    <button id="addTagBtn" type="button" class="btn btn-primary" style="width: 80px;">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+            <div class="modal-content" style="border:0;">
+                <div class="modal-body text-center"></div>
+            </div>
+        </div>
+    </div>
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        // 设置加载中...
+        $(document).ajaxStart(function() {
+            $("#loading").removeClass('hidden');
+        });
+        $(document).ajaxStop(function() {
+            $("#loading").addClass('hidden');
+        });
+    });
+    //提示框
+    function alertModal(msg) {
+        $("#alertModal").find('.modal-body').html(msg);
+        $("#alertModal").modal("show");
+        setTimeout(function() {
+            $("#alertModal").modal("hide");
+        }, msg.length / 7 * 1000);
+    }
+
+    // VUE实例
+    var vue = new Vue({
+        el: "#box",
+        data: {
+            ui: {}
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                vue.ui = ui;
+                var myTag = "";
+                if (ui.person_label) {
+                    myTag = ui.person_label.split(",");
+                }
+                for (var i = 0; i < myTag.length; i++) {
+                    var str = $.trim(myTag[i]);
+                    if (str.length > 0) {
+                        str = str.substring(0, str.length);
+                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                                    <span class=\"tagCt\">" + str + "</span>\
+                                    <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                                </div>";
+                        $("#myTagBox").append(n);
+                    }
+                }
+
+                //加载标签数据
+                vue.getTypeTag();
+                vue.getPfcTag();
+
+                var ex = new Array();
+                $(".typeTagBox").each(function(index, el) {
+                    var text = $(el).html();
+                    for (var i = 0; i < myTag.length; i++) {
+                        var str = $.trim(myTag[i]);
+                        if (text == str) {
+                            $(el).addClass('active');
+                            ex.push(text);
+                        }
+                    }
+                });
+                $(".pfcTagBox").each(function(index, el) {
+                    var text = $(el).html();
+                    for (var i = 0; i < myTag.length; i++) {
+                        var str = $.trim(myTag[i]);
+                        if (text == str) {
+                            $(el).addClass('active');
+                            ex.push(text);
+                        }
+                    }
+                });
+                for (var i = 0; i < myTag.length; i++) {
+                    var str = $.trim(myTag[i]);
+                    var exflag = false;
+                    for (var y = 0; y < ex.length; y++) {
+                        if (str == ex[y]) {
+                            exflag = true;
+                            break;
+                        }
+                    }
+                    if (!exflag) {
+                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                                <span class=\"tagCt\">" + str + "</span>\
+                                <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                            </div>";
+                        $("#tagBox").prepend(n);
+                    }
+                }
+
+                // 初始窗口
+                var wh = $(window).height();
+                var ww = $(window).width();
+                $("#box").height(wh);
+                setTimeout(function() {
+                    $("#pcHeader").width(ww - 20);
+                }, 400);
+
+                //选择标签
+                $("#openModifyTagModal").click(function(event) {
+                    $("#modifyTagModal").modal("show");
+                });
+                $("#modifyTagModal .modal-body").height(wh-160);
+                $("#myTagBox").on('click', '.tagDel', function(event) {
+                    $(this).parent().remove();
+                });
+
+                // 输入框
+                $(".basicInfoInput").each(function(index, el) {
+                    $(el).width(ww - 24 - $(el).prev().width());
+                });
+
+                $("#addImgBtn").click(function(event) {
+                    $("#fileInput").click();
+                });
+                
+                //发送验证码
+                $("#sendAuthCode").click(function(event) {
+                    var phone = $.trim($("input[name='phone']").val());
+                    if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+                        alertModal("请输入正确的手机号");
+                        return;
+                    }
+
+                    //发送请求
+                    if ($("#sendAuthCode").hasClass('bg_primary')) {
+                        $.ajax({
+                            url: 'http://fin.jrfacai.com/home/through_api/getNewNumber',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {"phone": phone},
+                        })
+                        .done(function(res) {
+                            if (res.code == 200) {
+                                alertModal("验证码已发送");
+                                var i = 60;
+                                var it = setInterval(function(){
+                                    if (i > 0) {
+                                        $("#sendAuthCode").removeClass("bg_primary c_white");
+                                        $("#sendAuthCode").addClass("bg_gray c_gray");
+                                        $("#sendAuthCode").html(i +" s");
+                                    }else {
+                                        $("#sendAuthCode").removeClass("bg_gray c_gray");
+                                        $("#sendAuthCode").addClass("bg_primary c_white");
+                                        $("#sendAuthCode").html("发送验证码");
+                                        clearInterval(it);
+                                    }
+                                    i--;
+                                }, 1000);
+                            }else {
+                                alertModal(res.msg);
+                            }
+                        });
+                    }
+                });
+                
+                $("#fileInput").change(function(event) {
+                    var fn = $(this).val();
+                    //判断图片格式
+                    var suffixIndex=fn.lastIndexOf(".");
+                    var suffix=fn.substring(suffixIndex+1).toUpperCase();
+                    if(suffix!="BMP" && suffix!="JPG" && suffix!="JPEG" && suffix!="PNG" && suffix!="GIF"){
+                        alertModal("图片格式错误(请上传BMP、JPG、JPEG、PNG、GIF)");
+                        return;
+                    }
+
+                    //上传图片操作
+                    var fileForm = new FormData($("#fileForm").get(0));
+                    $.ajax({
+                        url: "http://fin.jrfacai.com/home/base_api/upload",
+                        type: "POST",
+                        data: fileForm,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            var imgUrl = "http://fin.jrfacai.com/uploads/" + res.data.url;
+                            imgUrl = imgUrl.replace("\/", "/");
+                            $("#headerImg").attr('src', imgUrl);
+                        }else {
+                            alertModal(res.msg);
+                        }
+                    });
+                });
+
+                //添加标签
+                $("#tagBox").on('click', '.tagDel', function(event) {
+                    $(this).parent().remove();
+                });
+                $("#addTagBtn").click(function(event) {
+                    var v = $.trim($("#tagInput").val());
+                    if (v.length > 0 && v.length < 6) {
+                        if ($(".typeTagBox.active").length+$(".pfcTagBox.active").length+$("#tagBox .tagCt").length < 6) {
+                            var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                                <span class=\"tagCt\">" + v + "</span>\
+                                <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                            </div>";
+                            $("#tagBox").prepend(n);
+                            $("#tagInput").val("");
+                            $("#addTagModal").modal("hide");
+                        } else {
+                            $("#addTagModal").modal("hide");
+                            setTimeout(function() {
+                                alertModal("最多添加6个标签");
+                            }, 400);
+                        }
+                    }else {
+                        $("#addTagModal").modal("hide");
+                        setTimeout(function() {
+                            alertModal("标签长度超过五个字，请重新输入");
+                        }, 400);
+                    }
+                    $("#addTagBtn").focus();
+                });
+                $("#tagInput").keydown(function(event) {
+                    if (event.which == 13) {
+                        $("#addTagBtn").trigger('click');
+                    }
+                });
+
+                $("#typeTagBoxCn").on('click', '.typeTagBox', function(event) {
+                    var curr = $(event.currentTarget);
+                    if (curr.hasClass('active')) {
+                        curr.removeClass('active')
+                    }else {
+                        if ($(".typeTagBox.active").length+$(".pfcTagBox.active").length+$("#tagBox .tagCt").length < 6) {
+                            curr.addClass('active');
+                        } else {
+                            alertModal("最多添加6个标签");
+                        }
+                    }
+                });
+
+                $("#pfcTagBoxCn").on('click', '.pfcTagBox', function(event) {
+                    var curr = $(event.currentTarget);
+                    if (curr.hasClass('active')) {
+                        curr.removeClass('active')
+                    }else {
+                        if ($(".typeTagBox.active").length+$(".pfcTagBox.active").length+$("#tagBox .tagCt").length < 6) {
+                            curr.addClass('active');
+                        } else {
+                            alertModal("最多添加6个标签");
+                        }
+                    }
+                });
+
+                $("#openAddTagModal").click(function(event) {
+                    $("#tagInput").focus();
+                });
+
+                $("#tagFinishBtn").click(function(event) {
+                    $("#myTagBox").html("");
+                    $(".typeTagBox.active").each(function(index, el) {
+                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                                    <span class=\"tagCt\">" + $(el).html() + "</span>\
+                                    <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                                </div>";
+                        $("#myTagBox").append(n);
+                    });
+                    $(".pfcTagBox.active").each(function(index, el) {
+                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                                    <span class=\"tagCt\">" + $(el).html() + "</span>\
+                                    <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                                </div>";
+                        $("#myTagBox").append(n);
+                    });
+                    $("#tagBox .tagCt").each(function(index, el) {
+                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                                    <span class=\"tagCt\">" + $(el).html() + "</span>\
+                                    <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                                </div>";
+                        $("#myTagBox").append(n);
+                    });
+                });
+            });
+        },
+        methods: {
+            getTypeTag: function () {
+                $.ajax({
+                    url: "http://fin.jrfacai.com/home/dict_api/getServiceTypeDict",
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    data: {},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        var dt = res.data;
+                        for (var i = 0; i < dt.length; i++) {
+                            var el = "<div class=\"typeTagBox\">"+dt[i].value+"</div>";
+                            $("#typeTagBoxCn").append(el);
+                        }
+                    }
+                });
+            },
+            getPfcTag: function () {
+                $.ajax({
+                    url: "http://fin.jrfacai.com/home/dict_api/getIndustryDict",
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    data: {},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        var dt = res.data;
+                        for (var i = 0; i < dt.length; i++) {
+                            var el = "<div class=\"pfcTagBox\">"+dt[i].value+"</div>";
+                            $("#pfcTagBoxCn").append(el);
+                        }
+                    }
+                });
+            },
+            // 提交
+            submitAction: function (event) {
+                var tagArr = new Array();
+                $("#myTagBox .tagCt").each(function(index, el) {
+                    tagArr.push($(el).html());
+                });
+                if (tagArr.length > 0) {
+                    tagArr = JSON.stringify(tagArr).substring(1, JSON.stringify(tagArr).length-1);
+                } else {
+                    tagArr = "";
+                }
+
+                var real_name 		= $.trim($("#real_name").val());
+                var phone 			= $.trim($("#phone").val());
+                var position 		= $.trim($("#position").val());
+                var company 		= $.trim($("#company").val());
+                var company_jc 		= $.trim($("#company_jc").val());
+                var weixin_id 		= $.trim($("#weixin_id").val());
+                var email 			= $.trim($("#email").val());
+                var company_address = $.trim($("#company_address").val());
+                var website 		= $.trim($("#website").val());
+                var code 			= $.trim($("#code").val());
+
+                if (real_name.length <= 0) {
+                    alertModal("姓名为必填项");
+                    return;
+                }
+
+                if (phone.length <= 0) {
+                    alertModal("手机号为必填项");
+                    return;
+                }
+
+                if (position.length <= 0) {
+                    alertModal("职务为必填项");
+                    return;
+                }
+
+                if (company.length <= 0) {
+                    alertModal("公司名称为必填项");
+                    return;
+                }
+
+                if (company_jc.length <= 0) {
+                    alertModal("公司简称为必填项");
+                    return;
+                }
+
+                if (this.ui.userPhone != phone) {
+                    if (code.length <= 0) {
+                        alertModal("验证码为必填项");
+                        return;
+                    }
+                }
+
+                $.ajax({
+                    url: 'http://fin.jrfacai.com/home/through_api/perfectPersonalInfo',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "role_type": $("input:radio[name='role_type']:checked").val(),
+                        "real_name": real_name,
+                        "phone": phone,
+                        "position": position,
+                        "company": company,
+                        "company_jc": company_jc,
+                        "weixin_id": weixin_id,
+                        "email": email,
+                        "company_address": company_address,
+                        "website": website,
+                        "code": code,
+                        "tag_name": tagArr,
+                        "my_head": $("#headerImg").attr("src")
+                    },
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        alertModal("修改成功");
+                        setTimeout(function() {
+                            window.location.href = "/static/frontend/my.html";
+                        }, 1000);
+                    } else {
+                        alertModal(res.msg);
+                    }
+                });
+            },
+            changePhoneAct: function () {
+                var phone = $.trim($("#phone").val());
+                if (this.ui.userPhone != phone) {
+                    $(".changePhone").show();
+                }else {
+                    $(".changePhone").hide();
+                }
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>

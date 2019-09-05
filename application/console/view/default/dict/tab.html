@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">数据列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Dict/index")}')">数据列表</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" data-toggle="modal" data-target="#addModalData">添加数据</a>
+</ul>

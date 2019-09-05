@@ -1,0 +1,1204 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <!--//添加投资问答-->
+            <div class="modal fade bs-example-modal-lg" id="myModalAddQa" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="add_qa" action="{:url('ProjectQa/add')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加投资问答</h4>
+                            </div>
+                            <div class="modal-body">
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-sm-1 col-md-1 control-label">类型：</label>
+                                        <div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">
+                                            {foreach name="qa_type" item="ind"}
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radiobox" name="type" value="{$ind.id}" checked="">
+                                                <span> {$ind.value} </span> 
+                                            </label>
+                                            {/foreach}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">问题：</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="question" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">答案：</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <textarea rows="6" class="form-control" name="answer"></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="text" name="pro_id" value="{$info.pro_id}" class="hide">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--//修改投资问答-->
+            <div class="modal fade bs-example-modal-lg" id="myModalEditQa" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="edit_qa" action="{:url('ProjectQa/edit')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">修改投资问答</h4>
+                            </div>
+                            <div class="modal-body">
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-sm-1 col-md-1 control-label">类型：</label>
+                                        <div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">
+                                            {foreach name="qa_type" item="ind"}
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radiobox" name="type" value="{$ind.id}">
+                                                <span> {$ind.value} </span> 
+                                            </label>
+                                            {/foreach}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">问题：</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="question" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">答案：</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <textarea rows="6" class="form-control" name="answer"></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="text" name="qa_id" value="" class="hide">
+                                <input type="text" name="pro_id" value="{$info.pro_id}" class="hide">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--//添加新闻报道-->
+            <div class="modal fade bs-example-modal-lg" id="myModalAddNews" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="add_news" action="{:url('ProjectNews/add')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加新闻报道</h4>
+                            </div>
+                            <div class="modal-body">
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">标题:<span>*</span></label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="title" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">来源:<span>*</span></label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="source" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">作者:</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="author" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="control-label col-lg-1 col-md-1">头图:<sup>*</sup></label>
+                                        <div class="col-lg-8 col-sm-12 col-md-8 col-xs-12">
+                                            <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                                <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false"/>
+                                                <input type="text" class="hide" name="top_img" value=""/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-12 col-md-3 col-xs-12">
+                                            <label class="control-label">头图长宽比例为12:7</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend></legend>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">内容:</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <div id="summernote"></div>
+                                            <!--<textarea rows="6" class="form-control" name="content"></textarea>-->
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="text" name="pro_id" value="{$info.pro_id}" class="hide">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--//修改新闻报道-->
+            <div class="modal fade bs-example-modal-lg" id="myModalEditNews" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="edit_news" action="{:url('ProjectNews/edit')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">修改新闻报道</h4>
+                            </div>
+                            <div class="modal-body">
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">标题:<span>*</span></label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="title" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">来源:<span>*</span></label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="source" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">作者:</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <input type="text" class="form-control" name="author" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <label class="control-label col-lg-1 col-md-1">头图:<sup>*</sup></label>
+                                        <div class="col-lg-8 col-sm-12 col-md-8 col-xs-12">
+                                            <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                                <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                                <input type="text" class="hide" name="top_img" value=""/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-12 col-md-3 col-xs-12">
+                                            <label class="control-label">头图长宽比例为12:7</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend></legend>
+                                    <div class="form-group col-lg-12">
+                                        <label class="col-lg-1 col-md-1 control-label">内容：</label>
+                                        <div class="col-lg-11 col-sm-12 col-md-11 col-xs-12 form-group">
+                                            <div id="summernote1"></div>
+                                            <!--<textarea rows="6" class="form-control" name="content"></textarea>-->
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="text" name="n_id" value="" class="hide">
+                                <input type="text" name="pro_id" value="{$info.pro_id}" class="hide">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {include file="project/tab_detail" /}
+            <div id="project_detail" data-id="{$info.pro_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">企业名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.company_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">添加时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目简称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.pro_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {if condition="$info.status eq 1"}草稿{/if}
+                            {if condition="$info.status eq 2"}融资中{/if}
+                            {if condition="$info.status eq 3"}融资结束{/if}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">股票名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.stock_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">股票代码：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.stock_code}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                	<div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属业务：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_sign}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属行业：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_industry}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属城市：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_area}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">辅导机构：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.organization}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">资本计划：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.capital_plan}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">融资金额：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.financing_amount}万
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">公司估值：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.corporate_valuation}万
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">净利润：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.net_profit}万
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">年营业收入：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.annual_revenue}万
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">总股本：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.total_capital}万
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">成立时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.build_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目返点：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.rebate}%
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属标签：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_sign}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">转让类型：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.transfer_type}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属层级：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.hierarchy}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系人：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.contacts}（{$info.contacts_tel} , {$info.contacts_email}）
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">对应需求：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.need}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">简介：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.introduction}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">列表页头图：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.top_img}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">(top)</span>
+                        </div>
+                    </div>
+                </fieldset>
+               <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">详细页头图：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.index_img}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">(index)</span>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">路演视频地址：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.roadshow_url}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">商业计划书：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.business_plan}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">要素表：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.factor_table}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">企业视频：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.company_video}
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#investment_lights" aria-controls="investment_lights" role="tab" data-toggle="tab">投资亮点</a></li>
+                            <li role="presentation"><a href="#investment_qa" aria-controls="investment_qa" role="tab" data-toggle="tab">投资问答</a></li>
+                            <li role="presentation"><a href="#news_report" aria-controls="news_report" role="tab" data-toggle="tab">新闻报道</a></li>
+                            <li role="presentation"><a href="#dialogue_details" aria-controls="dialogue_details" role="tab" data-toggle="tab">对话详情</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="investment_lights">
+                                <fieldset>
+                                    <legend></legend>
+                                    <div class="form-group col-lg-12">
+                                        <label class="control-label col-lg-1">投资亮点概况：</label>
+                                        <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                            {foreach name="info.investment_lights" item="light"}
+                                            {$light}</br>
+                                            {/foreach}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">企业亮点：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.enterprise_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        {if condition="$info.enterprise_url_arr neq []"}
+                                        {foreach name="$info.enterprise_url_arr" item="it"}
+                                        <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12" style="border: 0px;">
+                                            <div class="col-lg-12" style="width: 100%;"><img style="width: 100%;" src="__UPLOAD__/{$it}"></div>
+                                        </div>
+                                        {/foreach}
+                                        {/if}
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">公司简介：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.company_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        {if condition="$info.company_url_arr neq []"}
+                                        {foreach name="$info.company_url_arr" item="it"}
+                                        <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12" style="border: 0px;">
+                                            <div class="col-lg-12" style="width: 100%;"><img style="width: 100%;" src="__UPLOAD__/{$it}"></div>
+                                        </div>
+                                        {/foreach}
+                                        {/if}
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">核心产品：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.product_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        {if condition="$info.product_url_arr neq []"}
+                                        {foreach name="$info.product_url_arr" item="it"}
+                                        <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12" style="border: 0px;">
+                                            <div class="col-lg-12" style="width: 100%;"><img style="width: 100%;" src="__UPLOAD__/{$it}"></div>
+                                        </div>
+                                        {/foreach}
+                                        {/if}
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">行业分析：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.analysis_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        {if condition="$info.analysis_url_arr neq []"}
+                                        {foreach name="$info.analysis_url_arr" item="it"}
+                                        <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12" style="border: 0px;">
+                                            <div class="col-lg-12" style="width: 100%;"><img style="width: 100%;" src="__UPLOAD__/{$it}"></div>
+                                        </div>
+                                        {/foreach}
+                                        {/if}
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="investment_qa">
+                                <fieldset>
+                                    <legend></legend>
+                                    <div class="form-group col-lg-12">
+                                        <a class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModalAddQa">添加问答</a>
+                                    </div>
+                                </fieldset>
+                                <div id="qa_content">
+                                    {foreach name="qa_list" item="list"}
+                                    <fieldset>
+                                        <legend></legend>
+                                        <div class="form-group col-lg-12">
+                                            <div class="form-inline">
+                                                <label class="control-label col-lg-1 col-md-2 col-sm-2 col-xs-12">问题序号：</label>
+                                                <div class="col-lg-1 col-sm-2 col-md-2 col-xs-12">{$list.qa_id}</div>
+                                                <label class="control-label col-lg-1 col-md-2 col-sm-2 col-xs-12">类型：</label>
+                                                <div class="col-lg-1 col-sm-2 col-md-2 col-xs-12">{$list.type}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group col-lg-12">
+                                            <div class="form-inline">
+                                                <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-12">问题：</label>
+                                                <div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">{$list.question}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group col-lg-12">
+                                            <div class="form-inline">
+                                                <label class="control-label col-lg-1 col-md-1 col-sm-1">答案：</label>
+                                                <div class="col-lg-9 col-sm-11 col-md-11 col-xs-12">{$list.answer}</div>
+                                                <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                                    <div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">
+                                                        {if condition="$list.hide eq 0"}<a href="javascript:void(0);" class="btn btn-warning" data-action="hide" data-id="{$list.qa_id}"><i class="glyphicon glyphicon-remove-sign"></i> 隐藏 </a>{else /}<a href="javascript:void(0);" class="btn btn-success" data-action="hide" data-id="{$list.qa_id}"><i class="glyphicon glyphicon-ok-sign"></i> 显示 </a>{/if}
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">
+                                                        {if condition="$list.hot eq 0"}<a href="javascript:void(0);" class="btn btn-danger" data-action="hot" data-id="{$list.qa_id}"><i class="glyphicon glyphicon-heart"></i> 置顶 </a>{else /}<a href="javascript:void(0);" class="btn btn-default" data-action="hot" data-id="{$list.qa_id}"><i class="glyphicon glyphicon-trash"></i> 取消置顶 </a>{/if}
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">
+                                                        <a class="btn btn-info" data-id="{$list.qa_id}" data-toggle="modal" data-target="#myModalEditQa"><i class="glyphicon glyphicon-search"></i> 修改 </a>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">
+                                                            {if condition="$list.hide eq 1"}<a href="javascript:void(0);" class="btn btn-danger" data-action="status" data-id="{$list.qa_id}"><i class="glyphicon glyphicon-trash"></i> 删除 </a>{/if}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {/foreach}
+                                </div>
+                                {if condition="$total1 neq 0"}
+                                <fieldset>
+                                    <nav aria-label="...">
+                                        <ul class="pager">
+                                            <li class="previous qa_click" data-id="previous"><a href="#"><span aria-hidden="true">&larr;上一页</span></a></li>
+                                            <li class="center-block" data-pro="{$info.pro_id}"><span class="now">1</span>/<span class="all">{$total1}</span></li>
+                                            <li class="next qa_click" data-id="next"><a href="#"><span aria-hidden="true">下一页&rarr;</span></a></li>
+                                        </ul>
+                                    </nav>
+                                </fieldset>
+                                {/if}
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="news_report">
+                                <fieldset>
+                                    <legend></legend>
+                                    <div class="form-group col-lg-12">
+                                        <a class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModalAddNews">发表新闻</a>
+                                    </div>
+                                </fieldset>
+                                <div id="news_content">
+                                    {foreach name="news_list" item="list1"}
+                                    <fieldset>
+                                        <legend></legend>
+                                        <div class="form-group col-lg-12">
+                                            <div class="form-inline">
+                                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">{$list1.title}</div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group col-lg-12">
+                                            <div class="form-inline">
+                                                <div class="col-lg-10 col-sm-6 col-md-6 col-xs-12">{$list1.create_time}</div>
+                                                <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                                                    <a class="btn btn-info" data-id="{$list1.n_id}" data-toggle="modal" data-target="#myModalEditNews"><i class="glyphicon glyphicon-search"></i> 修改 </a>
+                                                    <a href="javascript:void(0);" class="btn btn-danger" data-action="status" data-id="{$list1.n_id}"><i class="glyphicon glyphicon-trash"></i> 删除 </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    {/foreach}
+                                </div>
+                                {if condition="$total2 neq 0"}
+                                <fieldset>
+                                    <nav aria-label="...">
+                                        <ul class="pager">
+                                            <li class="previous news_click" data-id="previous"><a href="#"><span aria-hidden="true">&larr;上一页</span></a></li>
+                                            <li class="center-block" data-pro="{$info.pro_id}"><span class="now">1</span>/<span class="all">{$total2}</span></li>
+                                            <li class="next news_click" data-id="next"><a href="#"><span aria-hidden="true">下一页&rarr;</span></a></li>
+                                        </ul>
+                                    </nav>
+                                </fieldset>
+                                {/if}
+                            </div>
+                             <div role="tabpanel" class="tab-pane" id="dialogue_details">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".news_click").click(function(){
+        var total = $(this).siblings(".center-block").find(".all").html();
+        var page = $(this).siblings(".center-block").find(".now").html();
+        var pro_id = $(this).siblings(".center-block").attr("data-pro");
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url:'{:url("project_news/pages")}',
+            data:{id:id , page:page , pro_id:pro_id , total:total},
+            type:"POST",
+            dataType:"json",
+            success:function(resp){
+                if (resp.code == 1) {
+                    var str = '';
+                    var data = resp.data.content;
+                    var length = data.length;
+                    $(".now").html(resp.data.page);
+                    for(var i = 0 ; i < length ; i ++){
+                        var str1 = '<fieldset><legend></legend><div class="form-group col-lg-12"><div class="form-inline"><div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">'+data[i]['title']+'</div></div></div></fieldset>';
+                        var str2 = '<fieldset><div class="form-group col-lg-12"><div class="form-inline"><div class="col-lg-10 col-sm-6 col-md-6 col-xs-12">'+data[i]['create_time']+'</div><div class="col-lg-2 col-sm-6 col-md-6 col-xs-12"><a class="btn btn-info" data-id="'+data[i]['n_id']+'" data-toggle="modal" data-target="#myModalEditNews"><i class="glyphicon glyphicon-search"></i> 修改 </a><a href="javascript:void(0);" class="btn btn-danger" data-action="status" data-id="'+data[i]['n_id']+'"><i class="glyphicon glyphicon-trash"></i> 删除 </a></div></div></div></fieldset>';
+                        str = str + str1 + str2;
+                    }
+                    $("#news_content").html(str);
+                }else if(resp.code == 2){
+                    Dialog.success('', resp.msg, 2000);
+                }else{
+                    Dialog.error('翻页搜索数据失败', resp.msg);
+                }
+            }
+        })
+    });
+</script>
+<script>
+    $(".qa_click").click(function(){
+        var total = $(this).siblings(".center-block").find(".all").html();
+        var page = $(this).siblings(".center-block").find(".now").html();
+        var pro_id = $(this).siblings(".center-block").attr("data-pro");
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url:'{:url("project_qa/pages")}',
+            data:{id:id , page:page , pro_id:pro_id , total:total},
+            type:"POST",
+            dataType:"json",
+            success:function(resp){
+                if (resp.code == 1) {
+                    var str = '';
+                    var data = resp.data.content;
+                    var length = data.length;
+                    $(".now").html(resp.data.page);
+                    for(var i = 0 ; i < length ; i ++){
+                        var str1 = '<fieldset><legend></legend><div class="form-group col-lg-12"><div class="form-inline"><label class="control-label col-lg-1 col-md-2 col-sm-2 col-xs-12">问题序号：</label><div class="col-lg-1 col-sm-2 col-md-2 col-xs-12">'+data[i]['qa_id']+'</div><label class="control-label col-lg-1 col-md-2 col-sm-2 col-xs-12">类型：</label><div class="col-lg-1 col-sm-2 col-md-2 col-xs-12">'+data[i]['type']+'</div></div></div></fieldset>';
+                        var str2 = '<fieldset><div class="form-group col-lg-12"><div class="form-inline"><label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-12">问题：</label><div class="col-lg-11 col-sm-11 col-md-11 col-xs-12">'+data[i]['question']+'</div></div></div></fieldset>';
+                        if(data[i]['hide'] == 0){var hide = '<a href="javascript:void(0);" class="btn btn-warning" data-action="hide" data-id="'+data[i]['qa_id']+'"><i class="glyphicon glyphicon-remove-sign"></i> 隐藏 </a>';var del = '';}else{var hide ='<a href="javascript:void(0);" class="btn btn-success" data-action="hide" data-id="'+data[i]['qa_id']+'"><i class="glyphicon glyphicon-ok-sign"></i> 显示 </a>';var del = '<a href="javascript:void(0);" class="btn btn-danger" data-action="status" data-id="'+data[i]['qa_id']+'"><i class="glyphicon glyphicon-trash"></i> 删除 </a>';}
+                        if(data[i]['hot'] == 0){var hot ='<a href="javascript:void(0);" class="btn btn-danger" data-action="hot" data-id="'+data[i]['qa_id']+'"><i class="glyphicon glyphicon-heart"></i> 置顶 </a>';}else{var hot ='<a href="javascript:void(0);" class="btn btn-default" data-action="hot" data-id="'+data[i]['qa_id']+'"><i class="glyphicon glyphicon-trash"></i> 取消置顶 </a>';}
+                        var str3 = '<fieldset><div class="form-group col-lg-12"><div class="form-inline"><label class="control-label col-lg-1 col-md-1 col-sm-1">答案：</label><div class="col-lg-9 col-sm-11 col-md-11 col-xs-12">'+data[i]['answer']+'</div><div class="col-lg-2 col-sm-12 col-md-12 col-xs-12"><div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">'+hide+'</div><div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">'+hot+'</div><div class="col-lg-6 col-md-2 col-sm-2 col-xs-3"><a class="btn btn-info" data-id="'+data[i]['qa_id']+'" data-toggle="modal" data-target="#myModalEditQa"><i class="glyphicon glyphicon-search"></i> 修改 </a></div><div class="col-lg-6 col-md-2 col-sm-2 col-xs-3">'+del+'</div></div></div></div></fieldset>';
+                        str = str + str1+str2+str3;
+                    }
+                    $("#qa_content").html(str);
+                }else if(resp.code == 2){
+                    Dialog.success('', resp.msg, 2000);
+                }else{
+                    Dialog.error('翻页搜索数据失败', resp.msg);
+                }
+            }
+        })
+    });
+</script>
+<script>
+    $("body").removeClass("modal-open");
+        var qa_find_url = '{:url("project_qa/find")}';
+        var project_end_url = '{:url("Project/end")}';
+        var news_find_url = '{:url("project_news/find")}';
+        function begin(){
+            $('#add_news').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入新闻标题'
+                            }
+                        }
+                    },
+                    source: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入新闻来源'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                if($(this).find("input[name='top_img']").val() == ''){
+                    Dialog.error('请添加新闻头图');
+                    return false;
+                }
+                e.preventDefault();
+                var title = $(this).find("input[name='title']").val();
+                var source = $(this).find("input[name='source']").val();
+                var author = $(this).find("input[name='author']").val();
+                var top_img = $(this).find("input[name='top_img']").val();
+                var pro_id = $(this).find("input[name='pro_id']").val();
+                var content = $('#summernote').summernote("code");
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: {title:title , source:source , pro_id:pro_id , author:author, content:content , top_img:top_img},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        }
+        function begins(){
+            $('#edit_news').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入新闻标题'
+                            }
+                        }
+                    },
+                    source: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入新闻来源'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                if($(this).find("input[name='top_img']").val() == ''){
+                    Dialog.error('请添加新闻头图');
+                    return false;
+                }
+                e.preventDefault();
+                var title = $(this).find("input[name='title']").val();
+                var source = $(this).find("input[name='source']").val();
+                var author = $(this).find("input[name='author']").val();
+                var top_img = $(this).find("input[name='top_img']").val();
+                var pro_id = $(this).find("input[name='pro_id']").val();
+                var n_id = $(this).find("input[name='n_id']").val();
+                var content = $('#summernote1').summernote("code");
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: {title:title , source:source , pro_id:pro_id ,author:author, content:content , n_id:n_id , top_img:top_img},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        }
+        //图片弹出框显示,代表原来form的modal隐藏,也就是原来的bootstrapValidator失效了
+        function sendFile(file, editor, $editable) { 
+            var data = new FormData();  
+            data.append("file", file);  
+            $.ajax({  
+                data : data,  
+                type : "POST",  
+                url : '{:url("project_news/upload")}', //图片上传出来的url，返回的是图片上传后的路径，http格式  
+                cache : false,  
+                contentType : false,  
+                processData : false,  
+                dataType : "json",  
+                success: function(data) {
+                    $('#summernote').summernote('insertImage', data.data.url , data.data.name);  
+                },  
+                error:function(){  
+                    alert("上传失败");  
+                }  
+            });  
+            begin();
+        }
+        function sendFile1(file, editor, $editable) { 
+            var data = new FormData();  
+            data.append("file", file);  
+            $.ajax({  
+                data : data,  
+                type : "POST",  
+                url : '{:url("project_news/upload")}', //图片上传出来的url，返回的是图片上传后的路径，http格式  
+                cache : false,  
+                contentType : false,  
+                processData : false,  
+                dataType : "json",  
+                success: function(data) {
+                    console.log(data.data.url);
+                    $('#summernote1').summernote('insertImage', data.data.url , data.data.name);  
+                },  
+                error:function(){  
+                    alert("上传失败");  
+                }  
+            });  
+            begins();
+        }
+        //修改问答
+        $('#myModalEditQa').on('show.bs.modal', function (e) {
+            var id = $(e.relatedTarget).attr("data-id");
+            $.ajax({
+                url:qa_find_url,
+                data:{"id":id},
+                type:"POST",
+                dataType:"json",
+                success:function(resp){
+                    if (resp.code) {
+                        $("#edit_qa").find(".radiobox").prop("checked",false);
+                        $("#edit_qa").find(".radiobox[value='"+resp.data.type+"']").prop("checked",true);
+                        $("#edit_qa").find("input[name='question']").val(resp.data.question);
+                        $("#edit_qa").find("textarea[name='answer']").val(resp.data.answer);
+                        $("#edit_qa").find("input[name='qa_id']").val(resp.data.qa_id);
+                    } else {
+                        Dialog.error('搜索数据失败', resp.msg);
+                    }
+                }
+            });
+            loadModule('bootstrapValidator', function () {
+                $('#edit_qa').bootstrapValidator({
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        question: {
+                            validators: {
+                                notEmpty: {
+                                    message:'请输入问答的问题'
+                                }
+                            }
+                        },
+                        answer: {
+                            validators: {
+                                notEmpty: {
+                                    message:'请输入问答的答案'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.form.bv', function (e) {
+                    e.preventDefault();
+                    var $form = $(e.target);
+                    $.ajax({
+                        url: $form.attr('action'),
+                        type: 'POST',
+                        data: $form.serialize(),
+                        dataType: 'json',
+                        success: function (resp) {
+                            if (resp.code) {
+                                Dialog.success('操作成功', resp.msg, 3000, function () {
+                                    loadURL(resp.data.url);
+                                });
+                            } else {
+                                Dialog.error('操作失败', resp.msg);
+                            }
+                        }
+                    });
+                });
+            });
+        }).on('hidden.bs.modal', function (e) {
+            $('#edit_qa').bootstrapValidator('destroy');
+//            clearForm("#edit_qa");
+            $("#edit_qa")[0].reset();
+        });
+        //添加问答
+        $('#myModalAddQa').on('show.bs.modal', function (e) {
+            loadModule('bootstrapValidator', function () {
+                $('#add_qa').bootstrapValidator({
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        question: {
+                            validators: {
+                                notEmpty: {
+                                    message:'请输入问答的问题'
+                                }
+                            }
+                        },
+                        answer: {
+                            validators: {
+                                notEmpty: {
+                                    message:'请输入问答的答案'
+                                }
+                            }
+                        }
+                    }
+                }).on('success.form.bv', function (e) {
+                    e.preventDefault();
+                    var $form = $(e.target);
+                    $.ajax({
+                        url: $form.attr('action'),
+                        type: 'POST',
+                        data: $form.serialize(),
+                        dataType: 'json',
+                        success: function (resp) {
+                            if (resp.code) {
+                                Dialog.success('操作成功', resp.msg, 3000, function () {
+                                    loadURL(resp.data.url);
+                                });
+                            } else {
+                                Dialog.error('操作失败', resp.msg);
+                            }
+                        }
+                    });
+                });
+            });
+        }).on('hidden.bs.modal', function (e) {
+            $('#add_qa').bootstrapValidator('destroy');
+            $('#add_qa')[0].reset();
+//            clearForm("#edit_qa");
+        });
+        //添加新闻
+        $("#myModalAddNews").on('show.bs.modal', function(e){
+            $("#summernote").summernote({
+                height: 200,
+                focus: true,   
+                lang:'zh-CN',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                callbacks:{
+                    onImageUpload: function(files, editor, $editable) {
+                        sendFile(files[0],editor,$editable);  
+                    } 
+                }
+            });
+            var extension = $("#add_news").find(".file-upload").attr("data-extension");
+            var type = extension.split(',');
+            $("#add_news").find(".file-upload").fileinput({
+                language: 'zh',
+                uploadUrl: '{:url("Publics/upload")}',
+                showUpload: false,
+//                maxFileSize:2000,
+//                maxFileCount:1,
+                uploadExtraData:{type:'project_news'},
+                allowedFileExtensions:type,
+            }).on("filebatchselected", function() {
+                $(this).fileinput("upload");  
+            }).on("fileuploaded", function(event, data , previewId, index) {
+                $(this).parents(".file-input").siblings("input[class='hide']").attr({"value":data.response.data.id});
+                if(!data.response.code){
+                    Dialog.error('上传失败',data.response.msg,5000);
+                }
+            }); 
+            begin();
+        }).on('hidden.bs.modal', function (e) {
+            $('#add_news').bootstrapValidator('destroy');
+//            $('#add_news').find("input[name='title']").val('');
+//            $('#add_news').find("input[name='source']").val('');
+        });
+        //修改新闻
+        $("#myModalEditNews").on('show.bs.modal', function(e){
+            $("#summernote1").summernote({
+                height: 200,
+                focus: true,   
+                lang:'zh-CN',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                callbacks:{
+                    onImageUpload: function(files, editor, $editable) {  
+                        sendFile1(files[0],editor,$editable);  
+                    } 
+                }
+            });
+            var id = $(e.relatedTarget).attr("data-id");
+            $.ajax({
+                url: news_find_url,
+                data:{"id":id},
+                type:"POST",
+                dataType:"json",
+                success:function(resp){
+                    if (resp.code) {
+                        $("#edit_news").find("input[name='title']").val(resp.data.title);
+                        $("#edit_news").find("input[name='source']").val(resp.data.source);
+                        $("#edit_news").find("input[name='author']").val(resp.data.author);
+                        $("#edit_news").find("#summernote1").summernote('code' , resp.data.content);
+                        $("#edit_news").find("input[name='n_id']").val(resp.data.n_id);
+                        $("#edit_news").find("input[name='top_img']").val(resp.data.top_img);
+                        $("#edit_news").find("input[name='file']").attr("data-value",resp.data.top_img_name)
+                        var extension = $("#edit_news").find(".file-upload").attr("data-extension");
+                        var name = $("#edit_news").find(".file-upload").attr("data-value");
+                        var type = extension.split(',');
+                        $("#edit_news").find(".file-upload").fileinput({
+                            language: 'zh',
+                            uploadUrl: '{:url("Publics/upload")}',
+                            showUpload: false,
+            //                maxFileSize:2000,
+            //                maxFileCount:1,
+                            uploadExtraData:{type:'project_news'},
+                            allowedFileExtensions:type,
+                            initialCaption:name,
+                        }).on("filebatchselected", function() {
+                            $(this).fileinput("upload");  
+                        }).on("fileuploaded", function(event, data , previewId, index) {
+                            $("#edit_news").find("input[name='top_img']").val(data.response.data.id);
+                            if(!data.response.code){
+                                Dialog.error('上传失败',data.response.msg,5000);
+                            }
+                        }); 
+                    } else {
+                        Dialog.error('搜索数据失败', resp.msg);
+                    }
+                }
+            });
+            
+            begins();
+        }).on('hidden.bs.modal', function (e) {
+            $('#edit_news').bootstrapValidator('destroy');
+//            $('#edit_news')[0].reset();
+        });
+        //问答设置
+        $("#qa_content").on('click','[data-action]',function(){
+            var self = $(this);
+            var action = self.data("action");
+            var id = self.data("id");
+            var pro_id = $("#project_detail").attr("data-id");
+            var text = self.text();
+            Dialog.confirm('操作提示', '确定'+text+'该问答吗？', function () {
+                $.ajax({
+                    url: '{:url("project_qa/set")}',
+                    type: 'post',
+                    data: {id: id , pro_id: pro_id , action: action},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 2000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                })
+            });
+        });
+        $("#news_content").on('click','[data-action]',function(){
+            var pro_id = $("#project_detail").attr("data-id");
+            var id = $(this).attr("data-id");
+            Dialog.confirm('操作提示', '确定删除该新闻吗？', function () {
+                $.ajax({
+                    url: '{:url("project_news/delete")}',
+                    type: 'post',
+                    data: {id: id , pro_id: pro_id},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 2000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                })
+            });
+        });
+        $("#content").on('click','.end',function(){
+            var _this = $(this);
+            Dialog.confirm('操作提示', '确定结束融资该项目吗？', function () {
+                var id = _this.attr("data-id");
+                $.ajax({
+                    url: project_end_url,
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 2000, function () {
+                                location.reload();
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                })
+            });
+        });
+</script>

@@ -1,0 +1,181 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-sm" id="Modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="dividend_form" action="{:url('Dividend/account')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">分红核算</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="content" class="control-label">积分兑换比率：</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="ratio" placeholder="请输入积分兑换比率..." class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="hide" type="text" name="di_id" value="">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="dividend/tab_detail" /}
+            <div id="dividend_detail" data-id="{$info.di_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">未核算分红：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.month}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">参与分红总积分：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.jifen}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">积分比率：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {if condition="$info.ratio eq 0.00"}-{else /}1：{$info.ratio}{/if}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">参与分红金额：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {if condition="$info.total_money eq 0.00"}-{else /}{$info.total_money}{/if}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">参与分红人数：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.peoples}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label class="control-label col-lg-1 col-md-2 col-sm-2">说明：</label>
+                        <div class="form-group col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                            	以后一切与分红有关的机制都以积分制来计算，具体规则如下：<br>
+                                1.分红核算将输入积分兑换比率,即1积分等于多少元<br>
+                                2.邀请用户注册并绑定合伙人可获得10积分<br>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>具体积分记录</legend>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>合伙人姓名</th>
+                                    <th>获得积分</th>
+                                    <th>获得分数时间</th>
+                                    <th>事由</th>
+                                </tr>
+                            </thead>
+                            <tbody data-id="{$i = 1;}">
+                                {foreach name="$list" item="it"}
+                                <tr>
+                                    <th>{$it.uid}</th>
+                                    <td>{$it.integral}</td>
+                                    <td>{$it.through}</td>
+                                    <td>{$it.reason}</td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var dividend_success_url = '{:url("Dividend/grant")}';
+    $('#Modal').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).attr("data-id");
+        $('#Modal').find("input[name='di_id']").val(id);
+        loadModule('bootstrapValidator', function () {
+            $('#dividend_form').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    ratio: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入积分兑换比率'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的积分兑换比率'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        });
+    }).on('hidden.bs.modal', function (e) {
+        $('#dividend_form').bootstrapValidator('destroy');
+        $('#dividend_form')[0].reset();
+    });
+    $("body").on('click','.sendSuccess',function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定发放该月分红吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: dividend_success_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            location.reload();
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+</script>

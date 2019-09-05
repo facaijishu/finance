@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">角色管理</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("role/index")}')">角色管理</a></li>
+    {/if}
+    {if condition="$Request.action eq 'add' ||  $Request.action eq 'edit'"}
+    <li role="presentation" class="active"><a href="javascript:void(0);">添加角色</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("role/add")}')">添加角色</a></li>
+    {/if}
+</ul>

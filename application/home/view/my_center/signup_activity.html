@@ -1,0 +1,65 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="tab">
+            <a class="actived">我报名的活动</a>
+            <a>我关注的活动</a>
+        </div>
+        <div class="activity-list">
+            {foreach name="$list1" item="it"}
+            <a class="activity" data-id="{$it.a_id}" href="{:url('ActivityInfo/index' , ['id' => $it.a_id])}">
+                <div class="activity-t">
+                    {if condition="$it.status eq 0"}
+                    <span class="stat2">未开始</span>
+                    {/if}
+                    {if condition="$it.status eq 1"}
+                    <span class="stat1">已开始</span>
+                    {/if}
+                    {if condition="$it.is_show eq -1 || $it.is_use eq -1"}
+                    <span class="stat3">已结束</span>
+                    {/if}
+                    {$it.act_name}
+                </div>
+                <div class="time">时间：{$it.start_time}～{$it.end_time}</div>
+                <div class="box">
+                    <img src="__UPLOAD__/{$it.top_img_url}" alt="头图">
+                    <p>{$it.introduce}</p>
+                </div>
+            </a>
+            {/foreach}
+        </div>
+        <div class="activity-list" style="display:none;">
+            {foreach name="$list" item="it"}
+            <a class="activity" data-id="{$it.a_id}" href="{:url('ActivityInfo/index' , ['id' => $it.a_id])}">
+                <div class="activity-t">
+                    {if condition="$it.status eq 0"}
+                    <span class="stat2">未开始</span>
+                    {/if}
+                    {if condition="$it.status eq 1"}
+                    <span class="stat1">已开始</span>
+                    {/if}
+                    {if condition="$it.is_show eq -1 || $it.is_use eq -1"}
+                    <span class="stat3">已结束</span>
+                    {/if}
+                    {$it.act_name}
+                </div>
+                <div class="time">时间：{$it.start_time}～{$it.end_time}</div>
+                <div class="box">
+                    <img src="__UPLOAD__/{$it.top_img_url}" alt="头图">
+                    <p>{$it.introduce}</p>
+                </div>
+            </a>
+            {/foreach}
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".tab a").on("click", function () {
+                    $(".tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".activity-list").hide();
+                    $(".activity-list").eq($(this).index()).show();
+                });
+            });
+        </script>
+    </body>
+</html>

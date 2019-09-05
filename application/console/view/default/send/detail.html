@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="send/tab_detail" /}
+            <div id="send_detail" data-id="{$info.id}" data-upload="__UPLOAD__">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">序号：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="id" value="{$info.id}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">推送时间：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="created_at" value="{$info.created_at}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">类型：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="type" value="{$info.type}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-2 col-md-2 col-sm-2">项目id：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="act_id" value="{$info.act_id}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                               <li role="presentation">
+                                    <a href="#send_false" aria-controls="send_false" role="tab" data-toggle="tab">
+                                        推送失败
+                                        <span style="color: white;background-color: red;padding: 2px 8px;border-radius: 90px;margin-left: 5px;">
+                                            {$total_num}
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">                  
+                                <div role="tabpanel" class="tab-pane" id="send_false">
+                                    <fieldset>
+                                        <legend></legend>
+                                        {if condition="$total_false gt 0"}
+                                        <div class="form-group col-lg-12">
+                                            <a class="btn btn-sm btn-primary" id="sendRefresh" data-id="{$info.id}" style="float: right;">重新推送</a>
+                                        </div>
+                                        {/if}
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                            <table class="table" data-result="false">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>用户名</th>
+                                                        <th>openId</th>
+                                                        <th>失败类型</th>
+                                                        <th>发送日期</th>
+                                                    </tr>
+                                                    {foreach name="$false_list" item="list"}
+                                                    <tr class="list">
+                                                        <td>{$list.userName}</td>
+                                                        <td>{$list.openId}</td>
+                                                        <td>{$list.type}</td>
+                                                        <td>{$list.created_at}</td>
+                                                    </tr>
+                                                    {/foreach}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+                                    {if condition="$total_false gt 0"}
+                                    <fieldset>
+                                        <nav aria-label="...">
+                                            <ul class="pager">
+                                                <li class="previous news_click" data-id="previous"><a href="#"><span aria-hidden="true">&larr;上一页</span></a></li>
+                                                <li class="center-block" data-pro="{$info.id}" data-result="false"><span class="now">1</span>/<span class="all">{$total_false}</span></li>
+                                                <li class="next news_click" data-id="next"><a href="#"><span aria-hidden="true">下一页&rarr;</span></a></li>
+                                            </ul>
+                                        </nav>
+                                    </fieldset>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var upload = $("#send_detail").attr("data-upload");
+    var ye = '<div class="divMessageBox animated fadeIn fast zidingyi" id="MsgBoxBack"><div class="MessageBoxContainer animated fadeIn fast" id="Msg1"><div class="MessageBoxMiddle" style="text-align:center;"><span class="MsgTitle">推送中</span><img src="'+upload+'/loading.gif" style="width:50px;"></div></div></div>';
+    var false_refresh_send = '{:url("send/sendRefresh")}';
+    $("#sendRefresh").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定重新推送？', function () {
+            var id = _this.attr("data-id");
+            $("body").append(ye);
+            $.ajax({
+                url: false_refresh_send,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        $("body .zidingyi").remove();
+                        Dialog.success('操作成功', resp.msg, 2000, function () {
+                            location.reload();
+                        });
+                    } else {
+                        Dialog.error('操作失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".news_click").click(function(){
+        var total = $(this).siblings(".center-block").find(".all").html();
+        var page = $(this).siblings(".center-block").find(".now").html();
+        var send_id = $(this).siblings(".center-block").attr("data-pro");
+        var result = $(this).siblings(".center-block").attr("data-result");
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url:'{:url("send/pages")}',
+            data:{id:id , page:page , send_id:send_id , total:total , result:result},
+            type:"POST",
+            dataType:"json",
+            success:function(resp){
+                if (resp.code == 1) {
+                    var str = '';
+                    var data = resp.data.content;
+                    var length = data.length;
+                    $(".center-block[data-result='"+result+"']").find('.now').html(resp.data.page);
+//                    $(".now").html(resp.data.page);
+                    for(var i = 0 ; i < length ; i ++){
+                        str += '<tr class="list"><td>'+data[i]['userName']+'</td><td>'+data[i]['openId']+'</td><td>'+data[i]['content']+'</td></tr>';
+                    }
+                    $("table[data-result='"+result+"']").find(".list").remove();
+                    $("table[data-result='"+result+"']").find("tbody").append(str)
+//                    $("#news_content").html(str);
+                }else if(resp.code == 2){
+                    Dialog.success('', resp.msg, 2000);
+                }else{
+                    Dialog.error('翻页搜索数据失败', resp.msg);
+                }
+            }
+        })
+    });
+</script>

@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="introdece_img/modal" /}
+            {include file="self_customer_service/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="self_customer_service_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 客服昵称：</label>
+                                    <div class="col-lg-6 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="kf_nick" id="kf_nick">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-default" id="self_customer_service_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="self_customer_service" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> 客服ID</th>
+                                <th> 客服账号</th>
+                                <th> 绑定用户</th>
+                                <th> 绑定秘钥</th>
+                                <th> 客服头像</th>
+                                <th> 客服昵称</th>
+                                <th> 客服openId</th>
+                                <th> 创建时间</th>
+                                <th> 状态</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var self_customer_service_url = '{:url("SelfCustomerService/read")}';
+    var self_customer_service_delete_url = '{:url("SelfCustomerService/delete")}';
+    var self_customer_service_recover_url = '{:url("SelfCustomerService/recover")}';
+    var root_path_url = $("#self_customer_service").attr("data-path");
+    var self_customer_service_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/self_customer_service/self_customer_service_list.js"></script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

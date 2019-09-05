@@ -1,0 +1,278 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="system_config/tab" /}
+            <div>
+                <form id="addSystemConfigForm" action="{:url('SystemConfig/edit')}" class="form-horizontal" method="post">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">默认图文标题： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.title neq ''"}
+                                    <input type="text" class="form-control" name="title" value="{$info.title}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="title" />
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">默认关注提示： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.subscribe neq ''"}
+                    <textarea rows="6" class="form-control" name="subscribe">{$info.subscribe}</textarea>
+                                    {else /}
+                    <textarea rows="6" class="form-control" name="subscribe"></textarea>
+                                    {/if}
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">请输入默认用户关注提示语</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">默认图文logo： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.logo_img neq ''"}
+                                    <input id="logo_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value='{$info.logo_img_name}'/>
+                                    <input type="text" class="hide" name="logo_img" value="{$info.logo_img}"/>
+                                    {else /}
+                                    <input id="logo_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                    <input type="text" class="hide" name="logo_img" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">logo默认长宽比例9:5</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">默认客服提示： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.sign neq ''"}
+                                    <input type="text" class="form-control" name="sign" value="{$info.sign}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="sign" />
+                                    {/if}
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">请输入默认客服提示语:账号$kf_account,昵称$kf_nick</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">默认客服logo： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.kf_img neq ''"}
+                                    <input id="kf_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{$info.kf_img_name}"/>
+                                    <input type="text" class="hide" name="kf_img" value="{$info.kf_img}"/>
+                                    {else /}
+                                    <input id="kf_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                    <input type="text" class="hide" name="kf_img" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">logo默认长宽比例1:1</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">分红政策图解： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.policy neq ''"}
+                                    <input id="policy" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{$info.policy_name}"/>
+                                    <input type="text" class="hide" name="policy" value="{$info.policy}"/>
+                                    {else /}
+                                    <input id="policy" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                    <input type="text" class="hide" name="policy" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">宽度为手机屏幕宽度100%,长度自适应</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">分红说明图： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.question neq ''"}
+                                    <input id="question" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{$info.question_name}"/>
+                                    <input type="text" class="hide" name="question" value="{$info.question}"/>
+                                    {else /}
+                                    <input id="question" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                    <input type="text" class="hide" name="question" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">宽度为手机屏幕宽度100%,长度自适应</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">关注引导文字： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.guanzhu_title neq ''"}
+                                    <input type="text" class="form-control" name="guanzhu_title" value="{$info.guanzhu_title}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="guanzhu_title" />
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">关注页背景： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.gz_img neq ''"}
+                                    <input id="guanzhu_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value='{$info.gz_img_name}'/>
+                                    <input type="text" class="hide" name="gz_img" value="{$info.gz_img}"/>
+                                    {else /}
+                                    <input id="guanzhu_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                    <input type="text" class="hide" name="gz_img" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--定向增发列表转发出去时的文字-->
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">定向增发转发： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.zfmxes_des neq ''"}
+                                    <input type="text" class="form-control" name="zfmxes_des" value="{$info.zfmxes_des}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="zfmxes_des" />
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--定向增发列表转发出去时的文字-->
+                    <!--大宗转让列表转发出去时的文字-->
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">大宗转让转发： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.zryxes_des neq ''"}
+                                    <input type="text" class="form-control" name="zryxes_des" value="{$info.zryxes_des}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="zryxes_des" />
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--大宗转让列表转发出去时的文字-->
+                    <!--路演列表转发出去时的文字-->
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">路演列表转发： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq [] && $info.road_show_des neq ''"}
+                                    <input type="text" class="form-control" name="road_show_des" value="{$info.road_show_des}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="road_show_des" />
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--路演列表转发出去时的文字-->
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common_1.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addSystemConfigForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                var data = $form.serialize();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this)
+            var name = $(this).attr("data-value");
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('addSystemConfigForm', thiss, 'system_config', type, '{:url("Publics/upload")}', 1, name);
+        });
+    });
+</script>

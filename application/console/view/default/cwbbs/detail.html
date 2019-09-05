@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="cwbbs/tab_detail" /}
+            <div id="cwbbs_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">企业：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gsqc" value="{$info.gszls.gsqc}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="zqjc" value="{$info.gszls.zqjc}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票代码：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="neeq" value="{$info.neeq}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">报表日期：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="reportdate" value="{$info.reportdate}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">报表类型：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="type" value="{$info.type_name}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">采集时间：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="created_at" value="{$info.created_at}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {foreach name="$info.cwbbsjs" item="it"}
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">{$it.bbxm_name}：</label>
+                            <div class="col-lg-6 col-sm-5 col-md-5 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="xmsz" value="{$it.xmsz}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {/foreach}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

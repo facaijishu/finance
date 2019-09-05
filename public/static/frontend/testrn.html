@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <style>
+    .areaTagBox,.industryBox{border:1px solid #dddddd;color:#999999;width:92px;height:28px;line-height:26px;text-align:center;margin:0 5px 10px;float:left;}
+    .typeTagBox,.pfcTagBox{border:1px solid #dddddd;color:#999999;width:97px;height:28px;line-height:26px;text-align:center;margin:0 10px 20px;float:left;}
+    .secondProBox,.secondFundsBox{border:1px solid #dddddd;color:#999999;width:97px;height:28px;line-height:26px;text-align:center;margin:0 5px 15px;float:left;}
+    .typeTagBox.active,.pfcTagBox.active,.areaTagBox.active,.industryBox.active,.secondFundsBox.active{color:#0076FF;border:1px solid #0076FF;}
+    .pcFirstBtn.active{color:#ffffff;background:#0076FF;}
+    </style>
+</head>
+
+<body id="box" class="bg_gray mofh">
+
+    <!-- 首选发布 -->
+    <div id="firstChooseContent">
+        <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+        <div id="releaseBox" class="radius shadow bg_white " style="position: absolute;top:20px;left:10px;">
+            <div class="f18 c_black fb" style="position: absolute;top:20px;left:20px;">发布中心</div>
+            <a href="http://fin.jrfacai.com/home/customer_service/index/id/14" class="pull-left" style="position: absolute;top:20px;right:20px;">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:38px;">
+            </a>
+            <div class="text-center porel" style="height: 346px; top:50%; margin-top:-173px;">
+                <div class="f18">业务发布</div>
+                <div id="publishProjectBtn" class="c_primary f16 pointer" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:35px 38px 25px 38px;border-radius:19px;">发布项目</div>
+                <div id="publishFundsBtn" class="c_primary f16 pointer" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:15px 38px 40px 38px;border-radius:19px;">发布资金</div>
+                <div class="f18">需求</div>
+                <div id="oneKeyRelease" class="c_white f14 pointer" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:25px 38px 0px 38px;border-radius:19px;background:#0076FF">一键发布</div>
+                <div class="c_primary f14 pointer" onclick="javascript:history.back(-1);" style="border:1px solid #0076FF;height:38px;line-height:38px;margin:15px 38px 0px 38px;border-radius:19px;">取 消</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 项目发布 -->
+    <div id="publishProjectContent" class="dno">
+        <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+        <div id="releaseBox2" class="radius shadow bg_white mofh" style="position: absolute;top:20px;left:10px; z-index: 999;">
+            <div class="f18 c_black fb" id="publistTitle" style="position: absolute;top:20px;left:20px;"></div>
+            <a href="/static/frontend/service.html" class="pull-left" style="position: absolute;top:20px;right:20px;">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:38px;">
+            </a>
+            <div id="allFirstPro" class="text-center porel" style="margin-top:150px;">
+            </div>
+            <div style="height:15px;line-height:15px;"></div>
+        </div>
+    </div>
+    <!-- 项目二级选项 -->
+    <div class="modal fade" id="allSecondProModal" tabindex="-1" role="dialog" aria-labelledby="allSecondProModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true" style="position: absolute;bottom: 0px;">
+            <div class="modal-content">
+                <div class="modal-header b0 pb5">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-center" id="allSecondProModalLabel" style="font-size:16px;font-weight:bold;"></h4>
+                </div>
+                <div class="modal-body clearfix pb10"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 发布表单 -->
+    <div id="formContent" class="dno">
+        <div id="formBox" class="radius shadow bg_white mofh" style="position: absolute;top:20px;left:10px; z-index: 999;">
+            <div class="f18 c_black fb" style="position: absolute;top:20px;left:20px;"><span id="top_dict_title"></span><span id="dict_title"></span></div>
+            <a href="/static/frontend/service.html" class="pull-left" style="position: absolute;top:20px;right:20px;">
+                <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:38px;">
+            </a>
+            <form id="form" class="dbk" style="margin:70px 10px 20px;"></form>
+            <div class="clearfix" style="width:300px;margin:20px auto 0px;">
+                <div class="c_primary f14 pointer text-center pull-left mr20" onclick="
+                $('.industryBox').removeClass('active');
+                $('.areaTagBox').removeClass('active');
+                $('.areaTagBox').removeClass('bg_gray');
+                $('#formContent').hide();
+                $('#publishProjectContent').hide();
+                $('#firstChooseContent').show();
+                " style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;">取 消</div>
+                <div id="formFinish" class="c_white f14 pointer text-center pull-left" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;background:#0076FF">发 布</div>
+            </div>
+            <div style="height:15px;line-height:15px;"></div>
+        </div>
+    </div>
+    <!-- 省份选择 -->
+    <div class="modal fade" id="areaModal" tabindex="-1" role="dialog" aria-labelledby="areaModalLabel" aria-describedby="所在省份">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="areaModalLabel">所在省份 <span class="f12">（<span class="chooseSign"></span>）</span></h4>
+                </div>
+                <div class="modal-body clearfix pb0">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block btn-block" data-dismiss="modal">确 认 选 择</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 行业标签 -->
+    <div class="modal fade" id="industryModal" tabindex="-1" role="dialog" aria-labelledby="industryModalLabel" aria-describedby="行业标签">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="industryModalLabel">选择行业标签</h4>
+                </div>
+                <div class="modal-body clearfix pb0">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary center-block btn-block" data-dismiss="modal">确 认 选 择</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 需求发布 -->
+    <div id="oneKeyReleaseContent" class="dno">
+        <div class="f18 c_black fb" style="margin:20px 0 0 20px;">需求发布</div>
+        <div class="pl10 pr10 mt15 porel">
+            <textarea id="rcInput" maxSize="150" rows="8" class="form-control f12 rcInput" placeholder="例：有商劵渠道么？可以谈合作" style="width:100%;-webkit-box-shadow: inset 0 0px 0px;box-shadow: inset 0 0px 0px;border:0;"></textarea>
+            <div class="rcInputHint" style="position: absolute;bottom: 2px;right: 12px;">0/150</div>
+        </div>
+
+        <div class="f18 c_gray" style="margin:25px 0 15px 20px;">添加标签</div>
+        <div id="tagBox2" class="pl20 pr20 clearfix c_primary">
+            <div class="boxct"></div>
+            <div id="openModifyTagModal" class="f22 text-center pull-left" style="width:80px;height: 27px;border:1px solid #0076FF;line-height: 22px;">+</div>
+        </div>
+
+        <div class="f18 c_gray" style="margin:10px 0 15px 20px;">添加图片</div>
+        <div id="imgBox" class="pl20 pr20 clearfix c_primary">
+            <form id="fileForm" enctype="multipart/form-data">
+                <input type="text" name="origin" value="publish" class="sr-only">
+                <input id="fileInput" class="sr-only" name="file" type="file">
+            </form>
+            <div id="addImgBtn" class="f40 text-center pull-left" style="width:80px;height: 80px;border:1px solid #0076FF;line-height:73px;font-weight:300;">+</div>
+        </div>
+
+        <div class="clearfix" style="width:300px;margin:20px auto 0px;">
+            <div class="c_primary f14 pointer text-center pull-left mr20" onclick="$('#oneKeyReleaseContent').hide();$('#firstChooseContent').show();" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;">取 消</div>
+            <div id="oneKeyReleaseFinish" class="c_white f14 pointer text-center pull-left" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;background:#0076FF">完 成</div>
+        </div>
+
+        <!-- 编辑我的标签 -->
+        <div class="modal fade" id="modifyTagModal" tabindex="-1" role="dialog" aria-labelledby="modifyTagModalLabel" aria-describedby="选择标签">
+            <div class="modal-dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header b0 pb10">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-center" id="modifyTagModalLabel" style="font-size:18px;font-weight:bold;">选择标签</h4>
+                    </div>
+                    <div class="modal-body pl0 pr0 pt0 mofh porel">
+                        <div class="f18 pl10 pb20">业务类型</div>
+                        <div id="typeTagBoxCn" class="clearfix pb10">
+                        </div>
+
+                        <div class="f18 pl10 pb20">行业偏好</div>
+                        <div id="pfcTagBoxCn" class="clearfix pb10">
+                        </div>
+
+                        <div class="f18 pl10 pb20">添加标签</div>
+                        <div id="tagBox" class="pl10 pr10 clearfix c_primary">
+                        </div>
+                        <div id="openAddTagModal" class="c_primary text-center f16" style="width:320px;height:37px;border:1px solid #0076FF;border-radius:3px;line-height:37px;margin:10px auto 30px;">添加其他标签</div>
+                    </div>
+                    <div class="modal-footer">
+                        <div data-dismiss="modal" id="tagFinishBtn" class="bg_primary c_white text-center f16" style="border-radius:19px;height: 35px;line-height:33px;border: 1px solid #dddddd;margin:0 auto;width:182px;">确 定</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加标签 -->
+        <div class="modal fade" id="addTagModal" tabindex="-1" role="dialog" aria-labelledby="addTagModalLabel" aria-describedby="添加其他标签">
+            <div class="modal-dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-header b0 pb10">
+                        <h4 class="modal-title text-center" id="addTagModalLabel">添加其他标签</h4>
+                        <div class="text-center f12 c_gray">最多添加6个标签</div>
+                    </div>
+                    <div class="modal-body pt0 pb0">
+                        <div class="form-group mb0">
+                            <input id="tagInput" type="text" class="form-control" placeholder="请输入标签">
+                        </div>
+                    </div>
+                    <div class="modal-footer b0">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 80px;">取消</button>
+                        <button id="addTagBtn" type="button" class="btn btn-primary" style="width: 80px;">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+      <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+        <div class="modal-content" style="border:0;">
+          <div class="modal-body text-center"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+//========================== 内容加载 ===============================
+        //公共变量
+        var allService = new Array();
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#box").height(wh);
+        $("#releaseBox").height(wh-110);
+        $("#releaseBox").width(ww-20);
+        $("#releaseBox2").height(wh-30);
+        $("#releaseBox2").width(ww-20);
+        $("#formBox").height(wh-30);
+        $("#formBox").width(ww-20);
+
+
+        function getSubService (id) {
+            for (var i = 0; i < allService.length; i++) {
+                if (allService[i].id == id) {
+                    return allService[i].sub;
+                }
+            }
+        }
+
+        $.ajax({
+            url: "http://fin.jrfacai.com/home/dict_api/getServiceTypeDict",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+        })
+        .done(function(res) {
+            if (res.code == 200) {
+                allService = res.data;
+                var dt = res.data;
+                for (var i = 0; i < dt.length; i++) {
+                    var el = "<div tagId=\""+dt[i].id+"\" class=\"typeTagBox tofh\">"+dt[i].value+"</div>";
+                    $("#typeTagBoxCn").append(el);
+                    el = "<div tagId=\""+dt[i].id+"\" class=\"c_primary f16 pointer pcFirstBtn\" style=\"border:1px solid #0076FF;height:38px;line-height:38px;margin:20px 38px 20px 38px;border-radius:19px;\">"+dt[i].value+"</div>";
+                    $("#allFirstPro").append(el);
+                }
+            }
+        });
+        $.ajax({
+            url: "http://fin.jrfacai.com/home/dict_api/getIndustryDict",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+        })
+        .done(function(res) {
+            if (res.code == 200) {
+                var dt = res.data;
+                for (var i = 0; i < dt.length; i++) {
+                    var el = "<div tagId=\""+dt[i].id+"\" class=\"pfcTagBox tofh\">"+dt[i].value+"</div>";
+                    $("#pfcTagBoxCn").append(el);
+
+                    // 发布详情
+                    var sub = dt[i].sub;
+                    var subel = "";
+                    for (var y = 0; y < sub.length; y++) {
+                        subel += "<div sid=\""+sub[y].id+"\" class=\"industryBox tofh\">"+sub[y].value+"</div>";
+                    }
+                    var panel = "<div class=\"panel panel-default mb10\">\
+                            <div class=\"panel-heading\">\
+                            <h3 class=\"panel-title\">"+dt[i].value+"</h3>\
+                            </div>\
+                            <div class=\"panel-body pb0 pl5 pr5 pt10\">\
+                            "+subel+"\
+                            </div>\
+                        </div>";
+                    $("#industryModal .modal-body").append(panel);
+                }
+            }
+        });
+        $.ajax({
+            url: "http://fin.jrfacai.com/home/dict_api/getToProvinceDict",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+        })
+        .done(function(res) {
+            if (res.code == 200) {
+                var areaTag = res.data;
+                for (var i = 0; i < areaTag.length; i++) {
+                    var el = "<div class=\"areaTagBox\" sid=\""+areaTag[i].id+"\">"+areaTag[i].value+"</div>";
+                    $("#areaModal .modal-body").append(el);             
+                }
+            }
+        });
+        
+//========================== 一键发布 ===============================
+        $(document).ready(function() {
+            // 设置加载中...
+            $(document).ajaxStart(function() {
+                $("#loading").removeClass('hidden');
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        //提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/7*1000);
+        }
+
+        // 一键发布
+        $("#oneKeyRelease").click(function(event) {
+            $(".rcInput").trigger('keyup');
+            $("#firstChooseContent").hide();
+            $("#oneKeyReleaseContent").show();
+        });
+
+        //发布内容
+        $(".rcInput").keyup(function(event) {
+            var el = event.currentTarget;
+            $(el).val($.trim($(el).val()));
+            var i = $(el).val().length;
+            var s = $(el).attr('maxSize');
+            if (i > parseInt(s)) {
+                alertModal("此内容最多为"+s+"字");
+                $(el).val($(el).val().substring(0, parseInt(s)));
+                $(el).next().html(s+"/"+s);
+            }else {
+                $(el).next().html(i+"/"+s);
+            }
+        });
+
+        //添加标签
+        $("#openAddTagModal").click(function(event) {
+            $("#addTagModal").modal("show");
+            $("#tagInput").focus();;
+        });
+        $("#tagBox").on('click', '.tagDel', function(event) {
+            $(this).parent().remove();
+        });
+        $("#addTagBtn").click(function(event) {
+            var v = $.trim($("#tagInput").val());
+            if (v.length > 0) {
+                if ($(".tagCt").length < 6) {
+                    var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                        <span class=\"tagCt\">" + v + "</span>\
+                        <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                    </div>";
+                    $("#tagBox").prepend(n);
+                    $("#tagInput").val("");
+                    $("#addTagModal").modal("hide");
+                } else {
+                    $("#addTagModal").modal("hide");
+                    setTimeout(function() {
+                        alertModal("最多添加6个标签");
+                    }, 400);
+                }
+            }else {
+                $("#addTagModal").modal("hide");
+            }
+            $("#addTagBtn").focus();
+        });
+        $("#tagInput").keydown(function(event) {
+            if (event.which == 13) {
+                $("#addTagBtn").trigger('click');
+            }
+        });
+        $("#typeTagBoxCn").on('click', '.typeTagBox', function(event) {
+            var curr = $(event.currentTarget);
+            if (curr.hasClass('active')) {
+                curr.removeClass('active')
+            }else {
+                curr.addClass('active');
+            }
+        });
+        $("#pfcTagBoxCn").on('click', '.pfcTagBox', function(event) {
+            var curr = $(event.currentTarget);
+            if (curr.hasClass('active')) {
+                curr.removeClass('active')
+            }else {
+                curr.addClass('active');
+            }
+        });
+
+        //确定选择标签
+        var dict_id = new Array();
+        $("#tagFinishBtn").click(function(event) {
+            dict_id = new Array();
+            var tn = new Array();
+            $(".typeTagBox.active").each(function(index, el) {
+                dict_id.push($(el).attr('tagId'));
+                tn.push($(el).html());
+            });
+            $(".pfcTagBox.active").each(function(index, el) {
+                dict_id.push($(el).attr('tagId'));
+                tn.push($(el).html());
+            });
+            var tagboxhtml = "";
+            $("#tagBox .tagCt").each(function(index, el) {
+                tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                        <span class=\"tagCt\">" + $(el).html() + "</span>\
+                        <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                    </div>";
+            });
+            for (var i = 0; i < tn.length; i++) {
+                tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+                        <span class=\"tagCt\">" + tn[i] + "</span>\
+                        <img class=\"tagDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                    </div>";
+            }
+            $("#tagBox2 .boxct").html(tagboxhtml);
+        });
+
+        //选择标签
+        $("#openModifyTagModal").click(function(event) {
+            $("#modifyTagModal").modal("show");
+        });
+        $("#modifyTagModal .modal-body").height(wh-160);
+        $("#myTagBox").on('click', '.tagDel', function(event) {
+            $(this).parent().remove();
+        });
+
+        //添加图片
+        $("#addImgBtn").click(function(event) {
+            $("#fileInput").click();
+        });
+        $("#imgBox").on('click', '.imgDel', function(event) {
+            $(this).parent().remove();
+        });
+        $("#form").on('click', '.imgDel', function(event) {
+            $(this).parent().remove();
+            var imgids = "";
+            $("#addImgBox .imgCt").each(function(index, el) {
+                imgids += $(el).attr('imgId') + ",";
+            });
+            imgids = imgids.substring(0, imgids.length-1);
+            $("#addImgBox input").val(imgids);
+        });
+        $("#fileInput").change(function(event) {
+            var fn = $(this).val();
+            //判断图片格式
+            var suffixIndex=fn.lastIndexOf(".");
+            var suffix=fn.substring(suffixIndex+1).toUpperCase();
+            if(suffix!="BMP" && suffix!="JPG" && suffix!="JPEG" && suffix!="PNG" && suffix!="GIF"){
+                alertModal("图片格式错误(请上传BMP、JPG、JPEG、PNG、GIF)");
+                return;
+            }
+
+            //上传图片操作
+            var fileForm = new FormData($("#fileForm").get(0));
+            $.ajax({
+                url: "http://fin.jrfacai.com/home/base_api/upload",
+                type: "POST",
+                data: fileForm,
+                cache: false,
+                contentType: false,
+                processData: false,
+            })
+            .done(function(res) {
+                if (res.code == 200) {
+                    var imgUrl = "http://fin.jrfacai.com/uploads/" + res.data.url;
+                    imgUrl = imgUrl.replace("\/", "/");
+                    var n = "<div class=\"pull-left mr10 mb10 porel\" style=\"width:80px;height: 80px;\">\
+                                <img imgId=\""+res.data.id+"\" class=\"imgCt\" src=\""+imgUrl+"\" style=\"width:80px;height:80px;\">\
+                                <img class=\"imgDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+                            </div>";
+                    $("#imgBox").prepend(n);
+                    $("#addImgBox").prepend(n);
+                    if ($("#addImgBox input").length <= 0) {
+                        $("#addImgBox").append("<input type=\"text\" name=\""+$("#addImgBox").attr("fieldsName")+"\" class=\"sr-only\">");
+                    }
+                    var imgids = "";
+                    $("#addImgBox .imgCt").each(function(index, el) {
+                        imgids += $(el).attr('imgId') + ",";
+                    });
+                    imgids = imgids.substring(0, imgids.length-1);
+                    $("#addImgBox input").val(imgids);
+                    $("#addImgBox").show();
+                }else {
+                    alertModal(res.msg);
+                }
+            });
+        });
+
+        //完成
+        $("#oneKeyReleaseFinish").click(function(event) {
+            var ctL = $("#rcInput").val().length;
+            var tagL = $("#tagBox2 .tagCt").length;
+            var imgL = $(".imgCt").length;
+            if (ctL > 150) {
+                alertModal("发布的内容最多为150字");
+                return;
+            }
+            if (tagL > 6) {
+                alertModal("最多添加6个标签");
+                return;
+            }
+
+            //添加操作
+            var tagArr = new Array();
+            var imgArr = new Array();
+            $("#tagBox2 .tagCt").each(function(index, el) {
+                tagArr.push($(el).html());
+            });
+            $(".imgCt").each(function(index, el) {
+                imgArr.push($(el).attr('imgId'));
+            });
+            $.ajax({
+                url: 'http://fin.jrfacai.com/home/publish_api/addPublish',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "content": $("#rcInput").val(),
+                    "img_id": JSON.stringify(imgArr).substring(1, JSON.stringify(imgArr).length-1),
+                    "tag_name": JSON.stringify(tagArr).substring(1, JSON.stringify(tagArr).length-1)
+                },
+            })
+            .done(function(res) {
+                if (res.code == 200) {
+                    alertModal(res.msg);
+                    setTimeout(function() {
+                        history.back(-1);
+                    }, 2200);
+                }else {
+                    console.log(res);
+                }
+            });
+        });
+
+ //========================== 发布项目 ===============================   
+        var formType = 1; //表单类型 1项目 2资金
+        function getTextHtml (isNeed, name, title, desc) {
+            var needSign = "";
+            if (isNeed) {
+                needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+            }
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>"+title+"：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\""+name+"\" name=\""+name+"\" need=\""+isNeed+"\" type=\"text\" class=\"pull-left text-right inputBox\" placeholder=\""+desc+"\" style=\"border:0;height:20px;\">\
+                    "+needSign+"\
+                </div>";
+            return tmp;
+        }
+
+        function getSellStockHtml (isNeed, title, desc) {
+            var needSign = "";
+            if (isNeed) {
+                needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+            }
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>"+title+"：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\"sell_stock_min\" name=\"sell_stock_min\" need=\""+isNeed+"\" type=\"text\" class=\"pull-left text-center inputBox\" placeholder=\""+desc+"\" style=\"border:0;height:20px;\">\
+                    <span class=\"pull-left text-center\" style=\"width:20px;\">-</span>\
+                    <input id=\"sell_stock_max\" name=\"sell_stock_max\" need=\""+isNeed+"\" type=\"text\" class=\"pull-left text-center inputBox\" placeholder=\""+desc+"\" style=\"border:0;height:20px;\">\
+                    "+needSign+"\
+                </div>";
+            return tmp;
+        }
+
+        function getCheckBoxHtml (isNeed, name, values, title) {
+            var needSign = "";
+            if (isNeed) {
+                needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+            }
+            var cbhtml = "";
+            for (var i = 0; i < values.length; i++) {
+                if (i==0) {
+                    cbhtml += "<label class=\"checkbox-inline\">\
+                            <input type=\"checkbox\" name=\""+name+"\" value=\""+values[i].value+"\" checked=\"checked\"> "+values[i].name+"\
+                        </label>";
+                }else {
+                    cbhtml += "<label class=\"checkbox-inline\">\
+                            <input type=\"checkbox\" name=\""+name+"\" value=\""+values[i].value+"\"> "+values[i].name+"\
+                        </label>";
+                }
+            }
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>"+title+"：</span><span>&nbsp;&nbsp;</span></span>\
+                    <div class=\"pull-left inputBox\">\
+                        "+cbhtml+"\
+                    </div>\
+                    "+needSign+"\
+                </div>";
+            return tmp;
+        }
+
+        function getRadioHtml (isNeed, name, values, title) {
+            var needSign = "";
+            if (isNeed) {
+                needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+            }
+            var cbhtml = "";
+            for (var i = 0; i < values.length; i++) {
+                if (i==0) {
+                    cbhtml += "<label class=\"radio-inline\">\
+                            <input type=\"radio\" name=\""+name+"\" value=\""+values[i].value+"\" checked=\"checked\"> "+values[i].name+"\
+                        </label>";
+                }else {
+                    cbhtml += "<label class=\"radio-inline\">\
+                            <input type=\"radio\" name=\""+name+"\" value=\""+values[i].value+"\"> "+values[i].name+"\
+                        </label>";
+                }
+            }
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>"+title+"：</span><span>&nbsp;&nbsp;</span></span>\
+                    <div class=\"pull-left inputBox\">\
+                        "+cbhtml+"\
+                    </div>\
+                    "+needSign+"\
+                </div>";
+            return tmp;
+        }
+
+        function getTextAreaHtml (isNeed, name, title, desc, minSize, maxSize) {
+            var needSign = "";
+            if (isNeed) {
+                needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+            }
+            var tmp = "<div class=\"pt15 pb15 porel\">\
+                    <div class=\"clearfix\">\
+                        "+needSign+"<span class=\"fb pull-left\">"+title+"：</span>\
+                    </div>\
+                    <textarea name=\""+name+"\" textTitle=\""+title+"\" textMinSize=\""+minSize+"\" textMaxSize=\""+maxSize+"\" need=\""+isNeed+"\" rows=\"8\" class=\"form-control f12 rcInput\" placeholder=\""+desc+"\" style=\"width:100%;-webkit-box-shadow: inset 0 0px 0px;box-shadow: inset 0 0px 0px;border:0;\"></textarea>\
+                    <div class=\"rcInputHint f12\" style=\"position: absolute;bottom: 10px;right: 16px;\"></div>\
+                </div>";
+            return tmp;
+        }
+
+        function getModalChooseHtml (isNeed, name, alias, title, desc) {
+            var needSign = "";
+            if (isNeed) {
+                needSign = "<span class=\"c_primary\" style=\"position:absolute;left:0px;top:18px;\">*</span>";
+            }
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <span class=\"pull-left fb\"><span>&nbsp;&nbsp;</span><span>"+title+"：</span><span>&nbsp;&nbsp;</span></span>\
+                    <input id=\""+alias+"_t"+"\" name=\""+name+"_t"+"\" need=\""+isNeed+"\" type=\"text\" class=\"pull-left text-right inputBox\" placeholder=\""+desc+"\" style=\"border:0;height:20px;\">\
+                    "+needSign+"\
+                    <input id=\""+name+"\" type=\"text\" name=\""+name+"\" value=\"\" class=\"sr-only\">\
+                </div>";
+            return tmp;
+        }
+
+        function getProDataHtml () {
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <div class=\"fb\">项目资料：</div>\
+                    <div class=\"f12 c_gray\">如有详细资料，请微信添加FA財哥（微信号：jrfacaige）</div>\
+                    <div class=\"f12 c_gray\">备注：发布需求</div>\
+                </div>";
+            return tmp;
+        }
+
+        function getAddImgHtml (name, title) {
+            var tmp = "<div class=\"clearfix porel pl5 pr5 pt15 pb15 bb1\">\
+                    <div class=\"fb mb5\">"+title+"：</div>\
+                    <div fieldsName=\""+name+"\" id=\"addImgBox\" class=\"pull-left mr5 dno\"></div>\
+                    <div id=\"addImgBtn2\" class=\"f40 text-center pull-left\" style=\"width:80px;height: 80px;border:1px solid #eeeeee;line-height:73px;font-weight:300;\">+</div>\
+                </div>";
+            return tmp;
+        }
+
+        // 图片添加
+        $("#form").on('click', '#addImgBtn2', function(event) {
+            $("#fileInput").click();
+        });
+
+        // 省份选择
+        $("#form").on('click', '#province_id_t', function(event) {
+            if (formType == 2) {
+                $(".chooseSign").html("多选");
+            }else {
+                $(".chooseSign").html("单选");
+            }
+            $("#areaModal").modal("show");
+        });
+        $("#areaModal").on('click', '.areaTagBox', function(event) {
+            if (formType == 2) {
+                if ($(this).hasClass('bg_gray')) {
+                    return;
+                }
+                if ($(this).hasClass('active')) {
+                    if ($(this).html() == "全国") {
+                        $(".areaTagBox").removeClass('bg_gray');
+                        $(".areaTagBox").removeClass('active');
+                    }
+                    $(this).removeClass('active');
+                }else {
+                    if ($(this).html() == "全国") {
+                        $(".areaTagBox").addClass('bg_gray');
+                        $(".areaTagBox").removeClass('active');
+                        $(this).removeClass('bg_gray');
+                    }
+                    $(this).addClass('active');
+                }
+                var valHtml = "";
+                var sids = "";
+                $("#areaModal .areaTagBox.active").each(function(index, el) {
+                    valHtml += $(el).html() + ",";
+                    sids += $(el).attr('sid') + ",";
+                });
+                valHtml = valHtml.substring(0, valHtml.length - 1);
+                sids = sids.substring(0, sids.length - 1);
+                $("#province_id_t").val(valHtml);
+                $("#province_id").val(sids);
+                $("#province").val(sids);
+            }else {
+                $(".areaTagBox").removeClass('active');
+                $(this).addClass('active');
+                $("#province_id_t").val($(this).html());
+                $("#province_id").val($(this).attr('sid'));
+                $("#province").val($(this).attr('sid'));
+                $("#areaModal").modal("hide");
+            }
+        });
+
+        // 行业选择
+        $("#form").on('click', '#industry_t', function(event) {
+            $("#industryModal").modal("show");
+        });
+        $("#industryModal").on('click', '.industryBox', function(event) {
+            if (formType == 2) {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                }else {
+                    $(this).addClass('active');
+                }
+                var valHtml = "";
+                var sids = "";
+                $("#industryModal .industryBox.active").each(function(index, el) {
+                    valHtml += $(el).html() + ",";
+                    sids += $(el).attr('sid') + ",";
+                });
+                valHtml = valHtml.substring(0, valHtml.length - 1);
+                sids = sids.substring(0, sids.length - 1);
+                $("#industry_t").val(valHtml);
+                $("#industry").val(sids);
+                $("#top_industry_id").val(sids);
+                $("#industry_id").val(sids);
+            }else {
+                $(".industryBox").removeClass('active');
+                $(this).addClass('active');
+                $("#industry_t").val($(this).html());
+                $("#industry").val($(this).attr('sid'));
+                $("#top_industry_id").val($(this).attr('sid'));
+                $("#industry_id").val($(this).attr('sid'));
+                $("#industryModal").modal("hide");
+            }
+        });
+
+        // 输入框大小
+        function reloadBox () {
+            $(".inputBox").each(function(index, el) {
+                $(el).width(ww - 50 - $(el).prev().width());
+            });
+            var sell = ww - 50 - 20 - $("#sell_stock_min").prev().width();
+            $("#sell_stock_min").width(sell/2);
+            $("#sell_stock_max").width(sell/2);
+        }
+
+        // 项目一级菜单
+        $("#allFirstPro").on('click', '.pcFirstBtn', function(event) {
+            var el = event.currentTarget;
+            var subs = getSubService($(el).attr('tagId'));
+            var modalHtml = "";
+            for (var i = 0; i < subs.length; i++) {
+                modalHtml += "<div tagId=\""+subs[i].id+"\" class=\"secondProBox tofh\">"+subs[i].value+"</div>";
+            }
+            $("#allFirstPro .pcFirstBtn").removeClass('active');
+            $(el).addClass('active');
+            $("#allSecondProModalLabel").html($(el).html());
+            $("#allSecondProModal .modal-body").html(modalHtml);
+            $("#top_dict_title").html($(el).html())
+            if (formType == 2) {
+                $(".secondProBox").eq(1).trigger('click');
+            }else {
+                $("#allSecondProModal").modal("show");
+            }
+        });
+        // 资金二级多选菜单
+        function getfundsSecondMenuHtml (subs) {
+            var menuHtml = "";
+            for (var i = 0; i < subs.length; i++) {
+                menuHtml += "<div tagId=\""+subs[i].id+"\" class=\"secondFundsBox tofh\">"+subs[i].value+"</div>";
+            }
+            var needSign = "<span class=\"c_primary pull-left\" style=\"margin-top:2px;\">*&nbsp;&nbsp;</span>";
+            var tmp = "<div class=\"pt15 porel\">\
+                    <div class=\"clearfix\">\
+                        "+needSign+"<span class=\"fb pull-left\">请选择业务细分领域<span class=\"f12 c_gray\">(可多选)</span></span>\
+                    </div>\
+                    <div class=\"clearfix pt15\">\
+                        "+menuHtml+"\
+                    </div>\
+                    <input id=\"fundsSecondDid\" type=\"text\" name=\"dict_id\" value=\"\" class=\"sr-only\">\
+                    <div class=\"rcInputHint f12\" style=\"position: absolute;bottom: 10px;right: 16px;\"></div>\
+                </div>";
+            return tmp;
+        }
+        $("#form").on('click', '.secondFundsBox', function(event) {
+            var curr = event.currentTarget;
+            if ($(curr).hasClass('active')) {
+                $(curr).removeClass('active')
+            } else {
+                $(curr).addClass('active');
+            }
+            var vals = "";
+            $(".secondFundsBox.active").each(function(index, el) {
+                vals += $(el).attr('tagId')+",";
+            });
+            vals = vals.substring(0, vals.length-1);
+            $("#fundsSecondDid").val(vals);
+        });
+
+        // 发布项目、发布资金按钮
+        $("#publishProjectBtn").click(function(event) {
+            $("#firstChooseContent").hide();
+            $("#publishProjectContent").show();
+            $("#publistTitle").html("发布项目");
+            formType = 1;
+        });
+        $("#publishFundsBtn").click(function(event) {
+            $("#firstChooseContent").hide();
+            $("#publishProjectContent").show();
+            $("#publistTitle").html("发布资金");
+            formType = 2;
+        });
+
+        // 项目二级菜单
+        $("#allSecondProModal").on('click', '.secondProBox', function(event) {
+            if (formType == 1) {
+                $("#dict_title").html("-"+$(this).html());
+            }else {
+                $("#dict_title").html("");
+            }
+            $("#allSecondProModal").modal("hide");
+            $("#formContent").show();
+            var top_dict_id = $(".pcFirstBtn.active").attr('tagId');
+            var dict_id = $(this).attr('tagId');
+            var req = {
+                "top_dict_id": top_dict_id,
+                "dict_id": dict_id
+            };
+            var postUrl = 'http://fin.jrfacai.com/home/project_require_api/showProjectRequireForm';
+            if (formType == 2) {
+                postUrl = 'http://fin.jrfacai.com/home/organize_require_api/showOrganizeRequireForm';
+            }
+            $.ajax({
+                url: postUrl,
+                type: 'POST',
+                dataType: 'json',
+                data: req,
+            })
+            .done(function(res) {
+                var formHtml = "";
+                var obj = res.data;
+                var resData = new Array();
+                for (var i in obj) {
+                    if (i == "validity_period" && formType == 1) {
+                        resData.push({"name":"pro_data","title":"项目资料"})
+                    }
+                    var e = {
+                        "name": i,
+                        "title": obj[i]
+                    };
+                    resData.push(e);
+                }
+                if (formType == 2) {
+                    formHtml += getfundsSecondMenuHtml(getSubService(top_dict_id));
+                }
+                for (var i = 0; i < resData.length; i++) {
+                    var name = resData[i].name;
+                    var title = resData[i].title;
+                    switch (name) {
+                        case "name":
+                            formHtml += getTextHtml(true, name, title, "请输入");
+                            break;
+                        case "business_des":
+                            formHtml += getTextHtml(true, name, title, "请输入");
+                            break;
+                        case "stock_code":
+                            formHtml += getTextHtml(true, name, title, "请输入");
+                            break;
+                        case "is_public":
+                            values = [{
+                                "name": "不公开",
+                                "value": "2"
+                                },{
+                                "name": "公开",
+                                "value": "1"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, "是否公开代码");
+                            break;
+                        case "is_pre_ipo":
+                            values = [{
+                                "name": "否",
+                                "value": "2"
+                                },{
+                                "name": "是",
+                                "value": "1"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "lc_type":
+                            values = [{
+                                "name": "主板",
+                                "value": "1"
+                                },{
+                                "name": "中小板",
+                                "value": "2"
+                                },{
+                                "name": "创业板",
+                                "value": "3"
+                                },{
+                                "name": "其他",
+                                "value": "4"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "level":
+                            values = [{
+                                "name": "基础层",
+                                "value": "1"
+                                },{
+                                "name": "创新层",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "is_coach":
+                            values = [{
+                                "name": "是",
+                                "value": "1"
+                                },{
+                                "name": "否",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "trans_mode":
+                            values = [{
+                                "name": "做市",
+                                "value": "1"
+                                },{
+                                "name": "竞价",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "province_id":
+                            formHtml += getModalChooseHtml(true, name, name, title, "请选择");
+                            break;
+                        case "province":
+                            formHtml += getModalChooseHtml(true, name, "province_id", title, "请选择");
+                            break;
+                        case "product_issuer":
+                            formHtml += getTextHtml(true, name, title, "请输入");
+                            break;
+                        case "is_record":
+                            values = [{
+                                "name": "是",
+                                "value": "1"
+                                },{
+                                "name": "否",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "sub_amount":
+                            formHtml += getTextHtml(true, name, title, "（不少于）");
+                            break;
+                        case "product_status":
+                            values = [{
+                                "name": "预售期",
+                                "value": "1"
+                                },{
+                                "name": "存续中",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "industry":
+                            formHtml += getModalChooseHtml(true, name, name, title, "请选择行业标签");
+                            break;
+                        case "top_industry_id":
+                            formHtml += getModalChooseHtml(true, name, "industry", title, "请选择行业标签");
+                            break;
+                        case "industry_id":
+                            formHtml += getModalChooseHtml(true, name, "industry", title, "请选择行业标签");
+                            break;
+                        case "acceptor":
+                            values = [{
+                                "name": "商票",
+                                "value": "1"
+                                },{
+                                "name": "国股",
+                                "value": "2"
+                                },{
+                                "name": "城商",
+                                "value": "3"
+                                },{
+                                "name": "三农",
+                                "value": "4"
+                                },{
+                                "name": "财票",
+                                "value": "5"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "bill_type":
+                            values = [{
+                                "name": "商票",
+                                "value": "1"
+                                },{
+                                "name": "银票",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "coupon_finance":
+                            formHtml += getTextHtml(true, name, title, "万元");
+                            break;
+                        case "days_remain":
+                            formHtml += getTextHtml(true, name, title, "天");
+                            break;
+                        case "sell_stock_min":
+                            formHtml += getSellStockHtml(true, "拟出让股份范围", "%");
+                            break;
+                        case "sell_stock_max":
+                            break;
+                        case "general_capital":
+                            formHtml += getTextHtml(true, name, title, "万股");
+                            break;
+                        case "trans_stock_num":
+                            formHtml += getTextHtml(true, name, title, "万股");
+                            break;
+                        case "financing_scale":
+                            formHtml += getTextHtml(true, name, title, "万元");
+                            break;
+                        case "invest_scale":
+                            formHtml += getTextHtml(true, name, title, "万元");
+                            break;
+                        case "remain_period":
+                            formHtml += getTextHtml(false, name, title, "月");
+                            break;
+                        case "expected_return":
+                            formHtml += getTextHtml(false, name, title, "万元");
+                            break;
+                        case "allocation_ratio":
+                            formHtml += getTextHtml(true, name, title, "倍");
+                            break;
+                        case "total_trade_num":
+                            formHtml += getTextHtml(false, name, title, "万元");
+                            break;
+                        case "trade_period":
+                            formHtml += getTextHtml(true, name, title, "月");
+                            break;
+                        case "mirc":
+                            formHtml += getTextHtml(false, name, title, "%");
+                            break;
+                        case "financing_period":
+                            values = [{
+                                "name": "一年以内",
+                                "value": "1"
+                                },{
+                                "name": "二年以内",
+                                "value": "2"
+                                },{
+                                "name": "三年以内",
+                                "value": "3"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "period":
+                            values = [{
+                                "name": "一年以内",
+                                "value": "1"
+                                },{
+                                "name": "二年以内",
+                                "value": "2"
+                                },{
+                                "name": "三年以内",
+                                "value": "3"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "rate_cap":
+                            formHtml += getTextHtml(false, name, title, "%");
+                            break;
+                        case "inc_credit_way":
+                            values = [{
+                                "name": "抵押",
+                                "value": "1"
+                                },{
+                                "name": "质押",
+                                "value": "2"
+                                },{
+                                "name": "保证",
+                                "value": "3"
+                                },{
+                                "name": "信用",
+                                "value": "4"
+                                },{
+                                "name": "多重增信",
+                                "value": "5"
+                                }
+                            ];
+                            formHtml += getRadioHtml(false, name, values, title);
+                            break;
+                        case "fund_type":
+                            values = [{
+                                "name": "非金融机构",
+                                "value": "1"
+                                },{
+                                "name": "金融机构",
+                                "value": "2"
+                                },{
+                                "name": "个人投资机构",
+                                "value": "3"
+                                }
+                            ];
+                            formHtml += getCheckBoxHtml(true, name, values, title);
+                            break;
+                        case "invest_mode":
+                            values = [{
+                                "name": "优先级",
+                                "value": "1"
+                                },{
+                                "name": "劣后级",
+                                "value": "2"
+                                },{
+                                "name": "夹层",
+                                "value": "3"
+                                },{
+                                "name": "平层",
+                                "value": "3"
+                                },{
+                                "name": "其他",
+                                "value": "3"
+                                }
+                            ];
+                            formHtml += getCheckBoxHtml(true, name, values, title);
+                            break;
+                        case "business_income":
+                            formHtml += getTextHtml(true, name, title, "万元");
+                            break;
+                        case "debt_ratio":
+                            formHtml += getTextHtml(false, name, title, "%");
+                            break;
+                        case "is_stockholder":
+                            values = [{
+                                "name": "是",
+                                "value": "1"
+                                },{
+                                "name": "否",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "ltv_ratio":
+                            formHtml += getTextHtml(false, name, title, "%");
+                            break;
+                        case "price":
+                            if (dict_id == "335") {
+                                formHtml += getTextHtml(true, name, title, "元");
+                            }else {
+                                formHtml += getTextHtml(false, name, title, "元/股");
+                            }
+                            break;
+                        case "discount_rate":
+                            formHtml += getTextHtml(true, name, title, "%");
+                            break;
+                        case "is_bargain":
+                            values = [{
+                                "name": "否",
+                                "value": "2"
+                                },{
+                                "name": "是",
+                                "value": "1"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "mortgage_rate":
+                            formHtml += getTextHtml(false, name, title, "%");
+                            break;
+                        case "pe_ratio":
+                            formHtml += getTextHtml(false, name, title, "%");
+                            break;
+                        case "ly_net_profit":
+                            formHtml += getTextHtml(true, name, title, "万元");
+                            break;
+                        case "ty_net_profit":
+                            formHtml += getTextHtml(false, name, title, "万元");
+                            break;
+                        case "investor_preference":
+                            values = [{
+                                "name": "上市公司",
+                                "value": "1"
+                                },{
+                                "name": "其他机构",
+                                "value": "2"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "invest_target":
+                            formHtml += getTextAreaHtml(true, name, title, "请简要说明对投资的筛选标准，包括但不限于地区、财务要求、团队背景等，不少于10个字", "10", "300");
+                            break;
+                        case "financing_purpose":
+                            formHtml += getTextAreaHtml(false, name, title, "请简要说明本次融资的资金使用计划，不少于10个字", "10", "100");
+                            break;
+                        case "pro_highlight":
+                            formHtml += getTextAreaHtml(true, name, title, "请简要说明融资企业的关键投资亮点，包括但不限于市场机会、行业地位、产品/服务与商业模式、运营状况、增长策略、团队实力、和财务亮点等，不少于10个字", "10", "300");
+                            break;
+                        case "pay_source":
+                            formHtml += getTextAreaHtml(true, name, title, "请简要说明还款来源，不少于10个字", "10", "300");
+                            break;
+                        case "img_id":
+                            formHtml += getAddImgHtml (name, title);
+                            break;
+                        case "pro_data":
+                            formHtml += getProDataHtml();
+                            break;
+                        case "validity_period":
+                            values = [{
+                                "name": "30天",
+                                "value": "1"
+                                },{
+                                "name": "60天",
+                                "value": "2"
+                                },{
+                                "name": "90天",
+                                "value": "3"
+                                },{
+                                "name": "180天",
+                                "value": "4"
+                                }
+                            ];
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        case "contact_status":
+                            var values;
+                            if (formType == 2) {
+                                values = [{
+                                    "name": "发起方",
+                                    "value": "1"
+                                    },{
+                                    "name": "代理人",
+                                    "value": "2"
+                                    }
+                                ];
+                            }else {
+                                if (top_dict_id == "311" || top_dict_id == "312" || top_dict_id == "313") {
+                                    values = [{
+                                        "name": "发起方",
+                                        "value": "2"
+                                        },{
+                                        "name": "代理人",
+                                        "value": "3"
+                                        }
+                                    ];
+                                }else if (top_dict_id == "308" && dict_id == "335") {
+                                    values = [{
+                                        "name": "票方",
+                                        "value": "4"
+                                        },{
+                                        "name": "资方",
+                                        "value": "5"
+                                        }
+                                    ];
+                                }else {
+                                    values = [{
+                                        "name": "融资方",
+                                        "value": "1"
+                                        },{
+                                        "name": "代理人",
+                                        "value": "3"
+                                        }
+                                    ];
+                                }
+                            }
+                            formHtml += getRadioHtml(true, name, values, title);
+                            break;
+                        default:
+                            console.log(JSON.stringify(resData[i]));
+                            break;
+                    }
+                }
+                formHtml += "<input type=\"text\" name=\"top_dict_id\" value=\""+top_dict_id+"\" class=\"sr-only\">";
+                if (formType != 2) {
+                    formHtml += "<input type=\"text\" name=\"dict_id\" value=\""+dict_id+"\" class=\"sr-only\">";
+                }
+                $("#form").html(formHtml);
+                $("textarea").trigger('click');
+                reloadBox();
+            });
+        });
+
+        $("#formFinish").click(function(event) {
+            var postUrl = "http://fin.jrfacai.com/home/project_require_api/addProjectRequire";
+            if (formType == 2) {
+                postUrl = "http://fin.jrfacai.com/home/organize_require_api/addOrganizeRequire";
+            }
+            // console.log($("#form").serialize());
+            $.ajax({
+                url: postUrl,
+                type: 'POST',
+                dataType: 'json',
+                data: $("#form").serialize(),
+            })
+            .done(function(res) {
+                alertModal(res.msg);
+                if (res.code == 200) {
+                    setTimeout(function() {
+                        history.back(-1);
+                    }, 2200);
+                }else {
+                    console.log(res);
+                }
+            });
+        });
+
+        if (getParams().needs == "1") {
+            $("#oneKeyRelease").trigger('click');
+        }
+
+        $("body").on('click', 'img', function(event) {
+            var el = event.currentTarget;
+            wx.previewImage({
+            current: $(el).attr('src'), // 当前显示图片的http链接
+            urls: [$(el).attr('src')] // 需要预览的图片http链接列表
+            });
+        });
+    </script>
+</body>
+
+</html>

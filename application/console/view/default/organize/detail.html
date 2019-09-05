@@ -1,0 +1,148 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="organize/tab_detail" /}
+            <div id="organize_detail" data-id="{$info.org_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">机构名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.org_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">机构简称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.org_short_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">添加时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">管理规模：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.scale_min}-{$info.scale_max}{$info.unit}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">内部客服id：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.customer_service_id}
+                        </div>
+                    </div>
+                </fieldset>
+                {foreach $info.inc_target as $key => $value}
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资企业{$key+1}：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                          {$value['target_company']}  
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属行业：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$value['target_industry']}
+                        </div>
+                    </div>
+                </fieldset>
+                {/foreach}
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资方向：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_industry}
+                        </div>
+                    </div>
+                    
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属区域：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_area}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">资金性质：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_funds}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                     <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">资本类型：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_capital}
+                        </div>
+                    </div>
+                </fieldset>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系人：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.contacts}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">职位：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.position}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系方式：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.contact_tel}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">排序：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.list_order}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">头像：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                           {if $info.wx_img}
+                              <img src="{$info.wx_img}" style="width:80px;height:60px" /> 
+                            {else}
+                              <img src="__UPLOAD__/{$info.top_img}" style="width:80px;height:60px" />
+                           {/if}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">是否确认展示：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                           {if condition="$info.show eq 1"}
+                            
+                            <span style="color:yellow">已确认展示</span>    
+                            
+                           {else}
+                             
+                             <span style="color:red">未确认展示</span> 
+                             
+                           {/if}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

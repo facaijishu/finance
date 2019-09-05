@@ -1,0 +1,350 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="zryxes/tab_add" /}
+            <div id="zryxes_add">
+                <form id="addZryxesForm" action="{:url('Zryxes/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票代码：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="neeq" value=""/>
+                                            <span class="input-group-addon">.OC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票名称：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="sec_uri_tyshortname" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">转让类型：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="trademethod" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属层级：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="sublevel" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">买卖方向：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="direction" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">最新收盘价：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="new" />
+                                            <span class="input-group-addon">元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">意向价格：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="price" value=""/>
+                                            <span class="input-group-addon">元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">意向数量：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="num" value=""/>
+                                            <span class="input-group-addon">股</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">是否可议价：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="isdiscount" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">截止时间：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control datepicker" name="enddate" style="z-index: 400;" placeholder="截止时间" data-dateformat="yy-mm-dd" value=""/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系人：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="name" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系方式：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="contact" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系号码：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="accountment" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">分享描述：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="share_des"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--大宗项目添加头图功能-->
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头图： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_head_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value=""/>
+                                    <input type="text" class="hide" name="img_id" value=""/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">必填，图片格式</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--大宗项目添加头图功能-->
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addZryxesForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    secucode: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入股票代码'
+                            }
+                        }
+                    },
+                    sec_uri_tyshortname: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入股票名称'
+                            }
+                        }
+                    },
+                    trademethod: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入转让类型'
+                            }
+                        }
+                    },
+                    sublevel: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入所属层级'
+                            }
+                        }
+                    },
+                    direction: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入买卖方向'
+                            }
+                        }
+                    },
+                    new: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入最新收盘价'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的最新收盘价'
+                            }
+                        }
+                    },
+                    num: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入意向数量'
+                            },
+                            regexp: {
+                                regexp: /^[1-9][0-9]{0,9}$/,
+                                message: '请输入正确的意向数量'
+                            }
+                        }
+                    },
+                    price: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入意向价格'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的意向价格'
+                            }
+                        }
+                    },
+                    isdiscount: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入是否可议价'
+                            }
+                        }
+                    },
+                    enddate: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入截止时间'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}$/,
+                                message: '请输入正确的截止时间'
+                            }
+                        }
+                    },
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入联系人'
+                            }
+                        }
+                    },
+                    contact: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入联系方式'
+                            }
+                        }
+                    },
+                    accountment: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入联系号码'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                //大宗头图
+                if($("input[name='img_id']").val() == ''){
+                    Dialog.error('请选择头图');
+                    return false;
+                }
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('添加成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('添加失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this)
+            var name = $(this).attr("data-value");
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('addZryxesForm', thiss, 'zryxes', type, '{:url("Publics/upload")}', 1, name);
+        });
+    });
+</script>

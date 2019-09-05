@@ -1,0 +1,225 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="consultation/tab_add" /}
+            <div>
+                <form id="addConsultationForm" action="{:url('Consultation/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">标题： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="title" />
+                                </div>
+                            </div>
+                            <div style="float: left;">
+                            <input type="button" class="btn btn-primary reset-title" name="reset_title" value="重置标题">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">来源： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="source" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">作者： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="author" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">发布日期： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" name="release_date" placeholder="发布日期" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd" value="{$time}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">关键词： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="keyword" />
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">关键词请以，隔开</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">资讯分类： <sup>*</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach name="consultation" key="k" item="ind"}
+                                    <label class="radio radio-inline">
+                                        {if condition="$k eq 0"}
+                                        <input type="radio" class="radiobox" name="type" value="{$ind.id}" checked="">
+                                        {else /}
+                                        <input type="radio" class="radiobox" name="type" value="{$ind.id}">
+                                        {/if}
+                                        <span> {$ind.value} </span> 
+                                    </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+<!--                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">排序： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="list_order" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>-->
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头图： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false"/>
+                                    <input type="text" class="hide" name="top_img" value=""/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">头图长宽比例为12:7</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">正文：<sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div id="summernote"></div>
+                                <input type="text" class="hide" name="summernote" value=""/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script src="__STATIC__/js/summernote_common.js"></script>
+<script>
+    var send_file_url = "{:url('Consultation/uploads')}";
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addConsultationForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入资讯标题'
+                            },
+                        }
+                    },
+                    source: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入资讯来源'
+                            }
+                        }
+                    },
+                    top_img: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传头图'
+                            }
+                        }
+                    },
+                    summernote: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入正文'
+                            }
+                        }
+                    },
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                var data = $form.serialize();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $("#start_time").on('change', function() {
+            $('#addConsultationForm').data('bootstrapValidator').updateStatus('start_time', 'NOT_VALIDATED', null).validateField('start_time'); 
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this);
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('addConsultationForm', thiss, 'consultation', type, '{:url("Publics/upload")}', 1);
+        });
+        $("input[name='type']").change(function(){
+            $("input[name='type']").val($(this).val());
+        });
+        //重置标题
+        $('.reset-title').on('click',function(){
+            $("input[name='title']").val('');
+        });
+    });
+</script>

@@ -1,0 +1,828 @@
+{include file="base/header" /}
+<!-- 点击加载更多div -->
+    <style>
+        .more-text{
+            height: 50px;
+            line-height: 50px;
+            background-color: #E3E3E3;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .canDone{
+            background-color: #DDDDDD;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+<!-- 点击加载更多div -->
+<!-- 筛选和搜索 -->
+	<style type="text/css">
+        .more-box .in{
+           display: none; 
+        }
+        .more-box .inc_funds{
+           display: none; 
+        }
+        .more-box .scale{
+           display: none;
+        }
+	    .header-title{
+		    overflow:hidden;
+			padding-top:10px;
+			line-height:0px;
+            position: fixed;
+		}
+		.left{
+			float:left;
+			width:20%;
+			margin-top:0.5rem;
+		}
+		.left .icon{
+		    width:1.2rem;
+			height:1.2rem;
+		}
+		.left .miti{
+		    font-size:16px;
+		}
+		.right{
+		    width:76%;
+			float:right;
+		}
+         #s-input{
+            font-size:12px;font-weight:bold;
+        }
+		.ioon{
+		    width:100%;
+			height:2rem;
+			background-color:#CBA054;
+			border-radius:20px;
+            padding: 1px 10px 1px 1px;
+			position:relative;
+		}
+		.ioon .text{
+		    width:80.6%;
+			height:100%;
+			outline:none;
+			background-color:#fff;
+			border-radius:20px;
+			padding:2px 5px 2px 30px;
+			margin-left:-0.75rem;
+		}
+        @media screen and (max-width: 320px){
+            .ioon .text{
+                width:73.6%;
+            }
+        }
+        @media screen and (max-width: 375px) and (min-width: 330px) {
+            .ioon .text{
+                width:78.6%;
+            }
+        }
+		.ioon .sou{
+		    color:#fff;
+			cursor:pointer;
+			margin-left:10px;
+		}
+		.ioon .ser{
+		    width:1.1rem;
+			height:1.1rem;
+			position:absolute;
+			left:0.4rem;
+			top:0.48rem;
+			/*z-index:100;*/
+		}
+	</style>
+<!-- 筛选和搜索 -->
+<!-- seos-box下conlist列表 -->
+	<style type="text/css">
+		.headImg{
+			width:40px;
+			height:40px;
+			border:2px solid #d7a44c;
+			border-radius:50%;
+			float: left;
+            margin-left: 5%;
+		}
+
+        .seos-c{
+            border-top: 1px solid #efefef;
+            padding: 10px 0 10px 10px;
+        }
+        .seos-box{
+            padding-top: 15%;
+        }
+        .seos-box #ul{
+            padding: 0 1%;
+        }
+        .seos-box li{
+              border-bottom: none;
+              padding: 10px 0 0 0;
+        }   
+        .ico-lj {
+          background: #e03635;
+          color: #fff;
+          font-style:normal;
+          padding:1px 5px;
+          font-size: 14px;
+          border-radius: 4px;
+          float: right;
+          margin-right: 2%;
+        }
+		.org_person{
+			color: #d7a44c;
+		}
+		.org1{
+            margin-left: 69px;
+        }
+        .org2{
+            margin-left: 69px;
+        }
+        
+        .clearfix:after{
+            display: block;
+            visibility: hidden;
+            clear: both;
+            height:0;
+            content: ".";
+        }
+        .tzfx{
+            background-color: #f1f0f0;
+            padding: 2% 5%;
+        }
+       .org_box{
+            background: #fff;
+            text-align: left;
+       }
+        .org_box li{
+            padding: 10px 0 10px 10px;
+        }
+	</style>
+<!-- seos-box下conlist列表 -->
+<!-- 实时搜说出的数据 -->
+    <style type="text/css">
+        .clearfix:after{
+            display: block;
+            visibility: hidden;
+            clear: both;
+            height:0;
+            content: ".";
+        }
+        .default-t{
+            text-align:center;
+            z-index:3;
+            overflow:scroll;
+            padding: 0 10px;
+            position: fixed;
+            top: 8%;
+            width: 100%;
+            display: none;
+            -webkit-overflow-scrolling: touch;
+            min-height:20px;
+        }
+        .seach_result{
+            display:block;
+            border-radius: 3px;
+             -webkit-overflow-scrolling: touch;
+            min-height:20px;
+        }
+        .seach_ul{
+            overflow: scroll;
+            max-height: 399px;
+            -webkit-overflow-scrolling: touch;
+            min-height:20px;
+        }
+        .seach_org{
+            float: left;
+            width: 60%;
+            text-align: left;
+        }
+        .seach_det{
+            float: right;
+        }
+        .seach_bottom{
+            text-align:left;
+            color: #9f9f9f;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 66%;
+        }
+        .seach_title {
+            font-weight: bold;
+        }
+        .seach_detail{
+           color: #dba54b;
+        }
+        .seach_direct{
+            color:red;
+        }
+    </style>
+<!-- 实时搜说出的数据 -->
+<!-- 遮罩 -->
+    <style type="text/css">
+
+        .mool{
+            position:fixed;
+            top: 8%;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: none;
+            background-color: black;
+            opacity: 0.5;
+
+        }
+        .btn-white{
+            width: 38%;
+            margin-left: 10%;
+            font-size: 1rem;
+            background-color: #e5e5e5;
+            color: #000;
+        }
+        .submit{
+            width: 38%;
+            margin-left: 3%;
+            font-size: 1rem;
+            background-color: #e03635;
+            color: #fff;
+        }
+        .more-box{
+            width: 98%;
+            border-radius: 2%;
+            margin-left: 1%;
+            top: 10%;
+        }
+        .jiao{
+            width: 0;
+            height: 0;
+            border: 1rem solid transparent;
+            border-bottom-color: white;
+            z-index: 100;
+            position: fixed;
+            top: 5.5%;
+            left: 8%;
+            display: none;
+        }
+        #cha{
+            z-index: 100;
+            position: fixed;
+            width: 10%;
+            height: 7%;
+            font-size: 2rem;
+            top: 10%;
+            left: 89%;
+            display: none;
+        }
+        .tzfx{
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+        #empty{
+            z-index:2;
+            position: absolute;
+            top: 8%;
+            left: 1%;
+            background-color: white;
+            width: 98%;
+            height: 12%;
+            border-radius: 3px;
+            padding-top: 7%;
+            display: none;
+        }
+        .blank {
+            width: 100%;
+            height: 15px;
+            background-color: #dcdcdc;
+        }
+    </style>    
+    <body>
+         <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}">
+        <div class="kfLogo">
+               <img src="__HOME__/images/kefu.png" class="kfLogo-img">
+        </div>
+        </a>
+        <!--客服-->
+        {include file="base/slide" /}
+        {include file="base/dividend" /}
+        <div class="header-title clearfix">
+
+			<div class="left">
+			    <img src="__CSS__/img/miti.png" class="icon" />
+				<span class="miti">筛选</span>
+			</div>
+			<div class="right">
+			    <form id="ioon" class="ioon" method="" name="" action="">
+				    <input id="s-input" class="text" type="text" name="text" placeholder="请输入投资方向或机构名称"/>
+					<span class="sou">搜索</span>
+					<img src="__CSS__/img/icon-search1.png" class="ser" />
+				</form>
+			</div>
+        </div>
+        <!--搜索数据-->
+        <div class="mool">
+        </div>
+        <div id="empty">暂无内容</div>
+        <div class="default-t">
+            
+            <div  class="seach_result">
+             
+             <div class="seach_ul"></div>
+            </div>
+        </div>      
+        <div class="jiao"></div>
+        <div id="cha" title="关闭">×</div>
+        <div class="more-box" style="position: fixed;">
+            <form action="{:url('Organize/loadOrgInfo')}" method="post" id="organize_select">
+            	<input class="in
+                " type="text" name="text"/>                           
+                <dl>
+                    <dt>资金类型</dt>
+                    <dd class="dd-3">
+                      {foreach name="funds_nature" item="it"}
+                                <span data-id="{$it.id}">{$it.value}资金    </span>
+                      {/foreach} 
+                    </dd>
+                </dl>
+                <input class="inc_funds" type="text" name="inc_funds"/>
+                
+                <dl>
+                    <dt>投资规模</dt>
+                    <dd class="dd-3">
+                        <span data-id="1">1000万以下</span>
+                        <span data-id="2">1000～5000万</span>
+                        <span data-id="3">0.5～1亿</span>
+                        <span data-id="4">1~5亿</span>
+                        <span data-id="5">5~10亿</span>
+                        <span data-id="6">10亿以上</span>
+                    </dd>
+                </dl>
+                <input class="scale" type="text" name="scale">
+                <div class="shai-btn">
+                    <button class="btn-white" type="button">重置</button>
+                    <button class="submit" type="button">确认</button>
+                </div>
+            </form>
+        </div>  
+        
+	<div class="seos-box" data-num="{$num}">
+            <ul id="ul" style="padding:0 0">
+               
+                {foreach name="organize" item="it"}
+                <li>
+                    <a href="{:url('Organize/detail',['id'=>$it.org_id,'show'=>0])}">
+                        <div class="seos-t clearfix">
+                             <i class="ico-lj">了解更多>></i>
+                                {if !empty($it.wx_img)}
+                                  <img class="headImg" src="{$it.wx_img}"/>
+                                {else}
+                                  <img class="headImg" src="__UPLOAD__/{$it.top_img}"/>
+                                {/if}
+                            <div class="org_info">
+	                            <div class="org1">
+                                    <strong class="org_name">{$it.org_name}</strong>
+                                </div>
+                                <div class="org2">
+    	                            <p class="org_person">{$it.contacts}&nbsp;|&nbsp;{$it.position}
+                                    <p>
+                                </div>
+
+                            <div>  
+                        </div>
+
+                        <div class="seos-c">
+                            <div class="each">
+                                <span class="red">
+                                   {$it.scale_min} - {$it.scale_max}
+                                </span>
+                                <small>
+                                   {$it.unit}元
+                                </small><br />
+                                <div>管理规模</div>
+                            </div>
+                            <div class="each">
+                                <span class="red">{$it.inc_funds}资金</span><br />
+                                <div>资金性质</div>
+                            </div>
+                            
+                        </div>
+                        <div>
+                        <p class="tzfx"><span style="color:#d7a44c">投资方向：</span><span style="color:#000">{$it.inc_industry}</span></p>
+                        </div>
+                        
+                    </a>
+
+                </li>
+                <div class="blank"></div> 
+                {/foreach}
+               
+            </ul>
+        </div>
+         {if condition="$num lt 10"}
+        <div id="text-none" class="text-over">
+            没有啦~~~
+        </div>
+        {else /}
+        <div id="canDone" class="more-text canDone">加载更多</div>
+        {/if}
+        <script type="text/javascript">
+            /***
+             * 点击加载更多(ok)
+             */
+            $("body").on('click','.more-text',function(){
+                var id = $(".seos-box").attr("data-num");
+                var inc_funds = $(".inc_funds").val();
+                var scale = $(".scale").val();
+                var text = $(".in").val();
+                    $.ajax({
+                        type:"post",
+                        url: "{:url('Organize/loadOrgInfo')}",
+                        data: {id:id,inc_funds:inc_funds,scale:scale,text:text},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if(resp.code){
+                                var data = resp.data;
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    str += '<li><a href="detail/id/'+data[i]['org_id']+'/show/0"><div class="seos-t clearfix"><i class="ico-lj">了解更多>></i>{if 
+!empty($it.wx_img)}<img class="headImg" src="{$it.wx_img}"/>{else}<img class="headImg" src="__UPLOAD__/'+data[i]['top_img']+'"/>{/if}<div class="org_info"><div class="org1"><strong class="org_name">'+data[i]['org_name']+'</strong></div><div class="org2"><p class="org_person">'+data[i]['contacts']+'&nbsp;|&nbsp;'+data[i]['position']+'<p></div><div></div><div class="seos-c"><div class="each"><span class="red">'+data[i]['scale_min']+' - '+data[i]['scale_max']+'</span><small>'+data[i]['unit']+'元</small><br /><div>管理规模</div></div><div class="each"><span class="red">'+data[i]['inc_funds']+'资金</span><br /><div>资金性质</div></div></div><p class="tzfx"><span style="color:#d7a44c">投资方向：</span><span style="color:#000">'+data[i]['value']+'</span></p></a></li><div class="blank"></div>';
+                                }
+                                $(".seos-box ul").append(str);
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                            }else{
+                                $(".more-text").remove();
+                                $("body").append('<div class="text-over">没有啦~~~</div>');
+                            }
+                        }
+                    });
+                //}
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                /***
+                 * 点击确认，取消，每一个选项元素
+                 */
+                 
+                $(".left").click(function(){                   
+                    $(".more-box").show();
+                    $("#cha").show();
+                    $(".jiao").show();
+                    $(".mool").css('top','0');
+                    $(".mool").show();
+                    $('body').on('touchmove',function(event){event.preventDefault();});
+                    //重置所有条件的值
+                    str_funds = '';
+                    str_scale = '';
+                });
+                
+                $("#cha").click(function(){
+                    $(".more-box").hide();
+                    $("#cha").hide();
+                    $(".jiao").hide();
+                    $(".mool").hide();
+                    $('body').unbind('touchmove');
+                    //重置所有条件的值
+                    str_funds = '';
+                    str_scale = '';
+                });
+
+                $(".more-box .btn-white").on("click", function () {
+                    
+                    
+                    // $('body').css("overflow", "auto");
+                    $(".more-box span").removeClass("actived");
+                    var txt = "";
+                    $(".more-box span").parents("dl").next("input").val(txt);
+                    str_funds = '';
+                    str_scale = '';
+                });
+                var str_funds = '';
+                var str_scale = '';
+                var sear=new RegExp(',');
+                $(".more-box").on('click' , 'span' , function(){
+                    if($(this).hasClass("actived")){
+                        // var txt = "";
+                        $(this).removeClass("actived");
+                        var oInput = $(this).parents("dl").next("input");
+                        if(oInput.attr('name') == 'inc_funds'){
+                             var funds_id = $(this).attr("data-id");
+                             var arr_funds = [];
+                              str_funds = str_funds.trim(',');
+                              if(sear.test(str_funds)){
+                                    arr_funds = str_funds.split(',');
+                              }else{
+                                    arr_funds = [str_funds];
+                              }
+                              var pos = $.inArray(funds_id,arr_funds);
+                              if(!( pos == '-1')){
+                                 arr_funds.splice(pos,1);
+                              }
+                              if(arr_funds.length<1){
+                                str_funds = '';
+                              }else{
+                                str_funds = arr_funds.join(',');
+                              }
+                              console.log(str_funds);
+                             oInput.val(str_funds);
+                             
+                        }else{
+
+                             var scale_id = $(this).attr("data-id");
+                             var arr_scale = [];
+                              str_scale = str_scale.trim(',');
+                              if(sear.test(str_scale)){
+                                    arr_scale = str_scale.split(',');
+                              }else{
+                                    arr_scale = [str_scale];
+                              }
+                              var pos = $.inArray(scale_id,arr_scale);
+                              if(!( pos == '-1')){
+                                 arr_scale.splice(pos,1);
+                              }
+                              if(arr_scale.length<1){
+                                str_scale = '';
+                              }else{
+                                str_scale = arr_scale.join(',');
+                              }
+                              console.log(str_scale);
+                             oInput.val(str_scale);
+                             
+                        }
+                        
+                    }else{
+                       
+                        $(this).addClass("actived");
+                        
+                        var oInput = $(this).parents("dl").next("input");
+                        if(oInput.attr('name') == 'inc_funds'){
+                             var funds_id = $(this).attr("data-id");
+                             str_funds+=funds_id+',';
+                             console.log(str_funds);
+                             oInput.val(str_funds);
+                            
+                        }else{
+                             var scale_id = $(this).attr("data-id");
+                             str_scale+=scale_id+',';
+                             console.log(str_scale); 
+                             oInput.val(str_scale);
+                             
+                        }
+                        
+                    }
+                    var t = $(".text").val();
+                    var i = $(".in").val(t);
+                    
+                });
+                /**
+                 * 点击提交确认
+                 * */
+                $("#organize_select").on('click','.submit',function(){
+                    $(".seos-box").show();
+                    $(".seos-box").attr("data-num" , 0);
+                    $(".seos-box ul").html("");
+                    $(".more-box").fadeOut();
+                    $(".more-box span").removeClass("actived");
+                    $("#cha").fadeOut();
+                    $(".jiao").fadeOut();
+                    $("body").unbind('touchmove');
+                    var form = document.getElementById("organize_select");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Organize/loadOrgInfo')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success:function(resp){
+                            $(".more-box").fadeOut();
+                            //请求成功后要清除之前表单存留的数据
+                             $(".more-box span").removeClass("actived");  
+                              var txt = "";
+                            $(".more-box span").parents("dl").next("input").val(txt);
+                            $(".mool").hide();
+                            $(document.body).css({
+                               "overflow-x":"auto",
+                               "overflow-y":"auto"
+                            });
+                            if(resp.code){
+                                var data = resp.data;
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                   
+                                    str += '<li><a href="detail/id/'+data[i]['org_id']+'/show/0"><div class="seos-t clearfix"><i class="ico-lj">了解更多>></i>{if !empty($it.wx_img)}<img class="headImg" src="{$it.wx_img}"/>{else}<img class="headImg" src="__UPLOAD__/'+data[i]['top_img']+'"/>{/if}<div class="org_info"><strong class="org_name">'+data[i]['org_name']+'</strong><p class="org_person" style="margin-left:16%;">'+data[i]['contacts']+'&nbsp;|&nbsp;'+data[i]['position']+'<p><div></div><div class="seos-c"><div class="each"><span class="red">'+data[i]['scale_min']+' - '+data[i]['scale_max']+'</span><small>'+data[i]['unit']+'元</small><br /><div>管理规模</div></div><div class="each"><span class="red">'+data[i]['inc_funds']+'资金</span><br /><div>资金性质</div></div></div><p class="tzfx"><span style="color:#d7a44c">投资方向：</span>'+data[i]['value']+'</p></a></li><div class="blank"></div>';
+                                }
+                                
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                $(".seos-box ul").html(str);
+                                $(".seos-box li:even").addClass("even");
+                            }else{
+                               
+                                $(".seos-box").attr("data-num" , 0);
+                                $(".seos-box ul").html('');
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                            }
+                        }
+                    });
+                    //改变点击返回按钮默认的历史url
+                    returnUrl("{:url('Organize/orglist')}");
+                });
+                /**
+                 * 点击搜索(ok)
+                 */
+                $(".sou").on('click',function(){
+                    //影藏下拉框实时请求的数据
+                    //影藏遮罩
+                    $(".default-t").remove();
+                    $(".mool").remove(); 
+                    $(".seos-box").show();
+                    $(".seos-box ul").html("");
+                    $("body").unbind('touchmove');
+                    var form = document.getElementById("ioon");
+                    var formData = new FormData(form);
+                    $.ajax({
+                        url: "{:url('Organize/loadOrgInfo')}",
+                        type: 'POST',
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        success: function (resp) {
+                            $(".more-box").fadeOut();
+                            $(".all-no").removeClass("actived");
+                            $(".all-no[data-id='']").addClass("actived");
+                            if(resp.code){
+                                var data = resp.data;
+
+                                //var data = Object.keys(data1).map((item, index) => ({key: item, value:data1[item]}))
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    str += '<li><a href="detail/id/'+data[i]['org_id']+'/show/0"><div class="seos-t clearfix"><i class="ico-lj">了解更多>></i>{if !empty($it.wx_img)}<img class="headImg" src="{$it.wx_img}"/>{else}<img class="headImg" src="__UPLOAD__/'+data[i]['top_img']+'"/>{/if}<div class="org_info"><strong class="org_name">'+data[i]['org_name']+'</strong><p class="org_person" style="margin-left:16%;">'+data[i]['contacts']+'&nbsp;|&nbsp;'+data[i]['position']+'<p><div></div><div class="seos-c"><div class="each"><span class="red">'+data[i]['scale_min']+' - '+data[i]['scale_max']+'</span><small>'+data[i]['unit']+'元</small><br /><div>管理规模</div></div><div class="each"><span class="red">'+data[i]['inc_funds']+'资金</span><br /><div>资金性质</div></div></div><p class="tzfx"><span style="color:#d7a44c">投资方向：</span>'+data[i]['value']+'</p></a></li><div class="blank"></div>';
+                                }
+                           
+                                if(length < 10){
+                                    if(document.getElementById("canDone")){
+                                        $(".more-text").remove();
+                                        $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                    }
+                                }else{
+                                    if(document.getElementById("text-none")){
+                                        $(".text-over").remove();
+                                        $("body").append('<div id="canDone" class="more-text canDone">加载更多</div>');
+                                    }
+                                }
+                                var num = parseInt($(".seos-box").attr("data-num")) + parseInt(length);
+                                $(".seos-box").attr("data-num" , num);
+                                $(".seos-box ul").html(str);
+                            }else{
+
+                                $(".seos-box").attr("data-num" , 0);
+                                $(".seos-box ul").html('');
+                                if(document.getElementById("canDone")){
+                                    $(".more-text").remove();
+                                    $("body").append('<div id="text-none" class="text-over">没有啦~~~</div>');
+                                }
+                            }
+                        }
+                    });
+                     //改变点击返回按钮默认的历史url
+                    returnUrl("{:url('Organize/orglist')}");
+                });
+                //实时搜索功能
+               /* $("#s-input").bind('input propertychange', function() {
+
+                    var value = $(this).val();
+                    value = value.replace(/\s/g,'');
+                    if(value == ''){
+                        $('body').unbind('touchmove');
+                        $(".mool").hide();
+                        $(".default-t").hide();
+                        $(this).val('');
+                        return false;
+                    }else{
+                        if(value != ''){
+                            $('body').on('touchmove',function(event){event.preventDefault();});
+                            $.ajax({
+                                url: "{:url('Organize/search')}",
+                                type: 'POST',
+                                data: {value:value},
+                                success: function(resp){
+                                    $(".default-t > span").hide();
+                                    var data = resp.data;
+                                    var num = data.length;
+                                    if(num>=10){
+                                        num = 10;
+                                    }
+                                    if(data == ""){
+                                        num = 0;
+                                      $("#empty").html('没有搜到相关结果,请输入机构名称或投资方向');
+                                      $("#empty").show();
+                                    }else{
+                                        $("#empty").hide();
+                                           var str = '';
+                                         for(var i=0;i<num;i++){
+                                            str+='<div class="seach_list">'+
+                                                   '<div class="seach_top clearfix">'+
+                                                     '<div class="seach_org">'+
+                                                       '<span class="seach_title">'+ 
+                                                          data[i]['org_name']+
+                                                       '</span>'+
+                                                     '</div>'+
+                                                     '<a href="detail/id/'+data[i]['org_id']+'/show/0"><div class="seach_det">'+
+                                                       '<span class="seach_detail">了解更多>>'+
+                                                       '</span>'+
+                                                     '</div></a>'+
+                                                    '</div>'+
+                                                   '<div class="seach_bottom">投资方向:<span class="seach_direct">'+
+                                                        data[i]['value']+
+                                                   '</span></div>'+
+                                                 '</div>';
+                                                       
+                                          }
+                                        
+
+                                          $(".seach_ul").html(str);
+                                          $(".default-t").show();
+                                               
+                                    }
+                                    $(".mool").show();
+                                    
+                                }
+                            });
+                             //改变点击返回按钮默认的历史url
+                             returnUrl("{:url('Organize/orglist')}");
+                        }
+                    }
+                });*/
+                //点击浏览器返回按钮返回到指定url
+                function returnUrl(url)
+                {
+                    pushHistory();   
+                    window.addEventListener("popstate", function(e) {
+                        window.location = url;
+                    }, false);
+                }
+                //历史url
+                function pushHistory() {
+                    var state = {
+                        title: "title",
+                        url: "#"
+                    };
+                    window.history.pushState(state, state.title, state.url);
+                 }
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                var flat = $(".flat");
+                if(flat.length>0){
+                    var guding = $("<div />",{
+                        class:"guding"
+                    });
+                    $(".flat,.header-title").wrapAll(guding);
+                    $(".flat").css("margin-bottom",0);
+                    $(".flat").css("position","relative");
+                    $(".jiao").css("top","13.5%");
+                    $(".more-box").css("top","18.5%");
+                    $("#cha").css("top","18%");
+                    $(".guding").css({"width":"100%","display":"block","position":"fixed","z-index":"9999"});
+                }else{
+                    $(".header-title").css({"position":"fixed","z-index":"9999"});
+                }
+                
+            })
+        </script>
+    </body>
+</html>

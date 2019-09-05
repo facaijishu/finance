@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <style>
+        .typeTagBox,.pfcTagBox,.scaleTagBox,.areaTagBox{border:1px solid #dddddd;color:#999999;width:98px;height:28px;line-height:26px;text-align:center;margin:0 10px 20px;float:left;}
+        .typeTagBox.active,.pfcTagBox.active,.scaleTagBox.active,.areaTagBox.active{color:#0076FF;border:1px solid #0076FF;}
+    </style>
+</head>
+
+<body>
+<div id="box" class="bg_gray mofh">
+    <!-- 偏好选择 -->
+    <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height:144px;">
+    <div id="preference" class="radius shadow bg_white mofh porel" style="position: absolute;top:20px;left:10px;">
+        <div class="f18 c_black fb" style="position: absolute;top:20px;left:20px;">偏好选择</div>
+        <a href="/static/frontend/service.html" class="pull-left" style="position: absolute;top:20px;right:20px;">
+            <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:38px;">
+        </a>
+        <div class="f18 pl10 pb20" style="margin-top:80px;">业务类型</div>
+        <div class="clearfix pb10">
+            <div class="typeTagBox" v-for="item in typeTag" @click="chooseTagAction" :sid="item.id">{{item.value}}</div>
+        </div>
+
+        <div class="f18 pl10 pb20">行业偏好</div>
+        <div class="clearfix pb10">
+            <div class="pfcTagBox" v-for="item in pfcTag" @click="chooseTagAction" :sid="item.id">{{item.value}}</div>
+        </div>
+
+        <div class="f18 pl10 pb20">投融规模</div>
+        <div class="clearfix pb10">
+            <div class="scaleTagBox" v-for="item in scaleTag" @click="chooseTagAction" :sid="item.id">{{item.value}}</div>
+        </div>
+
+        <div class="f18 pl10 pb20">区域选择</div>
+        <div class="clearfix pb10">
+            <div class="areaTagBox" v-for="item in areaTag" @click="chooseTagAction" :sid="item.id">{{item.value}}</div>
+        </div>
+        <div style="height:68px;line-height:68px;"></div>
+
+        <div style="width:355px;height:68px;position:fixed;bottom:5px;left:50%;margin-left:-178px;background:#ffffff;">
+            <div class="pl30 pr30 pb15 pt15">
+                <div @click="submitAction" class="bg_primary c_white text-center f16" style="border-radius:19px;height: 38px;line-height:34px;border: 1px solid #dddddd;">完 成</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+      <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+        <div class="modal-content" style="border:0;">
+          <div class="modal-body text-center"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // 设置加载中...
+            $(document).ajaxStart(function() {
+                $("#loading").removeClass('hidden');
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").addClass('hidden');
+            });
+        });
+        //提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/7*1000);
+        }
+
+        // 初始窗口
+        var wh = $(window).height();
+        var ww = $(window).width();
+        $("#box").height(wh);
+        $("#preference").height(wh-30);
+        $("#preference").width(ww-20);
+
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                    typeTag:{},
+                    pfcTag:{},
+                    scaleTag:{},
+                    areaTag:{}
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    vue.getTypeTag();
+                    vue.getPfcTag();
+                    vue.getScaleTag();
+                    vue.getAreaTag();
+                });
+            },
+            methods: {
+                getTypeTag: function () {
+                    $.ajax({
+                        url: "http://fin.jrfacai.com/home/dict_api/getServiceTypeDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.typeTag = res.data;
+                        }
+                    });
+                },
+                getPfcTag: function () {
+                    $.ajax({
+                        url: "http://fin.jrfacai.com/home/dict_api/getIndustryDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.pfcTag = res.data;
+                        }
+                    });
+                },
+                getScaleTag: function () {
+                    $.ajax({
+                        url: "http://fin.jrfacai.com/home/dict_api/getSizeDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.scaleTag = res.data;
+                        }
+                    });
+                },
+                getAreaTag: function () {
+                    $.ajax({
+                        url: "http://fin.jrfacai.com/home/dict_api/getToProvinceDict",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            vue.areaTag = res.data;
+                        }
+                    });
+                },
+                // 选择
+                chooseTagAction: function (event) {
+                    var ct = $(event.currentTarget);
+                    if (ct.hasClass('active')) {
+                        ct.removeClass('active')
+                    }else {
+                        ct.addClass('active');
+                    }
+                },
+                // 提交
+                submitAction: function (event) {
+                    var type = $(".typeTagBox.active");
+                    var pfc = $(".pfcTagBox.active");
+                    var scale = $(".scaleTagBox.active");
+                    var area = $(".areaTagBox.active");
+
+                    //必须选择
+                    // if (type.length <= 0) {
+                    //     alertModal("请选择业务类型");
+                    //     return;
+                    // }
+                    // if (pfc.length <= 0) {
+                    //     alertModal("请选择行业偏好");
+                    //     return;
+                    // }
+                    // if (scale.length <= 0) {
+                    //     alertModal("请选择投融规模");
+                    //     return;
+                    // }
+                    // if (area.length <= 0) {
+                    //     alertModal("请选择关注区域");
+                    //     return;
+                    // }
+
+                    //数据装配
+                    var typeArr = new Array();
+                    type.each(function(index, el) {
+                        typeArr.push(Number($(el).attr("sid")));
+                    });
+                    pfc.each(function(index, el) {
+                        typeArr.push(Number($(el).attr("sid")));
+                    });
+                    scale.each(function(index, el) {
+                        typeArr.push(Number($(el).attr("sid")));
+                    });
+                    area.each(function(index, el) {
+                        typeArr.push(Number($(el).attr("sid")));
+                    });
+                    typeArr = JSON.stringify(typeArr).substring(1, JSON.stringify(typeArr).length-1);
+
+                    //发送请求
+                    $.ajax({
+                        url: 'http://fin.jrfacai.com/home/through_api/addDict',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {id: typeArr},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                            alertModal("设置成功");
+                            setTimeout(function () {
+                                window.location.href = "/static/frontend/index.html";
+                            }, 1000);
+                        }else {
+                            alertModal(res.msg);
+                        }
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

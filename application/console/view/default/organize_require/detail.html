@@ -1,0 +1,214 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="organize_require/tab_detail" /}
+            <div id="organize_require_detail" data-id="{$data['or_id']}" data-resource="2">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布资金id：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['or_id']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布人id：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['uid']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布人：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['realName']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">发布时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['create_time']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务类型：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['top_dict']}{$data['son_dict']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务描述：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['business_des']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">企业/项目/产品名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['name']}
+                        </div>
+                    </div>
+                    {if $data['top_dict'] !== '配资业务'}
+                        <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-3 col-md-3 col-sm-4">所属行业：</label>
+                            {if !empty($data['industry'])}
+                               
+                            <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                                {foreach  $data['industry'] as $val}
+                                    {$val}<br/>
+                                {/foreach}
+                            </div>
+                               
+                            {/if}
+                        </div>
+                    {/if}
+                </fieldset>
+                 <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">资金类型：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                           {$data['fund_type']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资规模：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['invest_scale']}万元
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资期限：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['financing_period']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资方式：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['invest_mode']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">投资标准：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['invest_target']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务截止日期：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['deadline']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所在省份：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['province']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">展示状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['is_show']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['status']}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系人身份：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$data['contact_status']}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <form id="editOrganizeRequireForm" action="{:url('OrganizeRequire/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                        <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                            <label class="control-label col-lg-3 col-md-3 col-sm-4">内部客服ID：</label>
+                            <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                                 <input type="text" class="form-control" name="inner_cs" value="{$data['inner_cs']}"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                            <button class="btn btn-primary edit_inner_cs" type="submit">
+                                <i class="fa fa-save"></i>
+                                修改内部客服id
+                            </button>
+                            <input type="hidden" name="or_id" value="{$data['or_id']}"> 
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/show/introduce_img.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#editOrganizeRequireForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                   
+                    inner_cs: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入内部客服id'
+                            },
+                            regexp: {
+                                regexp: /^\d+$/,
+                                message: '内部客服id必须为数字'
+                            },
+                        }
+                    },
+                   
+                }
+            }).on('click', '.edit_inner_cs', function (e) {
+
+                
+                var form = $("form");
+                $.ajax({
+                    url: "{:url('OrganizeRequire/edit')}",
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('修改成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('修改失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+            });
+            
+        });
+        
+
+    });
+</script>

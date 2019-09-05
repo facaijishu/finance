@@ -1,0 +1,34 @@
+{include file="base/header" /}
+    <body>
+        <div class="tab">
+            <a class="actived">提现记录</a>
+        </div>
+        <div class="record-list">
+            {foreach name="$list" item="it"}
+            <div class="record">
+                <div class="record-c">
+                    申请时间：{$it.create_time} <br>
+                    {if condition="$it.status eq 0"}
+                    提现进度：未审核
+                    {else /}
+                    提现进度：已审核
+                    {/if}
+                </div>
+                <div class="record-m">
+                    {$it.amount} 元
+                </div>
+            </div>
+            {/foreach}
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".tab a").on("click", function () {
+                    $(".tab a").removeClass("actived");
+                    $(this).addClass("actived");
+                    $(".record-list").hide();
+                    $(".record-list").eq($(this).index()).show();
+                });
+            });
+        </script>
+    </body>
+</html>

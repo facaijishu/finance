@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="st_yanbaos/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="yanbaos_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 发布时间：</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="date1" placeholder="开始时间" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="date2" placeholder="结束时间" id="end_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 标题：</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="title" id="title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 机构：</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="org" id="org">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-lg btn-default" id="yanbaos_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="yanbaos" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> 序号</th>
+                                <th> 相关品种</th>
+                                <th class="col-lg-4"> 标题</th>
+                                <th> 机构</th>
+                                <th> 作者</th>
+                                <th> 评级</th>
+                                <th> 变动</th>
+                                <th> 相关企业</th>
+                                <th> 发布日期</th>
+                                <th> 状态</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var yanbaos_url = '{:url("StYanbaos/read")}';
+    var root_path_url = $("#yanbaos").attr("data-path");
+    var yanbaos_detail_url = '{:url("StYanbaos/detail")}';
+    var yanbaos_show_url = '{:url("StYanbaos/exhibition_true")}';
+    var yanbaos_hide_url = '{:url("StYanbaos/exhibition_false")}';
+    var yanbaos_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/yanbaos/yanbaos1_list.js"></script>

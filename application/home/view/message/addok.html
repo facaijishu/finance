@@ -1,0 +1,19 @@
+{include file="base/header" /}
+    <body>
+        {include file="base/dividend" /}
+        <div class="sumbit-success">
+            感谢您的留言，稍后会有工作人员与您联系
+            <p>如有疑问请拨打客服电话</p>
+            <span class="fa">400-685-2585</span>
+            <button>返回项目</button>
+        </div>
+        <script>
+            $(document).ready(function(){
+                var url = "{$url}";
+                $("button").click(function(){
+                    location.href = url;
+                });
+            });
+        </script>
+    </body>
+</html>

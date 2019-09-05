@@ -1,0 +1,369 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="zfmxes/tab_edit" /}
+            <div id="zfmxes_edit" data-id="{$id}">
+                <form id="editZfmxesAddForm" action="{:url('Zfmxes/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend>可修改</legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">计划募资：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            {if condition="$info neq []"}
+                                            <input type="text" class="form-control" name="raise_money" value="{$info.raise_money}"/>
+                                            {else /}
+                                            <input type="text" class="form-control" name="raise_money" value=""/>
+                                            {/if}
+                                            <span class="input-group-addon">万元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">增发数量：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            {if condition="$info neq []"}
+                                            <input type="text" class="form-control" name="additional_num" value="{$info.additional_num}"/>
+                                            {else /}
+                                            <input type="text" class="form-control" name="additional_num" value=""/>
+                                            {/if}
+                                            <span class="input-group-addon">万股</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">董事会公告日：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        {if condition="$info neq []"}
+                                        <input id="gonggaori" type="text" class="form-control datepicker" name="announcement_date" style="z-index: 400;" placeholder="增发公告日" data-dateformat="yy-mm-dd" value="{$info.announcement_date}"/>
+                                        {else /}
+                                        <input id="gonggaori" type="text" class="form-control datepicker" name="announcement_date" style="z-index: 400;" placeholder="增发公告日" data-dateformat="yy-mm-dd" value=""/>
+                                        {/if}
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">定增价格：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            {if condition="$info neq []"}
+                                            <input type="text" class="form-control" name="increase_price" value="{$info.increase_price}"/>
+                                            {else /}
+                                            <input type="text" class="form-control" name="increase_price" value=""/>
+                                            {/if}
+                                            <span class="input-group-addon">元</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">增发市盈率：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="row"> 
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <div class="input-group">
+                                            {if condition="$info neq []"}
+                                            <input type="text" class="form-control" name="profit" value="{$info.profit}"/>
+                                            {else /}
+                                            <input type="text" class="form-control" name="profit" value=""/>
+                                            {/if}
+                                            <span class="input-group-addon">倍</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">截止日：<span>*</span></label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="input-group">
+                                        {if condition="$info neq []"}
+                                        <input id="jieziri" type="text" class="form-control datepicker" name="cutoff_date" style="z-index: 400;" placeholder="增发公告日" data-dateformat="yy-mm-dd" value="{$info.cutoff_date}"/>
+                                        {else /}
+                                        <input id="jieziri" type="text" class="form-control datepicker" name="cutoff_date" style="z-index: 400;" placeholder="增发公告日" data-dateformat="yy-mm-dd" value=""/>
+                                        {/if}
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">募资用途：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq []"}
+                                    <input type="text" class="form-control" name="fundraising_use" value="{$info.fundraising_use}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="fundraising_use" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">发行对象：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq []"}
+                                    <input type="text" class="form-control" name="Issue_object" value="{$info.Issue_object}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="Issue_object" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">大股东是否参与：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq []"}
+                                    <input type="text" class="form-control" name="involved" value="{$info.involved}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="involved" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">限售条件：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq []"}
+                                    <input type="text" class="form-control" name="sale_condition" value="{$info.sale_condition}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="sale_condition" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                        <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">手写净利润：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info neq []"}
+                                    <input type="text" class="form-control" name="write_lirun" value="{$info.write_lirun}"/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="write_lirun" value=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--定增项目添加头图功能-->
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头图： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_head_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{$info.name}"/>
+                                    <input type="text" class="hide" name="img_id" value="{$info.img_id}"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">必填，图片格式</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--定增项目添加头图功能-->
+                    <div class="form-actions" style="background-color: initial;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="text" name="id" value="{$id}" class="hide">
+                                <input type="text" name="plannoticeddate" value="{$plannoticeddate}" class="hide">
+                                <input type="text" name="neeq" value="{$neeq}" class="hide">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#editZfmxesAddForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    raise_money: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入计划募资'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的计划募资'
+                            }
+                        }
+                    },
+                    additional_num: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入增发数量'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的增发数量'
+                            }
+                        }
+                    },
+                    announcement_date: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入增发公告日'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}$/,
+                                message: '请输入正确的增发公告日'
+                            }
+                        }
+                    },
+                    increase_price: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入定增价格'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的定增价格'
+                            }
+                        }
+                    },
+                    profit: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入增发市盈率'
+                            },
+                            regexp: {
+                                regexp: /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/,
+                                message: '请输入正确的增发市盈率'
+                            }
+                        }
+                    },
+                    cutoff_date: {
+                        validators: {
+                            notEmpty: {
+                                message:'请输入截止日'
+                            },
+                            regexp: {
+                                regexp: /^\d{4}-\d{2}-\d{2}$/,
+                                message: '请输入正确的截止日'
+                            }
+                        }
+                    },
+                    fundraising_use: {
+                        validators: {
+    //                        notEmpty: {
+    //                            message:'请输入募资用途'
+    //                        }
+                        }
+                    },
+                    Issue_object: {
+                        validators: {
+    //                        notEmpty: {
+    //                            message:'请输入发行对象'
+    //                        }
+                        }
+                    },
+                    involved: {
+                        validators: {
+    //                        notEmpty: {
+    //                            message:'请输入大股东是否参与'
+    //                        }
+                        }
+                    },
+                    sale_condition: {
+                        validators: {
+    //                        notEmpty: {
+    //                            message:'请输入限售条件'
+    //                        }
+                        }
+                    },
+                }
+            }).on('success.form.bv', function (e) {
+                //定增头图
+                if($("input[name='img_id']").val() == ''){
+                    Dialog.error('请选择首页头图');
+                    return false;
+                }
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('修改成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('修改失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+        $("#gonggaori").on('change', function() {
+            $('#editZfmxesAddForm').data('bootstrapValidator').updateStatus('announcement_date', 'NOT_VALIDATED', null).validateField('announcement_date'); 
+        });
+        $("#jieziri").on('change', function() {
+            $('#editZfmxesAddForm').data('bootstrapValidator').updateStatus('cutoff_date', 'NOT_VALIDATED', null).validateField('cutoff_date'); 
+        });
+        $('.file-upload').each(function() {
+            var thiss = $(this)
+            var name = $(this).attr("data-value");
+            var extension = $(this).attr("data-extension");
+            var type = extension.split(',');
+            initFileInput('editZfmxesAddForm', thiss, 'zfmxes_add', type, '{:url("Publics/upload")}', 1, name);
+        });
+    });
+</script>

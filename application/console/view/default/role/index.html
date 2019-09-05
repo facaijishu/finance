@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+		<div class="well well-sm well-light">
+			{include file="role/tab" /}
+			<div>
+                            <table id="user_table" class="table table-hover">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th>角色名称</th>
+						<th>角色描述</th>
+						<th>状态</th>
+						<th>管理操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					{$role}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	var role_del_url = "{:url('role/delete')}";
+	$("#user_table").on('click', ".js-role-del", function (e) {
+		var _this = $(this);
+		Dialog.confirm('操作提示', '确定删除该用户吗？', function () {
+			var id = _this.attr("data-role-id");
+			$.ajax({
+				url: role_del_url,
+				type: 'post',
+				data: { id:id },
+				dataType: 'json',
+				success: function (resp) {
+					if(resp.code){
+						Dialog.success('操作成功', resp.msg, 2000, function () {
+							_this.parents('tr').remove();
+						});
+					}else{
+						Dialog.error('操作失败', resp.msg);
+					}
+				}
+
+			})
+		});
+	});
+</script>

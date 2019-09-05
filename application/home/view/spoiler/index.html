@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cn">
+        <meta charset="UTF-8">
+        <title>FA財 - 剧透中心</title>
+		<!--禁止缓存-->
+        <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+        <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
+        <meta HTTP-EQUIV="Expires" CONTENT="0">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="referrer" content="never">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <script type="text/javascript" src="/static/common/js/libs/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="/static/common/js/libs/jquery.cookie.js"></script>
+        <!--<script src="/static/home/js/jquery.drag.js"></script>-->
+                <!--<link rel="stylesheet" href="/static/common/css/bootstrap.min.css"  >-->
+        <script src="/static/common/js/bootstrap/bootstrap.min.js" ></script>
+                <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <link rel="stylesheet" href="/static/home/faicon/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/common/css/bootstrap.min.css"  >
+		<link rel="stylesheet" href="/static/home/css/swiper.min.css">
+		<script src="/static/home/js/swiper.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/static/newcj/css/h5app.css">
+        <link rel="stylesheet" type="text/css" href="/static/newcj/fonts/iconfont.css?v=2016070717">
+        <script src="/static/newcj/js/dist/flexible/flexible_css.debug.js"></script>
+        <script src="/static/newcj/js/dist/flexible/flexible.debug.js"></script>
+        <style>
+		    body{
+		        cursor: pointer;
+		    }
+		    .feadback_p{
+		        cursor: pointer;
+		    }
+		    .fa-heart{
+		        cursor: pointer;
+		    }
+		    .comment{
+		        cursor: pointer;
+		    }
+		    .img{
+		        cursor: pointer;
+		    }
+			img{
+			   pointer-events:auto !important;
+			}
+		    .load_div{
+		        width: 100%;
+		        height: 60px;
+		    }
+		    .loading{
+		        width: 80px;
+		        height: 40px;
+		        margin: auto;
+		        /*margin-top:20px;*/
+		    }
+		    .loading span{
+		        display: inline-block;
+		        margin: 0 4px;
+		        width: 8px;
+		        height: 100%;
+		        border-radius: 4px;
+		        background: lightgreen;
+		        -webkit-animation: load 1s ease infinite;
+		    }
+		    @-webkit-keyframes load{
+		        0%,100%{
+		            height: 40px;
+		            background: lightgreen;
+		        }
+		        50%{
+		            height: 70px;
+		            margin: -15px 0;
+		            background: lightblue;
+		        }
+		    }
+		    .loading span:nth-child(2){
+		        -webkit-animation-delay:0.2s;
+		    }
+		    .loading span:nth-child(3){
+		        -webkit-animation-delay:0.4s;
+		    }
+		    .loading span:nth-child(4){
+		        -webkit-animation-delay:0.6s;
+		    }
+		    .loading span:nth-child(5){
+		        -webkit-animation-delay:0.8s;
+		    }
+		    .more-text{
+		        height: 50px;
+		        line-height: 50px;
+		        background-color: #E3E3E3;
+		        font-size: 18px;
+		        cursor: pointer;
+		    }
+		    .canDone{
+		        background-color: #0076FF;
+		        color: white;
+		    }
+		     span.pdf-span {
+		        display: inline-block;
+		        width: 14rem;
+		    }
+		    .pdf-div {
+		        background-color: #f7f7f7;
+		        margin: 11px 8px;
+		        border-radius: 7px;
+		        
+		    }
+		    .pdf-div2 {
+		        float: left;
+		        font-size: 1rem;
+		        width: 3rem;
+		        margin: 0px 10px;
+		    }
+		    .pdf-div3 {
+		        float: left;
+		        font-size: 0.9rem;
+		        padding: 6px;
+		    }
+		    #allhome{display: none;}
+		</style>
+	
+        <script>
+        var controller = '{$address.controller}';
+        var action = '{$address.action}';
+        var title = '{$title0} {$title}';
+        var link = '{$wx.url}';
+        var imgURL = '{$img}';
+        if(imgURL === ''){
+            imgURL = '{$wx.root_path}__COMMON__/LOGO.png';
+        }else if(imgURL.indexOf("http")>=0){
+            imgURL = imgURL;
+        }else{
+            imgURL = '{$wx.root_path}/uploads/'+imgURL;
+        }
+        var desc = '{$des}';
+        //通过config接口注入权限验证配置
+        wx.config({
+          debug : false,
+          appId : '{$wx.appId}',
+          timestamp : '{$wx.timestamp}',
+          nonceStr : '{$wx.noncestr}',
+          signature : '{$wx.signature}',
+          jsApiList : ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+        });
+        wx.ready(function () {
+            //朋友圈
+            wx.onMenuShareTimeline({
+                title: title, // 分享标题
+                link: link, // 分享链接
+                imgUrl: imgURL, // 分享图标
+                desc: desc, // 分享图标
+                success: function () {
+                    if(controller == 'ProjectInfo' && action == 'index'){
+                        var url = window.location.href;
+                        var arr = url.split('/');
+                        var length = arr.length;
+                        var m = 0;
+                        for(var i = 0 ; i < length ; i ++){
+                            if(arr[i] == 'id'){
+                                m = i+1;
+                            }
+                        }
+                        $.ajax({
+                            url: "{:url('ProjectInfo/forward_project')}",
+                            data: {id : arr[m]},
+                            dataType: 'json',
+                            success: function (resp) {
+                                if (resp.code == 0) {
+                                    alert('转发收藏失败');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: function () {}
+            });
+            //微信好友
+            wx.onMenuShareAppMessage({
+                imgUrl: imgURL,
+                desc : desc,//摘要,如果分享到朋友圈的话，不显示摘要。
+                title : title,//分享卡片标题
+                link: link,//分享出去后的链接，这里可以将链接设置为另一个页面。
+                success:function(){
+                    if(controller == 'ProjectInfo' && action == 'index'){
+                        var url = window.location.href;
+                        var arr = url.split('/');
+                        var length = arr.length;
+                        var m = 0;
+                        for(var i = 0 ; i < length ; i ++){
+                            if(arr[i] == 'id'){
+                                m = i+1;
+                            }
+                        }
+                        $.ajax({
+                            url: "{:url('ProjectInfo/forward_project')}",
+                            data: {id : arr[m]},
+                            dataType: 'json',
+                            success: function (resp) {
+                                if (resp.code == 0) {
+                                    alert('转发收藏失败');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: function (){}
+            });
+            //QQ好友
+            wx.onMenuShareQQ({
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgURL, // 分享图标
+                success: function () {},
+                cancel: function () {}
+            });
+            //腾讯微博
+            wx.onMenuShareWeibo({
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: link, // 分享链接
+                imgUrl: imgURL, // 分享图标
+                success: function () {},
+                cancel: function () {}
+            });
+        });
+        	document.write("<link rel='stylesheet' href='/static/home/css/style.css?v=1022&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='/static/newcj/css/themes.css?v=2017129&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='/static/newcj/css/chat_list.css?random=" + Math.random() + "' />");
+       </script>
+       <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?7fcfdddf9172fe3c90899bbaf1b17cb4";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+    </head>
+    <body data-id="{$id}" data-uid="{$user.uid}" data_upload="__UPLOAD__">
+        <!--客服--> 
+        <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}">
+        <div class="kfLogo">
+        	<img src="__HOME__/images/kefu.png" class="kfLogo-img">
+        </div>
+        </a>
+        <!--客服-->
+        {include file="base/dividend" /}
+        <div class="jt">
+        {include file="base/slide" /}
+        {foreach name="$list" item="info"}
+        <div class="jutou" data-id="{$info.sp_id}" name="jutou_{$info.sp_id}">
+            <!--<h3>{$info.title}</h3>-->
+            <div class="text">
+                {$info.content}
+                {if condition="$info.img neq ''"}
+                    {if condition="$info.img_length eq 1"}
+                      {if isset($info.pdf) && isset($info.name)}
+                          <a class="view-pdf" href="__UPLOAD__/{$info.pdf}">
+                              <div class="pdf-div clearfix">
+                                   <div class="pdf-div2">
+                                      <img src="__IMG__/pdf.png" class="pdf-logo"/>    
+                                   </div>
+                                   <div class="pdf-div3">
+                                       {$info.name}<br/>
+                                       {$info.pdfsize}    
+                                   </div>
+                              </div>
+                          </a>
+                      {else /}
+                         <img class="img" style="max-height: 260px;max-width: 260px;" data-src="__UPLOAD__/{$info.img}" src="__UPLOAD__/{$info.img}" alt="">
+                      {/if}
+                    {else /}
+                    <div class="text-img">
+                        {foreach name="$info.img" key="k" item="url"}
+                               {if isset($url.pdf)}
+                            <a class="view-pdf" href="__UPLOAD__/{$url.pdf}">
+                                <div class="pdf-div clearfix">
+                                    <div class="pdf-div2">
+                                       <img src="__IMG__/pdf.png" class="pdf-logo" style="margin: 10px 0 10px;" />
+                                    </div>
+                                    <div class="pdf-div3">
+                                        {$url.name}<br/>
+                                        {$url.pdfsize}
+                                    </div>
+                                </div>
+                            </a>
+                            {else /}
+                        <img class="img" data-src="__UPLOAD__/{$info['file_url'][$k]['img']}" src="__UPLOAD__/{$url['img']}" alt="">
+                            {/if}
+                        {/foreach}
+                    </div>
+                    {/if}
+                {/if}
+                <!--<img src="images/huodong.png" alt="">-->
+            </div>
+            <div class="time">
+			<div class="zan">
+	            <span class="fa fa-share share_my_pro">分享</span>
+	            {if condition="$info.thumbs_up neq ''"}
+	                {if condition="in_array($user.uid , $info.thumbs_up)"}
+	                <span class="fa fa-heart fa-disabled">点赞</span>
+	                {else /}
+	                <span class="fa fa-heart">点赞</span>
+	                {/if}
+	            {else /}
+	                <span class="fa fa-heart">点赞</span>
+	            {/if}
+	            <span class="comment">评论</span>
+			</div>
+			{$info.release_date}
+            </div>
+            {if condition="$info.thumbs_up neq '' || $info.comments neq []"}
+            <div class="digg">
+				<span class="arrow"></span>
+                {if condition="$info.thumbs_up neq ''"}
+                    <span class="fa fa-heart-o"></span>
+                    {foreach name="$info.thumbs_up_img" item="img"}
+                    <img src="{$img}" alt="头像">
+                    {/foreach}
+                {else /}
+                <span class="fa fa-heart-o hide"></span>
+                {/if}
+                <div class="feadback">
+                    {if condition="$info.comments neq []"}
+                        {foreach name="$info.comments" item="comment"}
+                        <p class="feadback_p" data-id="{$comment.spc_id}" data-uid="{$comment.uid}"><strong>{$comment.userName}：</strong>{$comment.content}</p>
+                            {if condition="$comment.list neq []"}
+                            <div class="quote" data-id="{$comment.spc_id}">
+                                {foreach name="$comment.list" item="it"}
+                                <p data-uid="{$it.uid}"><strong>{$it.userName}：</strong>{$it.content}</p>
+                                {/foreach}
+                            </div>
+                            {/if}
+                        {/foreach}
+                    {/if}
+                </div>
+            </div>
+            {else /}
+            <div class="digg hide">
+		<span class="arrow"></span>
+		<span class="fa fa-heart-o hide"></span>
+                <div class="feadback">
+                    
+                </div>
+            </div>
+            {/if}
+        </div>
+        <br>
+        {/foreach}
+        </div>
+        <div class="more-text canDone">查看更多</div>
+        <div class="talk-msg" style="display:none;">
+            <div class="talk-input">
+                <form id="comment" action="{:url('Spoiler/addContent')}">
+                    <input class="hide" type="text" name="sp_id" value="0">
+                    <input class="hide" type="text" name="pid" value="0">
+                    <input class="content" type="text" name="content" placeholder="评论">
+                    <button type="submit">发送</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
+                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
+                <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
+                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
+                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
+                <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+        <script src="__HOME__/js/weixin_share.js"></script>
+        <script>
+            var upload_url = $("body").attr("data_upload");
+//            $(document).ready(function () {
+//                $("body").on("click",'.comment', function () {
+//                    $(".talk-msg").show();
+//                    $(".talk-input input").focus();
+//                    var id = $(this).parents(".jutou").attr("data-id");
+//                    var $body = $('body');
+//                    var scrollHeight = $(".jutou[name='jutou_"+id+"']").offset().top-$body.scrollTop();
+//                    $body.height($body.height() + scrollHeight).animate({
+//                        scrollTop: $body.scrollTop() + scrollHeight
+//                    }, 300);
+//                });
+//            });
+            
+//            var scrollHeight, //应该滚动的距离
+//            $body = $('body');
+//            $('.talk-input input').on('focus', function () {
+//                //input距离页面顶部的高度减body滚动的高度获得input距离窗口上方的高度，40表示距离顶部留点空隙
+//                scrollHeight = $('input').offset().top - $body.scrollTop()
+//                console.log(scrollHeight)
+//                //先修改body的高度，在滚动到对应的位置
+//                $body.height($body.height() + scrollHeight).animate({
+//                    scrollTop: $body.scrollTop() + scrollHeight
+//                }, 300);
+//            }).on('blur', function () {
+//                //input失去焦点后恢复到原来的位置
+//                $body.animate({
+//                    height: $body.height() - scrollHeight,
+//                    scrollTop: $body.scrollTop() - scrollHeight
+//                }, 300)
+//            })
+        </script>
+        <script type="text/javascript">
+//            var HH = window.innerHeight;
+//            var h1 = 1000;
+            var $body = $('body');
+//            var scrollHeight = 0;
+            $("body").on('click' , '.comment' , function(){
+                window.onscroll = function(){
+                    scrollBodyBad();
+                }
+                $(".talk-input").find("input[name='pid']").val(0);
+                $(".talk-input").find("input[name='sp_id']").val($(this).parents(".jutou").attr("data-id"));
+                $(".talk-input").find("input[name='content']").attr("placeholder" , '评论');
+                if(!isIOS()){
+                    var scrollHeight = $(this).parents(".jutou").offset().top-$body.scrollTop();
+                    $body.height($body.height() + scrollHeight).animate({
+                        scrollTop: $body.scrollTop() + scrollHeight
+                    }, 300);
+                }
+                setTimeout('showMsg()',"400");
+                $(".talk-msg").show();
+                $(".talk-msg input[name='content']").focus();
+//                $(".talk-msg input[name='content']").scrollIntoView(true);
+//                setTimeout(function(){
+//                    document.body.scrollTop = $(this).parents(".jutou").offset().top;
+//                },300);
+                if(isIOS()){
+                    $(window).resize();
+                }
+            });
+            $("body").on('click' , '.feadback_p' , function(){
+                window.onscroll = function(){
+                    scrollBodyBad();
+                }
+                $(".talk-input").find("input[name='pid']").val($(this).attr("data-id"));
+                $(".talk-input").find("input[name='sp_id']").val($(this).parents(".jutou").attr("data-id"));
+                $(".talk-input").find("input[name='content']").attr("placeholder" , '回复'+$(this).find("strong").text());
+                if(!isIOS()){
+                    var scrollHeight = $(this).parents(".jutou").offset().top-$body.scrollTop();
+                    $body.height($body.height() + scrollHeight).animate({
+                        scrollTop: $body.scrollTop() + scrollHeight
+                    }, 300);
+                }
+                setTimeout('showMsg()',"400");
+                $(".talk-msg").show();
+                $(".talk-msg input[name='content']").focus();
+                if(isIOS()){
+                    $(window).resize();
+                }
+            });
+//            function setMsg(){
+//                var hh = window.innerHeight;
+//                if(h1 > hh){
+//                    h1 = hh;
+//                }
+////                var h = HH-h1+52;
+//                if(scrollHeight == 0){
+//                    $(".talk-msg").css("bottom",h1+'px');
+//                }else{
+//                    $(".talk-msg").css("bottom",scrollHeight+'px');
+//                }
+//            }
+            function showMsg(){
+                window.onscroll = function(){
+                    scrollBody();
+                }
+            }
+            function isIOS(){
+                var u = navigator.userAgent;
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                return isiOS;
+            }
+            $("#comment").on('click','button', function (e) {
+                e.preventDefault();
+                var sp_id = $(this).siblings("input[name='sp_id']").val();
+                var pid = $(this).siblings("input[name='pid']").val();
+                var content = $(this).siblings("input[name='content']").val();
+                $.ajax({
+                    url: "{:url('Spoiler/addContent')}",
+                    type: 'POST',
+                    data: {sp_id:sp_id , pid:pid , content:content},
+                    dataType: 'json',
+                    success: function (resp) {
+                        var data = resp.data;
+                        if (resp.code) {
+                            if(data.pid == 0){
+                                $(".jutou[data-id='"+sp_id+"']").find(".feadback").append('<p class="feadback_p" data-id="'+data['spc_id']+'" data-uid="'+data['uid']+'"><strong>'+data['userName']+'：</strong>'+data['content']+'</p>');
+                            }else{
+                                var next = $(".jutou[data-id='"+sp_id+"']").find(".feadback_p[data-id='"+pid+"']").next()[0];
+                                if(next == null || next.className == 'feadback_p'){
+                                    $(".jutou[data-id='"+sp_id+"']").find(".feadback_p[data-id='"+pid+"']").after('<div class="quote" data-id="'+pid+'"><p data-uid="'+data['uid']+'"><strong>'+data['userName']+'：</strong>'+data['content']+'</p></div>');
+                                }else{
+                                    $(".quote[data-id='"+pid+"']").append('<p data-uid="'+data['uid']+'"><strong>'+data['userName']+'：</strong>'+data['content']+'</p>');
+                                }
+                            }
+                            $(".jutou[data-id='"+sp_id+"']").find(".digg").removeClass("hide");
+                        } else {
+                            alert(resp.msg);
+                        }
+                    }
+                });
+            });
+            var arr = ['content','talk-input','talk-msg','comment','feadback_p'];
+            $(document).click(function(){
+                var target = event.target || event.srcElement;
+                var className = $(target).context.className;
+                if(arr.indexOf(className) < 0){
+                    $(".talk-msg").hide();
+                    $(".talk-msg input[name='content']").val('');
+                }
+            });
+        </script>
+        <script>
+//            function getScrollTop() {  
+//                var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;  
+//                return scrollTop;  
+//            }  
+//            function setScrollTop(scroll_top) {
+//                document.documentElement.scrollTop = scroll_top;  
+//                window.pageYOffset = scroll_top;  
+//                document.body.scrollTop = scroll_top;  
+//            }
+//            var aa = getScrollTop()-getScrollTop();
+////            setScrollTop(aa);
+//            console.log(aa);
+//            setScrollTop(document.body.scrollHeight);
+            window.onscroll = function(){
+                scrollBody();
+            }
+            function scrollBodyBad(){
+            }
+            function scrollBody(){
+                $(".talk-msg").hide();
+                $(".talk-msg input[name='content']").val('');
+                $(".talk-msg input[name='content']").blur();
+            }
+            $(".more-text").click(function(){
+//            window.onscroll= function(){
+//                $(".talk-msg").hide();
+//                $(".talk-msg input[name='content']").val('');
+//                var scrollTop = document.body.clientHeight+document.body.scrollTop;
+//                var scrollHeight = document.body.scrollHeight;
+//                if(scrollTop == scrollHeight && $(".load_div").length == 0){
+//                    $("body").append('<div class="load_div"><div class="loading"><span></span><span></span><span></span><span></span><span></span></div></div>');
+                var id = $("body").attr("data-id");
+                    $.ajax({
+                        url: "{:url('Spoiler/selectMoreInfo')}",
+                        data: {id : id},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if (resp.code) {
+                                var data = resp.data;
+                                console.log(data);
+                                var length = data.length;
+                                var str = '';
+                                for(var i = 0 ; i < length ; i ++){
+                                    var h1 = '<div class="jutou" data-id="'+data[i]['sp_id']+'" name="'+data[i]['sp_id']+'">';
+                                    var img = '';
+                                    if(data[i]['img'] !== ''){
+                                        if(data[i]['img_length'] == 1){
+                                            img += '<img class="img" style="max-height: 260px;max-width: 260px;" data-src="__UPLOAD__/'+data[i]['img']+'" src="__UPLOAD__/'+data[i]['img']+'" alt="">';
+                                        }else{
+                                            img += '<div class="text-img">';
+                                            for(var j = 0 ;j < data[i]['img_length'] ; j ++){
+                                                img += '<img class="img" data-src="__UPLOAD__/'+data[i]['file_url'][j]+'" src="__UPLOAD__/'+data[i]['img'][j]+'" alt="">';
+                                                if((j+1)%3 == 0){
+                                                    img += '<br>';
+                                                }
+                                            }
+                                            img += '</div>';
+                                        }
+                                    }
+                                    var h2 = '<div class="text">'+data[i]['content']+img+'</div>';
+                                    if(data[i]['thumbs_up'] != ''){
+                                        var uid = $("body").attr("data-uid");
+                                        if(data[i]['thumbs_up'].indexOf(uid) != -1){
+                                            var zan = '<span class="fa fa-heart fa-disabled">点赞</span>';
+                                        }else{
+                                            var zan = '<span class="fa fa-heart">点赞</span>';
+                                        }
+                                    }else{
+                                        var zan = '<span class="fa fa-heart">点赞</span>';
+                                    }
+                                    var h3 = '<div class="time"><div class="zan"><span class="fa fa-share share_my_pro" style="margin-right:3px;">分享</span>'+zan+'<span class="comment" style="margin-left:3px;">评论</span></div>'+data[i]['release_date']+'</div>';
+                                    var talk = '';
+                                    if(data[i]['comments'].length != 0){
+                                        var length_c = data[i]['comments'].length;
+                                        for(var n = 0 ; n < length_c ; n++){
+                                            talk += '<p class="feadback_p" data-id="'+data[i]['comments'][n]['spc_id']+'" data-uid="'+data[i]['comments'][n]['uid']+'"><strong>'+data[i]['comments'][n]['userName']+'：</strong>'+data[i]['comments'][n]['content']+'</p>';
+                                            if(data[i]['comments'][n]['list'].length != 0){
+                                                talk += '<div class="quote" data-id="'+data[i]['comments'][n]['spc_id']+'">';
+                                                var length_m = data[i]['comments'][n]['list'].length;
+                                                for(var m = 0 ; m < length_m ; m++){
+                                                    talk += '<p data-uid="'+data[i]['comments'][n]['list'][m]['uid']+'"><strong>'+data[i]['comments'][n]['list'][m]['userName']+'：</strong>'+data[i]['comments'][n]['list'][m]['content']+'</p>';
+                                                }
+                                                talk += '</div>';
+                                            }
+                                        }
+                                    }
+                                    if(data[i]['thumbs_up'] != '' || data[i]['comments'].length != 0){
+                                        var imgs = '';
+                                        if(data[i]['thumbs_up'] != ''){
+                                            var length_k = data[i]['thumbs_up_img'].length;
+                                            for(var k = 0 ; k < length_k ; k ++){
+                                                imgs += '<img src="'+data[i]['thumbs_up_img'][k]+'" alt="头像">';
+                                            }
+                                            var h4 = '<div class="digg"><span class="arrow"></span><span class="fa fa-heart-o"></span>'+imgs+'<div class="feadback">'+talk+'</div></div>';
+                                        }else{
+                                            var h4 = '<div class="digg"><span class="arrow"></span><span class="fa fa-heart-o hide"></span>'+imgs+'<div class="feadback">'+talk+'</div></div>';
+                                        }
+                                    }else{
+                                        h4 = '<div class="digg hide"><span class="arrow"></span><span class="fa fa-heart-o"></span><div class="feadback">'+talk+'</div></div>';
+                                    }
+                                    str += h1+h2+h3+h4+'</div><br>';
+                                }
+                                $("body").attr("data-id",data[length-1]['sp_id']);
+//                                $(".load_div").remove();
+                                $(".jt").append(str);
+                            } else {
+//                                $(".load_div").remove();
+                                $(".more-text").remove();
+                                $("body").append('<div class="text-over">没有啦~~~</div>');
+                            }
+                        }
+                    });
+                
+//                }
+            });
+            $("body").on('click' , '.fa-heart' ,function(){
+                if(!$(this).hasClass("fa-disabled")){
+                    var _this = $(this);
+                    var id = _this.parents(".jutou").attr("data-id");
+                    $.ajax({
+                        url: "{:url('Spoiler/thumbsUp')}",
+                        data: {id : id},
+                        dataType: 'json',
+                        success: function (resp) {
+                            if (resp.code) {
+                                _this.addClass("fa-disabled");
+                                var img = '<img class="img" src="'+resp.data+'" alt="头像">';
+                                _this.parents(".time").siblings(".digg").removeClass("hide");
+                                _this.parents(".time").siblings(".digg").find(".fa-heart-o").removeClass("hide");
+                                _this.parents(".time").siblings(".digg").find(".feadback").before(img);
+//                                alert('点赞成功');
+                            } else {
+                                alert(resp.msg, '提示框');
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+        <script>
+                $("body").on('click','.img',function(){
+                    var arr = [];
+                    $(this).parents(".text").find(".img").each(function(){
+                        var src = $(this).attr("data-src");
+                        if(src.indexOf("http")<0){
+                            src = '{$wx.root_path}'+src;
+                        }
+                        arr.push(src);
+                    });
+                    var src = $(this).attr("data-src");
+                    if(src.indexOf("http")<0){
+                        src = '{$wx.root_path}'+src;
+                    }
+                    WeixinJSBridge.invoke('imagePreview',{
+                        current: src, // 当前显示图片的http链接
+                        urls: arr // 需要预览的图片http链接列表
+                    });
+                });
+        </script>
+    </body>
+</html>

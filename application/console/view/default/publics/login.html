@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>系统登录</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="__COMMON__/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="__STATIC__/css/login.css?v=20170914">
+    <link rel="shortcut icon" href="__STATIC__/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="__STATIC__/img/favicon/favicon.ico" type="image/x-icon">
+
+    <link rel="apple-touch-icon" href="__COMMON__/img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="__COMMON__/img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="__COMMON__/img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="__COMMON__/img/splash/touch-icon-ipad-retina.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-startup-image" href="__COMMON__/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="__COMMON__/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="__COMMON__/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+    <script>
+        var captcha_url = "{:captcha_src()}";
+    </script>
+</head>
+<body>
+
+<div class="login-layout">
+    <div class="top">
+        <h2>系统管理中心</h2>
+    </div>
+
+    <form method="post" id="form_login" action="{:url('Publics/login')}">
+        <div class="lock-holder">
+            <div class="form-group pull-left input-username">
+                <label>账号</label>
+                <input name="login_name" id="login_name" autocomplete="off" type="text" class="input-text" value="" >
+            </div>
+            <i class="fa fa-ellipsis-h dot-left"></i> <i class="fa fa-ellipsis-h dot-right"></i>
+            <div class="form-group pull-right input-password-box">
+                <label>密码</label>
+                <input name="login_pwd" id="login_pwd" class="input-text" autocomplete="off" type="password" >
+            </div>
+        </div>
+        <div class="avatar"><img src="__COMMON__/img/avatars/admin.png" alt=""></div>
+        <div class="submit">
+            <div class="form-group captcha-box">
+                <div class="code" style="display: none;">
+                    <div class="arrow"></div>
+                    <div class="code-img">
+                        <img src="{:captcha_src()}" name="codeimage" id="codeimage" border="0">
+                    </div>
+                    <a href="JavaScript:void(0);" id="hide" class="close" title="关闭"><i></i></a>
+                    <a href="JavaScript:void(0);" onclick="javascript:document.getElementById('codeimage').src=captcha_url+'?v=' + Math.random();" class="change" title="看不清,点击更换验证码"><i></i></a>
+                </div>
+                <input name="captcha" type="text" required="" class="input-code" id="captcha" placeholder="输入验证" autocomplete="off" value="">
+            </div>
+            <div class="form-group form-action">
+                <input name="" class="input-button btn-submit" type="submit" value="登录">
+            </div>
+        </div>
+        <div class="login-result"></div>
+        <div class="submit2"></div>
+    </form>
+    <div class="bottom">
+        <h5>Powered by <span class="vol"><font class="b">上海歆宝信息科技有限公司</font><font class="o"> v2017</font></span></h5>
+        <h6 title="上海歆宝信息科技有限公司">© 2017-2018 <a href="http://www.jrfacai.com/" target="_blank">上海歆宝信息科技有限公司</a></h6>
+    </div>
+</div>
+<script src="__COMMON__/js/libs/jquery-2.1.1.min.js"></script>
+<script src="__COMMON__/js/bootstrap/bootstrap.min.js"></script>
+<script src="__COMMON__/js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+<script src="__COMMON__/js/plugin/bootstrapvalidator/language/zh_CN.min.js"></script>
+<script src="__COMMON__/js/plugin/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="__STATIC__/js/plugin/jquery.supersized.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.supersized({
+            // 功能
+            slide_interval: 4000,
+            transition: 1,
+            transition_speed: 1000,
+            performance: 1,
+
+            // 大小和位置
+            min_width: 0,
+            min_height: 0,
+            vertical_center: 1,
+            horizontal_center: 1,
+            fit_always: 0,
+            fit_portrait: 1,
+            fit_landscape: 0,
+
+            // 组件
+            slide_links: 'blank',
+            slides: [
+                {image: '__STATIC__/img/login/1.jpg'},
+                {image: '__STATIC__/img/login/2.jpg'},
+                {image: '__STATIC__/img/login/3.jpg'},
+                {image: '__STATIC__/img/login/4.jpg'},
+                {image: '__STATIC__/img/login/5.jpg'}
+            ]
+
+        });
+        //显示隐藏验证码
+        $("#hide").click(function () {
+            $(".code").fadeOut("slow");
+        });
+        $("#captcha").focus(function () {
+            $(".code").fadeIn("fast");
+        });
+
+        //动画登录
+        var loginValidator = $('#form_login').bootstrapValidator({
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            fields : {
+                login_name : {
+                    validators : {
+                        notEmpty : {
+                            message : '请输入登录名'
+                        }
+                    }
+                },
+                login_pwd : {
+                    validators : {
+                        notEmpty : {
+                            message : '请输入登录密码'
+                        }
+                    }
+                },
+                captcha : {
+                    validators : {
+                        notEmpty : {
+                            message : '请输入验证码'
+                        }
+                    }
+                },
+            }
+        })
+        .on('success.form.bv', function(e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            $('.input-username, .dot-left').addClass('animated fadeOutRight');
+            $('.input-password-box, .dot-right').addClass('animated fadeOutLeft');
+            $('.btn-submit').addClass('animated fadeOutUp');
+            setTimeout(function () {
+                $('.avatar').addClass('avatar-top');
+                $('.submit').hide();
+                $('.submit2').html('<div class="progress"><div class="progress-bar progress-bar-success" role="progressbar" data-transitiongoal="100"></div></div>');
+                $('.progress .progress-bar').progressbar({
+                    done: function () {
+                        $.ajax({
+                            url: $form.attr('action'),
+                            type: 'POST',
+                            data: $form.serialize(),
+                            dataType: 'json',
+                            success: function (resp) {
+                                if(resp.code){
+                                    window.location.href = resp.data.url;
+                                }else{
+                                    $(".login-result").addClass("login-fail").text(resp.msg);
+                                    setTimeout(function () {
+                                        $(".login-result").removeClass("login-fail").text('');
+                                        $('.submit2').html('');
+                                        $('.submit').show();
+                                        $('.avatar').removeClass('avatar-top');
+                                        $('.btn-submit').removeClass('animated fadeOutUp');
+                                        $('.input-password-box, .dot-right').removeClass('animated fadeOutLeft');
+                                        $('.input-username, .dot-left').removeClass('animated fadeOutRight');
+                                        $form.data('bootstrapValidator').resetForm();
+                                        setTimeout(function () {
+                                            document.getElementById('codeimage').src=captcha_url + '?v=' + Math.random();
+                                        }, 500);
+                                    }, 1000);
+                                }
+                            }
+                        });
+                    }
+                });
+            },
+            300);
+        });
+
+        // 回车提交表单
+        $(document).keydown(function (event) {
+            if (event.keyCode == 13) {
+                $('.btn-submit').click();
+            }
+        });
+    });
+</script>
+</body>
+</html>

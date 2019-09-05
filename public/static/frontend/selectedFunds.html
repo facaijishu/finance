@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <script type="text/javascript" src="../router.js"></script>
+    <script type="text/javascript" src="./js/common.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/component.js"></script>
+</head>
+
+<body id="box" class="mofh bg_gray" style="width:100%;">
+    <section class="bg_white mb10" style="overflow:hidden;width:100%;">
+        <!-- 搜索 -->
+        <div class="search-box pt15 pl15 pr15 clearfix porel">
+            <input type="text" class="form-control pull-left bg_gray" placeholder="输入项目、资金、需求" style="width:85%;margin-right: 14px;">
+            <a href="#" class="pull-left">
+                <img src="./images/filter.png" alt="" style="height:23px;">
+                <p style="font-size: 10px;color: #000000;line-height: 14px;">筛 选</p>
+            </a>
+            <img src="./images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 74%;top: 24px;z-index: 999;" alt="">
+        </div>
+        <!-- 菜单 -->
+        <div class="clearfix bb1 pl15 pr15 mt10 mb5"> 
+            <a href="./selectedProjects.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_primary">精选</span>
+                <span class="bg_primary dbk" style="width:21px;height:4px;border-radius:2px;position:relative;margin:-2px auto 0;"></span>
+            </a> 
+            <a href="./stockRights.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">股权</span>
+            </a>  
+            <a href="./creditorRights.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">债权</span>
+            </a>
+            <a href="./startBusiness.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">创业</span>
+            </a>
+            <a href="./market.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">上市</span>
+            </a>
+            <a href="./other.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
+                <span class="f16 c_black">其他</span>
+            </a>
+        </div>
+    </section>
+    <!-- 精选项目 -->
+    <section style="overflow:hidden;width:100%;">
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+
+        <a href="#" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(./images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
+    </section>
+    <!-- 智能推荐 -->
+    <section style="overflow:hidden;width:100%;">
+        <a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a><a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a><a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a><a class="ml15 mr15 mb10 dbk p10 radius" style="background:#ffffff;" href="#">
+            <div class="clearfix porel">
+                <img src="./images/pro-img.png" alt="" style="width:50px;height:50px;" class="pull-left">
+                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+                    <div class="f16 c_black dbk" style="position: absolute;top: -4px;left: 0;">严锋 | 首席执行官</div>
+                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">信息技术服务</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball">金融</div>
+                        <div style="height:20px;line-height:18px;" class="pl10 pr10 f12 mr5 pull-left ball tofh">消费升级</div>
+                        <div style="height:20px;line-height:18px;" class="f12 pull-left">...</div>
+                    </div>
+                </div>
+                <div class="pull-right porel" style="height:50px;width:50%;">
+                    <div class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+                </div>
+            </div>
+            <div class="clearfix porel mt10">
+                <div class="pull-left c_black tofh mr5" style="width:60px;">信文资本</div>
+                <div class="pull-left c_gray tofh" style="width:230px;">管理规模：<span class="c_danger">0.00-32.00</span><span class="f12"> 亿元</span></div>
+                <div class="f12 c_gray text-right" style="position:absolute;right:0; bottom:1px;">7788人浏览</div>
+            </div>
+        </a>
+    </section>
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="./index.html">
+                <img src="./images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_black">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./selectedProjects.html">
+                <img src="./images/sign-2-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./release-needs.html">
+                <img src="./images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./">
+                <img src="./images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./">
+                <img src="./images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $("#box").height($(window).height());
+    </script>
+</body>
+
+</html>

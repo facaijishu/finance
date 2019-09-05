@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cn">
+        <meta charset="UTF-8">
+        <title>{$title0} {$title}</title>
+		<!--禁止缓存-->
+        <meta HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+        <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
+        <meta HTTP-EQUIV="Expires" CONTENT="0">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="referrer" content="never">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <script type="text/javascript" src="__COMMON__/js/libs/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__COMMON__/js/libs/jquery.cookie.js"></script>
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<link rel="stylesheet" href="__HOME__/css/swiper.min.css">
+		<script src="__HOME__/js/swiper.min.js"></script>
+		<style>
+			.modal-open{overflow:hidden}
+			.modal{display:none;overflow:hidden;position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;-webkit-overflow-scrolling:touch;outline:0}
+			.modal.fade .modal-dialog{-webkit-transform:translate(0, -25%);-ms-transform:translate(0, -25%);-o-transform:translate(0, -25%);transform:translate(0, -25%);-webkit-transition:-webkit-transform 0.3s ease-out;-o-transition:-o-transform 0.3s ease-out;transition:transform 0.3s ease-out}
+			.modal.in 
+			.modal-dialog{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);-o-transform:translate(0, 0);transform:translate(0, 0)}
+			.modal-open .modal{overflow-x:hidden;overflow-y:auto}
+			.modal-dialog{position:relative;width:auto;margin:10px}
+			.modal-content{position:relative;background-color:#fff;border:1px solid #999;border:1px solid rgba(0,0,0,0.2);border-radius:6px;-webkit-box-shadow:0 3px 9px rgba(0,0,0,0.5);box-shadow:0 3px 9px rgba(0,0,0,0.5);-webkit-background-clip:padding-box;background-clip:padding-box;outline:0}
+			.modal-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1040;background-color:#000}
+			.modal-backdrop.fade{opacity:0;filter:alpha(opacity=0)}
+			.modal-backdrop.in{opacity:.5;filter:alpha(opacity=50)}
+			.modal-header{padding:15px;border-bottom:1px solid #e5e5e5;min-height:16.42857143px}
+			.modal-header .close{margin-top:-2px}
+			.modal-title{margin:0;line-height:1.42857143}
+			.modal-body{position:relative;padding:15px}
+			.modal-footer{padding:15px;text-align:right;border-top:1px solid #e5e5e5}
+			.modal-footer .btn+.btn{margin-left:5px;margin-bottom:0}
+			.modal-footer .btn-group .btn+.btn{margin-left:-1px}
+			.modal-footer .btn-block+.btn-block{margin-left:0}
+			.modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
+			@media (min-width:768px){.modal-dialog{width:600px;margin:30px auto}
+			.modal-content{-webkit-box-shadow:0 5px 15px rgba(0,0,0,0.5);box-shadow:0 5px 15px rgba(0,0,0,0.5)}
+			.modal-sm{width:300px}}
+			@media (min-width:992px){.modal-lg{width:900px}}
+		</style>
+        <script>
+            var controller = '{$address.controller}';
+            var action = '{$address.action}';
+            var title = '{$title0} {$title}';
+            var link = '{$wx.url}';
+            var imgURL = '{$img}';
+            if(imgURL === ''){
+                imgURL = '{$wx.root_path}__COMMON__/LOGO.png';
+            }else if(imgURL.indexOf("http")>=0){
+                imgURL = imgURL;
+            }else{
+                imgURL = '{$wx.root_path}/uploads/'+imgURL;
+            }
+            var desc = '{$des}';
+            //通过config接口注入权限验证配置
+            wx.config({
+              debug : false,
+              appId : '{$wx.appId}',
+              timestamp : '{$wx.timestamp}',
+              nonceStr : '{$wx.noncestr}',
+              signature : '{$wx.signature}',
+              jsApiList : ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+            });
+            wx.ready(function () {
+                //朋友圈
+                wx.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    link: link, // 分享链接
+                    imgUrl: imgURL, // 分享图标
+                    desc: desc, // 分享图标
+                    success: function () {
+                        if(controller == 'ProjectInfo' && action == 'index'){
+                            var url = window.location.href;
+                            var arr = url.split('/');
+                            var length = arr.length;
+                            var m = 0;
+                            for(var i = 0 ; i < length ; i ++){
+                                if(arr[i] == 'id'){
+                                    m = i+1;
+                                }
+                            }
+                            $.ajax({
+                                url: "{:url('ProjectInfo/forward_project')}",
+                                data: {id : arr[m]},
+                                dataType: 'json',
+                                success: function (resp) {
+                                    if (resp.code == 0) {
+                                        alert('转发收藏失败');
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {}
+                });
+                //微信好友
+                wx.onMenuShareAppMessage({
+                    imgUrl: imgURL,
+                    desc : desc,//摘要,如果分享到朋友圈的话，不显示摘要。
+                    title : title,//分享卡片标题
+                    link: link,//分享出去后的链接，这里可以将链接设置为另一个页面。
+                    success:function(){
+                        if(controller == 'ProjectInfo' && action == 'index'){
+                            var url = window.location.href;
+                            var arr = url.split('/');
+                            var length = arr.length;
+                            var m = 0;
+                            for(var i = 0 ; i < length ; i ++){
+                                if(arr[i] == 'id'){
+                                    m = i+1;
+                                }
+                            }
+                            $.ajax({
+                                url: "{:url('ProjectInfo/forward_project')}",
+                                data: {id : arr[m]},
+                                dataType: 'json',
+                                success: function (resp) {
+                                    if (resp.code == 0) {
+                                        alert('转发收藏失败');
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: function (){}
+                });
+                //QQ好友
+                wx.onMenuShareQQ({
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接
+                    imgUrl: imgURL, // 分享图标
+                    success: function () {},
+                    cancel: function () {}
+                });
+                //腾讯微博
+                wx.onMenuShareWeibo({
+                    title: title, // 分享标题
+                    desc: desc, // 分享描述
+                    link: link, // 分享链接
+                    imgUrl: imgURL, // 分享图标
+                    success: function () {},
+                    cancel: function () {}
+                });
+            });
+            document.write("<link rel='stylesheet' href='__HOME__/css/style.css?v=1022&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='__NEWCJ__/css/themes.css?v=2017129&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='__NEWCJ__/css/chat_list.css?random=" + Math.random() + "' />");
+        </script>
+        <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?7fcfdddf9172fe3c90899bbaf1b17cb4";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+    </head>
+    

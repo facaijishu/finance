@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cn">
+        <meta charset="UTF-8">
+        <title>金融</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="__FA__/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__CSS__/new20180409.css">
+        <script type="text/javascript" src="__COMMON__/js/libs/jquery-2.1.1.min.js"></script>
+        <style>
+            .clear:after{
+                content:"";
+                display:block;
+                height:0;
+                clear:both;
+                overflow:hidden;
+                color:#fff;
+            }
+            .bg{
+                background-color:#d7a44c;
+                color:#fff !important;
+            }
+            .bg > a{
+                color:#fff !important;
+            }
+            .op{
+                display:block;
+                width:100%;
+                height:50px;
+                background-color:red;
+            }
+            body{
+                background-color:#fff;
+            }
+            .box .cover{
+                height:6.5rem;
+            }
+            .box img {
+                width: 100%;
+                height:100%;
+            }
+            .study-new-list {
+                background: #fff;
+                padding: 10px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 0px auto;
+                grid-gap: 10px;
+                text-align: left;
+            }
+            .study-new-list .tit1 {
+                grid-column: 1 / 3;
+                position: relative;
+                padding: 10px 0 10px 0px;
+                line-height: 0px;
+                font-size: 20px;
+                grid-column: 1 / 3;
+                color: #f00; }
+            .study-new-list .tit1:before {
+                position: absolute;
+                left: 0;
+                top: 0px;
+                height: 0px;
+                background: transparent;
+                width: 5px;
+                z-index: 1;
+                content: ""; }
+        </style>
+    </head>
+    <body>
+            <!--<div class="study-top">
+                <a href="" class="fa fa-chevron-left"></a>
+                我的学习课程
+            </div>-->
+        <div class="clear" style="border:1px solid #d7a44c;border-radius:5px;margin:5px auto;width:95%;">
+            <div class="bg" style="width:33.3%;height:40px;float:left;border-right:1px solid #d7a44c;text-align:center;line-height:40px;">学习课程</div>
+            <div style="width:33.3%;height:40px;float:left;border-right:1px solid #d7a44c;text-align:center;line-height:40px;">我的收藏</div>
+            <div style="width:33.3%;height:40px;float:left;text-align:center;line-height:40px;">我的转发</div>
+        </div>
+        <div class="study-new-list">
+            <div class="tit1">
+                <strong style="color:transparent;"></strong>
+            </div>
+            {foreach name="$data1" item="it"}
+            {if !empty($it['bg_music'])}
+            <div class="box icon-voice" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover">
+            {elseif !empty($it['bg_video'])}
+            <div class="box icon-video" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover" time="00:25:00">
+            {elseif !empty($it['bg_video']) && !empty($it['bg_music'])}
+            <div class="box icon-video" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover" time="00:25:00">
+            {elseif $it['bg_video'] == "" && $it['bg_music'] == ""}
+            <div class="box" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover">
+            {/if}
+                    <img src="http://study.yingtongkeji.com/attachment/{$it['thumb']}" alt="">
+                </a>
+                <span href="" class="text-tit">
+                    {$it['title']}
+                </span>
+                <div class="info">
+                    <span class="text-red">{$it['clickNum']}</span>人学习
+                </div></a>
+            </div>
+            {/foreach}
+        </div>
+        <div class="study-new-list" style="display:none;">
+            <div class="tit1">
+                <strong style="color:transparent;"></strong>
+            </div>
+            {foreach name="$data2" item="it"}
+            {if !empty($it['bg_music'])}
+            <div class="box icon-voice" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover">
+            {elseif !empty($it['bg_video'])}
+            <div class="box icon-video" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover" time="00:25:00">
+            {elseif !empty($it['bg_video']) && !empty($it['bg_music'])}
+            <div class="box icon-video" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover" time="00:25:00">
+            {elseif $it['bg_video'] == "" && $it['bg_music'] == ""}
+            <div class="box" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover">
+            {/if}
+                    <img src="http://study.yingtongkeji.com/attachment/{$it['thumb']}" alt="">
+                </a>
+                <span href="" class="text-tit">
+                    {$it['title']}
+                </span>
+                <div class="info">
+                    <span class="text-red">{$it['clickNum']}</span>人学习
+                </div>
+            </div>
+            {/foreach}
+        </div>
+        <div class="study-new-list" style="display:none;">
+            <div class="tit1">
+                <strong style="color:transparent;"></strong>
+            </div>
+            {foreach name="$data3" item="it"}
+            {if !empty($it['bg_music'])}
+            <div class="box icon-voice" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover">
+            {elseif !empty($it['bg_video'])}
+            <div class="box icon-video" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover" time="00:25:00">
+            {elseif !empty($it['bg_video']) && !empty($it['bg_music'])}
+            <div class="box icon-video" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover" time="00:25:00">
+            {elseif $it['bg_video'] == "" && $it['bg_music'] == ""}
+            <div class="box" data-id="{$it['id']}">
+                <a data-href="{$it['url']}" data-id="{$it['id']}" data-openId="{$openid}" class="cover">
+            {/if}
+                    <img src="http://study.yingtongkeji.com/attachment/{$it['thumb']}" alt="">
+                </a>
+                <span href="" class="text-tit">
+                    {$it['title']}
+                </span>
+                <div class="info">
+                    <span class="text-red">{$it['clickNum']}</span>人学习
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </body>
+    <script>
+        $(function () {
+            $(".clear div").on("click", function () {
+                $(".clear div").removeClass("bg");
+                $(this).addClass("bg");
+                $(".study-new-list").hide();
+                $(".study-new-list").eq($(this).index()).show();
+            });
+            $(".box").click(function() {
+                var id = $(this).attr('data-id');
+                location.href = "http://read.jrfacai.com/app/index.php?i=3&c=entry&id="+id+"&do=detail&m=dg_articlemanage";
+            })
+
+//            var url = document.URL;
+//            txt = (url.substr(-1, 1)) - 1;
+//            $(".clear div").each(function (i, e) {
+//                if (i == txt) {
+//                    $(".clear div").eq(i).addClass("bg").siblings().removeClass("bg");
+//                }
+//            });
+        });
+    </script>
+    <!--<script src="__JS__/open.js"></script>-->
+</html>

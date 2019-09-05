@@ -1,0 +1,1449 @@
+{include file="base/header" /}
+<script src="__HOME__/js/Chart.bundle.js"></script>
+<script src="__HOME__/js/readmore.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+<script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+<script type="text/javascript" src="/static/frontend/js/component.js"></script>
+<style>
+.news-box ul{padding: 0 20px 10px 20px;}
+.news-box .list ul{padding: 0 100px 20px 20px;}
+.of{
+  padding: 0 0px 15px 0px !important;
+}
+.information2{
+  background-color:#fff !important;
+}
+.op{
+  /*overflow:visible !important;*/
+  height:auto !important;
+}
+
+.news-tab1{
+	height: 44px;
+    padding: 7px 0.5rem;
+    line-height: 30px;
+    background: #fff;
+	color:#000;
+	overflow:hidden;
+}
+.news-tab1 > div{
+    width:23%;
+    float:left;
+	font-size:0.35rem;
+}
+.news-tab1 > div+div{
+    margin-left:2%;
+}
+.border{
+    border-bottom:1px solid #eee;
+}
+.news-tab1 .actived {
+    background: white;
+    border-radius: 20px;
+    background-color: #CBA054;
+	color:#fff;
+}
+.info-chart{
+    position:relative;
+}
+.info-chart .pos{
+    width:60px;
+	outline:none;
+	position:absolute;
+	top:3px;
+	right:25px;
+}
+.news-box .actived {
+    background: #eee !important;
+}
+.swiper-container1{
+    width:150px !important;
+	margin-right:50px !important;
+}
+@media screen and (max-width: 350px) and (min-width: 320px) {
+    .info-chart .pos{
+		width:60px;
+		outline:none;
+		position:absolute;
+		top:5px;
+		right:10px;
+	}
+}
+.tzwd {
+    width: 98%;
+    background-color: white;
+    margin: 10px auto;
+}
+.tzwd-wen-logo {
+	
+}
+.tzwd-wen-content {
+    color:#ca9f5a;
+    float: right;
+    margin: 2px 3px;
+    width: 89%;
+}
+.tzwd-wen {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.tzwd-da {
+    background-color: #f9f9f9;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.tzwd-da-content {
+    color:#000;
+    float: right;
+    margin: 2px 3px;
+    width: 89%;
+}
+.tzwd-da-logo {
+	
+}
+.tzwd-show {
+  float: left;
+  margin: 2px 3px;
+}
+.wen {
+   width: 1rem;
+}
+.da {
+   width: 1rem;
+}
+.pro-barh{
+	width:100%;position:fixed;_position:absolute;bottom:0px;_bottom:0px;_margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop)
+}
+  .pro-barc{width:30%;float:left;}
+  .pro-barc  a{
+  	  display:block;
+  	  height:50px;
+  	  line-height: 46px;
+	  background: url('/static/home/css/img/icon-fav.png') center -0.25rem #fff;
+	  background-size: 24px 20px;
+	  background-attachment:scorll;
+	  background-repeat:no-repeat;
+	  background-position:top center;
+	  padding: 6px 0 0 0px;
+	  margin: 0;
+	  box-shadow: none;
+	  color: #999999;
+	}
+	.pro-barc a.actived{
+	  display:block;
+  	  height:50px;
+  	  line-height: 46px;
+	  background: url('/static/home/css/img/icon-fav-on.png') center -0.25rem #fff;
+	  background-size: 24px 20px;
+	  background-attachment:scorll;
+	  background-repeat:no-repeat;
+	  background-position:top center;
+	  padding: 6px 0 0 0px;
+	  margin: 0;
+	  box-shadow: none;
+	  color: #999999;
+	}
+	.pro-bart{width:70%;float:right;}
+	.pro-bart a{
+	  display:block;
+  	  height:50px;
+  	  line-height: 30px;
+	  background: url('/static/home/css/img/callme.png') center  -0.25rem #fff;
+	  background-size: 250px 38px;
+	  background-attachment:scorll;
+	  background-repeat:no-repeat;
+	  background-position:top center;
+	  padding: 6px 0 0 0px;
+	  margin: 0;
+	  box-shadow: none;
+	  color: #ffffff;
+	  text-align: center;
+	}
+</style>
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        {if condition="$info1.roadshow_url neq ''"}
+        <video poster="__UPLOAD__/{$info1.index_img}" controls="controls" x5-playsinline="" playsinline="" webkit-playsinline="" poster="">
+            <source src="__UPLOAD__/{$info1.roadshow_url}" type="video/mp4">
+        </video>
+        {else /}
+        <img src="__UPLOAD__/{$info1.index_img}" alt="{$info1.pro_name}" style="width: 100%;">
+        {/if}
+        <input type="hidden" name="send_id" value="{$info1.pro_id}">
+        <div class="my-pro">
+            <div class="pro-t clearfix">
+            	<div style="float: left">
+            		{$info1.pro_name}
+            		{if condition="$info1.is_display eq 0"}
+            	    <small>（{$info1.stock_code}）</small>
+            	    {/if}
+            	</div>
+            	{if condition="$info1.is_display eq 0"}
+            	<div class="pro-label" style="float: right;padding: 0;font-size: 12px;">
+	            	<label for="transfer_type" class="red">{$info1.transfer_type}</label>
+	                <label for="hierarchy" class="orange">{$info1.hierarchy}</label>
+                </div>
+                {/if}
+            </div>
+            <div class="pro-label">
+                {foreach name="$info1.inc_industry" item="industry"}
+                <span>{$industry}</span>
+                {/foreach}
+            </div>
+            <div class="pro-box padding-0">
+                <p class="height-auto">{$info1.introduction}</p>
+            </div>
+        </div>
+        <div class="news-tab1 border">
+		    <div data-index = "0" class="actived">企业介绍</div>
+		    <div data-index = "1">商业计划书</div>
+		    <div data-index = "2">投资问答</div>
+        </div>
+        {if condition="$info1.is_display eq 0"}
+		<div class="news-tab1">
+		    <div data-index = "3">公司概况</div>
+            <div data-index = "4">财务指标</div>
+            <div data-index = "5">新闻公告</div>
+			<div data-index = "6">研报</div>
+		</div>
+		{/if}
+		
+		<!--投资亮点start-->
+        <div class="news-box" style="display:block;">
+            {if condition="$info1.company_des neq [] || $info1.company_url neq []"}
+            <div class="news-info-box">
+                {foreach name="$info1.company_url" item="it"}
+                <img class="img" src="__UPLOAD__/{$it}" alt="公司简介">
+                {/foreach}
+                {foreach name="$info1.company_des" item="it"}
+                <p>{$it}</p>
+                {/foreach}
+            </div>
+            {/if}
+            {if condition="$info1.enterprise_des neq [] || $info1.enterprise_url neq []"}
+            <div class="news-info-box">
+                {foreach name="$info1.enterprise_url" item="it"}
+                <img class="img" src="__UPLOAD__/{$it}" alt="企业亮点">
+                {/foreach}
+                    {foreach name="$info1.enterprise_des" item="it"}
+                    <p>{$it}</p>
+                    {/foreach}
+            </div>
+            {/if}
+            {if condition="$info1.product_des neq [] || $info1.product_url neq []"}
+            <div class="news-info-box">
+                {foreach name="$info1.product_url" item="it"}
+                <img class="img" src="__UPLOAD__/{$it}" alt="核心产品">
+                {/foreach}
+                    {foreach name="$info1.product_des" item="it"}
+                    <p>{$it}</p>
+                    {/foreach}
+            </div>
+            {/if}
+            {if condition="$info1.analysis_des neq [] || $info1.analysis_url neq []"}
+            <div class="news-info-box">
+                {foreach name="$info1.analysis_url" item="it"}
+                <img class="img" src="__UPLOAD__/{$it}" alt="行业分析">
+                {/foreach}
+                    {foreach name="$info1.analysis_des" item="it"}
+                    <p>{$it}</p>
+                    {/foreach}
+            </div>
+            {/if}
+        </div>
+        <!--投资亮点end-->
+        <!--商业计划书start-->
+		<div class="news-box" style="display:none;">
+		
+			{if condition="$info1.business_plan neq ''"}
+            <div class="business-book">
+                <ul>
+                    <li>
+                        <div><span>{$info1.business_plan}</span><em>Pdf</em></div>
+                        {if condition="$through eq null || $through.status neq 1"}
+                        <a class="disRead" data-src="__UPLOAD__/{$info1.business_plan_url}">打开</a>
+                        {else /}
+                        <a data-src="__UPLOAD__/{$info1.business_plan_url}">打开</a>
+                        {/if}
+                    </li>
+                </ul>
+            </div>
+            {else /}
+            <div class="news-info-box">
+                <img class="img" src="/static/home/css/img/howtobp.png" alt="商业计划书">
+            </div>
+            {/if}
+        </div>
+        <!--商业计划书end-->
+        
+        <!--投资问答start-->
+		<div class="news-box" style="display:none;">
+	                {foreach name="$info1.project_qa" item="it"}		
+			  <div class="tzwd">
+			      <div class="tzwd-wen clearfix">
+			      	<div class="tzwd-wen-logo tzwd-show">
+			      	    <img src="/static/home/images/wen.png" class="wen">
+			      	</div>
+			      	<div class="tzwd-wen-content">
+			      	  {$it.question}  
+			        </div>
+			      </div>
+			      <div class="tzwd-da clearfix">
+			      	<div class="tzwd-da-logo tzwd-show">
+			      		<img src="/static/home/images/da.png" class="da">
+			      	</div>
+			      	<div class="tzwd-da-content">
+			          {$it.answer}
+			      	</div>
+			      </div>
+			  </div> 
+			{/foreach}
+			<div class="foot-tips">已到底部</div>
+        </div>
+        <!--投资问答end-->
+        
+        <!--部分标签不显示-->
+        {if condition="$info1.is_display eq 0"}
+		<!--公司概况-->
+		<div class="news-box" style="display:none;">
+			<div class="info-box2">
+				<div class="info-tit">
+					<strong>基本信息</strong>
+				</div>
+				{if condition = "$info.gszls neq []"}
+				<div class="info-con">
+					<div class="information">
+						<p><label>公司名称：</label>{$info.gszls.gsqc}</p>
+						<p><label>公司网址：</label><span class="c1">{$info.gszls.gswz}</span></p>
+						<p><label>注册地址：</label>{$info.gszls.zcdz}</p>
+						<p><label>主营业务：</label>{$info.gszls.zyyw}</p>
+						<!--<p><label>所属区域：</label>上海-上海市</p>-->
+						<p><label>所属行业：</label>{$info.gszls.xyfl}</p>
+						<p><label>法定代表人：</label>{$info.gszls.frdb}</p>
+						<p><label>董事会秘书：</label>{$info.gszls.gsdm}</p>
+						<p><label>电话：</label>{$info.gszls.gsdh}</p>
+						<p><label>传真：</label>{$info.gszls.gscz}</p>
+						<p><label>总股本：</label>{$info.gszls.zgbwg}万股</p>
+						<p><label>挂牌日期：</label>{$info.gszls.gprq}</p>
+						<p><label>挂牌推荐：</label>{$info.gszls.tjgpqs}</p>
+					</div>
+				</div>
+				{/if}
+				<!--<a href="###" class="btn-open btn-change"><i class="fa fa-angle-down"></i><span>展开</span></a>-->
+			</div>
+			<div class="info-box2">
+				<div class="info-tit">
+					<strong>公司简介</strong>
+				</div>
+				<div class="info-con2">
+					<p>{$info.gszls.gsjj}</p>
+				</div>
+			</div>
+			<div class="info-box2">
+				<div class="info-tit">
+					<strong>中介机构</strong>
+				</div>
+				{if condition = "$info.gszls neq []"}
+				<div class="info-con3">
+					<p><label>挂牌推荐机构：</label>{$info.gszls.tjgpqs}</p>
+					<p><label>会计师事务所：</label>{$info.gszls.hjsws}</p>
+					<p><label>律师事务所：</label>{$info.gszls.lssws}</p>
+				</div>
+				{/if}
+			</div>
+			
+			{if condition="$info.gdyjs neq []"}
+			<div class="info-box2">
+				<div class="info-tit">
+					<strong>主要股东</strong>
+				</div>
+				<div class="info-con4">
+					<div class="box-1">
+						<canvas id="myChart" width="240" height="240"></canvas>
+					</div>
+					<div class="box-2">
+						截止日：{$info['gdyjs'][0]['jzrq']}<br />
+						股东数：{$info.gdyjs_num}<br />
+					</div>
+					<table class="table-2">
+						<thead>
+							<tr>
+								<th width="10%">序</th>
+								<th>股东名称</th>
+								<th width="26%">持股数</th>
+								<th width="18%">占比</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.gdyjs" item="it"}
+							<tr>
+								<td>{$it.cgpm}</td>
+								<td>{$it.gdmc}</td>
+								<td>{$it.cgsl}</td>
+								<td>{if condition="$it.fen neq ''"}{$it.fen}%{/if}</td>
+								<!--
+								<td>{if condition="$it.fen neq ''"}{$it.fen}%{/if}</td>
+								-->
+							</tr>
+							{/foreach}
+						</tbody>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td>合计</td>
+								<td>{$info.cgsl_num}</td>
+								<td>{if condition="$t neq 0.00"}{$t}%{/if}</td>
+								<!--
+								<td>{if condition="$t neq 0.00"}{$t}%{/if}</td>
+								-->
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			{/if}
+			<div class="info-box2">
+				<div class="info-tit">
+					<strong>高管介绍</strong>
+				</div>
+				<div class="info-con4">
+					<!--<div class="tab-1">
+						<span class="actived">董事会(5人)</span>
+						<span>监事会(5人)</span>
+						<span>高管(5人)</span>
+					</div>-->
+					<div class="tab-head">
+						<span class="name">姓名</span>
+						<span class="job">职务</span>
+						<span class="num">持股人数</span>
+					</div>
+					<div class="tab-box" style="display: block;">
+						<div class="toggle">
+							<dl>
+								{foreach name="$info.ggzls" item="it"}
+								<dt>
+									<span class="name">{$it.xm}</span>
+									<span class="job">{$it.zw}</span>
+									<span class="num" style="text-align: center;">{if condition="$it.cgsl neq ''"}{$it.cgsl}股{else /}-{/if}</span>
+								</dt>
+								<dd>
+									<div class="info-hd">
+										<span>学历：{$it.xl}</span>
+										<!--<span>任职到期日：2018-07-22</span>-->
+									</div>
+									<div class="info-bd">
+										<p>{$it.jl}</p>
+										<!--<div class="text-right">此简介更新于2015年-12-08</div>-->
+									</div>
+								</dd>
+								{/foreach}
+							</dl>
+						</div>
+					</div>
+					<div class="foot-tips">已到底部</div>
+				</div>
+			</div>
+        </div>
+        
+		<!--财务指标start-->
+		<div class="news-box" style="display:none;">		    
+			<div class="info-son-tab">
+				{if condition="$info.lirun neq []"}<a name="ok">净利润</a>{else /}<a name="false">净利润</a>{/if}
+				{if condition="$info.shouru neq []"}<a name="ok">营业收入</a>{else /}<a name="false">营业收入</a>{/if}
+				{if condition="$info.zichan neq []"}<a name="ok">每股净资产</a>{else /}<a name="false">每股净资产</a>{/if}
+				{if condition="$info.xianjinliu neq []"}<a name="ok">每股现金流</a>{else /}<a name="false">每股现金流</a>{/if}
+				{if condition="$info.maolilv neq []"}<a name="ok">毛利率</a>{else /}<a name="false">毛利率</a>{/if}
+				{if condition="$info.shouyi neq []"}<a name="ok">每股收益</a>{else /}<a name="false">每股收益</a>{/if}
+				{if condition="$info.gongjijin neq []"}<a name="ok">每股公积金</a>{else /}<a name="false">每股公积金</a>{/if}
+				{if condition="$info.weifenpei neq []"}<a name="ok">每股未分配</a>{else /}<a name="false">每股未分配</a>{/if}
+			</div>
+			{if condition="$info.lirun neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-1"></canvas>
+					<h4 class="f-h4 change pos cli">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar1">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">净利润</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.lirun" idex="key" item="it"}
+								{if condition="substr($it.bbrq,5,2) neq 12"}
+									<tr class="zhong" style="display:none;">
+										<td>{$it.bbrq}</td>
+										{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+										<td>{$it.xmsz/10000|round = 2}万</td>
+										{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+										<td>{$it.xmsz/100000000|round = 2}亿</td>
+										{else /}
+										<td>{$it.xmsz}</td>
+										{/if}
+										<td>{$it.lirun_bi}</td>
+									</tr>
+								{else/}
+									<tr class="nian">
+										<td>{$it.bbrq}</td>
+										{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+										<td>{$it.xmsz/10000|round = 2}万</td>
+										{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+										<td>{$it.xmsz/100000000|round = 2}亿</td>
+										{else /}
+										<td>{$it.xmsz}</td>
+										{/if}
+										<td>{$it.lirun_bi}</td>
+									</tr>
+								{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.shouru neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-2"></canvas>
+					<h4 class="f-h4 change pos cli1">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar2">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.shouru" idex="key" item="it"}
+							
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.shouru_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.shouru_bi}</td>
+								</tr>
+							{/if}								
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.zichan neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-3"></canvas>
+					<h4 class="f-h4 change pos cli2">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar3">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.zichan" idex="key" item="it"}
+							
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.zichan_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.zichan_bi}</td>
+								</tr>
+							{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.xianjinliu neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-4"></canvas>
+					<h4 class="f-h4 change pos cli3">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar4">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.xianjinliu" idex="key" item="it"}
+							
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.xianjinliu_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.xianjinliu_bi}</td>
+								</tr>
+							{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.maolilv neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-5"></canvas>
+					<h4 class="f-h4 change pos cli4">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar5">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.maolilv" idex="key" item="it"}
+						
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.maolilv_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.maolilv_bi}</td>
+								</tr>
+							{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.shouyi neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-6"></canvas>
+					<h4 class="f-h4 change pos cli5">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar6">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.shouyi" idex="key" item="it"}
+							
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.shouyi_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.shouyi_bi}</td>
+								</tr>
+							{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.gongjijin neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-7"></canvas>
+					<h4 class="f-h4 change pos cli6">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar7">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.gongjijin" idex="key" item="it"}
+							
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.gongjijin_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.gongjijin_bi}</td>
+								</tr>
+							{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.weifenpei neq []"}
+			<div class="info-son-con" name="ok">
+			{else /}
+			<div class="info-son-con" name="false">
+			{/if}
+				<div class="info-chart">
+					<canvas id="chart-area-8"></canvas>
+					<h4 class="f-h4 change pos cli7">
+						<div class="text">
+							<s>
+							    <img src="__CSS__/img/arrdw.png">
+							</s>
+							<span>年报</span>
+						</div>
+						<ul class="lie">
+							<li data-index="1">年报</li>
+							<li data-index="2">中报</li>
+						</ul>
+					</h4>
+				</div>
+				<div class="information2 bar8">
+					<table class="table-3">
+						<thead>
+							<tr>
+								<th width="35%">报告期</th>
+								<th width="30%">营业收入</th>
+								<th>同比上涨</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach name="$info.weifenpei" idex="key" item="it"}
+							<!--
+							<tr>
+								<td>{$it.bbrq}</td>
+								<td>{$it.xmsz}</td>
+								<td>{$it.weifenpei_bi}</td>
+							</tr>
+							-->
+							{if condition="substr($it.bbrq,5,2) neq 12"}
+								<tr class="zhong" style="display:none;">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.weifenpei_bi}</td>
+								</tr>
+							{else/}
+								<tr class="nian">
+									<td>{$it.bbrq}</td>
+									{if condition="($it.xmsz egt 10000) or ($it.xmsz lt -10000)"}
+									<td>{$it.xmsz/10000|round = 2}万</td>
+									{elseif condition="($it.xmsz egt 100000000) or ($it.xmsz lt -100000000)" /}
+									<td>{$it.xmsz/100000000|round = 2}亿</td>
+									{else /}
+									<td>{$it.xmsz}</td>
+									{/if}
+									<td>{$it.weifenpei_bi}</td>
+								</tr>
+							{/if}
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+				<!--<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>-->
+			</div>
+			{if condition="$info.cwbbs1 neq []"}
+			<div class="list-1">
+				<div class="list-head">
+					<strong>利润表</strong>
+				</div>
+				<ul class="list4 of">
+					<li>营业收入</li>
+					<li>净利润<a class="header_ioop" href="/home/financial/index/neeq/{$info1.stock_code}/name/{$info1.pro_name}"></a></li>
+					<li>扣非净利润</li>
+					<a href="/home/financial/index/neeq/{$info1.stock_code}/name/{$info1.pro_name}" class="link_ref"></a>
+				</ul>
+				<div class="swiper-container1">			
+					<div class="swiper-wrapper1">	
+						{foreach name="$info.cwbbs1" item="it"}
+						<div class="swiper-slide" style="width:200px;">
+							<span class="year">{$it.reportdate}</span>
+							<ul class="list4">
+								<li>{if condition="isset($it.value.OPERATEREVE)"}{$it.value.OPERATEREVE}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.NETPROFIT)"}{$it.value.NETPROFIT}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.KCFJCXSYJLR)"}{$it.value.KCFJCXSYJLR}{else /}-{/if}</li>
+							</ul>		            	         	
+						</div>
+						{/foreach}
+					</div>
+					<!--
+					<div class="list-pg">					
+						<div class="swiper-button-prev"><i class="fa fa-caret-left"></i></div>
+						<div class="swiper-button-next"><i class="fa fa-caret-right"></i></div>
+					</div>
+					-->
+				</div>
+			</div>
+			{/if}
+			{if condition="$info.cwbbs2 neq []"}
+			<div class="list-1">
+				<div class="list-head">
+					<strong>资产负债表</strong>				
+				</div>
+				<ul class="list4 of">
+					<li>流动资产</li>
+					<li>非流动资产</li>
+					<li>资产总计<a class="header_ioop" href="/home/financial/index2/neeq/{$info1.stock_code}/name/{$info1.pro_name}"></a></li>
+					<li>负债合计</li>
+					<li>实收资本</li>
+					<li>股东权益</li>
+					<a href="/home/financial/index2/neeq/{$info1.stock_code}/name/{$info1.pro_name}" class="link_ref"></a>
+				</ul>
+				<div class="swiper-container1">
+					<div class="swiper-wrapper1">
+						{foreach name="$info.cwbbs2" item="it"}
+						<div class="swiper-slide" style="width:200px;">
+							<span class="year">{$it.reportdate}</span>
+							<ul class="list4">
+								<li>{if condition="isset($it.value.SUMLASSET)"}{$it.value.SUMLASSET}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.SUMNONLASSET)"}{$it.value.SUMNONLASSET}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.SUMASSET)"}{$it.value.SUMASSET}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.SUMLIAB)"}{$it.value.SUMLIAB}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.SHARECAPITAL)"}{$it.value.SHARECAPITAL}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.SUMSHEQUITY)"}{$it.value.SUMSHEQUITY}{else /}-{/if}</li>
+							</ul> 	
+						</div>
+						{/foreach}
+					</div>
+					<!--
+					<div class="list-pg">					
+						<div class="swiper-button-prev"><i class="fa fa-caret-left"></i></div>
+						<div class="swiper-button-next"><i class="fa fa-caret-right"></i></div>
+					</div>
+					-->
+				</div>
+			</div>
+			{/if}
+			{if condition="$info.cwbbs3 neq []"}
+			<div class="list-1">
+				<div class="list-head">
+					<strong>现金流量表</strong>
+				</div>
+				<ul class="list4 of">
+					<li>经营现金流净额</li>
+					<li>投资现金流净额<a class="header_ioop" href="/home/financial/index3/neeq/{$info1.stock_code}/name/{$info1.pro_name}"></a></li>
+					<li>筹资现金流净额</li>
+					<a href="/home/financial/index3/neeq/{$info1.stock_code}/name/{$info1.pro_name}" class="link_ref"></a>
+				</ul>
+				<div class="swiper-container1">			
+					<div class="swiper-wrapper1">
+						{foreach name="$info.cwbbs3" item="it"}
+						<div class="swiper-slide" style="width:200px;">
+							<span class="year">{$it.reportdate}</span>
+							<ul class="list4">
+								<li>{if condition="isset($it.value.NETOPERATECASHFLOW)"}{$it.value.NETOPERATECASHFLOW}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.NETINVCASHFLOW)"}{$it.value.NETINVCASHFLOW}{else /}-{/if}</li>
+								<li>{if condition="isset($it.value.NETFINACASHFLOW)"}{$it.value.NETFINACASHFLOW}{else /}-{/if}</li>
+							</ul> 	
+						</div>
+						{/foreach}
+					</div>
+					<!--
+					<div class="list-pg">					
+						<div class="swiper-button-prev"><i class="fa fa-caret-left"></i></div>
+						<div class="swiper-button-next"><i class="fa fa-caret-right"></i></div>
+					</div>
+					-->
+				</div>
+			</div>
+			{/if}
+			<div class="foot-tips">已到底部</div>
+        </div>
+        <!--财务指标end-->
+        
+        
+		<!--新闻公告start-->
+		<div class="news-box" style="display:none;">
+			<ul class="list-2">
+				{foreach name="$info.gonggaos" item="it"}
+				<li>
+					<a href="{:url('GonggaoInfo/index' ,['ggid' => $it.ggid])}">
+						<p>【{$it.secu_s_name}】{$it.title}</p>
+						<div class="date">{$it.date}</div>
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+			<div class="foot-tips">已到底部</div>		    
+        </div>
+        <!--新闻公告end-->
+        
+		<!--研报start-->
+		<div class="news-box" style="display:none;">
+			<ul class="list-2">
+				{foreach name="$info.yanbaos" item="it"}
+				<li>
+					<a href="{:url('YanbaoInfo/index' ,['id' => $it.id])}">
+						<p>【{$it.org}】{$it.title}</p>
+						<div class="date">{$it.report_date}</div>
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+			<div class="foot-tips">已到底部</div>
+        </div>
+        <!--研报end-->
+       {/if}
+       <br/><br/><br/>
+		<!--footer-->	
+        <div class="pro-barh" style="font-size:14px;">
+       	 	<div style="width:100%;height:20px;background:#ffffff;"></div>		
+        	<div class="pro-barc">
+        	{if condition="$sign eq 'true'"}
+            <a class="collection actived" data-id="{$info1.pro_id}">已收藏</a>
+            {else /}
+            <a class="collection" data-id="{$info1.pro_id}">收藏</a>
+            {/if}
+            </div>
+            <div class="pro-bart">
+	        {if condition="$info1.contacts_uid eq 0"}
+	        	<a href="{:url('CustomerService/index',['id'=>$info.pro_id])}">联系客服</a>
+	        {else /}
+	        	<a class="chatme" data-id="{$info1.contacts_uid}">和TA聊天</a>
+	        {/if}
+	        </div>
+        </div>
+      
+        <div id="shadeAuth" class="dno" style="background:#ffffff;width:100%;height:100%;position:absolute;top:0;left:0;"></div>
+	    <!-- 认证模态框 -->
+	    <div class="modal fade in" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-describedby="公众号二维码">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div style="width:290px;margin:0 auto;">
+	                        <img src="/static/frontend/images/to_auth.png" width="290" alt="">
+	                        <div id="closeAuthModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+	                        <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+	                        </div>
+	                        <a href="javascript:void(0)" onclick="doreg()" style="position: absolute;top: 365px;left: 75px;width: 210px;height: 35px;line-height:30px;"></a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <input id="is_follow" value="{$follow}" type="hidden">
+	    <!-- 完善模态框 -->
+	    <div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="认证">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div style="width:290px;margin:0 auto;">
+	                        <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+	                        <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+	                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+	                        </div>
+	                        <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+	                     </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<div class="modal fade in" id="sendModal" style="top:30%;left:15%;width:70%;height:150px;border-radius:15px;border:solid 1px #eff5ff;background:#fff;" >
+			<div style="height:100px;color:#333;">
+				<div style="text-align:right;line-height:30px;"><span id="closeSendModal" style="margin-right:16px;font-size:14px;">X</span></div>
+	            <span style="line-height:40px;font-size:16px;">是否就此次项目与TA沟通？</span>
+			</div>
+			<div style="font-size:16px;line-height:50px;">
+	        	<div id="cancel"  data-id="{$info1.contacts_uid}" style="float:left;width:50%;height:50px;background:#eff5ff;">
+	        		<a style="color:#333;">否</a>
+	        	</div>
+	            <div id="confirm" data-id="{$info1.contacts_uid}"style="float:right;width:50%;height:50px;background-image: linear-gradient(-134deg, #679EFE 0%, #2873F4 100%);">
+	            	<a style="color:#fff;">是</a>
+	            </div>
+	        </div>
+  		</div>
+    </body>
+	<script src="__HOME__/js/weixin_share.js"></script>
+	<script type="text/javascript">
+		var is_follow = $("#is_follow").val();
+		
+		function doreg(){
+			if(is_follow==1){
+        		window.location.href = '/static/frontend/reg.html';
+        	}else{
+        		window.location.href = '/static/frontend/followtab.html';
+        	}
+		}
+		
+		function doinfo(){
+			if(is_follow==1){
+        		window.location.href = '/static/frontend/basic-info.html';
+        	}else{
+        		window.location.href = '/static/frontend/followtab.html';
+        	}
+		}
+
+        $("#closeAuthModal").click(function(event) {
+            history.back(-1);
+        });
+        $("#closeCmpInfoModal").click(function(event) {
+            history.back(-1);
+        });
+        
+        $("#closeSendModal").click(function(event) {
+        	$("#sendModal").hide();
+        });
+        
+		$(document).ready(function () {
+		    $(".news-box").eq(1).css({"display":"none"});
+			$(".news-box").eq(2).css({"display":"none"});
+			var arr = [];
+		 	$(".chatme").on("click",function(){
+	        	var _this 	= $(this);
+	        	var uid 	= _this.attr("data-id");
+	        	if (ui.userType == 0) {
+	        		$("#authModal").modal("show");
+	                $("#shadeAuth").show();
+	        	}else{
+	        		if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+	               		$("#cmpInfoModal").modal("show");
+	                    $("#shadeAuth").show();
+	                }else{
+	                	if(is_follow==1){
+	                		$("#sendModal").show();
+			        	}else{
+			        		window.location.href = '/static/frontend/followtab.html';
+			        	}
+	                }
+	        	}
+		 	});
+			 
+			$("#confirm").on("click",function(){
+				var _this 	= $(this);
+		        var uid 	= _this.attr("data-id");
+				var send_id = $("input[name='send_id']").val();
+         		var link = "http://fin.jrfacai.com/home/project_info/index/id/"+send_id;
+         		$.ajax({
+                     url: "{:url('chat/sendUrl')}",
+                     data: {uid:uid ,link:link,pro_id:send_id},
+                     type: "POST",
+                     dataType: 'json',
+                     success: function(resp){
+                         if(resp.code == 1){
+                         	window.location.href = '/home/chat/index/to_uid/'+uid;
+                         }
+                     }
+                 });
+			 });
+			 
+			$("#cancel").on("click",function(){
+				var _this 	= $(this);
+	        	var uid 	= _this.attr("data-id");
+				window.location.href = '/home/chat/index/to_uid/'+uid;
+			 });
+			 
+			$(".collection").on("click",function(){
+				var _this 	= $(this);
+				var id 		= _this.attr("data-id");
+				if(_this.hasClass("actived")){
+//                        _this.removeClass("actived");
+					var sign = 'false';
+				}else{
+//                        _this.addClass("actived");
+					var sign = 'true';
+				}
+				$.ajax({
+					url: "{:url('ProjectInfo/collection')}",
+					data: {sign:sign , id:id},
+					type: "POST",
+					dataType: 'json',
+					success: function(resp){
+						alert(resp.msg);
+						if(resp.code){
+							if(_this.hasClass("actived")){
+								_this.removeClass("actived");
+								_this.text("收藏");
+							}else{
+								_this.addClass("actived");
+								_this.text("已收藏");
+							}
+						}
+					}
+				});
+			});
+			$(".news-tab1 div").on("click", function () {
+				$(".news-tab1 div").removeClass("actived");
+				$(this).addClass("actived");
+				$(".news-box").hide();
+				$(".news-box").eq($(this).attr("data-index")).show();
+			});
+			//$(".news-box .ask-box").eq(0).css({"display":"block"});
+			//$(".news-box-tab a").eq(0).addClass("actived");
+			//$(".news-box-tab a").on("click", function(){
+			//    $(".news-box-tab a").removeClass("actived");
+			//    $(this).addClass("actived");
+			//    $(".ask-box").hide();
+			//    $(".ask-box").eq($(this).index()).show();
+			//});
+			$(".business-book a").click(function(){
+				if($(this).hasClass("disRead")){
+					$(".msg-dialog").css("display","block");
+				}else{
+					location.href = $(this).attr("data-src");
+				}
+			});
+		});
+	</script>
+	<script>
+            var pie_data 				= {$pie_data};
+            var pie_name 				= {$pie_name};
+            var pie_color 				= {$pie_color};
+            /**利润**/
+            var lirun 					= {$lirun};
+			//净利润年报数据
+            var lirun_data 				= {$lirun_data};
+			//净利润中报数据
+			var lirun_zhong 			= {$lirun_zhong};
+			//净利润年报时间
+            var lirun_name 				= {$lirun_name};
+			//净利润中报时间
+			var lirun_name_zhong 		= {$lirun_name_zhong};
+            var lirun_color 			= {$lirun_color};
+			//净利润同比
+            var lirun_bi 				= {$lirun_bi};
+			//净利润同比年报数据
+            var lirun_bi_data 			= {$lirun_bi_data};
+			//净利润同比中报数据
+			var lirun_bi_zhong 			= {$lirun_bi_zhong};
+            var lirun_bi_color 			= {$lirun_bi_color};
+            /**营业收入**/
+            var shouru 					= {$shouru};
+            var shouru_data 			= {$shouru_data};
+            var shouru_name 			= {$shouru_name};
+			//中报
+			var yingye_zhong 			= {$yingye_zhong};
+            var yingye_time_zhong 		= {$yingye_time_zhong};
+			
+            var shouru_color 			= {$shouru_color};
+            var shouru_bi 				= {$shouru_bi};
+            var shouru_bi_data 			= {$shouru_bi_data};
+			//中报
+			var ying_bi_zhong 			= {$ying_bi_zhong};
+			
+            var shouru_bi_color 		= {$shouru_bi_color};
+            /**每股净资产**/
+            var zichan 					= {$zichan};
+            var zichan_data 			= {$zichan_data};
+            var zichan_name 			= {$zichan_name};
+			//中报
+			var jing_zhong 				= {$jing_zhong};
+            var jing_time 				= {$jing_time};
+			
+            var zichan_color 			= {$zichan_color};
+            var zichan_bi 				= {$zichan_bi};
+            var zichan_bi_data 			= {$zichan_bi_data};
+			//中报
+			var jing_bi_zhong 			= {$jing_bi_zhong};
+			
+            var zichan_bi_color 		= {$zichan_bi_color};
+            /**每股现金流**/
+            var xianjinliu 				= {$xianjinliu};
+            var xianjinliu_data 		= {$xianjinliu_data};
+            var xianjinliu_name 		= {$xianjinliu_name};
+			//中报
+			var xianjin_zhong 			= {$xianjin_zhong};
+            var xianjin_time_zhong 		= {$xianjin_time_zhong};
+			
+            var xianjinliu_color 		= {$xianjinliu_color};
+            var xianjinliu_bi 			= {$xianjinliu_bi};
+            var xianjinliu_bi_data 		= {$xianjinliu_bi_data};
+			//中报
+			var xianjin_bi_zhong 		= {$xianjin_bi_zhong};
+			
+            var xianjinliu_bi_color 	= {$xianjinliu_bi_color};
+            /**毛利率**/
+            var maolilv 				= {$maolilv};
+            var maolilv_data 			= {$maolilv_data};
+            var maolilv_name 			= {$maolilv_name};
+			//中报
+			var lilv_zhong 				= {$lilv_zhong};
+            var lilv_time_zhong 		= {$lilv_time_zhong};
+			
+            var maolilv_color 			= {$maolilv_color};
+            var maolilv_bi 				= {$maolilv_bi};
+            var maolilv_bi_data 		= {$maolilv_bi_data};
+			//中报
+			var lilv_bi_zhong 			= {$lilv_bi_zhong};
+			
+            var maolilv_bi_color 		= {$maolilv_bi_color};
+            /**每股收益**/
+            var shouyi 					= {$shouyi};
+            var shouyi_data 			= {$shouyi_data};
+            var shouyi_name 			= {$shouyi_name};
+			//中报
+			var meigu_zhong 			= {$meigu_zhong};
+            var meigu_time_zhong 		= {$meigu_time_zhong};
+			
+            var shouyi_color 			= {$shouyi_color};
+            var shouyi_bi 				= {$shouyi_bi};
+            var shouyi_bi_data 			= {$shouyi_bi_data};
+			//中报
+			var meigu_bi_zhong 			= {$meigu_bi_zhong};
+			
+            var shouyi_bi_color 		= {$shouyi_bi_color};
+            /**每股公积金**/
+            var gongjijin 				= {$gongjijin};
+            var gongjijin_data 			= {$gongjijin_data};
+            var gongjijin_name 			= {$gongjijin_name};
+			//中报
+			var gong_zhong 				= {$gong_zhong};
+            var gong_time_zhong 		= {$gong_time_zhong};
+			
+            var gongjijin_color 		= {$gongjijin_color};
+            var gongjijin_bi 			= {$gongjijin_bi};
+            var gongjijin_bi_data 		= {$gongjijin_bi_data};
+			//中报
+			var gong_bi_zhong 			= {$gong_bi_zhong};
+			
+            var gongjijin_bi_color 		= {$gongjijin_bi_color};
+            /**每股未分配**/
+            var weifenpei 				= {$weifenpei};
+            var weifenpei_data 			= {$weifenpei_data};
+            var weifenpei_name 			= {$weifenpei_name};
+			//中报
+			var weifenpei_zhong 		= {$weifenpei_zhong};
+            var weifenpei_time_zhong	= {$weifenpei_time_zhong};
+			
+            var weifenpei_color 		= {$weifenpei_color};
+            var weifenpei_bi 			= {$weifenpei_bi};
+            var weifenpei_bi_data 		= {$weifenpei_bi_data};
+			//中报
+			var weifenpei_bi_zhong 		= {$weifenpei_bi_zhong};
+			
+            var weifenpei_bi_color 		= {$weifenpei_bi_color};
+            var config_bar_lirun 		= [];
+            var config_bar_shouru 		= [];
+            var config_bar_zichan 		= [];
+            var config_bar_xianjinliu 	= [];
+            var config_bar_maolilv 		= [];
+            var config_bar_shouyi 		= [];
+            var config_bar_gongjijin 	= [];
+            var config_bar_weifenpei 	= [];
+    </script>
+    <script src="__HOME__/js/zfmxes_bar.js"></script>
+</html>

@@ -1,0 +1,88 @@
+.widget label input[type=checkbox].checkbox + span:before, .widget label input[type=radio].radiobox + span:before {
+    border: 1px solid #5E5E5E
+}
+
+.widget label:hover input[type=checkbox].checkbox + span:before {
+    border-color: #E77317
+}
+
+.widget label {
+    margin-bottom: 4 !important
+}
+
+.widget .checkbox i {
+    border-color: #7A7A7A
+}
+
+.widget .checkbox, .widget .radio {
+    padding-left: 22px
+}
+
+.widget.activate {
+    right: 0 !important;
+    box-shadow: -11px 12px 23px rgba(0, 0, 0, .2);
+    padding: 5px 10px 10px
+}
+
+.widget .setting + form {
+    display: none
+}
+
+.widget.activate .setting + form {
+    display: block
+}
+
+.widget {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 160px;
+    z-index: 902;
+    background: #F1DA91
+}
+
+.widget > span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    height: 30px;
+    width: 105px;
+    border-radius: 5px 0 0 5px;
+    background: #F1DA91;
+    text-align: center;
+    line-height: 28px;
+    cursor: pointer
+}
+
+.widget > span i {
+    font-size: 17px
+}
+
+.widget.activate > span a:nth-child(3) i:before {
+    content: "\f00d"
+}
+
+.widget.activate > span {
+    left: -105px
+}
+
+.widget > span:hover i {
+    color: #333 !important
+}
+
+.widget form section {
+    margin: 0 !important
+}
+
+.widget .btn {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+    padding: 3px 7px !important;
+    height: auto !important
+}
+
+.smart-rtl .widget .margin-right-5 {
+    margin-right: 0 !important
+}

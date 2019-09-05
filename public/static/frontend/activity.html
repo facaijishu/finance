@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="./css/common.css" />
+    <script type="text/javascript" src="../router.js"></script>
+    <script type="text/javascript" src="./js/common.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/component.js"></script>
+    <style>
+        .active{
+            color: #0076FF;
+        }
+        .activeSpan{
+            display: block;
+            width:22px;
+            height:3px;
+            background-color: #0076FF;
+            border-radius:1px;
+            position:relative;
+            top: 2px;
+            margin:2px auto 0;
+        }
+    </style>
+</head>
+
+<body id="box" class="mofh bg_gray" style="width:100%;">
+    
+    <section class="bg_white" style="overflow:hidden;width:100%;">
+        <!-- 搜索 -->
+        <div class="search-box pt15 pl15 pr15 clearfix porel">
+            <input type="text" class="form-control pull-left bg_gray" placeholder="输入项目、资金、需求" style="width:85%;">
+            <a href="./service.html" class="pull-left" style="width: 15%;">
+                <img src="./images/service.png" alt="" class="pull-right" style="height:34px;">
+            </a>
+            <img src="./images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 74%;top: 24px;z-index: 999;" alt="">
+        </div>
+
+        <!-- 菜单 -->
+        <div class="clearfix ml15 mr15 mt10 mb5">
+            <a style="width:20%;height:32px;line-height:32px;" class="pull-left text-center" href="#">
+                <span class="f16 c_primary">精选</span>
+            </a>
+            <a style="width:20%;height:32px;line-height:32px;" class="pull-left text-center" href="#">
+                <span class="c_black f16">学习</span>
+            </a>
+            <a style="width:20%;height:32px;line-height:32px;" class="pull-left text-center" href="#">
+                <span class="c_black f16">路演</span>
+            </a>
+            <a style="width:20%;height:32px;line-height:32px;" class="pull-left text-center" href="#">
+                <span class="c_black f16">剧透</span>
+            </a>
+            <a style="width:20%;height:32px;line-height:32px;" class="pull-left text-center" href="#">
+                <span class="c_black f16">活动</span>
+                <span class="bg_primary dbk" style="width:21px;height:4px;border-radius:2px;position:relative;margin:0 auto;"> </span>
+            </a>
+        </div>
+    </section>
+    <div style="padding: 10px 7px 0;margin-top: 10px;">
+        <div class="bg_white" style="border-radius: 3px;padding: 10px 7px 0;  ">
+            <img src="./images/index-banner-2.png" alt="" width="100%">
+        </div>
+        <div class="clearfix pt15 text-center bg_white">
+            <div class="col-xs-4">
+                <div style="font-size: 14px;line-height: 20px;color: #007FED;" class="menuBtn">
+                    报名中
+                </div>
+                <span class="activeSpan menuBtnSpan"></span>
+            </div>
+            <div class="col-xs-4">
+                <div style="font-size: 14px;line-height: 20px;color: #333333;" class="menuBtn">
+                    全部活动
+                </div>
+                <span class="menuBtnSpan"></span>
+            </div>
+            <div class="col-xs-4">
+                <div style="font-size: 14px;line-height: 20px;color: #333333;" class="menuBtn">
+                    已结束
+                </div>
+                <span class="menuBtnSpan"></span>
+            </div>
+        </div>
+        <!-- 报名中活动 -->
+        <div id="ing" class="tabBox">
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;width: 100%;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;line-clamp: 2;-webkit-box-orient: vertical;">新产业、新转机、新升级  路演活动新升级  路演活动路演活动新升级  路演活动</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #FFFFFF;font-size: 12px;line-height: 20px;background-size: 58px 20px;background-image: url(./images/act_btn.png);width:58px;height:20px;position: absolute;right: 0;bottom: 0;" @click="actApply">去报名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #FFFFFF;font-size: 12px;line-height: 20px;background-size: 58px 20px;background-image: url(./images/act_btn.png);width:58px;height:20px;position: absolute;right: 0;bottom: 0;" @click="actApply">去报名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #FFFFFF;font-size: 12px;line-height: 20px;background-size: 58px 20px;background-image: url(./images/act_btn.png);width:58px;height:20px;position: absolute;right: 0;bottom: 0;">去报名</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!-- 全部活动 -->
+        <div id="all" class="tabBox" style="display: none;">
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #FFFFFF;font-size: 12px;line-height: 20px;background-size: 58px 20px;background-image: url(./images/act_btn.png);width:58px;height:20px;position: absolute;right: 0;bottom: 0;">去报名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机、新升级  路演活动</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #333333;font-size: 12px;line-height: 20px;background: #F0F0F0;box-shadow: 0 1px 2px 0 rgba(154,154,154,0.50);border-radius: 10px;width:58px;height:20px;position: absolute;right: 0;bottom: 0;">已结束</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 已结束活动 -->
+        <div id="ed" class="tabBox" style="display: none;">
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机、新升级  路演活动</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #333333;font-size: 12px;line-height: 20px;background: #F0F0F0;box-shadow: 0 1px 2px 0 rgba(154,154,154,0.50);border-radius: 10px;width:58px;height:20px;position: absolute;right: 0;bottom: 0;">已结束</div>
+                    </div>
+                </div>
+            </div>
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机、新升级  路演活动</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #333333;font-size: 12px;line-height: 20px;background: #F0F0F0;box-shadow: 0 1px 2px 0 rgba(154,154,154,0.50);border-radius: 10px;width:58px;height:20px;position: absolute;right: 0;bottom: 0;">已结束</div>
+                    </div>
+                </div>
+            </div>
+            <div class="porel clearfix bg_white mt10 ingDiv" style="padding: 6px 7px;">
+                <div class="pull-left">
+                    <img src="./images/index-banner-2.png" alt="" width="133" height="76" style="margin-top: 2px;">
+                </div>
+                <div class="pull-right ml10 porel ingRight" style="height: 78px;">
+                    <div class="f16 c_black" style="font-size: 16px;line-height: 22px;color: #1E1E1E;word-break:break-all;-webkit-line-clamp:2;width: ">新产业、新转机、新升级  路演活动</div>
+                    <div style="font-size: 10px;line-height: 14px;"><span class="date mr10" style="color: #999999;">2019年2月19日开始</span><span class="position" style="color: #007FED">浦东新区</span></div>
+                    <div>
+                        <p class="pull-left" style="font-size: 12px;line-height: 17px;color: #ED2C2C;position: absolute;left: 0;bottom: 0;">免费</p>
+                        <div class="pull-left text-center" style="color: #333333;font-size: 12px;line-height: 20px;background: #F0F0F0;box-shadow: 0 1px 2px 0 rgba(154,154,154,0.50);border-radius: 10px;width:58px;height:20px;position: absolute;right: 0;bottom: 0;">已结束</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部菜单 -->
+    <div style="height:80px;line-height:80px;"></div>
+    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+        <div style="width: 100%;height: 50px;" class="clearfix">
+            <a style="width:20%;" class="pull-left text-center" href="./index.html">
+                <img src="./images/sign-1-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_black">首页</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./">
+                <img src="./images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">市场</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./release-needs.html">
+                <img src="./images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
+                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./">
+                <img src="./images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">发现</div>
+            </a>
+            <a style="width:20%;" class="pull-left text-center" href="./my.html">
+                <img src="./images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
+                <div class="f12 c_gray">我的</div>
+            </a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#box").height($(window).height());
+        $(".article-box").width($(window).width()-185);
+        var slider = new Swiper('#index-slider', {
+            autoplay: 5000,
+            pagination : '.swiper-pagination',
+            paginationClickable :true,
+        })
+        var ingWidth = $(".ingDiv").width();
+        $(".ingRight").width(ingWidth-133-10);
+        //切换显示
+        $(".menuBtn").click(function(event) {
+            var i = $(".col-xs-4").index($(this).parent());
+            console.log(this)
+            var box = $(".tabBox").eq(i);
+            console.log(i)
+
+
+            //加当前菜单标识
+            $(".menuBtn").removeClass('active');
+            $(this).addClass('active');
+            $(".menuBtnSpan").removeClass('activeSpan');
+            $(".menuBtnSpan").eq(i).addClass('activeSpan');
+
+            //显示当前菜单对应tabBox
+            $(".tabBox").hide();
+            box.show();
+        });
+        // VUE实例
+        var vue = new Vue({
+            el: "#box",
+            data: {
+                
+            },
+            mounted: function () {
+                this.$nextTick(function() {
+                    vue.ui = ui;
+                });
+            },
+            methods: {
+                actApply: function () {
+                    location.href = "./activityDetails.html"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

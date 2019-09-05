@@ -1,0 +1,16 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    	<li role="presentation" class="active"><a href="javascript:void(0);">分红详情</a></li>
+    {else /}
+    	<li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Dividend/detail")}')">分红详情</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("Dividend/index")}')">返回</a>
+    {if condition="$info.accounting eq -1"}
+    	{if condition="$flg eq 1"}
+    		<a href="javascript:void(0);" style="float: right;" class="btn btn-link" data-id="{$info.di_id}" data-toggle="modal" data-target="#Modal">核算</a>
+    	{/if}
+    {/if}
+    {if condition="$info.success eq -1 && $info.accounting eq 1"}
+    	<a class="btn btn-link sendSuccess" data-id="{$info.di_id}" style="float: right;">发放</a>
+    {/if}
+</ul>

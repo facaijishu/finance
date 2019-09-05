@@ -1,0 +1,370 @@
+{include file="base/header" /}
+<style>
+	.clearfix:after{
+            display: block;
+            visibility: hidden;
+            clear: both;
+            height:0;
+            content: ".";
+    }
+</style>
+<style>
+	.detail-top{
+		height: 23.5%;
+		width: 100%;
+		background-color: #d6bb73;
+		padding-top: 11%;
+	}
+	.detail-break{
+		height: 1.5%;
+		width: 100%;
+		background-color: #ddd;
+		
+	}
+	.person-top{
+		height:50%;
+		width: 100%;    
+	}
+	.top-img{
+		width: 14.5%;
+		height: 73%;
+		border: 1px solid #d7a44c;
+		border-radius:50%;
+		margin-top: 2%; 
+	}
+	.person-middle{
+		width: 100%;
+		font-size: 1rem;
+	}
+	.person-bottom{
+		width: 100%;
+		height: 35%;
+		padding-top: 12px;
+	}
+</style>
+<style type="text/css">
+	.detail-content{
+		width: 100%;
+	}
+	.person-table{
+		width: 100%;
+        background-color: white;
+	}
+	.table-org{
+		width: 100%;
+	}
+	.table-org td{
+		border: 1px solid #ddd;
+		padding-left: 3%;
+	    padding-top: 1.5%;
+	    padding-bottom: 1.5%;
+	    color: #000;
+	    width: 9%;
+	}
+	.person-direction{
+		width: 100%;
+		background-color: white;
+	}
+	.direction-content{
+	   width: 80%;
+       float: left;
+       color:#000;
+       padding-top: 2%;
+       padding-bottom: 2%;
+	   overflow: hidden;
+	   text-overflow: ellipsis;
+	   white-space: nowrap;
+	   text-align: left;
+	   padding-left: 3%;
+	}
+	.direction-more{
+		color:#dba54b;
+		padding-top: 2%;
+	    float: right;
+	    margin-right: 3%;
+	    padding-bottom: 2%;
+	}
+	.person-done{
+		width: 100%;
+    	height: 10%;
+    	background-color: #f2f2f2;
+	}
+	.orange{
+        width: 2%;
+	    height: 24px;
+	    background-color: #deb46f;
+	    float: left;
+	    margin-top: 1%;
+	    margin-bottom: 1%;
+	    margin-left: 3%;
+	}
+	.done-org{
+        width: 18%;
+	    float: left;
+	    margin-top: 5px;
+	    font-weight: bold;
+	    font-size: 1rem;
+	    margin-left: 1%;
+	}
+	.detail-bottom{
+        width: 100%;
+    	height: 6%;
+        border-top: 0.1rem solid #dcdcdc; 
+    	background-color: #f2f2f2;
+    	bottom: -19px;
+    	position: fixed;
+    	z-index: 100;
+	}
+	#communicate{
+        width: 39%;
+	    background-color: #deb46f;
+	    color: #fff;
+	    margin-top: 1%;
+	}
+	#deliver{
+        width: 39%;
+	    background-color: #e03635;
+	    color: #fff;
+	    margin-top: 1%;
+	}
+	.warning{
+		width: 100%;
+	    height: 8%;
+	    background-color: red;
+	    color:#fff;
+	}
+	.warning-tips{
+		width: 90%;
+	    /* border: 1px solid; */
+	    text-align: left;
+	    margin: 0 auto;
+	}
+	.colum-title {
+	    /*border: 1px solid red;*/
+	    height: 8%;
+	    background-color: #fff;
+    }
+    .tzqy {
+	    float: left;
+	    margin-left: 5%;
+	    font-weight: bold;
+	    color: #000;
+	    margin-top: 4%;
+	    font-size: 1rem;
+    }
+    .sshy{
+    	float: right;
+        margin-right: 20%;
+        font-weight: bold;
+	    color: #000;
+	    margin-top: 4%;
+	    font-size: 1rem;
+    }
+    .query-left {
+    	float: left;
+        margin-left: 19px;
+        font-weight: bold;
+        width: 40%;
+        margin-left: 1%;
+        padding: 2%;
+        text-align: left;
+    }
+    .query-right {
+	    float: right;
+	    width: 56%;
+	    padding: 2%;
+    }
+    .tips{
+    	height: 22%;
+    	margin-bottom: 0;
+    }
+    .detail-bottom {
+	        width: 100%;
+		    height: 11%;
+		    border-top: 0.1rem solid #dcdcdc;
+		    background-color: #f2f2f2;
+		    bottom: -3%;
+		    position: fixed;
+		    z-index: 100;
+    }
+    #communicate{
+        width: 39%;
+	    background-color: #deb46f;
+	    color: #fff;
+	    margin-top: 1%;
+	}
+    .colum-query{
+    	background-color: #fff;
+    	padding: 2%;
+    }
+    /*遮罩*/
+	#zhezhao{
+	   position: absolute;
+       top: 0px;
+       background-color: black;
+       z-index: 2;
+       left: 0px;
+       opacity: 0.5;
+       display: none;
+	}
+	.jiao{
+		width: 0;
+		height: 0;
+		border:20px solid transparent;
+		border-bottom-color: white;
+		position: absolute;
+		top: 45%;
+        left: 86%;
+		z-index: 3;
+		display:none;
+	}
+	.more-direct{
+		text-align:left;
+        z-index:3;
+        overflow:scroll;
+        padding: 0 7%;
+        padding-bottom: 8%;
+        position: absolute;
+        top: 51%;
+        width: 98%;
+        display: none;
+        background: white;
+        border-radius: 7px;
+        margin-left: 1%;
+	}
+	#cha{
+        width: 7%;
+        text-align: center;
+        margin-left: 96%;
+        font-size: 2rem;
+        margin-top: -4%;
+    }
+</style>
+<body>
+       {include file="base/dividend" /}
+	<div class="warning">
+		<div class="warning-tips">
+		您的机构信息展示如下,请点击"确认展示",FA財将展示您的名称及微信头像,如有疑问请联系客服！
+	    </div>
+	</div>
+	 <div class="detail-top">
+	 	<div class="person-middle">
+	 		{$info.org_name}
+	 	</div>
+	 	<div class="person-bottom">
+	 		<span>{$info.contacts}&nbsp;|&nbsp;{$info.position}</span>
+	 	</div>
+	 </div>
+	 <div class="detail-break">
+	 	
+	 </div>
+	 <div class="detail-content">
+	 	<div class="person-table">
+	 		<table class="table-org">
+	 			<tr>
+	 				<td>资本类型: {$info.inc_capital}</td>
+	 				<td>管理规模: {$info.scale_min}-{$info.scale_max}{$info.unit}</td>
+	 			</tr>
+                <tr>
+	 				<td>所属区域: {$info.inc_area}</td>
+	 				<td>资金性质: {$info.inc_funds}</td>
+	 			</tr>  
+	 		</table>
+	 	</div>
+	 	<div id="zhezhao"></div>
+	 	<div class="person-direction clearfix">
+	 		<div class="direction-content">投资方向: <span>{$info.inc_industry}</span></div>
+	 		<div class="direction-more">更多>></div>
+	 	</div>
+	 	<div class="jiao"></div>
+	 	<div class="more-direct">
+            <div id="cha" title="关闭">×</div>
+            <div id="more-detail"></div>
+        </div>
+	 	<div class="person-done clearfix">
+           <div class="orange"></div>
+           <div class="done-org">已投项目</div>
+        </div>
+	 </div>
+	 <div class="colum-title clearfix">
+        	<div class="tzqy">投资企业</div>
+        	<div class="sshy">所属行业</div>
+     </div>
+     {if !empty($info.inc_target)}
+	     {foreach $info.inc_target as $key => $value}
+		     <ul class="colum-query clearfix" style="{if $key%2 == 0}background-color: #f2f2f2;{/if}">
+		     	  <li class="query-left">{$value['target_company']}</li>
+		     	  <li class="query-right">{$value['target_industry']}</li>
+		     </ul>
+	     {/foreach}
+     {/if}
+	 <div class="tips">已到底部</div>
+	 <input type="hidden" id="wx_uid" value="{$info.wx_uid}">
+	 <input type="hidden" id="org_id" value="{$info.org_id}">
+	 <input type="hidden" id="code">
+	 <div class="detail-bottom">
+	 	<a href="{:url('OrganizeInfo/service',['org_id'=>$info.org_id])}"><button id="communicate">联系客服</button></a>
+	 	<button id="deliver">确认展示</button>	 
+	 </div>
+</body>
+</html>
+<script type="text/javascript">
+    // var Organize_detail = "{:Url('Organize/detail')}";
+    // var id = "{$info.org_id}";
+	$(function(){
+		//点击更多
+		$('.direction-more').on('click',function(){
+                var content = $('.direction-content span').html();
+                // $('.more-direct').css('position','relative');
+                $('.more-direct #more-detail').html(content);
+                $('.more-direct,.jiao').show();
+                $('#zhezhao').css('width',$(document).width());
+                $('#zhezhao').css('height',$(document).height());
+                $('#zhezhao').show();
+		});
+		//点击X
+        $('#cha').on('click',function(){
+        	 $('.more-direct,.jiao').hide();
+        	 $('#zhezhao').hide();
+
+        });
+        //点击确认展示
+        $('#deliver').on('click',function(){
+        	//用户是否已确认
+        	var wx_uid = $("#wx_uid").val();
+        	if(wx_uid !=0){
+        		alert('此机构信息已经确认');
+        		return false;
+        	}
+        	
+            var mobile = prompt("请输入您的手机号确认机构信息");
+            var org_id = $("#org_id").val();
+            var mobile_length = $.trim(mobile).length;
+        	if (mobile_length == 0) {
+                alert('手机号不能为空');
+                return false;  
+        	}
+
+        	var mobile_pattern = /^1\d{10}$/;
+        	if(!(mobile_pattern.test(mobile))){
+        		alert('手机号格式错误');
+        		return false;
+        	} 
+        	$.ajax({
+        		url:"{:url('OrganizeInfo/doVerifyTel')}",
+                        data:{tel:mobile,id:org_id},
+        		type:"post",
+        		dataType:'json',
+        		success:function(resp){
+                           if(resp.code == 1){
+                   	      alert(resp.msg);
+                              window.location.href ="{:url('Organize/detail',['id'=>$info.org_id,'show'=>1])}";
+                         }else{
+                   	      alert(resp.msg);
+                         }
+                   } 
+        	});   
+            
+          });
+	});
+</script>

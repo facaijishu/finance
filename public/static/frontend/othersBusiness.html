@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <style>
+		.swidth{width:414px;}
+		@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+		.swidth{width:375px;}
+		}
+	</style>
+</head>
+
+<body class="mofh bg_gray" style="width:100%;">
+    <div class="back_index">
+		<a href="./index.html" id="ad">返回首页</a>
+	</div>
+	<div id="box" v-if="showDetail">
+        <section>
+            <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;height: 75px;">
+            <div id="pcHeader" class="radius shadow bg_white" style="position: absolute;top:20px;left:10px;z-index:999;">
+                <div style="padding:10px 5px 15px;">
+                    <div class="clearfix">
+                        <img class="pull-left mt5" :src="userInfo.userPhoto" width="46" height="46" style="border-radius:2px;margin-right:13px;">
+                        <div class="pull-left">
+                            <p style="font-size: 18px;line-height: 25px;color: #1E1E1E;margin-bottom: 10px;">{{userInfo.realName}}</p>
+                            <p style="font-size: 12px;line-height: 17px;color: #999999;">{{userInfo.company_jc}} | {{userInfo.position}}</p>
+                        </div>
+                        <div @click="followUser(userInfo)" v-if="userInfo.is_follow == '关注'" class="pull-right mt15 text-center ball" style="border-color: #545AFF;color: #007FED;border-radius: 2px;width: 70px;height: 24px;">{{userInfo.is_follow}}</div>
+                        <div @click="followUser(userInfo)" v-else class="pull-right mt15 text-center ball" style="border-color: #979797;color: #999999;border-radius: 2px;width: 70px;height: 24px;">{{userInfo.is_follow}}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:35px 15px 10px;background-color: #FFFFFF;">
+                <p style="font-size: 20px;color: #333333;line-height: 28px;">TA的标签</p>
+                <div class="clearfix mt20">
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;" v-for="l in userInfo.person_label">{{l}}</div>
+                </div>
+            </div>
+        </section>
+        <div style="overflow:hidden;width:100%;margin-top: 10px;">
+            <div class="ml5 mr5 bg_white clearfix mt5 pt10 bb1 radius_t">
+                <div style="width:50%;" class="pull-left text-center porel">
+                    <div class="navName pb10 c_primary">TA的业务</div>
+                    <div class="navSign bg_primary" style="height: 3px;line-height: 3px;border-radius: 2px;width: 32px;margin: -1px 0 0 -16px;position: absolute;left: 50%;"></div>
+                </div>
+                <div style="width:50%;" class="pull-left text-center porel">
+                    <div class="navName pb10">TA的需求</div>
+                    <div class="navSign bg_primary dno" style="height: 3px;line-height: 3px;border-radius: 2px;width: 32px;margin: -1px 0 0 -16px;position: absolute;left: 50%;"></div>
+                </div>
+            </div>
+            <div class="ml5 mr5 mb5 bg_white radius_b" style="height:10px;"></div>
+            <div id="busBox">
+                <div id="busBoxContent"></div>
+                <div id="moreBus" style="height:15px;line-height:15px;"></div>
+            </div>
+            <div id="needsBox" class="dno">
+                <div id="needsBoxContent"></div>
+                <div id="moreNeeds" style="height:15px;line-height:15px;"></div>
+            </div>
+        </div>
+        <!-- 项目介绍 -->
+        <!-- 底部菜单 -->
+        <div style="height:70px;line-height:70px;"></div>
+        <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+            <div style="width:200px;height: 50px;margin: 0 auto;" class="clearfix">
+                <div class="pull-left" @click="sharefb()">
+                    <img src="/static/frontend/images/pro-share.png" alt="" width="24">
+                    <p style="font-size: 12px;">转发</p>
+                </div>
+                <div v-if="ui.uid !== s_uid"   @click="chatMe(vue.uid)" class="pull-left porel" style="margin-left: 40px;">
+                    <img src="/static/frontend/images/pro-chat.png" alt="" width="133">
+                    <span style="color: #FFFFFF;line-height: 18px;position: absolute;top: 7px;left:38px;" class="f13">和TA聊天</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 认证模态框 -->
+    <div class="modal fade in" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-describedby="公众号二维码">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+                <div class="modal-body porel p0">
+                    <div style="width:290px;margin:0 auto;">
+                        <img src="/static/frontend/images/to_auth.png" width="290" alt="">
+                        <div id="closeAuthModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+                         	<img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+                        </div>
+                        <a href="javascript:void(0)" onclick="doreg()" style="position: absolute;top: 365px;left: 75px;width: 210px;height: 35px;line-height:30px;"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 完善模态框 -->
+    <div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="公众号二维码">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+                <div class="modal-body porel p0">
+                    <div style="width:290px;margin:0 auto;">
+                        <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+                        <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+                        	<img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+                        </div>
+                        <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 转发 -->
+    <div class="modal fade in" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-describedby="转发分享">
+        <div aria-hidden="true">
+            <div class="modal-content" style="background: none;border: 0;box-shadow: none;">
+                <div class="modal-body porel p0">
+                    <div class="swidth" >
+                        <img src="/static/frontend/images/share_wechat.png"  width="100%" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    // 初始窗口
+    var wh = $(window).height();
+    var ww = $(window).width();
+    $("#box").height(wh);
+    $("#pcHeader").width(ww - 20);
+    $(".secContent").width(ww - 15);
+    
+    $("#shareModal").click(function(event) {
+    	$("#shareModal").modal("hide");
+        $("#shadeAuth").hide();
+    });
+
+    $(document).ready(function() {
+        // 设置加载中...
+        $(document).ajaxStart(function() {
+            $("#loading").removeClass('hidden');
+        });
+        $(document).ajaxStop(function() {
+            $("#loading").addClass('hidden');
+        });
+    });
+    //提示框
+    function alertModal(msg) {
+        $("#alertModal").find('.modal-body').html(msg);
+        $("#alertModal").modal("show");
+        setTimeout(function() {
+            $("#alertModal").modal("hide");
+        }, msg.length / 7 * 1000);
+    };
+
+    function splitStr(str) {
+        if (str != null && str.length > 0) {
+            var strArr = str.split(":");
+            var item = { "label": strArr[0] + "： ", "content": strArr[1] };
+            return item;
+        } else {
+            return { "label": "", "content": "" };
+        }
+    };
+    var params = getParams();
+    var s_uid  = getParams()["uid"];
+    var vue = new Vue({
+        el: "#box",
+        data: {
+            uid: s_uid,
+            userInfo: {},
+            page: 1,
+            page2: 1,
+            pageFlag: true,
+            page2Flag: true,
+            delThisBus: {},
+            delThisNeed: {},
+            showDetail: true,
+            ui: {},
+            appId: "",
+            noncestr: "",
+            signature: "",
+            timestamp: "",
+            share: {}
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                vue.ui = ui;
+
+                if (ui.userType == 0) {
+                    $("#authModal").modal("show");
+                    vue.showDetail = false;
+                }
+                if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+                    $("#cmpInfoModal").modal("show");
+                    vue.showDetail = false;
+                }
+                
+                $("#closeAuthModal").click(function(event) {
+                    history.back(-1);
+                });
+                $("#closeCmpInfoModal").click(function(event) {
+                    history.back(-1);
+                });
+
+                vue.getUserInfo();
+                vue.loadBusiness();
+                vue.loadNeeds();
+                $(".navName").click(function(event) {
+                    $(".navName").removeClass('c_primary');
+                    $(".navSign").hide();
+                    var e = $(event.currentTarget);
+                    e.addClass('c_primary');
+                    e.next().show();
+                    if ($(".navName").index(e) == 0) {
+                        $("#busBox").removeClass('dno');
+                        $("#needsBox").addClass('dno');
+                    } else {
+                        $("#busBox").addClass('dno');
+                        $("#needsBox").removeClass('dno');
+                    }
+                });
+                if (params["types"] == 1) {
+                    $(".navName").eq(1).trigger('click');
+                }
+                setTimeout(function() {
+                    $(document).scroll(function() {
+                        if (vue.pageFlag) {
+                            var y = $("#moreBus").offset().top - $(window).scrollTop() - $(window).height();
+                            if (y < 80 && !$("#moreBus").parent().hasClass('dno')) {
+                                vue.page = vue.page + 1;
+                                vue.loadBusiness();
+                            }
+                        }
+                    });
+
+                    $(document).scroll(function() {
+                        if (vue.page2Flag) {
+                            var y = $("#moreNeeds").offset().top - $(window).scrollTop() - $(window).height();
+                            if (y < 80 && !$("#moreNeeds").parent().hasClass('dno')) {
+                                vue.page2 = vue.page2 + 1;
+                                vue.loadNeeds();
+                            }
+                        }
+                    });
+                    //     $(".navName").click(function(event) {
+                    //         $(".navName").removeClass('c_primary');
+                    //         $(".navSign").hide();
+                    //         var e = $(event.currentTarget);
+                    //         e.addClass('c_primary');
+                    //         e.next().show();
+                    //         if ($(".navName").index(e) == 0) {
+                    //             $("#busBox").removeClass('dno');
+                    //             $("#needsBox").addClass('dno');
+                    //         } else {
+                    //             $("#busBox").addClass('dno');
+                    //             $("#needsBox").removeClass('dno');
+                    //         }
+                    //     });
+                    //     if (params["types"] == 1) {
+                    //     $(".navName").eq(1).trigger('click');
+                    // }
+
+                }, 800);
+
+                // 加载微信配置
+                $.ajax({
+                    url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    async: false,
+                    data: {"link": window.location.href},
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        vue.appId = res.data.appId;
+                        vue.noncestr = res.data.noncestr;
+                        vue.signature = res.data.signature;
+                        vue.timestamp = res.data.timestamp;
+                    }
+                });
+
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: vue.appId, // 必填，公众号的唯一标识
+                    timestamp: vue.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: vue.noncestr, // 必填，生成签名的随机串
+                    signature: vue.signature,// 必填，签名
+                    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+                });
+
+                var shareLink = window.location.href;
+                if (ui.userType == 1 || ui.userType == 2) {
+                    shareLink = shareLink+"&superior="+ui.uid;
+                }
+                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                    wx.onMenuShareAppMessage({ 
+                        title: vue.share.title, // 分享标题
+                        desc: vue.share.desc, // 分享描述
+                        link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vue.share.imgUrl, // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+                    wx.onMenuShareTimeline({ 
+                        title: vue.share.title, // 分享标题
+                        link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: vue.share.imgUrl, // 分享图标
+                        success: function () {
+                          // 设置成功
+                        }
+                    });
+                });
+            });
+        },
+        methods: {
+            callMe: function () {
+                $.ajax({
+                    url: 'http://fin.jrfacai.com/home/member_api/editTelNum',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        "type": 'member',
+                        "id": vue.uid
+                    },
+                })
+                .done(function(res) {
+                    if (res.code == 200) {
+                        window.location.href = 'tel://' + vue.userInfo.userPhone;
+                    }
+                });
+            },
+            sharefb: function() {
+            	$("#shareModal").modal("show");
+                $("#shadeAuth").show();
+            },
+            followUser: function(userInfo) {
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/follow_user_api/doFollowUser',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            "uid": vue.uid,
+                        },
+                    })
+                    .done(function(res) {
+                        alertModal(res.msg);
+                        if (res.code == 200) {
+                            if (vue.userInfo.is_follow == '关注') {
+                                vue.userInfo.is_follow = "已关注";
+                            } else {
+                                vue.userInfo.is_follow = "关注";
+                            }
+                        }
+                    });
+            },
+            getUserInfo: function() {
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/member_api/showMemberDetail',
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                        data: {
+                            uid: vue.uid,
+                        },
+                    })
+                    .done(function(res) {
+                        vue.userInfo = res.data;
+                        vue.share    = res.data.share;
+                    });
+            },
+            loadBusiness: function() {
+                vue.pageFlag = false;
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/member_api/getOtherBusiness',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            uid: vue.uid,
+                            "page": vue.page
+                        }
+                    })
+                    .done(function(res) {
+                        var bus = res.data;
+                        if (bus && bus.length > 0) {
+                            for (var i = 0; i < bus.length; i++) {
+                                var tg = bus[i].tag_name.split(",");
+                                if (tg.length > 3) {
+                                    var arr = new Array();
+                                    for (var y = 0; y < 3; y++) {
+                                        arr.push(tg[y]);
+                                    }
+                                    tg = arr;
+                                }
+                                var tgStr = "";
+                                for (var z = 0; z < tg.length; z++) {
+                                    tgStr += "<div style=\"height:20px;line-height:18px;\" class=\"pl10 pr10 f12 mr5 pull-left ball\">" + tg[z] + "</div>";
+                                }
+                                var typeStr = "";
+                                var linkUrl = "";
+                                if (bus[i].type == 'project_require') {
+                                    typeStr += "<div class=\"c_white text-center f12 pl5\" style=\"position:absolute;right:0;top:0;background-size: 48px 26px;background-image: url(/static/frontend/images/pro-sign.png);width:48px;height:26px;line-height:24px;\">项目</div>";
+                                    linkUrl = "http://fin.jrfacai.com/static/frontend/detailsShowProject.html?id="+bus[i].id+"&type=project_require";
+                                }
+                                if (bus[i].type == 'organize_require') {
+                                    typeStr += "<div class=\"c_white text-center f12 pl5\" style=\"position:absolute;right:0;top:0;background-size: 48px 26px;background-image: url(/static/frontend/images/fund-sign.png);width:48px;height:26px;line-height:24px;\">资金</div>";
+                                    linkUrl = "http://fin.jrfacai.com/static/frontend/detailsShowFunds.html?id="+bus[i].id+"&type=organize_require";
+                                }
+                                var n = "<a href=\""+linkUrl+"\" class=\"ml5 mr5 mb10 dbk pt10 pb10 pl10 radius\" style=\"background:#ffffff;\">\
+                                        <div class=\"clearfix porel\">\
+                                            <img src=\"" + bus[i].userPhoto + "\" alt=\"\" style=\"width:50px;height:50px;\" class=\"pull-left\">\
+                                            <div style=\"position: absolute;width:100%;height:50px;left:65px;top:0;\">\
+                                                <div class=\"f16 c_black dbk tofh proTitle\" style=\"position: absolute;top: -4px;left: 0;\">" + bus[i].name + "</div>\
+                                                <div class=\"c_gray clearfix ofh\" style=\"position: absolute;bottom: 0;left: 0;\">\
+                                                    " + tgStr + "\
+                                                </div>\
+                                            </div>\
+                                            <div class=\"pull-right porel\" style=\"height:50px;width:50%;\">\
+                                                " + typeStr + "\
+                                                <div class=\"f12 c_gray text-right mr10\" style=\"position:absolute;right:3px; bottom:0;\">" + bus[i].view_num + "人浏览</div>\
+                                            </div>\
+                                        </div>\
+                                        <div class=\"clearfix porel mt10 mr10\">\
+                                            <div class=\"pull-left c_black tofh mr5\" style=\"width:60px;\">" + bus[i].realName + "</div>\
+                                            <div class=\"pull-left c_gray tofh\" style=\"width:230px;\">简介：" + bus[i].des + "</div>\
+                                            <div class=\"pull-right c_primary\" style=\"position:absolute;right:0;bottom:0;\">更多</div>\
+                                        </div>\
+                                    </a>";
+                                $("#busBoxContent").append(n);
+                            }
+                            vue.pageFlag = true;
+                            setTimeout(function() {
+                                $(".proTitle").width(ww - 165);
+                            }, 400);
+                        }
+                    });
+            },
+            loadNeeds: function() {
+                vue.page2Flag = false;
+                $.ajax({
+                        url: 'http://fin.jrfacai.com/home/member_api/getOtherPublish',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            uid: vue.uid,
+                            "page": vue.page2
+                        }
+                    })
+                    .done(function(res) {
+                        var needs = res.data;
+                        if (needs && needs.length > 0) {
+                            for (var i = 0; i < needs.length; i++) {
+                                var imgStr = "";
+                                var img = needs[i].img_url;
+                                for (var y = 0; y < img.length; y++) {
+                                    imgStr += "<img src=\"http://fin.jrfacai.com/uploads/" + img[y].url + "\" width=\"100\" height=\"100\" class=\"pull-left\">";
+                                }
+                                if (imgStr.length > 0) {
+                                    imgStr = "<a href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\" class=\"clearfix mb10 dbk\">\
+                                        "+imgStr+"\
+                                    </a>";
+                                }
+
+                                var tagStr = "";
+                                var tag = needs[i].all_tag.split(",");
+                                for (var y = 0; y < tag.length; y++) {
+                                    tagStr += "<div class=\"pull-left tofh text-center mr5 c_gray mb5\" style=\"border:1px solid #eeeeee;border-radius:2px;padding:2px 8px;font-size:10px;\">" + tag[y] + "</div>";
+                                }
+                                if (tagStr.length > 0) {
+                                    tagStr = "<a href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\" class=\"clearfix mb10 dbk c_gray\">\
+                                        "+tagStr+"\
+                                    </a>";
+                                }
+
+                                var n = "<div class=\"ml5 mr5 mb10 bg_white\" style=\"padding:10px 5px;border-radius:3px;\">\
+                                    <div class=\"clearfix porel\">\
+                                        <img class=\"pull-left\" src=\"" + needs[i].userPhoto + "\" width=\"46\" height=\"46\" style=\"border-radius:2px;margin-right:13px;\">\
+                                        <div class=\"pull-left\" style=\"width:186px;\">\
+                                            <div class=\"clearfix\">\
+                                                <span class=\"pull-left tofh\" style=\"margin-top:-5px;width:86px;\">" + needs[i].realName + "</span>\
+                                            </div>\
+                                            <div class=\"c_gray f12\" style=\"margin-top:8px;\">" + needs[i].company_jc + " | " + needs[i].position + "</div>\
+                                        </div>\
+                                    </div>\
+                                    <a href=\"http://fin.jrfacai.com/static/frontend/findCommemt.html?id="+needs[i].id+"\" class=\"mt10 mb10 dbk c_black\">" + needs[i].content + "</a>\
+                                    " + imgStr + "\
+                                    " + tagStr + "\
+                                    <div class=\"clearfix c_gray\" style=\"font-size:10px;\">\
+                                        <div class=\"pull-left\">" + needs[i].create_time + "</div>\
+                                        <div class=\"pull-right\">\
+                                            <img src=\"/static/frontend/images/like-0.png\" class=\"pull-left mr5\" width=\"16\" height=\"16\">\
+                                            <span class=\"pull-left mr10\">" + needs[i].point_num + "</span>\
+                                            <div id=\"transferBtn\" class=\"pull-left mr10\" @click=\"sharefb()\">\
+                                                <img src=\"/static/frontend/images/tsf-0.png\" class=\"pull-left mr5\" width=\"16\" height=\"16\">\
+                                                <span class=\"pull-left\">转发</span>\
+                                            </div>\
+                                            <img src=\"/static/frontend/images/msg-0.png\" class=\"pull-left mr5\" width=\"16\" height=\"16\">\
+                                            <span class=\"pull-left\">" + needs[i].comment_num + "</span>\
+                                        </div>\
+                                    </div>\
+                                </div>";
+                                $("#needsBoxContent").append(n);
+                            }
+                            vue.page2Flag = true;
+                        }
+                    });
+            },
+            chatMe:function(to_uid) {
+            	if (ui.userType == 0) {
+	        		$("#authModal").modal("show");
+	                $("#shadeAuth").show();
+	        	}else{
+	        		if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+	               		$("#cmpInfoModal").modal("show");
+	                    $("#shadeAuth").show();
+	                }else{
+	                	if(ui.is_follow==1){
+	                		window.location.href = 'http://fin.jrfacai.com/home/chat/index/to_uid/'+to_uid;
+	                	}else{
+	                		window.location.href = 'http://fin.jrfacai.com/static/frontend/followtab.html';
+	                	}
+	                }
+	        	}
+            }
+        }
+    })
+    
+    function doreg(){
+		if(ui.is_follow==1){
+    		window.location.href = '/static/frontend/reg.html';
+    	}else{
+    		window.location.href = '/static/frontend/followtab.html';
+    	}
+	}
+	
+	function doinfo(){
+		if(ui.is_follow==1){
+    		window.location.href = '/static/frontend/basic-info.html';
+    	}else{
+    		window.location.href = '/static/frontend/followtab.html';
+    	}
+	}
+    </script>
+</body>
+
+</html>

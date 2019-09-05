@@ -1,0 +1,652 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="zfmxes/tab_detail" /}
+            <div id="zfmxes_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">项目ID：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="id" value="{$info.id}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">项目名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="project_name" value="{$info.sec_uri_tyshortname}{$date}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">采集时间：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="created_at" value="{$info.created_at}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票代码：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="msecucode" value="{$info.msecucode}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">企业名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="sec_uri_tyshortname" value="{$info.sec_uri_tyshortname}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="msecucode_name" value="{$info.sec_uri_tyshortname}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">转让类型：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="trademethod" value="{$info.trademethod}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属层级：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="sublevel" value="{$info.sublevel}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">资本计划：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="jihua" value="定向增发" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属行业：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="xyfl" value="{$info.gszls.xyfl}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">所属地域：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="zcdz" value="{$info.gszls.zcdz}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">预案公告日：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="plannoticeddate" value="{$info.plannoticeddate}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">董秘姓名：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gsdm" value="{$info.gszls.gsdm}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">联系电话：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="gsdh" value="{$info.gszls.gsdh}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">主承券商：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="issuehostunderwriting" value="{$info.issuehostunderwriting}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--定增头图-->
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">头图：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <img src="{$info.img_url}" style="width:200px;height:200px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--定增头图-->
+                    <fieldset>
+                        <legend>可修改</legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">计划募资：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="raise_money" value="{$info.add.raise_money}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="raise_money" value="-" readonly=""/>
+                                    {/if}
+                                    <span class="input-group-addon">万元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">增发数量：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="additional_num" value="{$info.add.additional_num}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="additional_num" value="-" readonly=""/>
+                                    {/if}
+                                    <span class="input-group-addon">万股</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">董事会公告日：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="announcement_date" value="{$info.add.announcement_date}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="announcement_date" value="-" readonly=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">定增价格：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="increase_price" value="{$info.add.increase_price}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="increase_price" value="-" readonly=""/>
+                                    {/if}
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">增发市盈率：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="profit" value="{$info.add.profit}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="profit" value="-" readonly=""/>
+                                    {/if}
+                                    <span class="input-group-addon">倍</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">截止日：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="cutoff_date" value="{$info.add.cutoff_date}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="cutoff_date" value="-" readonly=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">募资用途：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="fundraising_use" value="{$info.add.fundraising_use}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="fundraising_use" value="-" readonly=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">发行对象：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="Issue_object" value="{$info.add.Issue_object}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="Issue_object" value="-" readonly=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">大股东是否参与：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="involved" value="{$info.add.involved}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="involved" value="-" readonly=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="control-label col-lg-1 col-md-2 col-sm-2">限售条件：</label>
+                            <div class="col-lg-10 col-sm-10 col-md-10 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    {if condition="$info.add neq []"}
+                                    <input type="text" class="form-control" name="sale_condition" value="{$info.add.sale_condition}" readonly=""/>
+                                    {else /}
+                                    <input type="text" class="form-control" name="sale_condition" value="-" readonly=""/>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                {if condition="$info.add neq [] && $info.add.zfmx_examine eq 1"}
+                <fieldset>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#remark" aria-controls="remarkz" role="tab" data-toggle="tab">添加签约信息</a></li>
+                            {if condition="$info.sign neq []"}
+                            <li class="btn btn-success editSign" style="float: right;">修改</li>
+                            {/if}
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="investment_lights">
+                                <form id="addZfmxesSignForm" action="{:url('Zfmxes/sign')}" class="form-horizontal" method="post" onsubmit="return false;">
+                                    {if condition="$info.sign eq []"}
+                                        <fieldset>
+                                            <legend></legend>
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-1 control-label">签约模式： <sup>*</sup></label>
+                                                <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                                        <label class="radio radio-inline">
+                                                            <input type="radio" class="radiobox" name="sign" value="1" checked="">
+                                                            <span>独家</span>
+                                                        </label>
+                                                        <label class="radio radio-inline">
+                                                            <input type="radio" class="radiobox" name="sign" value="2">
+                                                            <span>非独家</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-1 control-label">签约备注： <sup>*</sup></label>
+                                                <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                                        <textarea class="form-control" rows="4" name="content"></textarea>
+                                                    </div>
+                                                    <input type="text" name="id" value="{$info.id}" class="hide">
+                                                    <input type="text" name="neeq" value="{$neeq}" class="hide">
+                                                    <input type="text" name="plannoticeddate" value="{$info.plannoticeddate}" class="hide">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="form-actions" style="background-color: initial;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        {:token()}
+                                                        <button class="btn btn-primary" type="submit">
+                                                            <i class="fa fa-save"></i>
+                                                            添加
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    {else /}
+                                        <fieldset>
+                                            <legend></legend>
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-1 control-label">签约模式： <sup>*</sup></label>
+                                                <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group noEdit">
+                                                        {if condition="$info.sign.sign eq 1"}
+                                                        <input type="text" class="form-control" value="独家" readonly=""/>
+                                                        {else /}
+                                                        <input type="text" class="form-control" value="非独家" readonly=""/>
+                                                        {/if}
+                                                    </div>
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group yesEdit hide">
+                                                        {if condition="$info.sign.sign eq 1"}
+                                                        <label class="radio radio-inline">
+                                                            <input type="radio" class="radiobox" name="sign" value="1" checked="">
+                                                            <span>独家</span>
+                                                        </label>
+                                                        <label class="radio radio-inline">
+                                                            <input type="radio" class="radiobox" name="sign" value="2">
+                                                            <span>非独家</span>
+                                                        </label>
+                                                        {else /}
+                                                        <label class="radio radio-inline">
+                                                            <input type="radio" class="radiobox" name="sign" value="1">
+                                                            <span>独家</span>
+                                                        </label>
+                                                        <label class="radio radio-inline">
+                                                            <input type="radio" class="radiobox" name="sign" value="2" checked="">
+                                                            <span>非独家</span>
+                                                        </label>
+                                                        {/if}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-1 control-label">签约备注： <sup>*</sup></label>
+                                                <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12 yesEditText">
+                                                        <textarea class="form-control" rows="4" name="content" readonly="">{$info.sign.content}</textarea>
+                                                    </div>
+                                                    <input type="text" name="id" value="{$info.id}" class="hide">
+                                                    <input type="text" name="neeq" value="{$neeq}" class="hide">
+                                                    <input type="text" name="plannoticeddate" value="{$info.plannoticeddate}" class="hide">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="hide yesEdit">
+                                            <div class="form-actions" style="background-color: initial;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        {:token()}
+                                                        <button class="btn btn-primary" type="submit">
+                                                            <i class="fa fa-save"></i>
+                                                            添加
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    {/if}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                {/if}
+                <fieldset>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#remark" aria-controls="remarkz" role="tab" data-toggle="tab">添加备注</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="investment_lights">
+                                <form id="addZfmxesRemarkForm" action="{:url('CaijiRemark/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                                    <fieldset>
+                                        <legend></legend>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <textarea class="form-control" rows="4" name="content"></textarea>
+                                                <input type="text" name="type" value="Zfmxes" class="hide">
+                                                <input type="text" name="detail" value="detail" class="hide">
+                                                <input type="text" name="pid" value="0" class="hide">
+                                                <input type="text" name="neeq" value="{$neeq}" class="hide">
+                                                <input type="text" name="plannoticeddate" value="{$info.plannoticeddate}" class="hide">
+                                                <input type="text" name="id" value="{$info.id}" class="hide">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-actions" style="background-color: initial;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {:token()}
+                                                    <button class="btn btn-primary" type="submit">
+                                                        <i class="fa fa-save"></i>
+                                                        添加
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                {if condition="$info.remark neq []"}
+                <fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                <table class="table">
+                                    <tbody>
+                                        {foreach name="$info.remark" item="it"}
+                                        <tr>
+                                            <th colspan="4">{$it['content']}</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">添加人：{$it['create_uid']}</td>
+                                            <td>添加时间：{$it['create_time']}</td>
+                                        </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var zfmxes_examine_url = '{:url("Zfmxes/examine")}';
+    var zfmxes_financing_url = '{:url("Zfmxes/financing")}';
+    var zfmxes_exhibition_true_url = '{:url("Zfmxes/exhibition_true")}';
+    var zfmxes_exhibition_false_url = '{:url("Zfmxes/exhibition_false")}';
+    $(".examine").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定通过该增发明细的审核吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: zfmxes_examine_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('审核成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('审核失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".financing").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定结束融资该增发明细吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: zfmxes_financing_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('结束融资成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('结束融资失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".exhibition_true").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定展示该增发明细吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: zfmxes_exhibition_true_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('展示成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('展示失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".exhibition_false").click(function(){
+        var _this = $(this);
+        Dialog.confirm('操作提示', '确定取消展示该增发明细吗？', function () {
+            var id = _this.attr("data-id");
+            $.ajax({
+                url: zfmxes_exhibition_false_url,
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('取消展示成功', resp.msg, 2000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('取消展示失败', resp.msg);
+                    }
+                }
+            })
+        });
+    });
+    $(".editSign").click(function(){
+        $(".noEdit").addClass("hide");
+        $(".yesEdit").removeClass("hide");
+        $(".yesEditText textarea").attr("readonly",false);
+        $(this).addClass("hide");
+    });
+    loadModule('bootstrapValidator', function () {
+        $('#addZfmxesRemarkForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                content: {
+                    validators: {
+                        notEmpty: {
+                            message:'请输入备注内容'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('备注成功', resp.msg, 3000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('备注失败', resp.msg);
+                    }
+                }
+            });
+        });
+    });
+    loadModule('bootstrapValidator', function () {
+        $('#addZfmxesSignForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                content: {
+                    validators: {
+                        notEmpty: {
+                            message:'请输入签约备注内容'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('签约成功', resp.msg, 3000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('签约失败', resp.msg);
+                    }
+                }
+            });
+        });
+    });
+    
+</script>

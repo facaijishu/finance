@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>后台管理中心</title>
+    <meta name="keywords" content="后台管理中心" />
+    <meta name="description" content="后台管理中心" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="./css/common.min.css" />
+    <script type="text/javascript" src="../router.js"></script>
+    <script type="text/javascript" src="./js/common.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/component.min.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <my-header uri="/backend/member.html"></my-header>
+        <div id="my_content" class="my_content bg_white" style="overflow-y:auto;">
+            <div class="p15">
+                <div class="porel table_parrent" id="table_parrent">
+                    <!-- 内容头部 -->
+                    <div class="clearfix mb15 well">
+                        <button type="button" class="btn btn-primary btn-sm" @click="add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加实体</button>
+                    </div>
+                    <!-- 内容主体 -->
+                    <!-- 表格 table-bordered使表格周围有边框；table-hover使表格有鼠标悬停状态；可将table写入panel内组合使用 -->
+                    <table class="table table-hover table-bordered mb0">
+                        <thead>
+                            <tr class="bg_gray">
+                                <th style="width:50px;">
+                                    <input class="selectAll" type="checkbox" @click="selectAll">
+                                </th>
+                                <th>ID</th>
+                                <th>实体名称</th>
+                                <th>URI</th>
+                                <th style="width:155px;">创建时间</th>
+                                <th style="width:155px;">更新时间</th>
+                                <th style="width:60px;">状态</th>
+                                <th style="width:140px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="f12" :class="filterStatusClass(item.enabled)" v-for="item in entities">
+                                <td>
+                                    <input class="chooseArrClass" type="checkbox" :value="item.id">
+                                </td>
+                                <td>{{item.id}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.uri}}</td>
+                                <td>{{item.createTime}}</td>
+                                <td>{{item.updateTime}}</td>
+                                <td><img :src="filterEnabled(item.enabled)" height="22" class="pointer" @click="switchSingle(item)"></td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-xs" @click="edit(item)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 编辑</button>
+                                    <button type="button" class="btn btn-primary btn-xs" @click="del(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 内容底部 -->
+                    <div class="bottom_groupbtn bg_white" id="bottom_groupbtn">
+                        <div class="bg_white ball clearfix bottom_groupbtn_box">
+                            <input class="selectAll pull-left ml10" type="checkbox" @click="selectAll" style="margin: 8px 0 0 11px;">
+                            <button type="button" class="btn btn-primary btn-sm pull-left ml20 mb5" @click="batchDel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 批量删除</button>
+                            <button type="button" class="btn btn-success btn-sm pull-left ml15 mb5" @click="switchBatch(true)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 启用</button>
+                            <button type="button" class="btn btn-danger btn-sm pull-left ml15 mb5" @click="switchBatch(false)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 禁用</button>
+                        </div>
+                    </div>
+                    <!-- 设置模态框 -->
+                    <div class="modal fade" id="setModal" tabindex="-1" role="dialog" aria-labelledby="setModalLabel" aria-describedby="{{ addTitle }}">
+                        <div class="modal-dialog" aria-hidden="true">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="setModalLabel"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group clearfix">
+                                        <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">所属父辈：</label>
+                                        <select v-model.trim="entity.pid" class="form-control pull-left" style="width:250px;">
+                                            <option value="0">===根部===</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">实体名称：</label>
+                                        <input @focus="useSelect" v-model.trim="entity.name" type="text" class="form-control pull-left" placeholder="1~30位的中英文组成" style="width:250px;">
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">实体备注：</label>
+                                        <textarea @focus="useSelect" v-model.trim="entity.remark" rows="3" class="form-control pull-left" placeholder="0~60位的中英文组成" style="width:250px"></textarea>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="control-label pull-left text-right mt5 mr5" style="width:150px;">URI：</label>
+                                        <input @focus="useSelect" v-model.trim="entity.uri" type="text" class="form-control pull-left" placeholder="长度为1~128位" style="width:250px;">
+                                    </div>
+                                    <div class="form-group clearfix mb0">
+                                        <div class="pull-left text-right mr5 fb" style="width:150px;">状态：</div>
+                                        <label class="radio-inline">
+                                            <input v-model.trim="entity.enabled" class="status_radio" type="radio" name="status" value="true"> <span class="c_success">启用</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input v-model.trim="entity.enabled" class="status_radio" type="radio" name="status" value="false"> <span class="c_danger">禁用</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="setBtn" type="button" class="btn btn-primary" @click="setAction">确 认</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 删除模态框 -->
+                    <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-describedby="{{ delTitle }}">
+                        <div class="modal-dialog" aria-hidden="true">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="delModalLabel">{{ delTitle }}</h4>
+                                </div>
+                                <div class="modal-body text-center c_danger">
+                                    {{ delAlertText }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" @click="delAction">确 认</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var req = basicRequest({
+        el: "#box",
+        data: {
+            queryUrl: ROUTE10007, //查询实体的URL
+
+            delUrl: ROUTE10010, //删除实体的URL
+            delTitle: "删除实体", //删除实体时的提示模态框标题
+            delAlertText: "确认删除所选实体？", //删除实体时的提示模态框内容
+
+            setUrl: ROUTE10008, //设置实体的URL
+            addTitle: "添加实体", //添加实体时的模态框标题
+            editTitle: "编辑实体", //编辑实体时的模态框标题
+            defaultEntity: { //默认实体
+                id: "",
+                name: "",
+                uri: "",
+                enabled: true
+            },
+
+            switchUrl: ROUTE10009, //实体状态切换的URL
+        },
+        methods: {
+            preSetAction: function() {
+                var nameREG = /^[^<>]{1,30}$/;
+                var uriREG = /^[^<>]{1,128}$/;
+                if (!nameREG.test(req.entity.name)) {
+                    alertModal("实名名称由1~30位的中英文组成");
+                    return false;
+                }
+                if (!uriREG.test(req.entity.uri)) {
+                    alertModal("uri标识长度为1~128位");
+                    return false;
+                }
+                return true;
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

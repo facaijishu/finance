@@ -1,0 +1,209 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="intention/tab_detail_zryxes" /}
+            <div id="zfmxes_detail" data-id="{$info.id}">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">项目ID：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="id" value="{$info.id}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票代码：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="neeq" value="{$info.neeq}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">买卖方向：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="direction" value="{$info.direction}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">股票名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="name" value="{$info.name}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">意向数量：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="num" value="{$info.num}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">每股价格：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="price" value="{$info.price}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">意向价格：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="money" value="{$info.money}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">名称：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="company" value="{$info.company}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">电话：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="phone" value="{$info.phone}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">创建用户：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="create_uid" value="{$info.create_uid}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                            <label class="control-label col-lg-3 col-md-6 col-sm-6">创建时间：</label>
+                            <div class="col-lg-8 col-sm-6 col-md-6 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="create_time" value="{$info.create_time}" readonly=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <fieldset>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#remark" aria-controls="remarkz" role="tab" data-toggle="tab">添加备注</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="investment_lights">
+                                <form id="addZfmxesIntentionRemarkForm" action="{:url('CaijiRemark/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                                    <fieldset>
+                                        <legend></legend>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <textarea class="form-control" rows="4" name="content"></textarea>
+                                                <input type="text" name="type" value="Intention" class="hide">
+                                                <input type="text" name="detail" value="detail_zryxes" class="hide">
+                                                <input type="text" name="pid" value="{$info.id}" class="hide">
+                                                <input type="text" name="neeq" value="{$info.neeq}" class="hide">
+                                                <input type="text" name="plannoticeddate" value="" class="hide">
+                                                <input type="text" name="id" value="{$info.id}" class="hide">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-actions" style="background-color: initial;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {:token()}
+                                                    <button class="btn btn-primary" type="submit">
+                                                        <i class="fa fa-save"></i>
+                                                        添加
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                {if condition="$info.remark neq []"}
+                <fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding: 0px;">
+                                <table class="table">
+                                    <tbody>
+                                        {foreach name="$info.remark" item="it"}
+                                        <tr>
+                                            <th colspan="4">{$it['content']}</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">添加人：{$it['create_uid']}</td>
+                                            <td>添加时间：{$it['create_time']}</td>
+                                        </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    loadModule('bootstrapValidator', function () {
+        $('#addZfmxesIntentionRemarkForm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                content: {
+                    validators: {
+                        notEmpty: {
+                            message:'请输入备注内容'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function (resp) {
+                    if (resp.code) {
+                        Dialog.success('备注成功', resp.msg, 3000, function () {
+                            loadURL(resp.data.url);
+                        });
+                    } else {
+                        Dialog.error('备注失败', resp.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>

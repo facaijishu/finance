@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cn">
+        <meta charset="UTF-8">
+        <title>{$title0} {$title}</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="referrer" content="never">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <script type="text/javascript" src="/static/common/js/libs/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="/static/common/js/libs/jquery.cookie.js"></script>  
+        <script src="/static/common/js/bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <link rel="stylesheet" href="/static/home/faicon/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/common/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/home/css/swiper.min.css">
+		<script src="/static/home/js/swiper.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/newcj/css/h5app.css">
+        <link rel="stylesheet" type="text/css" href="/static/newcj/fonts/iconfont.css">
+        <script src="/static/newcj/js/dist/flexible/flexible_css.debug.js"></script>
+        <script>
+            document.write("<link rel='stylesheet' href='__NEWCJ__/css/themes.css?v=2017129&random=" + Math.random() + "' />");
+            document.write("<link rel='stylesheet' href='__NEWCJ__/css/chat_list.css?random=" + Math.random() + "' />");
+       </script>
+       <style>@charset "utf-8";
+		html{overflow-y:scroll;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+		html *{outline:0;-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}html,
+		body{font-family:sans-serif;background:#F5F5F5}
+		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin:0;padding:0}input,select,textarea{font-size:100%}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}abbr,acronym{border:0;font-variant:normal}del{text-decoration:line-through}address,caption,cite,code,dfn,em,th,var{font-style:normal;font-weight:500}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:500}q:before,q:after{content:''}sub,
+		sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}a:hover{text-decoration:underline}ins,a{text-decoration:none}
+		.img{cursor: pointer;}
+		.talk-box .talk-l, .talk-box .talk-r, .talk-msg {
+			display: -moz-box;
+			display: -webkit-box;
+			display: box;
+		}
+
+		.talk-box .talk-l .talk-c, .talk-box .talk-r .talk-c, .talk-msg .talk-input {
+			-moz-box-flex: 1.0;
+			-webkit-box-flex: 1.0;
+			box-flex: 1.0;
+		}
+		.talk-box {
+		  padding: 15px;
+		}
+
+		.talk-box .time {
+		  background: #CECECE;
+		  line-height: 16px;
+		  font-size: 12px;
+		  color: #fff;
+		  display: inline-block;
+		  border-radius: 3px;
+		  padding: 0 10px;
+		  margin:0 0 10px 100px;
+		}
+
+		.talk-box .talk-l {
+		  margin: 0 0 18px  0;
+		}
+
+
+		.talk-box .talk-l img {
+		  width: 40px;
+		  height: 40px;
+		  display: block;
+		}
+
+		.talk-box .talk-l .talk-c {
+		  position: relative;
+		  text-align: left;
+		}
+
+		.talk-box .talk-l .talk-c img {
+		  width: 178px;
+		  height: auto;
+		  border-radius: 3px;
+		  margin: 0 0 0 20px;
+		}
+
+		.talk-box .talk-l .talk-c p {
+		  font-size: 16px;
+		  background: #fff;
+		  padding: 10px;
+		  display: inline-block;
+		  border-radius: 12px;
+		  margin: 0 0 0 10px;
+		  word-wrap: break-word;
+		  word-break: break-all;
+		  text-align:left;
+		}
+
+		.talk-box .talk-l .talk-c em {
+		  font-size: 12px;
+		  color: #999999;
+		  transform: scale(0.8);
+		  margin: 0 0 0 20px;
+		}
+
+		.talk-box .talk-l .talk-c .sound {
+		  height: 20px;
+		  width: 80px;
+		  display: block;
+		  text-align: left;
+		}
+
+		.talk-box .talk-l .talk-c .sound img {
+		  height: 100%;
+		  width: auto;
+		  margin: 0;
+		}
+
+		.talk-box .talk-l .talk-c .brage {
+		  position: absolute;
+		  left: 8px;
+		  top: 0;
+		  z-index: 1;
+		  width: 0;
+		  height: 0;
+		  border-top: 18px solid #fff;
+		  border-left: 18px solid transparent;
+		}
+
+		.talk-box .talk-r {
+		  margin: 0 0 18px 40px;
+		}
+
+		.talk-box .talk-r img {
+		  width: 40px;
+		  height: 40px;
+		  display: block;
+		}
+
+		.talk-box .talk-r .talk-c {
+		  position: relative;
+		  text-align: right;
+		}
+
+		.talk-box .talk-r .talk-c img {
+		  width: 178px;
+		  height: auto;
+		  border-radius: 3px;
+		  margin: 0 20px 0 0;
+		  display: inline-block;
+		}
+
+		.talk-box .talk-r .talk-c p {
+		  color: #ffffff;
+		  font-size: 16px;
+		  background: #2997ff;
+		  padding: 10px;
+		  display: inline-block;
+		  border-radius: 12px;
+		  margin: 0 10px 0 0;
+		  word-wrap: break-word;
+		  word-break: break-all;
+		  text-align:left;
+		}
+
+		.talk-box .talk-r .talk-c em {
+		  font-size: 14px;
+		  color: #999999;
+		  transform: scale(0.8);
+		  display: block;
+		}
+
+		.talk-box .talk-r .talk-c .sound {
+		  height: 20px;
+		  width: 80px;
+		  display: block;
+		  text-align: left;
+		  transform: rotate(-180deg);
+		  -ms-transform: rotate(-180deg);
+		  /* IE 9 */
+		  -moz-transform: rotate(-180deg);
+		  /* Firefox */
+		  -webkit-transform: rotate(-180deg);
+		  /* Safari 和 Chrome */
+		  -o-transform: rotate(-180deg);
+		  /* Opera */
+		}
+
+		.talk-box .talk-r .talk-c .sound img {
+		  height: 100%;
+		  width: auto;
+		  margin: 0;
+		}
+
+		.talk-box .talk-r .talk-c .brage {
+		  position: absolute;
+		  right: 8px;
+		  top: 0;
+		  z-index: 1;
+		  width: 0;
+		  height: 0;
+		  border-top: 18px solid #2997ff;
+		  border-right: 18px solid transparent;
+		}
+
+		.talk-msg {
+		  background: #F5F5F5;
+		  border-top: 1px solid #CECECE;
+		  position: fixed;
+		  left: 0;
+		  z-index: 2;
+		  bottom: 0;
+		  padding-bottom: constant(safe-area-inset-bottom);
+		  width: 100%;
+		  height: 52px;
+		  padding: 5px 10px;
+		}
+
+		.talk-msg .talk-input {
+		  background: #fff;
+		  border-radius: 12px;
+		  position: relative;
+		  padding: 0 60px 0 15px;
+		}
+
+		.talk-msg .talk-input input {
+		  width: 100%;
+		  height:40px;
+		  border:none;
+		}
+
+		.talk-msg .talk-input button {
+		  position: absolute;
+		  right: 3px;
+		  top: 2px;
+		  z-index: 1;
+		  background: #2997ff;
+		  border-radius: 20px;
+		  color: #fff;
+		  width: 60px;
+		  height: 36px;
+		  line-height: 36px;
+		  border:solid 1px #fff;
+		}
+
+		.talk-msg .talk-img {
+		  display: block;
+		  background: #fff;
+		  width: 44px;
+		  height: 42px;
+		  line-height: 42px;
+		  margin: 0 0 0 10px;
+		  border-radius: 20px;
+		}
+
+		.talk-msg .talk-img .fa {
+		  color: #7F8389;
+		  font-size: 20px;
+		  padding:11px 11px;
+		}
+       </style>
+    	<script src="/static/newcj/js/dist/flexible/flexible.debug.js"></script>
+    </head>
+<body>
+    {include file="base/dividend" /}
+    <div class="talk-box" id="scrolldIV" data-min="{$min}" data-max="{$max}">
+        {foreach name="list" key="k" item="it"}
+        {if condition="$k eq 0 || $it.day neq $list[$k-1]['day']"}<div class="time">{$it.create_time}</div>{/if}
+        {if condition="$it.to_uid == $from_uid"}
+        <div class="talk-l">
+            <a href="/static/frontend/othersBusiness.html?uid={$to_uid}&type=0"><img src="{$toheadurl}" alt="{$tousername}"></a>
+            <div class="talk-c">
+                {if condition="$it.type eq '1'"}
+                <p>
+                    {$it.content}
+                </p>
+                {/if}
+                {if condition="$it.type eq '2'"}
+				<div class="dianji">
+					<img class="img" src="{$it.content}">
+				</div>
+                {/if}
+                {if condition="$it.type eq '3'"}
+                <p class="voice">
+                    <span class="fa fa-rss" id="audioDIV" data-id='{$it.content}'></span>
+                    <audio id="musicBox" src="/{$it.content}" preload=""></audio>
+                </p>
+                {/if}
+                <br/>
+                <em>{$it.time}</em>
+            </div>
+        </div>
+        {else /}
+        <div class="talk-r">
+            <div class="talk-c">
+                {if condition="$it.type eq '1'"}
+                <p>
+                    {$it.content}
+                </p>
+                {/if}
+                {if condition="$it.type eq '2'"}
+				<div class="dianji">
+					<img class="img" src="{$it.content}">
+				</div>
+                {/if}
+                {if condition="$it.type eq '3'"}
+                <p class="voice">
+                    <span class="fa fa-rss" id="audioDIV" data-id='{$it.content}'></span>
+                    <audio id="musicBox" src="/{$it.content}" preload=""></audio>
+                </p>
+                {/if}
+                <em>{$it.time}</em>
+            </div>
+             <img src="{$fromheadurl}" alt="{$fromusername}">
+        </div>
+        {/if}
+        {/foreach}
+        <div class="time">-----以上皆为历史记录-----</div>
+    </div>
+	<div class="talk-msg">
+        <div class="talk-input">
+            <input type="text"><button type="submit">发送</button>
+        </div>
+        <div class="talk-img">
+            <i class="fa fa-photo"></i>
+            <form id="form_img" enctype="multipart/form-data">
+                <input type="hidden" name="from_uid" id="from_uid" value="{$from_uid}">
+                <input type="hidden" name="to_uid" id="to_uid" value="{$to_uid}">
+                <input type="hidden" name="type" id="type" value="2">
+                <input type="hidden" name="fromheadurl" id="fromheadurl" value="{$fromheadurl}">
+                <input type="hidden" name="fromusername" id="fromusername" value="{$fromusername}">
+                <input type="hidden" name="toheadurl" id="toheadurl" value="{$toheadurl}">
+                <input type="hidden" name="tousername" id="tousername" value="{$tousername}">
+                <input id="file" type="file" name="file" style="position: absolute;top: 0;right: 0; width:44px;height: 42px;opacity: 0;margin: 5px 10px;">
+            </form>
+        </div>
+    </div>
+	<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+   		<div id="innerdiv" style="position:absolute;">
+       		<img id="bigimg" style="border:5px solid #fff;" src="" />
+   		</div>
+	</div>
+    <script type="text/javascript">
+    
+	    var from_uid  = $("#from_uid").val();
+	    var to_uid 	  = $("#to_uid").val();
+	    var from_url  = $("#fromheadurl").val();
+	    var from_name = $("#fromusername").val();
+	    var to_url 	  = $("#toheadurl").val();
+	    var to_name   = $("#tousername").val();
+		
+		var api_prefix = 'http://fin.jrfacai.com/';
+	    
+	    $(document).ready(function () {
+			change_noread();
+		});
+	    
+	    function changeToBottom(){
+            //能兼容微信的写法  
+            setScrollTop(document.getElementById('scrolldIV').scrollHeight);  
+        } 
+	    
+	    window.onscroll= function(){
+	        var a = document.documentElement.scrollTop==0? document.body.clientHeight : document.documentElement.clientHeight;  
+	        var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;  
+	        if(b == 0){
+	            var oldHeight = document.getElementById('scrolldIV').scrollHeight;
+	            var uid = $(".talk-box").attr("data-uid");
+	            var min = $(".talk-box").attr("data-min");
+	            $.ajax({
+	                url: "{:url('chat/selectOldInfo')}",
+	                type: 'POST',
+	                data: {from_uid:from_uid , to_uid:to_uid ,min:min},
+	                success: function (resp) {
+	                    if (resp.code) {
+	                        var data 	= resp.data;
+	                        var length 	= data.length;
+	                        var str 	= '';
+	                        var text 	= $(".talk-box .time:eq(0)").text();
+	                        var day 	= text.substr(0,10);
+	                        var content = '';
+	                        min = data[0]['chat_id'];
+	                        $(".talk-box").attr("data-min",min);
+	                        for(var i = 0 ; i < length ; i++){
+	                            if(i == 0){
+	                                str += '<div class="time">'+data[i]['create_time']+'</div>';
+	                            }else if(i > 0 && data[i]['day'] != data[i-1]['day']){
+	                                str += '<div class="time">'+data[i]['create_time']+'</div>';
+	                            }
+	                            if(data[i]['type'] == 1){
+	                                content = '<p>'+data[i]['content']+'</p>';
+	                            }else if(data[i]['type'] == 2){
+	                                content = '<div class="dianji"><img class="img" src="'+data[i]['content']+'"></div>';
+	                            }else{
+	                                content = '<p class="voice"><span class="fa fa-rss" data-id="'+data[i]['content']+'"></span></p>';
+	                            }
+	                            if(data[i]['direction'] == '-->'){
+	                                str += '<div class="talk-l"><a href="/static/frontend/othersBusiness.html?uid="'+to_uid+'&type=0"><img src="'+to_url+'" alt="'+to_name+'"></a><div class="talk-c">'+content+'<br/><em>'+data[i]['time']+'</em></div></div>';
+	                            }else{
+	                                str += '<div class="talk-r"><div class="talk-c">'+content+'<em>'+data[i]['time']+'</em></div><img src="'+from_url+'" alt="'+from_name+'"></div>';
+	                            }
+	                        }
+	                        if(data[length-1]['day'] == day){
+	                            $(".talk-box .time:eq(0)").remove();
+	                        }
+	                        $(".talk-box").prepend(str);
+	                        var newHeight = document.getElementById('scrolldIV').scrollHeight;
+	                        setScrollTop(parseInt(newHeight)-parseInt(oldHeight));
+	                    } else {
+	                        var sstr = '<div><div class="time tisi">已无数据</div></div>'
+	                        $(".tisi").remove();
+	                        $(".talk-box").prepend(sstr);
+	                    }
+	                }
+	            });
+	        }
+	    };  
+	    function getScrollTop() {  
+            var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;  
+            return scrollTop;  
+        }  
+        function setScrollTop(scroll_top) {
+            document.documentElement.scrollTop = scroll_top;  
+            window.pageYOffset 				   = scroll_top;  
+            document.body.scrollTop 		   = scroll_top;  
+        }
+        setScrollTop(document.getElementById('scrolldIV').scrollHeight);
+        
+	    $(".talk-input button").click(function(){
+	    	var _this 	 = $(this);
+	        var content  = _this.siblings("input").val();
+	        _this.siblings("input").val('');
+	        var type 	 = 1;
+	        var max 	 = $(".talk-box").attr("data-max");
+	        if (content == '') {
+                alert('发送内容不能为空', '提示框');
+                return false;
+            }
+	        setTimeGetNewInfo();
+	        $.ajax({
+                url: "{:url('chat/add')}",
+                type: 'POST',
+                data: {from_uid:from_uid,to_uid:to_uid,content:content,type:type},
+                dataType:'json',
+                success: function(resp){
+                	if (resp.code) {
+                		var data 	= resp.data;
+                        var content = '';
+                        var str 	= '';
+                        max = data.chat_id;
+                        $(".talk-box").attr("data-max",max);
+                        if(data.type == 1){
+                            content = '<p>'+data.content+'</p>';
+                        }else if(data.type == 2){
+                            content = '<div class="dianji"><img class="img" src="'+data.content+'"></div>';
+                        }else{
+                            content = '<p class="voice"><span class="fa fa-rss" data-id="'+data.content+'"></span></p>';
+                        }
+                        var str = '<div class="talk-r"><div class="talk-c">'+content+'<em>'+data.time+'</em></div><img src="'+from_url+'" alt="'+from_name+'"></div>';
+                        //str  += '<div class="talk-r" style="height:50px;">&nbsp;</div>';
+                        $(".talk-box").append(str);
+                        changeToBottom();
+                	}
+                }
+            });
+	    
+	    });
+	    
+	    var tmid = window.setInterval("setTimeGetNewInfo()", 3000);
+	    
+        function setTimeGetNewInfo(){
+            var max 	  = $(".talk-box").attr("data-max");
+            $.ajax({
+                url: "{:url('chat/selectNewInfo')}",
+                type: 'POST',
+                data: {from_uid:from_uid ,to_uid:to_uid,max:max},
+                success: function (resp) {
+                    if (resp.code) {
+                        var data = resp.data;
+                        var length = data.length;
+                        var str = '';
+                        var content = '';
+                        for(var i = 0 ; i < length ; i++){
+                            if(data[i]['chat_id'] > max){
+                                if(i > 0 && data[i]['day'] != data[i-1]['day']){
+                                    str += '<div class="time">'+data[i]['create_time']+'</div>';
+                                }
+                                if(data[i]['type'] == 1){
+                                    content = '<p>'+data[i]['content']+'</p>';
+                                }else if(data[i]['type'] == 2){
+                                    content = '<div class="dianji""><img class="img" src="'+data[i]['content']+'"></div>';
+                                }else{
+                                    content = '<p class="voice"><span class="fa fa-rss" data-id="'+data[i]['content']+'"></span><audio id="musicBox" src="/'+data[i]['content']+'" preload=""></audio></p>';
+                                }
+                                
+                                if(data[i]['to_uid'] == from_uid){
+                                    str += '<div class="talk-l"><a href="/static/frontend/othersBusiness.html?uid="'+to_uid+'&type=0"><img src="'+to_url+'" alt="'+to_name+'"></a><div class="talk-c">'+content+'<br/><em>'+data[i]['time']+'</em></div></div>';
+                                }else{
+                                    str += '<div class="talk-r"><div class="talk-c">'+content+'<em>'+data[i]['time']+'</em></div><img src="'+from_url+'" alt="'+from_name+'"></div>';
+                                }
+                            }
+                        }
+                        $(".talk-box").append(str);
+                        max = data[length-1]['chat_id'];
+                        $(".talk-box").attr("data-max",max);
+                        changeToBottom();
+                    } 
+                }
+            });
+        }
+        
+        
+        function change_noread()
+        {
+            $.ajax({
+                url:api_prefix + 'home/chat/changeNoread',
+                type:'post',
+                data:{from_uid:from_uid,to_uid:to_uid},
+                dataType:'json',
+                success:function(e){
+                    if (e.code == 200) {
+                       console.log('success'); 
+                    } else {
+                       console.log(e.msg);
+                    }
+                }
+            });
+        }
+
+		$("body").on('click','.img',function(){
+			$(this).parents(".dianji").find(".img").each(function(){
+				var _this = $(this);
+				imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);  
+			});
+		
+		});
+
+        $("#file").on('change', function () {
+            var supplier = document.getElementById("form_img");
+            var formData = new FormData(supplier);
+            var max 	 = $(".talk-box").attr("data-max");
+	        
+            setTimeGetNewInfo();
+            $.ajax({
+                url: "{:url('chat/upload')}",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (resp) {
+                    if (resp.code) {
+                        var data 	= resp.data;
+                        var content = '';
+                        var str 	= '';
+                        max = data.km_id;
+                        $(".talk-box").attr("data-max",max);
+                        if(data.type == '1'){
+                            content = '<p>'+data.content+'</p>';
+                        }else if(data.type == '2'){
+                            content = '<div class="dianji"><img class="img" src="'+data.content+'"></div>';
+                        }else{
+                            content = '<p class="voice"><span class="fa fa-rss" data-id="'+data.content+'"></span></p>';
+                        }
+                        var str = '<div class="talk-r"><div class="talk-c">'+content+'<em>'+data.time+'</em></div><img src="'+from_url+'" alt="'+from_name+'"></div>';
+                        $(".talk-box").append(str);
+                        changeToBottom();
+                    } else {
+                        alert(resp.msg);
+                    }
+                }
+            });
+        });
+
+		$("input").blur(function(){ 
+			var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+			window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+		});
+
+
+
+		function imgShow(outerdiv, innerdiv, bigimg, _this){  
+			var src = _this.attr("src");
+			$(bigimg).attr("src", src);
+		  
+			/*获取当前点击图片的真实大小，并显示弹出层及大图*/  
+			$("<img/>").attr("src", src).load(function(){  
+				var windowH = document.documentElement.clientHeight;
+                var windowW = document.documentElement.clientWidth;
+				var realWidth 	= this.width;
+				var realHeight 	= this.height;
+				var scale 		= 0.8;
+				var imgWidth;
+				var imgHeight;
+				var margin;
+				var top;
+				
+				if(realWidth>realHeight){
+					if(realWidth>windowW*scale){
+						imgWidth  = windowW*scale; 
+						imgHeight = imgWidth/realWidth*realHeight;
+					} else {
+						imgWidth  = realWidth;  
+						imgHeight = realHeight;  
+					}
+					$(innerdiv).css({"top":100});
+				}else{
+					if(realHeight>windowH*scale){
+						imgHeight = windowH*scale;
+						imgWidth  = imgHeight/realHeight*realWidth;
+						if(imgWidth>windowW*scale) {
+							imgWidth = windowW*scale;
+						}  
+					} else {
+						imgWidth  = realWidth;  
+						imgHeight = realHeight;  
+					} 
+					
+				}
+				
+				margin	= (windowW-imgWidth)*0.5;
+				top		= (windowH-imgHeight)*0.5;
+				$(innerdiv).css({"top":top});
+				$(innerdiv).css({"margin-left":margin});
+                $(innerdiv).css({"height":imgHeight,"width":imgWidth});
+				
+				$(bigimg).css("width","100%");
+				$(bigimg).css("height","100%");
+				$(outerdiv).fadeIn("fast");
+			});  
+			  
+			$(outerdiv).click(function(){
+				$("#bigimg").attr("src", '');
+				$(this).fadeOut("fast");  
+			});  
+		}
+
+    </script>
+</body>
+</html>

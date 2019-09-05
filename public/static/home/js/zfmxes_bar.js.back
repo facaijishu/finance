@@ -1,0 +1,695 @@
+if (lirun.length != 0) {
+    config_bar_lirun = {
+        type: 'bar',
+        data: {
+            labels: lirun_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '净利润',
+                    data: lirun_data,
+                    backgroundColor: lirun_color,
+                    borderColor: lirun_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '万元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (lirun_bi.length != 0) {
+        config_bar_lirun = {
+            type: 'bar',
+            data: {
+                labels: lirun_name,
+                datasets: [{
+                        type: 'line',
+                        label: '净利润同比',
+                        borderColor: lirun_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: lirun_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '净利润',
+                        data: lirun_data,
+                        backgroundColor: lirun_color,
+                        borderColor: lirun_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '万元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (shouru.length != 0) {
+    config_bar_shouru = {
+        type: 'bar',
+        data: {
+            labels: shouru_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '营业收入',
+                    data: shouru_data,
+                    backgroundColor: shouru_color,
+                    borderColor: shouru_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '万元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (shouru_bi.length != 0) {
+        config_bar_shouru = {
+            type: 'bar',
+            data: {
+                labels: shouru_name,
+                datasets: [{
+                        type: 'line',
+                        label: '营业收入同比',
+                        borderColor: shouru_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: shouru_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '营业收入',
+                        data: shouru_data,
+                        backgroundColor: shouru_color,
+                        borderColor: shouru_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '万元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (zichan.length != 0) {
+    config_bar_zichan = {
+        type: 'bar',
+        data: {
+            labels: zichan_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '每股净资产',
+                    data: zichan_data,
+                    backgroundColor: zichan_color,
+                    borderColor: zichan_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (zichan_bi.length != 0) {
+        config_bar_zichan = {
+            type: 'bar',
+            data: {
+                labels: zichan_name,
+                datasets: [{
+                        type: 'line',
+                        label: '每股净资产同比',
+                        borderColor: zichan_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: zichan_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '每股净资产',
+                        data: zichan_data,
+                        backgroundColor: zichan_color,
+                        borderColor: zichan_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (xianjinliu.length != 0) {
+    config_bar_xianjinliu = {
+        type: 'bar',
+        data: {
+            labels: xianjinliu_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '每股现金流',
+                    data: xianjinliu_data,
+                    backgroundColor: xianjinliu_color,
+                    borderColor: xianjinliu_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (xianjinliu_bi.length != 0) {
+        config_bar_xianjinliu = {
+            type: 'bar',
+            data: {
+                labels: xianjinliu_name,
+                datasets: [{
+                        type: 'line',
+                        label: '每股现金流同比',
+                        borderColor: xianjinliu_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: xianjinliu_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '每股现金流',
+                        data: xianjinliu_data,
+                        backgroundColor: xianjinliu_color,
+                        borderColor: xianjinliu_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (maolilv.length != 0) {
+    config_bar_maolilv = {
+        type: 'bar',
+        data: {
+            labels: maolilv_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '毛利率',
+                    data: maolilv_data,
+                    backgroundColor: maolilv_color,
+                    borderColor: maolilv_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '%'
+                        }
+                    }]
+            }
+        }
+    };
+    if (maolilv_bi.length != 0) {
+        config_bar_maolilv = {
+            type: 'bar',
+            data: {
+                labels: maolilv_name,
+                datasets: [{
+                        type: 'line',
+                        label: '毛利率同比',
+                        borderColor: maolilv_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: maolilv_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '毛利率',
+                        data: maolilv_data,
+                        backgroundColor: maolilv_color,
+                        borderColor: maolilv_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '%'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (shouyi.length != 0) {
+    config_bar_shouyi = {
+        type: 'bar',
+        data: {
+            labels: shouyi_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '每股收益',
+                    data: shouyi_data,
+                    backgroundColor: shouyi_color,
+                    borderColor: shouyi_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (shouyi_bi.length != 0) {
+        config_bar_shouyi = {
+            type: 'bar',
+            data: {
+                labels: shouyi_name,
+                datasets: [{
+                        type: 'line',
+                        label: '每股收益同比',
+                        borderColor: shouyi_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: shouyi_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '每股收益',
+                        data: shouyi_data,
+                        backgroundColor: shouyi_color,
+                        borderColor: shouyi_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (gongjijin.length != 0) {
+    config_bar_gongjijin = {
+        type: 'bar',
+        data: {
+            labels: gongjijin_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '每股公积金',
+                    data: gongjijin_data,
+                    backgroundColor: gongjijin_color,
+                    borderColor: gongjijin_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (gongjijin_bi.length != 0) {
+        config_bar_gongjijin = {
+            type: 'bar',
+            data: {
+                labels: gongjijin_name,
+                datasets: [{
+                        type: 'line',
+                        label: '每股公积金同比',
+                        borderColor: gongjijin_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: gongjijin_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '每股公积金',
+                        data: gongjijin_data,
+                        backgroundColor: gongjijin_color,
+                        borderColor: gongjijin_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+if (weifenpei.length != 0) {
+    config_bar_weifenpei = {
+        type: 'bar',
+        data: {
+            labels: weifenpei_name,
+            datasets: [{
+                    type: 'bar',
+                    label: '每股未分配',
+                    data: weifenpei_data,
+                    backgroundColor: weifenpei_color,
+                    borderColor: weifenpei_color,
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '报告期'
+                        }
+                    }],
+                yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '元'
+                        }
+                    }]
+            }
+        }
+    };
+    if (weifenpei_bi.length != 0) {
+        config_bar_weifenpei = {
+            type: 'bar',
+            data: {
+                labels: weifenpei_name,
+                datasets: [{
+                        type: 'line',
+                        label: '每股未分配同比',
+                        borderColor: weifenpei_bi_color,
+                        borderWidth: 2,
+                        fill: false,
+                        data: weifenpei_bi_data
+                    }, {
+                        type: 'bar',
+                        label: '每股未分配',
+                        data: weifenpei_data,
+                        backgroundColor: weifenpei_color,
+                        borderColor: weifenpei_color,
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '报告期'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: '元'
+                            }
+                        }]
+                }
+            }
+        };
+    }
+}
+var config_pie = {
+    type: 'pie',
+    data: {
+        datasets: [{
+                data: pie_data,
+                backgroundColor: pie_color,
+                label: 'Dataset 1'
+            }],
+        labels: pie_name
+    }
+};
+window.onload = function () {
+    if (config_bar_lirun != []) {
+        var ctx_bar = document.getElementById('chart-area-1').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_lirun);
+    }
+    if (config_bar_shouru != []) {
+        var ctx_bar = document.getElementById('chart-area-2').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_shouru);
+    }
+    if (config_bar_zichan != []) {
+        var ctx_bar = document.getElementById('chart-area-3').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_zichan);
+    }
+    if (config_bar_xianjinliu != []) {
+        var ctx_bar = document.getElementById('chart-area-4').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_xianjinliu);
+    }
+    if (config_bar_maolilv != []) {
+        var ctx_bar = document.getElementById('chart-area-5').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_maolilv);
+    }
+    if (config_bar_shouyi != []) {
+        var ctx_bar = document.getElementById('chart-area-6').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_shouyi);
+    }
+    if (config_bar_gongjijin != []) {
+        var ctx_bar = document.getElementById('chart-area-7').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_gongjijin);
+    }
+    if (config_bar_weifenpei != []) {
+        var ctx_bar = document.getElementById('chart-area-8').getContext('2d');
+        window.myPie = new Chart(ctx_bar, config_bar_weifenpei);
+    }
+    var ctx_pie = document.getElementById("myChart").getContext("2d");
+    window.myPie = new Chart(ctx_pie, config_pie);
+};
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    paginationClickable: true,
+    slidesPerView: 2,
+    observer: true,
+    observeParents: true
+});
+
+function tabs(oa, oc) {
+    $(oa).on("click", function () {
+        $(oa).removeClass("actived");
+        $(this).addClass("actived");
+        $(oc).css({"display": "none","position": "absolute", "left": "-999px"});
+        $(oc).eq($(this).index()).css({"display": "block", "position": "relative", "left": "0"});
+    });
+};
+tabs(".info-tab a", ".info-content");
+tabs(".info-son-tab a", ".info-son-con");
+tabs(".tab-1 span", ".tab-box");
+$(".info-son-con[name='ok']").show();
+$('.information').readmore({
+    moreLink: '<a href="###" class="btn-open btn-change"><i class="fa fa-angle-down"></i><span>展开</span></a>',
+    lessLink: '<a href="###" class="btn-open btn-change"><i class="fa fa-angle-up"></i><span>收起</span></a>',
+    maxHeight: 88
+});
+$('.information2').readmore({
+    moreLink: '<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-down"></i></a>',
+    lessLink: '<a href="###" class="btn-open2 btn-change"><i class="fa fa-angle-up"></i></a>',
+    maxHeight: 40
+});
+$(".info-son-tab a[name='false']").css({"display":"none"});
+$(".info-son-con[name='false']").css({"display":"none"});
+$(".info-content").hide();
+$(".info-content").eq(0).show();
+$(".info-son-tab a[name='ok']").eq(0).addClass("actived");
+$(".info-son-con").hide();
+$(".info-son-con[name='ok']").eq(0).show();
+$(".list-1 > .list4 li:even").addClass("even");
+$(".list-2 li:odd").addClass("odd");
+$(".toggle dl dd").hide();
+$(".toggle dl dt").click(function () {
+$(".toggle dl dd").not($(this).next()).hide();
+$(".toggle dl dt").not($(this).next()).removeClass("current");
+$(this).next().css("border-bottom", "1px solid #b3b3b3").slideToggle(500);
+$(this).toggleClass("current");
+});

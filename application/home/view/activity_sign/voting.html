@@ -1,0 +1,139 @@
+{include file="base/header" /}
+    <body style="background:#fff;">
+		{include file="base/dividend" /}
+        {include file="base/slide" /}
+		<div id="proModal">
+			<div style="margin:30px 0 0 20px;font-size:20px;text-align:left;font-weight:bold;">选择感兴趣的项目</div>
+			<div style="height:40px;margin-left:20px;line-height:30px;font-size:14px;text-align:left;color:#cacaca;">项目联系人会尽快与您对接</div>
+        	<div class="voting">
+            	<form id="checkUp">
+                <ul>
+                	{foreach $project as $item}
+                	<li>
+                		<div style="cursor:pointer;height:70px;" id="pro_check" data-id="{$item['pro_id']}">
+                        	<div style="margin-left:15px;width:75%;float:left;text-align:left;">
+                         		<span style="font-size:16px;line-height:45px;font-weight:bold;">{$item['pro_name']}</span><br/>
+                         		<span style="font-size:14px;line-height:5px;color:#cacaca;">{$item['company_name']}</span>
+                         	</div> 
+                         	<div style="width:15%;float:right;margin-top:18px;">
+                         	 <img src="/static/home/css/img/checkedGou.png" width="21" height="21" id="{$item['id_check']}" style="display:none" > 
+                         	<input type="checkbox" style="display:none"  id="{$item['id_name']}"  name="pro_id" value="{$item['pro_id']}"></div>
+                         	<!--<input type="checkbox" class="voting_checkbox" id="{$item['id_name']}" name="pro_id" value="{$item['pro_id']}"></div>-->
+                         </div>
+                    </li>
+                    <div style="width:10px;">&nbsp;</div>
+                    {/foreach}
+                </ul>
+                <input name="a_id_check" type="hidden" value="{$a_id}">
+		        <div>
+		        	<button type="button" id="checkbtn" class="activity_sign_btn" style="width:240px;height:40px;line-height:40px;color:#fff;">提交</button>
+		        </div>
+        		</form>
+    		</div>
+		</div>
+		
+		<div class="modal fade in modal_body" id="falseModal">
+			<div style="margin-top:160px;height:100%;">
+				<img src="/static/home/css/img/voting_fasle.png" width="330" height="292">
+			</div>
+		</div>
+		
+		<div class="modal fade in modal_body" id="successModal">
+			<div style="margin-top:130px;">
+				<div class="activity_sign_box">
+					<div class="activity_success">
+					<div style="color:#fff;font-size:18px;font-weight:bold;margin:0px 0 0 0px;line-height:80px;">提交成功</div>
+					<div style="text-align:left;color:#a6a6a6;font-size:16px;line-height:30px;">意向项目已提交，相关项目负责人会尽快与您联系，请持续关注FA財。</div>
+					<div class="act_submmit" style="margin:86px 0 5px 0px;">
+			        	<button type="button" id="getprobtn" class="activity_sign_btn" style="width:220px;">查看项目详情</button>
+			        </div>
+			        </div>
+		        </div>
+			</div>
+		</div>
+		<div class="modal fade in msg_error_body" id="msgModal"><div class="msg_error" id="msgBody"></div></div>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var s = $("input[name='pro_id']");
+				s.each(function(i){
+					$(this).click(function(){
+						if(this.checked==true){
+							var pro_id = $(this).val();
+							$("div [id=pro_check]").each(function(){
+								var check_id = $(this).attr("data-id");
+								if(pro_id==check_id){
+									$(this).addClass("voting_check"); 
+									$("#checkkk_"+pro_id).css("display","block");
+								}
+							});
+						}else{
+							var pro_id_no = $(this).val();
+							$("div [id=pro_check]").each(function(){
+								var check_id_no = $(this).attr("data-id");
+								if(pro_id_no==check_id_no){
+									$(this).removeClass("voting_check"); 
+									$("#checkkk_"+pro_id).css("display","none");
+								}
+							});
+						}
+					});
+				});
+				
+				$(document.body).on('click','div#pro_check',function(){
+				    var id  = $(this).attr("data-id");
+					if($(this).hasClass("voting_check")){
+						$(this).removeClass("voting_check"); 
+						$("#checkkk_"+id).css("display","none");
+						$("#checkId_"+id).prop("checked",false);
+						$("#checkId_"+id).attr("checked",false);
+					}else{
+						$(this).addClass("voting_check"); 
+						$("#checkkk_"+id).css("display","block");
+						$("#checkId_"+id).prop("checked","checked"); 
+						$("#checkId_"+id).attr("checked","checked");
+					}
+				});
+		
+                $("#checkbtn").on('click', function (e) {
+                    var id 		= $("#proModal").find("input[name='a_id_check']").val();
+                    var pro_ids = '';
+                    $("input[name='pro_id']:checked").each(function(){
+                    	if(pro_ids==''){
+                    		pro_ids = $(this).val();
+                    	}else{
+                    		pro_ids = pro_ids+","+$(this).val();
+                    	}
+                    });
+                    if(pro_ids==""){
+                    	alertMsgModal("请选择感兴趣的项目！");
+                    	return;
+                    }
+					
+                    $.ajax({
+                        url: "{:url('ActivitySign/dovoting')}",
+                        data: {pro_ids:pro_ids , id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                        	if(resp.code==2){
+                        		$("#falseModal").show();
+                            	setTimeout(function () {
+                            		$("#falseModal").hide();
+                            		window.location.href = '/home/activity_sign/index/id/'+id;
+                                }, 2000);
+                        	}else if(resp.code==1){
+                        		$("#successModal").show();
+                        	}else{
+                        		alertMsgModal(resp.msg);
+                        	}
+                        }
+                    });
+                });
+                
+                $("#getprobtn").on('click', function (e) {
+					window.location.href = '/static/frontend/selectedProjects.html';
+				});
+			});
+		</script>
+    </body>
+</html>

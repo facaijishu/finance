@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">已支付</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Order/index")}')">已支付</a></li>
+    {/if}
+    {if condition="$Request.action eq 'wait' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">未支付</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Order/wait")}')">未支付</a></li>
+    {/if}
+</ul>

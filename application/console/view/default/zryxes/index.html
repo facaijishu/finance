@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="introdece_img/modal" /}
+            {include file="zryxes/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="zryxes_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 发布日期：</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date1" placeholder="开始时间" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date2" placeholder="结束时间" id="end_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 企业名称：</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="sec_uri_tyshortname" id="sec_uri_tyshortname">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 股票代码：</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="secucode" id="secucode">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 展示状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_exhibition" name="zryx_exhibition" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_exhibition" name="zryx_exhibition" value="1">
+                                            <span> 展示 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_exhibition" name="zryx_exhibition" value="0">
+                                            <span> 隐藏 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 融资状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_financing" name="zryx_financing" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_financing" name="zryx_financing" value="0">
+                                            <span> 融资中 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_financing" name="zryx_financing" value="1">
+                                            <span> 融资结束 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 签约状态：</label>
+                                    <div class="radio-inline col-lg-10 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_sign" name="zryx_sign" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_sign" name="zryx_sign" value="1">
+                                            <span> 是 </span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="zryx_sign" name="zryx_sign" value="0">
+                                            <span> 否 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-lg btn-default" id="zryxes_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="zryxes" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> ID</th>
+                                <th> 股票代码</th>
+                                <th> 企业名称</th>
+                                <th> 项目二维码</th>
+                                <th> 转让方向</th>
+                                <th> 转让价格</th>
+                                <th> 展示状态</th>
+                                <th> 融资状态</th>
+                                <th> 签约状态</th>
+                                <th> 是否为精品</th>
+                                <th> 发布时间</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var zryxes_url = '{:url("Zryxes/read")}';
+    var root_path_url = $("#zryxes").attr("data-path");
+    var zryxes_detail_url = '{:url("Zryxes/detail")}';
+    var zryxes_show_url = '{:url("Zryxes/exhibition_true")}';
+    var zryxes_hide_url = '{:url("Zryxes/exhibition_false")}';
+    var zryxes_boutique_url = '{:url("Zryxes/boutique")}';
+    var zryxes_stop_boutique_url = '{:url("Zryxes/stop_boutique")}';
+    var zryxes_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/zryxes/zryxes_list.js"></script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>

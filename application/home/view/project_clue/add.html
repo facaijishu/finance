@@ -1,0 +1,416 @@
+{include file="base/header" /}
+<body style="background:#fff;">
+    {include file="base/dividend" /}
+    {include file="base/slide" /}
+	<form id="project_info" action="{:url('ProjectClue/add')}" method="post" enctype="multipart/form-data">  
+		<!-- 项目基本信息 -->
+		<div class="master">
+			<div class="pro_body_master">
+				<ul class="pro_body_list">
+                    <li class="li_bottom"><label>项目名称：</label><span><input id="pro_name" name="pro_name" type="text"></span></li>
+                    <!-- <li class="li_bottom"><label>公司代码：</label><span><input id="stock_code" name="stock_code" type="text"></span></li>-->
+					<li class="li_bottom"><label>所属行业：</label><span id="capital_plan_t"><input id="capital_plan_n" name="capital_plan_n" type="text"><input id="capital_plan" name="capital_plan" type="hidden"></span></li>
+                    <li><label>项目金额：</label><span><input name="financing_amount" type="text">万</span></li>
+                </ul>
+			</div>
+			<div class="pro_body_btn">
+				<button type="button" onclick="next(3)" class="pro_body_next">下一步</button>
+			</div>
+		</div>
+		<!-- 提交人信息 -->
+		<!-- <div class="person" style="display:none">
+			<div class="pro_body_person">
+				<ul class="pro_body_list">
+					<li class="li_bottom"><label>公司姓名：</label><span><input id="" name="company_name" type="text"></span></li>
+					<li class="li_bottom"><label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label><span><input id="contacts" name="contacts" type="text"></span></li>
+					<li class="li_bottom"><label>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：</label><span><input id="contacts_position" name="contacts_position" type="text"></span></li>
+					<li class="li_bottom"><label>联系电话：</label><span><input id="contacts_tel" name="contacts_tel" type="tel"></span></li>
+					<li><label>联系邮箱：</label><span><input id="contacts_email" name="contacts_email" type="text"></span></li>
+				</ul>
+			</div>
+			<div class="pro_body_btn">
+				<button type="button" onclick="next(1)" class="pull-left pro_body_next">上一步</button>
+				<button type="button" onclick="next(3)" class="pull-right pro_body_next">下一步</button>
+			</div>
+		</div>-->
+		<!-- 项目简介图片 -->
+		<div class="pic" style="display:none">
+			<div class="pro_body_pic">
+				<ul class="pro_body_list">
+					<li><label>项目简介</label><span style="color:#2873f4">必填</span></li>
+					<li style="height:100px;"><textarea id="introduction" name="introduction" rows="8" cols="80" style="text-align:left;vertical-align:top;width:100%;height:100px;border:solid 1px #f2f2f2;resize:none;box-shadow:0px 0px 0px rgba(0,0,0,0);-webkit-appearance:none;"></textarea></li>
+					<li><label>说明图片</label><span style="color:#2873f4">选填</span></li>
+					<li>
+						<div class="upload-box clearfix">
+							<div class="upload" style="width: 80px;height:80px;border:solid 1px #2873F4;"><input id="file" type="file" name="file"></div>
+							<input type="text" name="img" style="display: none;">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="pro_body_btn">
+				<button type="button" onclick="next(1)" class="pro_body_next">上一步</button>
+			</div>
+		</div>
+		<input type="hidden" name="pro_origin" value="{$pro_origin}">
+	</form>
+	
+	<!-- 底部菜单 -->
+	<div class="new_footer shadow">
+		<div><img src="/static/home/css/img/footer_line.png" height="34"></div>
+		<div class="new_footer_in clearfix">
+			<button type="submit" onclick="postall()" id="postbtn" class="pull-left new_footer_btn_gray">投递项目</button>
+		</div>
+	</div>
+
+	<div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="planModalLabel" aria-describedby="所属业务" style="display:none;">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:solid 1px #ffffff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="planModalLabel">所属行业<span class="font-size:12px;">（<span class="chooseSign">单选</span>）</span></h4>
+                </div>
+                <div style="padding-bottom:20px;">
+				 {foreach name="list" item="it"}
+					<div class="plan_check" sid="{$it.id}">{$it.value}</div>
+				 {/foreach}
+				</div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade in msg_error_body" id="msgModal"><div class="msg_error" id="msgBody"></div></div>
+	<script type="text/javascript">
+
+		$(document).ready(function () { 
+			if($.cookie('pro_name')){
+				$("#pro_name").val($.cookie('pro_name'));
+			}
+			/*if($.cookie('stock_code')){
+				$("#stock_code").val($.cookie('stock_code'));
+			}*/
+			if($.cookie('capital_plan_n')){
+				$("#capital_plan_n").html($.cookie('capital_plan_n'));
+			}
+			if($.cookie('capital_plan')){
+				$("#capital_plan").val($.cookie('capital_plan'));
+			}
+			if($.cookie('financing_amount')){
+				$("#financing_amount").val($.cookie('financing_amount'));
+			}
+			/*if($.cookie('company_name')){
+				$("#company_name").val($.cookie('company_name'));
+			}
+			if($.cookie('contacts')){
+				$("#contacts").val($.cookie('contacts'));
+			}
+			if($.cookie('contacts_position')){
+				$("#contacts_position").val($.cookie('contacts_position'));
+			}
+			if($.cookie('contacts_tel')){
+				$("#contacts_tel").val($.cookie('contacts_tel'));
+			}
+			if($.cookie('contacts_email')){
+				$("#contacts_email").val($.cookie('contacts_email'));
+			}*/
+			if($.cookie('introduction')){
+				$("#introduction").val($.cookie('introduction'));
+			}
+			if($.cookie('content')){
+				$("#upload").before($.cookie('content'));
+			}
+
+            var pro_name		 = '';
+            //var stock_code		 = ''
+            var financing_amount = '';
+            //var company_name	 = '';
+            //var contacts		 = '';
+            //var contacts_tel	 = '';
+            //var contacts_email	 = '';
+            var introduction	 = '';
+             
+           
+            $("#pro_name").on('blur',function(){
+                pro_name = $.trim($(this).val());
+                if(pro_name != ''){
+                  $.cookie('pro_name',pro_name,{path:"/"});  
+                }
+                
+            });
+
+            /*$("#stock_code").on('blur',function(){
+                stock_code = $.trim($(this).val());
+                if(stock_code != ''){
+                 $.cookie('stock_code',stock_code,{path:"/"});
+                }
+            });*/
+
+			$("#capital_plan_n").on('blur',function(){
+                capital_plan_n = $.trim($(this).val());
+                if(capital_plan_n != ''){
+                 $.cookie('capital_plan_n',capital_plan_n,{path:"/"});
+                }
+            });
+
+			$("#capital_plan").on('blur',function(){
+                capital_plan = $.trim($(this).val());
+                if(capital_plan != ''){
+                 $.cookie('capital_plan',capital_plan,{path:"/"});
+                }
+            });
+            
+            $("#financing_amount").on('blur',function(){
+                financing_amount = $.trim($(this).val());
+                if(financing_amount != ''){
+                   $.cookie('financing_amount',financing_amount,{path:"/"}); 
+                }
+            });
+
+            /*$("#company_name").on('blur',function(){
+                company_name = $.trim($(this).val());
+                if(company_name != ''){
+                    $.cookie('company_name',company_name,{path:"/"});
+                }
+                
+            });
+
+            $("#contacts").on('blur',function(){
+                contacts = $.trim($(this).val());
+                if(contacts != ''){
+                   $.cookie('contacts',contacts,{path:"/"}); 
+                }
+                
+            });
+
+			$("#contacts_position").on('blur',function(){
+                contacts_position = $.trim($(this).val());
+                if(contacts_position != ''){
+                   $.cookie('contacts_position',contacts_position,{path:"/"}); 
+                }
+                
+            });
+
+            $("#contacts_tel").on('blur',function(){
+                contacts_tel = $.trim($(this).val());
+                if(contacts_tel != ''){
+                    $.cookie('contacts_tel',contacts_tel,{path:"/"});
+                }
+                
+            });
+
+            $("#contacts_email").on('blur',function(){
+                contacts_email = $.trim($(this).val());
+                if(contacts_email != ''){
+                   $.cookie('contacts_email',contacts_email,{path:"/"}); 
+                }
+                
+            });*/
+
+            $("#introduction").on('blur',function(){
+                introduction = $.trim($(this).val());
+                if(introduction != ''){
+                   $.cookie('introduction',introduction,{path:"/"}); 
+                }
+                
+			});   
+			
+			 $("#project_info").on('click', '#capital_plan_t', function(event) {
+                $("#planModal").modal("show");
+            });
+            $("#planModal").on('click', '.plan_check', function(event) {
+				$(".plan_check").removeClass('active');
+				$(this).addClass('active');
+				$("#capital_plan_n").val($(this).html());
+				$("#capital_plan").val($(this).attr('sid'));
+				$("#planModal").modal("hide");
+                
+            });
+
+		});
+
+		var str = '';
+        $("#file").on('change', function () {
+            var supplier = document.getElementById("project_info");
+            var formData = new FormData(supplier);
+            $.ajax({
+                url: "{:url('ProjectClue/upload')}",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (resp) {
+                    if(resp.code){
+                        var length = $(".upload-box").find("img").length;
+                        if(length >= 9){
+                            alert('已到达上传图片上限.无法上传' , '提示框');
+                        }else{
+                            var content = '<div class="img-box clearfix" style="width:80px;height:80px;text-align: center;float: left;margin-right: 10px;"><img src="__UPLOAD__/home/project_clue/'+resp.data.name+'" alt="说明图片"><div class="pro_del">×</div></div>';
+                            //如果之前cookie里有，就取出来和当前新点击添加的拼接
+                            if($.cookie('content')){
+                                str = $.cookie('content');
+                            }
+                            str += content;
+
+                            //添加后更新content
+                            $.cookie('content',str,{path:"/"});
+                            //添加后更新input[name='img']
+                            $("input[name='img']").val($("input[name='img']").val()+','+resp.data.name);
+                            $(".upload").after(content);
+                        }
+                    }else{
+                        alert(resp.msg);
+                    }
+                }
+            });
+        });
+       
+        //删除图片
+        $("body").on('click','.pro_del',function(){
+            $(this).parent().remove();
+            var aaa = $(this).parent().html();
+            var bbb = '<div class="img-box clearfix" style="width:80px;height:80px;text-align: center;float: left;margin-right: 10px;">'+aaa+'</div>';
+            str = $.cookie('content').replace(bbb,'');
+            //删除后更新content
+            $.cookie('content',str,{path:"/"});
+            //删除后更新input[name='img']
+            var imgName = $("input[name='img']").val();
+            var fileName = $(this).siblings('img').attr("src");
+            var pos = fileName.lastIndexOf('/');
+            var name= fileName.substring(pos+1);
+            var arr_imgName = imgName.split(',');
+            arr_imgName.splice($.inArray(name,arr_imgName),1);
+            var newImgName = arr_imgName.join(',');
+            $("input[name='img']").val(newImgName);
+           
+         });
+
+
+		function next(id) {
+			if(id==1){
+				$(".master").show();
+				$(".person").hide();
+				$(".pic").hide();
+				if($("#postbtn").hasClass("new_footer_btn")){
+					$("#postbtn").removeClass("new_footer_btn"); //移除
+				}
+				if(!$("#postbtn").hasClass("new_footer_btn_gray")){
+					$("#postbtn").addClass("new_footer_btn_gray"); // 追加样式
+				}
+				
+			}else if(id==2){
+				$(".master").hide();
+				$(".person").show();
+				$(".pic").hide();
+				if($("#postbtn").hasClass("new_footer_btn")){
+					$("#postbtn").removeClass("new_footer_btn"); //移除
+				}
+				if(!$("#postbtn").hasClass("new_footer_btn_gray")){
+					$("#postbtn").addClass("new_footer_btn_gray"); // 追加样式
+				}
+				
+			}else{
+				$(".master").hide();
+				$(".person").hide();
+				$(".pic").show();
+				$("#postbtn").addClass("new_footer_btn"); // 追加样式
+				$("#postbtn").removeClass("new_footer_btn_gray"); //移除
+			}
+		}
+
+
+		function postall(id) {
+			if($("#postbtn").hasClass("new_footer_btn")){
+				var _this = $(this);
+				var res;
+				res = readySend(_this);
+				if(res){
+					$('#project_info').submit();
+				}else{
+					return false;
+				}
+			}
+		}
+
+		function readySend(e) {
+            var pro_name			= $("#project_info").find("input[name='pro_name']").val();
+            var financing_amount	= $("#project_info").find("input[name='financing_amount']").val();
+            //var company_name		= $("#project_info").find("input[name='company_name']").val();
+            //var contacts			= $("#project_info").find("input[name='contacts']").val();
+			//var contacts_position	= $("#project_info").find("input[name='contacts_position']").val();
+            //var contacts_tel		= $("#project_info").find("input[name='contacts_tel']").val();
+            //var contacts_email		= $("#project_info").find("input[name='contacts_email']").val();
+            var pro_content			= $("#project_info").find("#introduction").val();
+            var capital_plan		= $("#project_info").find("input[name='capital_plan']").val();
+			var capital_plan_n		= $("#project_info").find("input[name='capital_plan_n']").val();
+            if (pro_name == '') {
+            	alertMsgModal('项目名称不能为空', '提示框');
+                return false;
+            }
+            if(capital_plan == ''){
+            	alertMsgModal('请选择所属业务', '提示框');
+                return false;
+            }
+            var amount_pattern = /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/;
+            if (financing_amount == '') {
+            	alertMsgModal('项目金额不能为空', '提示框');
+                return false;
+            }
+            if(amount_pattern.exec(financing_amount) == null){
+            	alertMsgModal('项目金额输入不正确', '提示框');
+                return false;
+            }
+            /*if (company_name == '') {
+            	alertMsgModal('公司名称不能为空', '提示框');
+                return false;
+            }
+            if (contacts == '') {
+            	alertMsgModal('姓名不能为空', '提示框');
+                return false;
+            }
+			if (contacts_position == '') {
+				alertMsgModal('职位不能为空', '提示框');
+                return false;
+            }
+            var tel = /^1\d{10}$/;
+            if (contacts_tel == '') {
+            	alertMsgModal('联系电话不能为空', '提示框');
+                return false;
+            }
+            if(tel.exec(contacts_tel) == null){
+            	alertMsgModal('联系电话输入不正确', '提示框');
+                return false;
+            }
+            var email = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (contacts_email == '') {
+            	alertMsgModal('联系邮箱不能为空', '提示框');
+                return false;
+            }
+            if(email.exec(contacts_email) == null){
+            	alertMsgModal('联系邮箱输入不正确', '提示框');
+                return false;
+            }*/
+            if (pro_content == '') {
+            	alertMsgModal('项目简介不能为空', '提示框');
+                return false;
+            }
+            //提交后清空cookie里存储的所有值
+            $.cookie('pro_name','',{path:"/"});
+            //$.cookie('stock_code','',{path:"/"});
+            $.cookie('capital_plan','',{path:"/"});
+            $.cookie('capital-plan_n','',{path:"/"});
+            $.cookie('financing_amount','',{path:"/"});
+            //$.cookie('company_name','',{path:"/"});
+            //$.cookie('contacts','',{path:"/"});
+			//$.cookie('contacts_position','',{path:"/"});
+            //$.cookie('contacts_tel','',{path:"/"});
+            //$.cookie('contacts_email','',{path:"/"});
+            $.cookie('introduction','',{path:"/"});
+            $.cookie('content','',{path:"/"});
+            return true;
+        }
+
+	</script>
+</body>
+</html>

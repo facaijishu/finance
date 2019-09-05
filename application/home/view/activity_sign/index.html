@@ -1,0 +1,250 @@
+{include file="base/header" /}
+    <body style="background:#fff;">
+		{include file="base/dividend" /}
+        {include file="base/slide" /}
+       	<div class="activity_sign_master" id="signModal" style="display:block">
+       		<div style="position:fixed;">
+        		<div class="act_title">{$act.act_name}</div>
+        		<div class="act_time">
+	        		<table border="0" width="100%">
+						<tr height="35">
+							<td style="font-weight:bold;">活动时间</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr style="color:#545454;">
+							<td>0:00</td>
+							<td style="text-align:center;">---</td>
+							<td style="text-align:right;">1:00</td>
+						</tr>
+						<tr style="color:#a6a6a6;">
+							<td>开始签到</td>
+							<td>&nbsp;</td>
+							<td style="text-align:right;">活动结束</td>
+						</tr>
+					</table>
+        		</div>
+            	<form id="SignUp">
+            	<div class="activity_sign_input">
+            	    <span>报名信息</span>
+	                <ul>
+	                    <li><input name="name" type="text" style="font-size:18px;" placeholder="姓名" ></li>
+	                    <li><input name="phone" type="tel" style="font-size:18px;" placeholder="手机" ></li>
+						<input name="a_id" type="hidden" value="{$a_id}">
+	                </ul>
+                </div>
+            	<div class="act_submmit">
+		        	<button type="button" id="signbtn" class="activity_sign_btn">验票</button>
+		        </div>
+        		</form>
+       		</div>
+       		<div class="clear"></div>
+   		</div>
+		<div class="modal fade in modal_body" id="successModal">
+			<div>
+				<div class="activity_sign_box">
+					<div class="activity_success">
+						<div style="color:#fff;font-size:20px;font-weight:bold;margin:80px 0 0 0px;line-height:80px;">验票成功</div>
+						<div style="text-align:left;color:#333333;font-size:16px;font-weight:bold;margin:0px 0 0 0px;line-height:40px;">尊敬的<span id="keyname"></span></div>
+						<div style="text-align:left;color:#a6a6a6;font-size:16px;line-height:30px;">您已经验票通过，请在工作人员的引导下有序进场，谢谢您的配合！</div>
+						<div class="act_submmit" style="margin:36px 0 5px 0px;">
+							<button type="button" id="getprobtn" class="activity_sign_btn" style="width:220px;">选择感兴趣的项目</button>
+						</div>
+						<div style="color:#a6a6a6;font-size:12px;">*获取项目资料&amp;对接项目联系人*</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade in modal_body" id="falseModal">
+			<div style="margin-top:160px;height:100%">
+				<img src="/static/home/css/img/sign_fasle.png" width="330" height="292">
+			</div>
+		</div>
+		
+		<div class="modal fade in modal_body" id="errorModal" style="background: rgba(0,0,0,.3);">
+			<div>
+				<div class="msg_error" id="errorname"></div>
+			</div>
+		</div>
+		
+		<div class="modal fade in" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel">
+        	<div class="activity_reg_master">
+	        	<div class="activity_reg_title">活动报名</div>
+            	<form id="regUp">
+            	<div class="activity_sign_input">
+            		<div class="activity_reg_centent">报名信息</div>
+	                <ul>
+	                    <li><input name="realName" type="text" style="font-size:18px;" placeholder="姓名" ></li>
+	                    <li><input name="mobile" type="tel" style="font-size:18px;" placeholder="手机" ></li>
+	                    <li><input name="regcode" type="tel" style="font-size:18px;width:180px;" placeholder="验证码" ><div id="sendCode" class="activity_tel_btn">获取验证码</div></li>
+	                  	<li><input name="company_jc" type="text" style="font-size:18px;" placeholder="公司（简称）" ></li>
+	                    <li><input name="position" type="text" style="font-size:18px;" placeholder="职位" ></li>
+						<input name="a_id_reg" type="hidden" value="{$a_id}">
+	                </ul>
+                </div>
+            	<div class="act_reg_submmit">
+		        	<button type="button" id="regbtn" class="activity_sign_btn">报名</button>
+		        </div>
+        		</form>
+    		</div>
+		</div>
+		<input type="hidden" id="signId" value="{$sign}">
+		<div class="modal fade in msg_error_body" id="msgModal"><div class="msg_error" id="msgBody"></div></div>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var sign = $("#signId").val();
+				if(sign == 1){
+					$("#keyname").html("会员：");
+	        	    $("#successModal").show();
+				}
+				
+                $("#signbtn").on('click', function (e) {
+                    var id 		  = $("#signModal").find("input[name='a_id']").val();
+                    var name 	  = $("#signModal").find("input[name='name']").val();
+                    var phone 	  = $("#signModal").find("input[name='phone']").val();
+                    if (name == '') {
+                        alertMsgModal("姓名不能为空");
+                        return false;
+                    }
+                    var phone_pattern = /^1\d{10}$/;
+                    if (phone == '') {
+                        alertMsgModal("手机不能为空");
+                        return false;
+                    }
+                    if(phone_pattern.exec(phone) == null){
+                        alertMsgModal("手机输入不正确");
+                        return false;
+                    }
+					
+                    $("#signModal").hide();
+                    var url  = '/home/activity_sign/index/id/'+id+'&time='+((new Date()).getTime());
+    				var url1 = '/home/activity_sign/voting/id/'+id+'&time='+((new Date()).getTime());
+                    
+                    $.ajax({
+                        url: "{:url('ActivitySign/sign')}",
+                        data: {name:name ,phone:phone , id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                        	if(resp.code==1){
+                        		alertMsgModal(resp.msg);
+                        		$("#signModal").show();
+                        	}else if(resp.code==2){
+                        		alertMsgModal(resp.msg);
+                        		$("#regModal").find("input[name='realName']").val(name);
+                                $("#regModal").find("input[name='mobile']").val(phone);
+                                $("#regModal").find("input[name='a_id_reg']").val(id);
+                        		$("#regModal").show();
+                        	}else if(resp.code==3){
+                                alertMsgModal(resp.msg);
+                            	$("#signModal").show();
+                        	}else{
+                        		$("#keyname").html(name+"先生/女士：");
+                        		$("#successModal").show();
+                        	}
+                        }
+                    });
+                });
+                
+				$("#getprobtn").on('click', function (e) {
+					var id 		  = $("#signModal").find("input[name='a_id']").val();
+    				var url = '/home/activity_sign/voting/id/'+id;
+					window.location.href = url;
+				});
+                
+                $("#regbtn").on('click', function (e) {
+                    var id 		  = $("#regModal").find("input[name='a_id_reg']").val();
+                    var name 	  = $("#regModal").find("input[name='realName']").val();
+                    var phone 	  = $("#regModal").find("input[name='mobile']").val();
+                    var regcode   = $("#regModal").find("input[name='regcode']").val();
+                    var com_jc 	  = $("#regModal").find("input[name='company_jc']").val();
+                    var position  = $("#regModal").find("input[name='position']").val();
+                    if (name == '') {
+                        alertMsgModal("姓名不能为空");
+                        return false;
+                    }
+                    var phone_pattern = /^1\d{10}$/;
+                    if (phone == '') {
+                        alertMsgModal("手机不能为空");
+                        return false;
+                    }
+                    if(phone_pattern.exec(phone) == null){
+                        alertMsgModal("手机输入不正确");
+                        return false;
+                    }
+                    
+                    if (regcode == '') {
+                        alertMsgModal("验证码不能为空");
+                        return false;
+                    }
+                    
+                    if (com_jc == '') {
+                        alertMsgModal("公司简称不能为空");
+                        return false;
+                    }
+                    
+                    if (position == '') {
+                        alertMsgModal("职位不能为空");
+                        return false;
+                    }
+					
+                    $("#regModal").hide();
+                    $.ajax({
+                        url: "{:url('ActivitySign/reg')}",
+                        data: {name:name ,phone:phone ,regcode:regcode ,com_jc:com_jc ,position:position, id:id},
+                        type: "POST",
+                        dataType: 'json',
+                        success: function(resp){
+                        	if(resp.code==1){
+                        		$("#keyname").html(name);
+                        		$("#successModal").show();
+                        	}else {
+                        		alertMsgModal(resp.msg);
+                                $("#regModal").show();
+                            }
+                        }
+                    });
+                });
+                //发送验证码
+                $("#sendCode").click(function(event) {
+                    var phone = $.trim($("input[name='mobile']").val());
+                    if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+                        alertMsgModal("请输入正确的手机号");
+                        return;
+                    }
+
+                    //发送请求
+                    if ($("#sendCode").hasClass('activity_tel_btn')) {
+                        $.ajax({
+                            url: "{:url('ActivitySign/getNewNumber')}",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {"phone": phone},
+                        })
+                        .done(function(res) {
+                            if (res.code == 0) {
+                                var i = 60;
+                                var it = setInterval(function(){
+                                    if (i > 0) {
+                                        $("#sendCode").removeClass("activity_tel_btn");
+                                        $("#sendCode").addClass("tel_primary");
+                                        $("#sendCode").html(i +" s");
+                                    }else {
+                                        $("#sendCode").removeClass("tel_primary");
+                                        $("#sendCode").addClass("activity_tel_btn");
+                                        $("#sendCode").html("发送验证码");
+                                        clearInterval(it);
+                                    }
+                                    i--;
+                                }, 1000);
+                            }else {
+                            	alertMsgModal(res.msg);
+                            }
+                        });
+                    }
+                });
+			});
+		</script>
+    </body>
+</html>

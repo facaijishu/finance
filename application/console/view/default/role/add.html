@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="role/tab" /}
+            <div>
+                <form id="addRoleForm" action="{:url('role/add')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend>角色信息</legend>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">父角色 <sup>*</sup></label>
+                            <div class="col-lg-4 selectContainer">
+                                <select class="form-control" name="pid">
+                                    {$role_option}
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色名称 <sup>*</sup></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="name" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">角色描述信息</label>
+                            <div class="col-lg-4">
+                                <textarea class="form-control" name="remark" placeholder="角色描述信息" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">是否启用</label>
+                            <div class="col-md-4">
+                                <label class="radio radio-inline">
+                                    <input type="radio" class="radiobox" name="status" value="1" checked>
+                                    <span>启用</span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    <input type="radio" class="radiobox" name="status" value="0">
+                                    <span>停用</span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#addRoleForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    pid: {
+                        validators: {
+                            notEmpty: {
+                                message: '请选择父角色'
+                            },
+                            digtts: {
+                                message: '请选择父角色'
+                            }
+                        }
+                    },
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入角色名称'
+                            },
+                            stringLength: {
+                                min: 2,
+                                max: 20,
+                                message: '角色名称长度必须在2到20位之间'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if (e && e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    },
+                    error: function (resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+        });
+    })
+</script>

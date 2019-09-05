@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財</title>
+    <meta name="keywords" content="FA財" />
+    <meta name="description" content="FA財" />
+    <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/frontend/js/component.js"></script>
+    <style>
+		.swidth{width:414px;}
+		@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+		.swidth{width:375px;}
+		}
+	</style>
+</head>
+
+<body class="mofh bg_gray" style="width:100%;">
+    <div id="box">
+        <section>
+            <img src="/static/frontend/images/userinfo-bg.png" alt="" style="width:100%;">
+            <div id="pcHeader" class="radius shadow bg_white" style="position: absolute;top:20px;left:10px;z-index:999;">
+                <div style="padding:10px 5px 15px;">
+                    <div class="clearfix">
+                        <img id="headerImg" class="pull-left mt5" :src="owner.userPhoto" width="46" height="46" style="border-radius:2px;margin-right:13px;">
+                        <div class="pull-left">
+                            <p style="font-size: 18px;line-height: 25px;color: #1E1E1E;margin-bottom: 10px;">{{owner.realName}}</p>
+                            <p style="font-size: 12px;line-height: 17px;color: #999999;">{{owner.company_jc}} | {{owner.position}}</p>
+                        </div>
+                        <div class="porel pull-right mt15">
+                            <img src="/static/frontend/images/pro-financing.png" alt="" width="70">
+                            <span style="color: #FFFFFF;line-height: 20px;position: absolute;top: 2px;left:17px;" class="f14">{{owner.contact_status}}</span>
+                        </div>
+                    </div>
+                    <div class="clearfix ofh mt30">
+                        <div class="text-center pull-left porel" style="width:33.33%;">
+                            <p style="font-size: 14px;color: #1E1E1E;line-height: 20px;">{{owner.service_num}}</p>
+                            <p style="font-size: 10px;color: #1E1E1E;line-height: 14px;">TA的业务</p>
+                            <div style="border-right:2px solid #eeeeee;height:25px;position:absolute;right:0;bottom:0;"></div>
+                        </div>
+                        <div class="text-center pull-left porel" style="width:33.33%;">
+                            <p style="font-size: 14px;color: #1E1E1E;line-height: 20px;">{{owner.require_num}}</p>
+                            <p style="font-size: 10px;color: #1E1E1E;line-height: 14px;">TA的需求</p>
+                            <div style="border-right:2px solid #eeeeee;height:25px;position:absolute;right:0;bottom:0;"></div>
+                        </div>
+                        <div class="text-center pull-left porel" style="width:33.33%;">
+                            <img src="/static/frontend/images/attention.png" alt="" width="19">
+                            <p style="font-size: 10px;color: #007FED;line-height: 14px;">关注</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding:75px 15px 10px;background-color: #FFFFFF;">
+                <p style="font-size: 20px;color: #333333;line-height: 28px;">业务详情</p>
+            </div>
+        </section>
+        <section class="bg_white secContent" style="margin: 10px auto 0px;">
+            <div style="padding: 15px 10px;">
+                <div class="clearfix">
+                    <p class="pull-left" style="font-size: 16px;color: #333333;line-height: 22px;">新三板业务范围</p>
+                    <p class="pull-right" style="font-size: 12px;color: #999999;line-height: 22px;">
+                        <img src="/static/frontend/images/pro-position.png" alt="" width="20" style="vertical-align: top;">
+                        <span>上海</span>
+                    </p>
+                </div>
+                <div class="clearfix mt20">
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向增发</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向增发</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向增发</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向增发</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #545AFF;color: #007FED;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向增发</div>
+                </div>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;">业务描述：新三板项目资金</p>
+            </div>
+        </section>
+        <section class="bg_white secContent" style="margin: 10px auto 0px;">
+            <div style="padding: 15px 10px;">
+                <p style="font-size: 16px;color: #333333;line-height: 22px;">关注的行业</p>
+                <div class="clearfix mt20">
+                    <div class="pull-left ball pl5 pr5" style="border-color: #999999;color: #999999;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">新能源与环保</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #999999;color: #999999;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">新能源</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #999999;color: #999999;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">新能源环保</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #999999;color: #999999;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">能源环保</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #999999;color: #999999;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">定向</div>
+                    <div class="pull-left ball pl5 pr5" style="border-color: #999999;color: #999999;border-radius: 3px;font-size: 12px;line-height: 22px;margin-right: 8px;margin-bottom: 12px;">新能源与环保</div>
+                </div>
+            </div>
+        </section>
+        <section class="bg_white secContent" style="margin: 10px auto 0px;">
+            <div style="padding: 15px 10px;">
+                <p style="font-size: 16px;color: #333333;line-height: 22px;">资金信息</p>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;margin-top: 12px;">投资类型：<span style="color: red;">金融机构</span></p>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;margin-top: 6px;">投资规模：<span style="color: #151515">7000.00万元</span></p>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;margin-top: 6px;">投资期限：<span style="color: #151515">3年以上</span></p>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;margin-top: 6px;">投资方式：<span style="color: #151515">优先级</span></p>
+            </div>
+        </section>
+        <section class="bg_white secContent" style="margin: 10px auto 0px;">
+            <div style="padding: 15px 10px;">
+                <p style="font-size: 16px;color: #333333;line-height: 22px;">投资标准</p>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;margin-top: 12px;">聚焦三大平台营销手段多远行业景气度回升一线城市投放成本持续增高</p>
+            </div>
+        </section>
+        <section class="bg_white secContent" style="margin: 10px auto 0px;">
+            <div style="padding: 15px 10px;">
+                <p style="font-size: 16px;color: #333333;line-height: 22px;">{{projectDetail.five[1]}}</p>
+                <p style="font-size: 14px;color: #999999;line-height: 20px;margin-top: 12px;">{{projectDetail.five[2]}}</p>
+            </div>
+        </section>
+        <div class="clearfix secContent">
+            <p class="pt15 pb15 pull-right" style="color: #007FED;font-size: 13px;line-height: 18px;">{{projectDetail.view_num}}人查看</p>
+        </div>
+        <!-- 项目介绍 -->
+        <!-- 底部菜单 -->
+        <div style="height:70px;line-height:70px;"></div>
+        <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
+            <div style="width:275px;height: 50px;margin: 0 auto;" class="clearfix">
+                <div class="pull-left" @click="sharefb()">
+                    <img src="/static/frontend/images/pro-share.png" alt="" width="24">
+                    <p style="font-size: 12px;">转发</p>
+                </div>
+                <div class="pull-left porel" style="margin-left: 45px;margin-right: 45px;">
+                    <img src="/static/frontend/images/pro-chat.png" alt="" width="133">
+                    <span style="color: #FFFFFF;line-height: 18px;position: absolute;top: 7px;left:38px;" class="f13">和TA聊天</span>
+                </div>
+                <div class="pull-left">
+                    <img src="/static/frontend/images/pro-collect.png" alt="" width="24">
+                    <p style="font-size: 12px;">收藏</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 转发 -->
+    <div class="modal fade in" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-describedby="转发分享">
+        <div aria-hidden="true">
+            <div class="modal-content" style="background: none;border: 0;box-shadow: none;">
+                <div class="modal-body porel p0">
+                    <div class="swidth" >
+                        <img src="/static/frontend/images/share_wechat.png"  width="100%" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+	    $("#shareModal").click(function(event) {
+	    	$("#shareModal").modal("hide");
+	        $("#shadeAuth").hide();
+	    });
+	    $(document).ready(function() {
+	        // 设置加载中...
+	        $(document).ajaxStart(function() {
+	            $("#loading").removeClass('hidden');
+	        });
+	        $(document).ajaxStop(function() {
+	            $("#loading").addClass('hidden');
+	        });
+	    });
+	    //提示框
+	    function alertModal(msg) {
+	        $("#alertModal").find('.modal-body').html(msg);
+	        $("#alertModal").modal("show");
+	        setTimeout(function() {
+	            $("#alertModal").modal("hide");
+	        }, msg.length / 7 * 1000);
+	    }
+	
+	    // 初始窗口
+	    var wh = $(window).height();
+	    var ww = $(window).width();
+	    $("#box").height(wh);
+	    $("#pcHeader").width(ww - 20);
+	    $(".secContent").width(ww - 15);
+	
+	    var vue = new Vue({
+	        el: "#box",
+	        data: {
+	            id: getParams()["id"],
+	            type: getParams()["type"],
+	            projectDetail: {},
+	            owner: {},
+	        },
+	        mounted: function() {
+	            this.$nextTick(function() {
+	                console.log("===============")
+	                // 精选项目
+	                $.ajax({
+	                        url: 'http://fin.jrfacai.com/home/require_detail_api/showProjectDetail',
+	                        type: 'GET',
+	                        dataType: 'json',
+	                        data: {
+	                            type: vue.type,
+	                            id: vue.id,
+	                        },
+	                    })
+	                    .done(function(res) {
+	                        console.log(res)
+	                        vue.projectDetail = res.data;
+	                        vue.owner = res.data.owner;
+	                        console.log(vue.projectDetail.five)
+	                    });
+	
+	
+	            });
+	        },
+	        methods: {
+	        	sharefb: function() {
+	            	$("#shareModal").modal("show");
+	                $("#shadeAuth").show();
+	            }
+	        }
+	    });
+    </script>
+</body>
+
+</html>

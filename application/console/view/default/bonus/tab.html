@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">分红列表</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("Bonus/index")}')">分红列表</a></li>
+    {/if}
+    {if condition="$menu eq 131"}
+    <a class="btn btn-success" style="float: right;" onclick="loadURL('{:url("Bonus/addDay")}')">添加分红</a>
+    {else /}
+    <a class="btn btn-success" style="float: right;" onclick="loadURL('{:url("Bonus/addMonth")}')">添加公告</a>
+    {/if}
+</ul>

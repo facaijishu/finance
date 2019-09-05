@@ -1,0 +1,13 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'index' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">未处理</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("PresentRecord/index")}')">未处理</a></li>
+    {/if}
+    {if condition="$Request.action eq 'already' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">已处理</a></li>
+    <button class="btn btn-success" style="float: right;" type="button"><i class="fa fa-download"></i><a href="http://fin.jrfacai.com/console/present_record/downLoadPresentRecord" target="_black">下载提现统计</a></button>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("PresentRecord/already")}')">已处理</a></li>
+    {/if}
+</ul>

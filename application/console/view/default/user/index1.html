@@ -1,0 +1,101 @@
+<div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-12">
+		<div class="well well-sm well-light">
+			{include file="user/tab" /}
+			<div>
+				<table id="user_table" class="table table-striped table-bordered table-hover" width="100%">
+					<thead>
+					<tr>
+						<th data-hide="phone">ID</th>
+						<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> 登录名</th>
+						<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> 所属角色</th>
+						<th>上次登录IP</th>
+						<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> 上次登录时间</th>
+						<th data-hide="phone,tablet">登录次数</th>
+						<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> 操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					{foreach name="list" item="vo"}
+					<tr>
+						<td>{$vo.uid}</td>
+						<td>{$vo.login_name}</td>
+						<td>
+							{foreach name="vo['roles']" item='role'}
+							<div class="badge bg-color-blue">
+								{$role.name}
+							</div>
+							{/foreach}
+						</td>
+						<td>{$vo.last_login_ip}</td>
+						<td>{$vo.last_login_time}</td>
+						<td>{$vo.login_count}</td>
+						<td>
+							<a href="javascript:void(0);" class="btn btn-xs btn-warning" onclick="loadURL('{:url('user/edit', ['id'=>$vo['uid']])}')"><i class="fa fa-trash-o"></i> 修改</a>
+							{if condition=" $vo.is_admin eq 1"}
+							<a href="javascript:void(0);" class="btn btn-xs btn-danger disabled"> 删除</a>
+							{else /}
+							<a href="javascript:void(0);" data-uid="{$vo.uid}" class="btn btn-xs btn-danger js-user-del"> 删除</a>
+							{/if}
+						</td>
+					</tr>
+					{/foreach}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	var user_del_url = "{:url('user/delete')}";
+	loadModule('dataTable', function () {
+		var responsiveHelper_dt_basic = undefined;
+		var breakpointDefinition = {
+			tablet : 1024,
+			phone : 480
+		};
+		$('#user_table').dataTable({
+			"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+			"t"+
+			"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+			"autoWidth" : true,
+			"oLanguage": {
+				"sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+			},
+			"preDrawCallback" : function() {
+				// Initialize the responsive datatables helper once.
+				if (!responsiveHelper_dt_basic) {
+					responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#user_table'), breakpointDefinition);
+				}
+			},
+			"rowCallback" : function(nRow) {
+				responsiveHelper_dt_basic.createExpandIcon(nRow);
+			},
+			"drawCallback" : function(oSettings) {
+				responsiveHelper_dt_basic.respond();
+			}
+		});
+		$(document).on('click', ".js-user-del", function (e) {
+			var _this = $(this);
+			Dialog.confirm('操作提示', '确定删除该用户吗？', function () {
+				var id = _this.attr("data-uid");
+				$.ajax({
+					url: user_del_url,
+					type: 'post',
+					data: { id:id },
+					dataType: 'json',
+					success: function (resp) {
+						if(resp.code){
+							Dialog.success('操作成功', resp.msg, 2000, function () {
+								_this.parents('tr').remove();
+							});
+						}else{
+							Dialog.error('操作失败', resp.msg);
+						}
+					}
+
+				})
+			});
+		});
+	});
+</script>

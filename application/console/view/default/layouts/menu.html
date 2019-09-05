@@ -1,0 +1,42 @@
+<aside id="left-panel">
+    {include file="layouts/inc/login_info" /}
+    <nav>
+        <ul>
+            {foreach name='menu_list' item='menu_lvl_1'}
+            {if condition=" isset($menu_lvl_1.items) "}
+            <li {if condition=" strtolower($Request.controller) eq strtolower($menu_lvl_1.controller) "} class='active' {/if}>
+            <a href="#" title="{$menu_lvl_1.name}"><i class="fa fa-lg fa-fw {$menu_lvl_1.icon}"></i> <span class="menu-item-parent">{$menu_lvl_1.name}</span></a>
+            <ul>
+                {foreach name='menu_lvl_1.items' item='menu_lvl_2'}
+                {if condition=" isset($menu_lvl_2.items) "}
+                <li>
+                    <a href="#" title="{$menu_lvl_2.name}"><i class="fa fa-lg fa-fw {$menu_lvl_2.icon}"></i> <span class="menu-item-parent">{$menu_lvl_2.name}</span></a>
+                    <ul>
+                        {foreach name='menu_lvl_2.items' item='menu_lvl_3'}
+                        <li {if condition=" strtolower($Request.controller) eq strtolower($menu_lvl_3.controller) AND strtolower($Request.action) eq strtolower($menu_lvl_3.action) "} class='active' {/if}>
+                        <a href="{$menu_lvl_3.url}"><i class="fa fa-lg fa-fw {$menu_lvl_3.icon}"></i> {$menu_lvl_3.name}</a>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </li>
+                {else /}
+                <li {if condition=" strtolower($Request.controller) eq strtolower($menu_lvl_2.controller) AND strtolower($Request.action) eq strtolower($menu_lvl_2.action) "} class='active' {/if}>
+                <a href="{$menu_lvl_2.url}"><i class="fa fa-lg fa-fw {$menu_lvl_2.icon}"></i> {$menu_lvl_2.name}</a>
+                </li>
+                {/if}
+                {/foreach}
+            </ul>
+            </li>
+            {else /}
+            <li {if condition=" strtolower($Request.controller) eq strtolower($menu_lvl_1.controller) "} class='active' {/if}>
+            <a href="{$menu_lvl_1.url}"><i class="fa fa-lg fa-fw {$menu_lvl_1.icon}"></i>  <span class="menu-item-parent"> {$menu_lvl_1.name}</span></a>
+            </li>
+            {/if}
+            {/foreach}
+            <li>
+                <a href="{$url}" target="_blank"><i class="fa fa-lg fa-fw fa-envelope-o"></i>  <span class="menu-item-parent"> 短信管理</span></a>
+            </li>
+        </ul>
+    </nav>
+    <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+</aside>

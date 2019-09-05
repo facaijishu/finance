@@ -1,0 +1,61 @@
+{include file="base/header" /}
+<style>
+    #weixin-tip{
+        cursor: pointer;
+    }
+</style>
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        <div class="home">
+            <div class="home-card">
+                <div class="rz-ok"></div>
+                <strong>{$info.member.userName}</strong>
+                <p>
+                    电话：{$info.member.userPhone}
+                    <br> 邮箱：{$info.through.email}
+                </p>
+                {if condition="$show eq 'true'"}
+                <a class="fa fa-share share_my_pro" data_upload="__UPLOAD__">分享给朋友</a>
+                {else /}
+                <a href="{:url('Through/index')}" class="fa fa-share">我也要做合伙人</a>
+                {/if}
+            </div>
+        </div>
+        <div class="my-box">
+            <div class="title" style="font-size:25px;">我的项目</div>
+            {foreach name="$project" item="it"}
+            <a class="my-c" data-id='{$it.pro_id}'>
+                <img src="__UPLOAD__/{$it.top_img}" alt="">
+                <strong>{$it.pro_name}
+                    <small>（{$it.stock_code}）</small>
+                </strong>
+<!--                {if condition="$show eq 'true'"}
+                    {if condition="$it.rebate neq 0"}
+                    返点
+                    <span class="red">{$it.rebate}%</span>
+                    {else /}
+                    合作价格
+                    <span class="red">{$it.coop_price}元</span>
+                    {/if}
+                {/if}-->
+            </a>
+            {/foreach}
+        </div>
+        <script src="__HOME__/js/weixin_share.js"></script>
+        <script>
+            var upload_url = $(".share_my_pro").attr("data_upload");
+            $(".my-box").on('click','.my-c',function(){
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "{:url('Project/detail')}",
+                    type: 'POST',
+                    data: {id:id},
+                    success: function(resp){
+                        location.href = resp.data;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
