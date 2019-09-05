@@ -270,10 +270,12 @@ class MyCenter extends Base{
 		$this->assign('openid',$user);
         return view();
     }
+    
     public function signup_activity(){
-        $info = $this->jsGlobal;
+        $info  = $this->jsGlobal;
         $model = model("Activity");
-        $list = [];$list1 = [];
+        $list  = [];
+        $list1 = [];
         if($info['member']['collection_activity'] != ''){
             $list = $model->getActivityListByUser($info['member']['collection_activity']);
         }
@@ -282,22 +284,25 @@ class MyCenter extends Base{
         }
         $this->assign('list' ,$list);
         $this->assign('list1' ,$list1);
-        $this->assign('title' , '个人报名活动 -');
+        $this->assign('title' , '-报名活动 ');
         $this->assign('img' , $info['member']['userPhoto']);
         $this->assign('des' , '个人报名活动');
         return view();
     }
     
     public function collection_activity(){
-        $info = $this->jsGlobal;
+        $info  = $this->jsGlobal;
         $model = model("Activity");
-        $list = [];$list1 = [];
+        $list  = [];
+        $list1 = [];
         if($info['member']['collection_activity'] != ''){
             $list = $model->getActivityListByUser($info['member']['collection_activity']);
         }
         if($info['member']['pay_activity'] != ''){
             $list1 = $model->getActivityListByUser($info['member']['pay_activity']);
         }
+        
+        faLog("AAA--".json_encode($list1));
         $this->assign('list' ,$list);
         $this->assign('list1' ,$list1);
         $this->assign('title' , '-个人收藏活动 ');

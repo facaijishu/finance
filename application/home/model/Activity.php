@@ -60,11 +60,55 @@ class Activity extends Model
     
     public function getActivityListByUser($str){
         $arr = explode(',', $str);
+        $arr = array_reverse($arr);
         foreach ($arr as $key => $value) {
-            $info = $this->getActivityInfo($value);
+            $info = $this->getActivity($value);
             $arr[$key] = $info;
         }
         return $arr;
+    }
+    
+    /**
+     * 我的活动获取（收藏，报名列表页）
+     * @param 活动编号 $id
+     * @return 活动信息集合
+     */
+    public function getActivity($id){
+        $info       = $this->where(['a_id' => $id])->find();
+        
+        $model      = model("MaterialLibrary");
+        $top_img    = $model->getMaterialInfoById($info['top_img']);
+        $info['top_img_url']  = $top_img['url'];
+        $info['top_img_name'] = $top_img['name'];
+        
+        $now        = time();
+        $sign_start = $info['sign_start_time'];
+        $sign_end   = $info['sign_end_time'];
+        
+        $model      = model("Order");
+        $is_signed  = $model->isSignUp($id,1);
+        if($info['is_show']==1){
+            if($sign_start>$now){
+                $info['icon_name'] = "未开始";
+                $info['sign_name'] = "未开始";
+                $info['icon']      = 0;
+            }else{
+                if($sign_end>=$now){
+                    $info['icon_name'] = "进行中";
+                    $info['sign_name'] = "报名";
+                    $info['icon']      = 1;
+                }else{
+                    $info['icon_name'] = "停止报名";
+                    $info['sign_name'] = "停止报名";
+                    $info['icon']      = 0;
+                }
+            }
+        }else{
+            $info['icon_name'] = "停止报名";
+            $info['sign_name'] = "停止报名";
+            $info['icon']      = 0;
+        }
+        return $info;
     }
 
     public function getActivityList(){

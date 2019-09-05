@@ -32,14 +32,14 @@
             {foreach name="$list" item="it"}
             <a class="activity" data-id="{$it.a_id}" href="{:url('ActivityInfo/index' , ['id' => $it.a_id])}">
                 <div class="activity-t">
-                    {if condition="$it.status eq 0"}
+                	{if condition="$it.icon_name eq '未开始'"}
                     <span class="stat2">未开始</span>
                     {/if}
-                    {if condition="$it.status eq 1"}
-                    <span class="stat1">已开始</span>
+                    {if condition="$it.icon_name eq '进行中'"}
+                    <span class="stat1">进行中</span>
                     {/if}
-                    {if condition="$it.is_show eq -1 || $it.is_use eq -1"}
-                    <span class="stat3">已结束</span>
+                    {if condition="$it.icon_name eq '停止报名'"}
+                    <span class="stat3">停止报名</span>
                     {/if}
                     {$it.act_name}
                 </div>
