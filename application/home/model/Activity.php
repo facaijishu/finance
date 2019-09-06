@@ -68,6 +68,21 @@ class Activity extends Model
         return $arr;
     }
     
+    
+    /**
+     * 
+     * @param unknown $arr
+     * @return unknown
+     */
+    public function getActivitByUser($arr){
+        $data = [];
+        foreach ($arr as $key => $value) {
+            $info = $this->getActivity($value['id']);
+            $data[] = $info;
+        }
+        return $data;
+    }
+    
     /**
      * 我的活动获取（收藏，报名列表页）
      * @param 活动编号 $id

@@ -298,11 +298,13 @@ class MyCenter extends Base{
         if($info['member']['collection_activity'] != ''){
             $list = $model->getActivityListByUser($info['member']['collection_activity']);
         }
-        if($info['member']['pay_activity'] != ''){
-            $list1 = $model->getActivityListByUser($info['member']['pay_activity']);
-        }
         
-        faLog("AAA--".json_encode($list1));
+        $uid   = session('FINANCE_USER.uid');
+        $order = model("Order")->getSignId($uid);
+        
+        if(!empty($order)){
+            $list1 = $model->getActivitByUser($order);
+        }
         $this->assign('list' ,$list);
         $this->assign('list1' ,$list1);
         $this->assign('title' , '-个人收藏活动 ');

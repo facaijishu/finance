@@ -38,5 +38,14 @@ class Order extends Model
         return $flg;
     }
     
+    /**
+     * 获取会员报名的活动ID
+     * @param 会员编号 $uid
+     */
+    public function getSignId($uid){
+        $order = $this->field("id")->where(['uid' => $uid,'is_pay' => 1,'status' => 1])->order('o_id desc')->select();
+        return $order;
+    }
+    
     
 }
