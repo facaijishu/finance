@@ -262,6 +262,39 @@
         		</form>
     		</div>
 		</div>
+		
+		<!-- 认证模态框 -->
+	    <div class="modal fade in" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-describedby="公众号二维码">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div style="width:290px;margin:0 auto;">
+	                        <img src="/static/frontend/images/to_auth.png" width="290" alt="">
+	                        <div id="closeAuthModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+	                        <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+	                        </div>
+	                        <a href="javascript:void(0)" onclick="doreg()" style="position: absolute;top: 365px;left: 75px;width: 210px;height: 35px;line-height:30px;"></a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<!-- 完善模态框 -->
+	    <div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="认证">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div style="width:290px;margin:0 auto;">
+	                        <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+	                        <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+	                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+	                        </div>
+	                        <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+	                     </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 		<div class="modal fade in msg_error_body" id="msgModal"><div class="msg_error" id="msgBody"></div></div>
 		
         <script type="text/javascript">
@@ -326,6 +359,14 @@
                             }
                         }
                     });
+                });
+                
+                $("#closeAuthModal").click(function(event) {
+                	$("#authModal").hide();
+                });
+                
+                $("#closeCmpInfoModal").click(function(event) {
+                	$("#cmpInfoModal").hide();
                 });
                 
               //发送验证码
@@ -405,7 +446,7 @@
                         dataType: 'json',
                         success: function(resp){
                             if(resp.code == 0){
-				    			alert(resp.msg);
+                            	$("#authModal").show();
                             }else{
                                 $(".model").fadeIn('fast',function(){
                                     $("#signModal").show();
@@ -536,6 +577,15 @@
                     }
             	}
             }
+            
+            function doreg(){
+            	window.location.href = '/static/frontend/reg.html';
+            	
+    		}
+            
+            function doinfo(){
+            	window.location.href = '/static/frontend/basic-info.html';
+    		}
         </script>
     </body>
 </html>
