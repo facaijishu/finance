@@ -1,6 +1,7 @@
 {include file="base/header"/}
     <body>
         {include file="base/dividend"/}
+        {include file="base/slide" /}
         <!--客服--> 
         <a href="{:url('CustomerService/index',['id'=>$project[0]['pro_id']])}"> 
         <div class="kfLogo">      
@@ -32,33 +33,6 @@
             </div>
             {/foreach}
         </div>
-
-        <!-- 底部菜单 -->
-    <div style="height:80px;line-height:80px;"></div>
-    <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
-        <div style="width: 100%;height: 50px;" class="clearfix">
-            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
-                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">首页</div>
-            </a>
-            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
-                <img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">市场</div>
-            </a>
-            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
-                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
-                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
-            </a>
-            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
-                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">发现</div>
-            </a>
-            <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
-                <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">我的</div>
-            </a>
-        </div>
-    </div>
 	<script type="text/javascript">
  		$(document).ready(function () {
         	$(".msg-dialog").css("display","none");
