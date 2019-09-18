@@ -5070,23 +5070,22 @@ video {
  
 .activity_sign_input {
 	width:330px;
-    margin: 30px 10px 0 10px;
+    margin: 30px 10px 0 40px;
     text-align: left;
     display: inline-block;
     list-style-type: none;
 }
-
 @media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
  	.activity_sign_input{
 		width:300px;
- 		margin: 15px 10px 0 10px;
+ 		margin: 15px 10px 0 40px;
 	} 
  }
  
  @media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
  	.activity_sign_input{
 	 	width:280px;
- 		margin: 10px 10px 0 10px;
+ 		margin: 10px 10px 0 18px;
 	} 
  }
 	
@@ -5114,7 +5113,7 @@ video {
 	color:#fff;
 }
 .act_title{
-		width:350px;margin:50px 0 0 32px;height:160px;font-size:20px;font-weight:bold;color:#fff;line-height:40px;text-align:left;
+		height:160px;font-weight:bold;color:#fff;text-align:left;font-size:26px;margin:50px 0 0 42px;line-height:28px;width:320px;
 	}
 @media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
  	.act_title{
@@ -5218,7 +5217,7 @@ video {
 .activity_tel_btn{
 	font-size:14px;
 	font-weight:bold;
-	width: 120px;
+	width: 96px;
 	height:30px;
 	line-height:30px;
 	background-image: linear-gradient(-134deg, #679EFE 0%, #2873F4 100%);
@@ -5232,7 +5231,7 @@ video {
 .tel_primary{
 	font-size:14px;
 	font-weight:bold;
-	width: 120px;
+	width: 96px;
 	height:30px;
 	line-height:30px;background: #c9c9c9;
 	border-radius: 30px;
