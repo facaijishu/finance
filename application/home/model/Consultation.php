@@ -62,7 +62,7 @@ class Consultation extends BaseModel
        $result = $this->alias('con')
                       ->join("Dict d" , 'con.type = d.id')
                       ->join("MaterialLibrary ml",'con.top_img = ml.ml_id')
-                      ->field('con.con_id,con.title,con.source,con.release_date,ml.url_compress')
+                      ->field('con.con_id,con.title,con.sort_name,con.release_date,ml.url_compress')
                       ->where(['con.status' => 1 , 'd.des' => ''])
                       ->order("is_hot desc,con_id desc")
                       ->limit($length)
