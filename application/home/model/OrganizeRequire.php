@@ -1440,7 +1440,8 @@ class OrganizeRequire extends BaseModel
                 if (count($label)>3) {
                     $label = array_slice($label,0,3);
                 }
-                $all_result[$k]['label'] = $label;
+                $all_result[$k]['bottom']         = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']          = $label;
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选资金';
                 } else {
@@ -1670,7 +1671,8 @@ class OrganizeRequire extends BaseModel
                 if (count($label)>3) {
                     $label = array_slice($label,0,3);
                 }
-                $all_result[$k]['label'] = $label;
+                $all_result[$k]['bottom']         = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']          = $label;
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选资金';
                 } else {
@@ -1900,7 +1902,8 @@ class OrganizeRequire extends BaseModel
                 if (count($label)>3) {
                     $label = array_slice($label,0,3);
                 }
-                $all_result[$k]['label'] = $label;
+                $all_result[$k]['bottom']         = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']          = $label;
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选资金';
                 } else {
@@ -2126,7 +2129,8 @@ class OrganizeRequire extends BaseModel
                 if (count($label)>3) {
                     $label = array_slice($label,0,3);
                 }
-                $all_result[$k]['label'] = $label;
+                $all_result[$k]['bottom']         = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']          = $label;
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选资金';
                 } else {
@@ -2353,7 +2357,8 @@ class OrganizeRequire extends BaseModel
                 if (count($label)>3) {
                     $label = array_slice($label,0,3);
                 }
-                $all_result[$k]['label'] = $label;
+                $all_result[$k]['bottom']         = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']          = $label;
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选资金';
                 } else {

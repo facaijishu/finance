@@ -683,6 +683,7 @@ class Project extends BaseModel
         }
         return $re;
     }
+    
     /**
      * FA財4.0
      */
@@ -713,16 +714,15 @@ class Project extends BaseModel
            $dl = $dl->getDictLabelApi($uid);
            if(empty($dl)){
               $data = $this->alias('p')
-                       ->join('Dict d','p.inc_top_sign=d.id')
-                       ->join('Dict d2','p.inc_sign=d2.id')
-                       ->join('Dict d3','p.inc_top_industry=d3.id')
+                       ->join('Dict d','p.inc_industry = d.id')
+                       ->join('Dict d2','p.inc_sign = d2.id')
                        ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
                        ->field([
-                        'p.pro_id'=>'id',
+                        'p.pro_id'      =>'id',
                         'ml.url',
-                        'p.pro_name'=>'name',
+                        'p.pro_name'    =>'name',
                         'p.company_name'=>'top',
-                        'concat(d.value,",",d2.value,",",d3.value)'=>'label',
+                        'concat(d.value,",",d2.value)'=>'label',
                         'p.introduction'=>'bottom',
                         'p.view_num',
                         'p.type',
@@ -733,17 +733,18 @@ class Project extends BaseModel
                        ->select();
                 if(empty($data)){
 
-                    $result_info['code'] = 201;
-                    $result_info['msg'] = '精选项目不存在,请先登录后台添加';
-                    $result_info['data'] = '';
+                    $result_info['code']    = 201;
+                    $result_info['msg']     = '精选项目不存在,请先登录后台添加';
+                    $result_info['data']    = '';
                     return $result_info;
                 }
                //添加类型标签
                foreach ($data as &$v) {
                    $v['type_label'] = '精选项目';
-                   $v['bottom'] = '简介:'.$v['bottom'];
-                   $v['label'] = explode(',', $v['label']);
-                   $v['url'] = config('view_replace_str')['__DOMAIN__'].$v['url'];
+                   $v['bottom']     = subStrLen($v['bottom'],23);
+                   $v['label']      = explode(',', $v['label']);
+                   $v['url']        = config('view_replace_str')['__DOMAIN__'].$v['url'];
+                   
                }
                // return $this->result($data);
                $result_info['code'] = 200;
@@ -804,21 +805,20 @@ class Project extends BaseModel
             //开始匹配project表融资中且展示在前台的精选项目
             $match_str = '';
             $match_pro = $this->alias('p')
-                       ->join('Dict d','p.inc_top_sign=d.id')
-                       ->join('Dict d2','p.inc_sign=d2.id')
-                       ->join('Dict d3','p.inc_top_industry=d3.id')
-                       ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
-                       ->field([
-                        'p.pro_id'=>'id',
-                        'ml.url',
-                        'p.pro_name'=>'name',
-                        'p.company_name'=>'top',
-                        'concat(d.value,",",d2.value,",",d3.value)'=>'label',
-                        'p.introduction'=>'bottom',
-                        'p.view_num',
-                        'p.type',
-                        ])
-                       ->where(['p.status' => 2 , 'p.flag' => 1]);
+                              ->join('Dict d','p.inc_industry = d.id')
+                              ->join('Dict d2','p.inc_sign = d2.id')
+                              ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
+                              ->field([
+                                'p.pro_id'      =>'id',
+                                'ml.url',
+                                'p.pro_name'    =>'name',
+                                'p.company_name'=>'top',
+                                'concat(d.value,",",d2.value)'=>'label',
+                                'p.introduction'=>'bottom',
+                                'p.view_num',
+                                'p.type',
+                                ])
+                              ->where(['p.status' => 2 , 'p.flag' => 1]);
             
             //匹配业务类型二级标签
             if(!empty($service_type_son)){
@@ -892,9 +892,9 @@ class Project extends BaseModel
             //添加类型标签
            foreach ($list as &$v) {
                $v['type_label'] = '精选项目';
-               $v['bottom'] = '简介:'.$v['bottom'];
-               $v['label'] = explode(',', $v['label']);
-               $v['url'] = config('view_replace_str')['__DOMAIN__'].$v['url'];
+               $v['bottom']     = subStrLen($v['bottom'],23);
+               $v['label']      = explode(',', $v['label']);
+               $v['url']        = config('view_replace_str')['__DOMAIN__'].$v['url'];
            }
 
             $result_info['code'] = 200;
@@ -904,16 +904,15 @@ class Project extends BaseModel
         } else {
             //游客及其他未知情况
            $list = $this->alias('p')
-                       ->join('Dict d','p.inc_top_sign=d.id')
-                       ->join('Dict d2','p.inc_sign=d2.id')
-                       ->join('Dict d3','p.inc_top_industry=d3.id')
+                       ->join('Dict d','p.inc_industry = d.id')
+                       ->join('Dict d2','p.inc_sign = d2.id')
                        ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
                        ->field([
                         'p.pro_id'=>'id',
                         'ml.url',
                         'p.pro_name'=>'name',
                         'p.company_name'=>'top',
-                        'concat(d.value,",",d2.value,",",d3.value)'=>'label',
+                        'concat(d.value,",",d2.value)'=>'label',
                         'p.introduction'=>'bottom',
                         'p.view_num',
                         'p.type',
@@ -935,9 +934,9 @@ class Project extends BaseModel
             //添加类型标签
             foreach ($list as &$v) {
                $v['type_label'] = '精选项目';
-               $v['bottom'] = '简介:'.$v['bottom'];
-               $v['label'] = explode(',', $v['label']);
-               $v['url'] = config('view_replace_str')['__DOMAIN__'].$v['url'];
+               $v['bottom']     = subStrLen($v['bottom'],23);
+               $v['label']      = explode(',', $v['label']);
+               $v['url']        = config('view_replace_str')['__DOMAIN__'].$v['url'];
            }
           // dump($list);die;
            $result_info['code'] = 200;

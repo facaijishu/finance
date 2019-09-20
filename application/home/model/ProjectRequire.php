@@ -1753,12 +1753,12 @@ class ProjectRequire extends BaseModel
             ->join('Dict d3','p.inc_top_industry=d3.id')
             ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
             ->field([
-                'p.pro_id'=>'id',
+                'p.pro_id'          =>'id',
                 'ml.url',
-                'p.pro_name'=>'name',
-                'p.company_name'=>'top',
+                'p.pro_name'        =>'name',
+                'p.company_name'    =>'top',
                 'concat_ws(",",d.value,d2.value,d3.value)'=>'label',
-                'p.introduction'=>'bottom',
+                'p.introduction'    =>'bottom',
                 'p.view_num',
                 'p.type',
             ])
@@ -1770,7 +1770,7 @@ class ProjectRequire extends BaseModel
             if (!empty($project_list)) {
                 foreach ($project_list as &$v) {
                     $v['type_label']    = '精选项目';
-                    $v['bottom']        = '简介:'.$v['bottom'];
+                    $v['bottom']        = subStrLen($v['bottom'],23);
                     $v['label']         = explode(',', $v['label']);
                     $v['url']           = config('view_replace_str')['__DOMAIN__'].$v['url'];
                 }
@@ -1937,10 +1937,10 @@ class ProjectRequire extends BaseModel
         
         if (!empty($project_list)) {
             foreach ($project_list as &$v) {
-                $v['type_label'] = '精选项目';
-                $v['bottom'] = '简介:'.$v['bottom'];
-                $v['label'] = explode(',', $v['label']);
-                $v['url'] = config('view_replace_str')['__DOMAIN__'].$v['url'];
+                $v['type_label']    = '精选项目';
+                $v['bottom']        = subStrLen($v['bottom'],23);
+                $v['label']         = explode(',', $v['label']);
+                $v['url']           = config('view_replace_str')['__DOMAIN__'].$v['url'];
             }
         }
         //精准匹配后的所有结果
@@ -2110,12 +2110,13 @@ class ProjectRequire extends BaseModel
             //置精项目和非置精项目
               $is_vaild = prorStatus2($v['create_time'],$v['validity_period']);
                if ($is_vaild) {
-                   $all_result[$k]['label'] = explode(',', $v['label']);
+                   $all_result[$k]['bottom']       = subStrLen($v['bottom'],23);
+                   $all_result[$k]['label']        = explode(',', $v['label']);
                     if ($v['is_care'] == 1) {
                        $all_result[$k]['type_label'] = '精选项目'; 
                     } else {
                        $all_result[$k]['type_label'] = '项目';
-                    } 
+                    }
                } else {
                    unset($all_result[$k]);
                }    
@@ -2282,7 +2283,8 @@ class ProjectRequire extends BaseModel
             //置精项目和非置精项目
             $is_vaild = prorStatus2($v['create_time'],$v['validity_period']);
             if ($is_vaild) {
-                $all_result[$k]['label'] = explode(',', $v['label']);
+                $all_result[$k]['bottom']       = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']        = explode(',', $v['label']);
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选项目';
                 } else {
@@ -2454,7 +2456,8 @@ class ProjectRequire extends BaseModel
             //置精项目和非置精项目
             $is_vaild = prorStatus2($v['create_time'],$v['validity_period']);
             if ($is_vaild) {
-                $all_result[$k]['label'] = explode(',', $v['label']);
+                $all_result[$k]['bottom']       = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']        = explode(',', $v['label']);
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选项目';
                 } else {
@@ -2628,7 +2631,8 @@ class ProjectRequire extends BaseModel
             //置精项目和非置精项目
             $is_vaild = prorStatus2($v['create_time'],$v['validity_period']);
             if ($is_vaild) {
-                $all_result[$k]['label'] = explode(',', $v['label']);
+                $all_result[$k]['bottom']       = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']        = explode(',', $v['label']);
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选项目';
                 } else {
@@ -2799,7 +2803,8 @@ class ProjectRequire extends BaseModel
             //置精项目和非置精项目
             $is_vaild = prorStatus2($v['create_time'],$v['validity_period']);
             if ($is_vaild) {
-                $all_result[$k]['label'] = explode(',', $v['label']);
+                $all_result[$k]['bottom']       = subStrLen($v['bottom'],23);
+                $all_result[$k]['label']        = explode(',', $v['label']);
                 if ($v['is_care'] == 1) {
                     $all_result[$k]['type_label'] = '精选项目';
                 } else {
@@ -3307,6 +3312,7 @@ class ProjectRequire extends BaseModel
                    }
                    return $this->result($all_project); 
     }
+    
     //首页-搜索-行业
     public function getIndexSearchIndustry($keyword = '',$page = 1,$uid = 0,$length = 0,$offset = 0)
     {
@@ -3728,14 +3734,16 @@ class ProjectRequire extends BaseModel
                                 $each_through['is_follow'] = '关注';
                             }
                         }
-                   $match_final['person'] = $through_list;
+                    $match_final['person'] = $through_list;
                 }
                 if (empty($match_final)) {
                     $this->code = 214;
-                    $this->msg = '抱歉没有发现的相关内容';
+                    $this->msg  = '抱歉没有发现的相关内容';
                     return $this->result('',$this->code,$this->msg);
-               }
-               return $this->result($match_final);
+                }else{
+                    return $this->result($match_final);
+                }
+               
     }
     
     /**
