@@ -16,17 +16,15 @@
     <script type="text/javascript" src="./js/component.js"></script>
 </head>
 
-<body class="mofh" style="width:100%;background-color: #F8F8F8;">
+<body class="mofh" style="width:100%;">
     <div id="box">
         <section class="bg_white mb10" style="overflow:hidden;width:100%;">
             <!-- 搜索 -->
             <div class="search-box pt15 pl15 pr15 clearfix mb15">
-                <a href="/static/frontend/search.html">
-                    <img src="./images/back.png" alt="" class="pull-left mr5" style="width:17px;height:12px;margin-top: 10px;" >
-                </a>
-                <input type="text" id="keyword" style="width:80%;background-color: #F8F8F8;" class="form-control pull-left porel dbk tofh pr30" placeholder="输入业务、项目、资金、行业、用户名、个性标签……" v-model.trim="keyword">
-                <img src="./images/zoomtool.png" style="width:18px;height:18px;position: absolute;right: 19%;top: 24px;z-index: 999;" alt="" @click="search">
-                <a href="javascript:history.go(-1);" class="pull-right c_primary mt5" style="font-size: 18px;color: #007FED;line-height: 25px;">取消</a>
+                <div class="form-search-control-left pull-left bg_gray"></div>
+                <input type="text" id="keyword" style="width:80%;" class="form-search-control-right pull-left bg_gray" placeholder="输入业务、项目、资金、行业、用户名、个性标签……" v-model.trim="keyword">
+                <img src="./images/zoomtool.png" id="searchpic" style="width:18px;height:18px;position: absolute;left:8%;top:24px;z-index: 999;" alt="" @click="search">
+                <a href="/static/frontend/search.html" class="pull-right c_primary mt5" style="font-size: 14px;color: #007FED;line-height: 25px;">取消</a>
             </div>
         </section>
         <section style="overflow:hidden;width:100%;">
@@ -35,67 +33,63 @@
                 <p class="ml15 mb10" style="font-size: 22px;line-height:30px;color: #000000;">项目</p>
                 <div v-for="(item,index) in projectList">
                     <a class="ml5 mr5 mb10 dbk pt10 pb10 pl10 radius" style="background:#ffffff;" @click="getDetail(item.pro_id,item.type)">
-            <div class="clearfix porel mt0">
-                <img  :src="item.img" alt="" style="width:50px;height:50px;" class="pull-left">
-                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
-                    <div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;">{{item.pro_name}}</div>
-                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
-                        <div style="height:20px;line-height:18px;" class="pl5 pr5 f12 mr5 mb5 pull-left ball" v-for="l in item.label">{{l}}</div>
-                    </div>
+	            		<div class="clearfix porel mt0">
+	                		<img  :src="item.img" alt="" style="width:50px;height:50px;" class="pull-left">
+		                	<div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+			                    <div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;">{{item.pro_name}}</div>
+			                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+			                        <div style="height:20px;line-height:18px;" class="pl5 pr5 f12 mr5 mb5 pull-left ball" v-for="l in item.label">{{l}}</div>
+			                    </div>
+		                	</div>
+			                <div class="pull-right porel" style="height:50px;width:50%;">
+			                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+			                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize_require'" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/fund-sign.png);width:50px;height:26px;line-height:24px;">资金</div>
+			                    <div v-if="item.type == 'project_require'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/pro-sign.png);width:50px;height:26px;line-height:24px;">项目</div>
+			                    <div v-if="item.type == 'project' || item.type == 'zfmxes_add' || item.type == 'zryxes_effect'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">精选项目</div>
+			                    <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
+			                </div>
+	            		</div>
+			            <div class="clearfix porel mt10 mr10">
+			                <div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
+			                <div class="pull-left c_gray tofh dbk" style="width:230px;">简介：{{item.des}}</div>
+			                <div class="pull-right c_primary" style="position:absolute;right:0;bottom:0;">更多</div>
+			            </div>
+        			</a>
+                    <div></div>
                 </div>
-                <div class="pull-right porel" style="height:50px;width:50%;">
-                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
-                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize_require'" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/fund-sign.png);width:50px;height:26px;line-height:24px;">资金</div>
-                    <div v-if="item.type == 'project_require'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/pro-sign.png);width:50px;height:26px;line-height:24px;">项目</div>
-                    <div v-if="item.type == 'project' || item.type == 'zfmxes_add' || item.type == 'zryxes_effect'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">精选项目</div>
-                    <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
-                </div>
-            </div>
-            <div class="clearfix porel mt10 mr10">
-                <div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
-                <div class="pull-left c_gray tofh dbk" style="width:230px;">简介：{{item.des}}</div>
-                <div class="pull-right c_primary" style="position:absolute;right:0;bottom:0;">更多</div>
-            </div>
-        </a>
-                    <div>
-                    </div>
-                </div>
-                <a @click="loadMore1" v-show="!isOver1" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p>
-                    </a>
+                <a @click="loadMore1" v-show="!isOver1" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p></a>
                 <p v-show="isOver1" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
-            </div>
+			</div>
             <!-- 资金 -->
             <div v-if="fundsList != null && fundsList.length > 0">
                 <p class="ml15 mb10" style="font-size: 22px;line-height:30px;color: #000000;">资金</p>
                 <div v-for="(item,index) in fundsList">
                     <a class="ml5 mr5 mb10 dbk pt10 pb10 pl10 radius" style="background:#ffffff;" @click="getDetail(item.org_id,item.type)">
-            <div class="clearfix porel mt0">
-                <img  :src="item.img_url" alt="" style="width:50px;height:50px;" class="pull-left">
-                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
-                    <div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;">{{item.top_name}}</div>
-                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
-                        <div style="height:20px;line-height:18px;" class="pl5 pr5 f12 mr5 mb5 pull-left ball" v-for="l in item.tag">{{l}}</div>
-                    </div>
+			            <div class="clearfix porel mt0">
+			                <img  :src="item.img_url" alt="" style="width:50px;height:50px;" class="pull-left">
+			                <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
+			                    <div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;">{{item.top_name}}</div>
+			                    <div class="c_gray clearfix" style="position: absolute;bottom: 0;left: 0;">
+			                        <div style="height:20px;line-height:18px;" class="pl5 pr5 f12 mr5 mb5 pull-left ball" v-for="l in item.tag">{{l}}</div>
+			                    </div>
+			                </div>
+			                <div class="pull-right porel" style="height:50px;width:50%;">
+			                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
+			                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize_require'" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/fund-sign.png);width:50px;height:26px;line-height:24px;">资金</div>
+			                    <div v-if="item.type == 'project_require'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/pro-sign.png);width:50px;height:26px;line-height:24px;">项目</div>
+			                    <div v-if="item.type == 'project' || item.type == 'zfmxes_add' || item.type == 'zryxes_effect'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">精选项目</div>
+			                    <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
+			                </div>
+			            </div>
+			            <div class="clearfix porel mt10 mr10">
+			                <div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
+			                <div class="pull-left c_gray tofh dbk" style="width:230px;">简介：{{item.des}}</div>
+			                <div class="pull-right c_primary" style="position:absolute;right:0;bottom:0;">更多</div>
+			            </div>
+        			</a>
+					<div></div>
                 </div>
-                <div class="pull-right porel" style="height:50px;width:50%;">
-                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/fund-sign.png);width:74px;height:26px;line-height:24px;">精选资金</div>
-                    <div class="c_white text-center f12 pl5"  v-if="item.type == 'organize_require'" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/fund-sign.png);width:50px;height:26px;line-height:24px;">资金</div>
-                    <div v-if="item.type == 'project_require'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(./images/pro-sign.png);width:50px;height:26px;line-height:24px;">项目</div>
-                    <div v-if="item.type == 'project' || item.type == 'zfmxes_add' || item.type == 'zryxes_effect'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(./images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">精选项目</div>
-                    <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
-                </div>
-            </div>
-            <div class="clearfix porel mt10 mr10">
-                <div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
-                <div class="pull-left c_gray tofh dbk" style="width:230px;">简介：{{item.des}}</div>
-                <div class="pull-right c_primary" style="position:absolute;right:0;bottom:0;">更多</div>
-            </div>
-        </a>
-                    <div>
-                    </div>
-                </div>
-                <a @click="loadMore2" v-show="!isOver2" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p>
-                    </a>
+                <a @click="loadMore2" v-show="!isOver2" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p></a>
                 <p v-show="isOver2" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
             </div>
             <!-- 发现 -->
@@ -115,85 +109,57 @@
                             </template>
                             <div @click="reportBtnAct" :sid="item.id" style="width: 18px;height: 18px;border-radius: 9px; position: absolute;top: -5px;right: -5px;border-color: #999999;" class="ball">
                                 <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute;top: 4px;right: 4px;">
-                    </div>
-                            </div>
-                            <div>
-                                <a style="font-size: 15px;color: #444444;line-height: 24px;" class="mt15 dbk" :href="'/static/frontend/findCommemt.html?id='+item.id">
-                        <p>{{item.content}}</p>
-                    </a>
-                                <a class="clearfix mt15 mb15" :href="'/static/frontend/findCommemt.html?id='+item.id">
-                        <img v-for="img in item.img_url" :src="img.url" alt="" width="108" class="mr10 mb5">
-                    </a>
-                            </div>
-                            <div class="clearfix" style="font-size: 12px;line-height: 17px;color: #999999;">
-                                <p class="pull-left">{{item.create_time}}</p>
-                                <div class="pull-right">
-                                    <div class="mr20 pull-left">
-                                        <img v-if="item.is_point == 0" src="/static/frontend/images/like-0.png" alt="点赞" :sid="item.id" width="14" @click="like(event, item)">
-                                        <img v-else src="/static/frontend/images/like-1.png" alt="点赞" width="14" :sid="item.id" @click="like(event, item)"> <span>{{item.point_num}}</span>
-                                    </div>
-                                    <a class="pull-left" :href="'/static/frontend/findCommemt.html?id='+item.id">
-                            <img src="/static/frontend/images/msg-0.png" alt="评论" width="14"> <span>{{item.comment_num}}</span>
-                        </a>
+                    		</div>
+                         </div>
+                         <div>
+                         	<a style="font-size: 15px;color: #444444;line-height: 24px;" class="mt15 dbk" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                        		<p>{{item.content}}</p>
+                    		</a>
+                            <a class="clearfix mt15 mb15" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                        		<img v-for="img in item.img_url" :src="img.url" alt="" width="108" class="mr10 mb5">
+                    		</a>
+						</div>
+                        <div class="clearfix" style="font-size: 12px;line-height: 17px;color: #999999;">
+							<p class="pull-left">{{item.create_time}}</p>
+							<div class="pull-right">
+								<div class="mr20 pull-left">
+                                    <img v-if="item.is_point == 0" src="/static/frontend/images/like-0.png" alt="点赞" :sid="item.id" width="14" @click="like(event, item)">
+                                    <img v-else src="/static/frontend/images/like-1.png" alt="点赞" width="14" :sid="item.id" @click="like(event, item)"> <span>{{item.point_num}}</span>
                                 </div>
-                            </div>
+                                <a class="pull-left" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                           			<img src="/static/frontend/images/msg-0.png" alt="评论" width="14"> <span>{{item.comment_num}}</span>
+                       			</a>
+                               </div>
+						</div>
+					</div>
+				</div>
+				<a @click="loadMore3" v-show="!isOver3" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p></a>
+                <p v-show="isOver3" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
+			</div>
+            <!-- 人脉 -->
+            <div v-if="personList != null && personList.length > 0">
+                <p class="ml15" style="font-size: 22px;line-height:30px;color: #000000;">人脉</p>
+                <div v-for="(item,index) in personList" style="padding: 10px 7px 0;">
+                    <div style="padding:10px 10px;" class="bg_white mb5">
+                        <div class="clearfix">
+                            <a class="pull-left" :href="'http://fin.jrfacai.com/static/frontend/othersBusiness.html?uid='+item.uid+'&type=0'">
+	                            <img id="headerImg" class="pull-left" :src="item.userPhoto" width="46" height="46" style="border-radius:2px;margin-right:13px;">
+	                            <div class="pull-left">
+	                                <p style="font-size: 16px;line-height: 20px;color: #1E1E1E;margin-bottom: 10px;">{{item.realName}}</p>
+	                                <p style="font-size: 12px;line-height: 16px;color: #999999;">{{item.company_jc}} | {{item.position}}</p>
+	                            </div>
+                        	</a>
+                            <template v-if="item.uid != ui.uid">
+                                <div v-if="item.is_follow == '关注'" @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #545AFF;color: #007FED;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">关注</div>
+                                <div v-else @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #979797;color: #999999;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">已关注</div>
+                            </template>
                         </div>
                     </div>
-                    <a @click="loadMore3" v-show="!isOver3" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p>
-                    </a>
-                    <p v-show="isOver3" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
                 </div>
-                <!-- 人脉 -->
-                <div v-if="personList != null && personList.length > 0">
-                    <p class="ml15" style="font-size: 22px;line-height:30px;color: #000000;">人脉</p>
-                    <div v-for="(item,index) in personList" style="padding: 10px 7px 0;">
-                        <div style="padding:10px 10px;" class="bg_white mb5">
-                            <div class="clearfix">
-                                <a class="pull-left" :href="'http://fin.jrfacai.com/static/frontend/othersBusiness.html?uid='+item.uid+'&type=0'">
-                                <img id="headerImg" class="pull-left" :src="item.userPhoto" width="46" height="46" style="border-radius:2px;margin-right:13px;">
-                                <div class="pull-left">
-                                    <p style="font-size: 16px;line-height: 20px;color: #1E1E1E;margin-bottom: 10px;">{{item.realName}}</p>
-                                    <p style="font-size: 12px;line-height: 16px;color: #999999;">{{item.company_jc}} | {{item.position}}</p>
-                                </div>
-                            </a>
-                                <template v-if="item.uid != ui.uid">
-                                    <div v-if="item.is_follow == '关注'" @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #545AFF;color: #007FED;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">关注</div>
-                                    <div v-else @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #979797;color: #999999;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">已关注</div>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                    <a @click="loadMore4" v-show="!isOver4" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p>
-                    </a>
-                    <p v-show="isOver2" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
-                </div>
-        </section>
-        <!-- 底部菜单 -->
-        <!-- <div style="height:80px;line-height:80px;"></div> -->
-        <!-- <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
-            <div style="width: 100%;height: 50px;" class="clearfix">
-                <a style="width:20%;" class="pull-left text-center" href="./index.html">
-                <img src="./images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">首页</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="./selectedProjects.html">
-                <img src="./images/sign-2-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_black">市场</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="./release-needs.html">
-                <img src="./images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
-                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="./find.html">
-                <img src="./images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">发现</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="./my.html">
-                <img src="./images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">我的</div>
-            </a>
+                <a @click="loadMore4" v-show="!isOver4" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #007FED;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p></a>
+                <p v-show="isOver2" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
             </div>
-        </div> -->
+        </section>
     </div>
     <!-- 模态框 -->
     <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-describedby="反馈信息">
@@ -330,7 +296,7 @@
                     var searchName = $(this).val();
                     if (keycode == '13') {
                         vue.page1 = 1;
-                        search();
+                        $("#searchpic").trigger('click');
                     }
                 });
 
@@ -348,6 +314,10 @@
                         },
                     })
                     .done(function(res) {
+                    	if(res.code="214"){
+                    		
+                    	}
+                    	
                         if (!res.data.project || res.data.project.length < 4) {
                             vue.isOver1 = true;
                         } else {

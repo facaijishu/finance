@@ -16,17 +16,15 @@
     <script type="text/javascript" src="./js/component.js"></script>
 </head>
 
-<body class="mofh" style="width:100%;background-color: #F8F8F8;">
+<body class="mofh bg_white" style="width:100%;">
     <div id="box">
-        <section class="bg_white mb10" style="overflow:hidden;width:100%;">
+        <section class="mb10" style="overflow:hidden;width:100%;">
             <!-- 搜索 -->
             <div class="search-box pt15 pl15 pr15 clearfix mb15">
-                <a href="/static/frontend/search.html">
-                    <img src="./images/back.png" alt="" class="pull-left mr5" style="width:17px;height:12px;margin-top: 10px;" >
-                </a>
-                <input type="text" id="keyword" style="width:80%;background-color: #F8F8F8;" class="form-control pull-left porel dbk tofh pr30" placeholder="输入机构名称、投融规模、省份" v-model.trim="keyword">
-                <img src="./images/zoomtool.png" style="width:18px;height:18px;position: absolute;right: 19%;top: 24px;z-index: 999;" alt="" @click="search">
-                <a href="javascript:history.go(-1);" class="pull-right c_primary mt5" style="font-size: 18px;color: #007FED;line-height: 25px;">取消</a>
+                <div class="form-search-control-left pull-left bg_gray"></div>
+                <input type="text" id="keyword" style="width:80%;" class="form-search-control-right pull-left bg_gray" placeholder="输入机构名称、投融规模、省份…" v-model.trim="keyword">
+                <img src="./images/zoomtool.png" id="searchpic" style="width:18px;height:18px;position: absolute;left:8%;top: 24px;z-index: 999;" alt="" @click="search">
+                <a href="/static/frontend/search.html" class="pull-right c_primary mt5" style="font-size: 14px;color: #007FED;line-height: 25px;">取消</a>
             </div>
         </section>
         <section style="overflow:hidden;width:100%;">
@@ -109,7 +107,7 @@
                     var searchName = $(this).val();
                     if (keycode == '13') {
                         vue.page = 1;
-                        search();
+                        $("#searchpic").trigger('click');
                     }
                 });
 
