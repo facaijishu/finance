@@ -18,99 +18,105 @@
 </head>
 
 <body class="mofh bg_gray" style="width:100%;">
-    <div id="box">
+    <div id="box" style="background:#fbf9ff;">
         <section class="bg_white mb10" style="overflow:hidden;width:100%;">
             <!-- 搜索 -->
             <div class="search-box pt15 pl15 pr15 clearfix porel">
-                <input type="text" class="form-control pull-left bg_gray" placeholder="输入项目、资金、需求" style="width:85%;" @click="searchModal">
-                <a href="#" class="pull-left" style="width: 15%;" @click="getServiceUrl">
-                <img src="/static/frontend/images/service.png" alt="" class="pull-right" style="height:34px;">
-            </a>
-                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 74%;top: 24px;z-index: 999;" alt="">
-        </div>
-                <!-- 菜单 -->
-                <div class="clearfix bb1 pl15 pr15 mt10 mb5">
-                    <a href="/static/frontend/selectedProjects.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
-                <span class="f16 c_black">精选</span>
-            </a>
-                    <a href="/static/frontend/stockRights.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
-                <span class="f16 c_black">股权</span>
-            </a>
-                    <a href="/static/frontend/creditorRights.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
-                <span class="f16 c_black">债权</span>
-            </a>
-                    <a href="/static/frontend/startBusiness.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
-                <span class="f16 c_black">创业</span>
-            </a>
-                    <a href="/static/frontend/market.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
-                <span class="f16 c_black">上市</span>
-                
-            </a>
-                    <a href="/static/frontend/other.html" style="width:16.66%;height:32px;line-height:32px;" class="pull-left text-center">
-                <span class="f16 c_primary">其他</span>
-                <span class="bg_primary dbk" style="width:21px;height:4px;border-radius:2px;position:relative;margin:-2px auto 0;"></span>
-            </a>
-                </div>
-        </section>
-        <!-- 精选项目 -->
-        <section style="overflow:hidden;width:100%;">
-            <div v-for="(item,index) in projectList">
-                <a class="ml5 mr5 mb10 dbk pt10 pb10 pl10 radius" style="background:#ffffff;" @click="getDetail(item.id,item.type)">
-                    <div class="clearfix porel mt0">
-                        <img  :src="item.url" alt="" style="width:50px;height:50px;" class="pull-left">
-                        <div style="position: absolute;width:100%;height:50px;left:65px;top:0;">
-                            <div class="f16 c_black dbk tofh rightDiv" style="position: absolute;top: -4px;left: 0;">{{item.top}}</div>
-                            <div class="c_gray clearfix rightDiv" style="position: absolute;top: 20px;left: 0;">
-                                <div style="height:18px;line-height:16px;margin-bottom: 3px;" class="pl5 pr5 f12 mr5 pull-left ball" v-for="l in item.label">{{l}}</div>
-                            </div>
-                        </div>
-                        <div class="pull-right porel" style="height:50px;width:50%;">
-                            <div class="c_white text-center f12 pl5"  v-if="item.type_label=='精选资金'" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(/static/frontend/images/fund-filter-sign.png);width:74px;height:26px;line-height:24px;">{{item.type_label}}</div>
-                            <div class="c_white text-center f12 pl5"  v-if="item.type_label=='资金'" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(/static/frontend/images/fund-sign.png);width:50px;height:26px;line-height:24px;">{{item.type_label}}</div>
-                            <div v-if="item.type_label=='项目'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 50px 26px;background-image: url(/static/frontend/images/pro-sign.png);width:50px;height:26px;line-height:24px;">{{item.type_label}}</div>
-                            <div v-if="item.type == 'project' || item.type == 'zfmxes_add' || item.type == 'zryxes_effect' || item.type_label=='精选项目'" class="c_white text-center f12 pl5" style="position:absolute;right:0;top:0;background-size: 74px 26px;background-image: url(/static/frontend/images/pro-filter-sign.png);width:74px;height:26px;line-height:24px;">{{item.type_label}}</div>
-                            <div class="f12 c_gray text-right mr10" style="position:absolute;right:3px; bottom:0;">{{item.view_num}}人浏览</div>
-                        </div>
-                    </div>
-                    <div class="clearfix porel mt10 mr10">
-                        <div class="pull-left c_black tofh mr5" style="width:60px;">{{item.name}}</div>
-                        <div class="pull-left c_gray tofh dbk" style="width:230px;">简介：{{item.bottom}}</div>
-                        <div class="pull-right c_primary" style="position:absolute;right:0;bottom:0;">更多</div>
-                    </div>
+            	<div class="form-search-control-left pull-left bg_gray"></div>
+                <input type="text" style="width:80%;" class="form-search-control-right pull-left bg_gray" placeholder="输入项目、资金、需求"  @click="searchModal">
+                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 8%;top: 24px;z-index: 999;" alt="">
+                <a href="#" class="pull-left" style="width:10%;margin-left:2%;" @click="getServiceUrl">
+                    <div style="width: 80%;text-align: center;"><img src="/static/frontend/images/kefuLogo.png" alt="客服" style="width:20px;height:20px;"></div>
+                    <div style="width: 80%;text-align: center;"><span style="color:#c2c2c2;font-size:12px;">客服</span></div>
                 </a>
-                <a href="/static/frontend/intelligentMatch.html" v-show="(index+1)%6==0" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(/static/frontend/images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
-            </div>
-            <div id="more" class="mt10 mb10 bg_white ofh" style="height:30px;">
-                <div class="bb1 pt15"></div>
-                <div class="text-center f12 c_gray bg_white center-block" style="position: relative;margin-top:-10px;width: 205px;">找不到想要的？去发布您的需求吧！</div>
-            </div>
+        	</div>
+            <!-- 菜单 -->
+			<div class="clearfix pl15 pr15 mt10 mb5">
+				<a href="/static/frontend/selectedProjects.html" class="pull-left text-center s_active">
+               		<span>精选</span>
+				</a>
+                <a href="/static/frontend/stockRights.html" class="pull-left text-center s_active">
+              	   <span>股权</span>
+           		</a>
+                <a href="/static/frontend/creditorRights.html" class="pull-left text-center s_active">
+               		<span>债权</span>
+           		</a>
+                <a href="/static/frontend/startBusiness.html" class="pull-left text-center s_active">
+               		<span>创业</span>
+           		</a>
+                <a href="/static/frontend/market.html" class="pull-left text-center s_active">
+               		<span>上市</span>
+           		</a>
+                <a href="/static/frontend/other.html" class="pull-left text-center s_actived">
+               		<span>其他</span>
+           		</a>
+			</div>
         </section>
+        
+        <!-- 精选项目 -->
+        <section style="overflow:hidden;width:100%;background:#fbf9ff;">
+	        <template v-if="projectList && projectList.length > 0">
+				<div v-for="(item,index) in projectList">
+		            <a class="mb10 dbk pt10 pb10 pl10 bg_white" style="height:110px;" @click="getDetail(item.id,item.type,item.neeq,item.plannoticeddate)">
+			        	<div class="clearfix porel">
+				            <div style="position: absolute;width:100%;height:60px;left:15px;top:0;">
+				                <div class="f16 c_black dbk tofh rightDiv" style="top:-4px;height:40px;line-height:40px;color:#222222;font-weight:bold;">{{item.top}}</div>
+				                <div>
+				                	<div style="float: left; height: 40px;width:19px;"><img src="/static/frontend/images/yellowicon.png" width="6" height="37" style="margin-top:5px;"></div>
+				                	<div style="float: left;width:90%;">
+					                	<div style="font-size:12px;margin-right:25px;height:18px;background-color:#f9faff;color:#848e98;">{{item.bottom}}</div>
+						                <div class="c_gray clearfix rightDiv" style="float:left;margin-top:10px;left: 0px; width: 235px;">
+						                    <div style="height:18px;line-height:18px;margin-bottom: 3px;" class="pl5 pr5 f12 mr5 pull-left index_icon" v-for="l in item.label">{{l}}</div>
+						                </div>
+						                <div class="f12 c_gray text-right pr25" style="line-height:40px; float: right; ">{{item.view_num}}人浏览</div>
+					                </div>
+				                </div>
+				            </div>
+			        	</div>
+		    		</a>
+		    		<a href="/static/frontend/intelligentMatch.html" v-show="(index+1)%6==0" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(/static/frontend/images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
+	            </div>  
+	        </template>
+	        <template v-else>
+	            <div>
+	                <a href="/static/frontend/intelligentMatch.html" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(/static/frontend/images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
+	            </div>
+	        </template>
+        </section>
+        <div id="more" class="mt10 mb10 ofh" style="height: 100px;">
+			<div style="margin-left: 20%; margin-top: 10px;">
+				<a href="/static/frontend/release-needs.html">
+					<img src="/static/frontend/images/rightMark.png" alt="" class="pull-left" style="width: 14px; height: 14px;margin-top:4px;">
+					<span class="f14" style="color: rgb(132, 142, 152);">&nbsp;&nbsp;找不到想要的？去发布您的需求吧!</span>
+				</a>
+			</div>
+		</div>
         <!-- 底部菜单 -->
-        <div style="height:80px;line-height:80px;"></div>
-        <div style="padding:8px 0 8px;position:fixed;left: 0;bottom: 0;width: 100%;background:#ffffff;" class="shadow">
-            <div style="width: 100%;height: 50px;" class="clearfix">
-                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/index.html">
-                <img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">首页</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/selectedProjects.html">
-                <img src="/static/frontend/images/sign-2-1-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_black">市场</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/release-needs.html">
-                <img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width:54px;margin:-23px auto 1px;position: relative;">
-                <div class="f12 c_gray" style="color:#3966F9">需求发布</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/find.html">
-                <img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">发现</div>
-            </a>
-                <a style="width:20%;" class="pull-left text-center" href="/static/frontend/my.html">
-                <img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width:27px;height: 27px;margin:3px auto 0;">
-                <div class="f12 c_gray">我的</div>
-            </a>
-            </div>
-        </div>
+        <div style="height:70px;line-height:70px;"></div>
+		<div class="footer_new" style="height: 60px; padding: 12px 0px; position: fixed; left: 0px; bottom: 0px; width: 100%;">
+			<div class="clearfix" style="width: 100%; height: 50px;">
+				<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
+					<div class="f12 c_black" style="line-height: 22px; height: 22px;">首页</div>
+				</a> 
+				<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-2-1-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
+					<div class="f12 c_gray" style="line-height: 22px; height: 22px;">市场</div>
+				</a> 
+				<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
+					<div class="f12 c_gray" style="line-height: 22px; height: 22px;">需求发布</div>
+				</a> 
+				<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
+					<div class="f12 c_gray" style="line-height: 20px; height: 20px;">发现</div>
+				</a> 
+				<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;"> 
+					<div class="f12 c_gray" style="line-height: 22px; height: 22px;">我的</div>
+				</a>
+			</div>
+  		</div>
     </div>
 
     <!-- loading -->
