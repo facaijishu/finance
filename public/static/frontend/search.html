@@ -18,62 +18,125 @@
 
 <body class="mofh bg_white" style="width:100%;">
     <div id="box">
-        <div class="pb10" style="overflow:hidden;width:100%;">
+        <div class="pl15" style="overflow:hidden;width:100%;">
             <!-- 搜索 -->
-            <div class="search-box pt15 pl15 pr15 clearfix  mb10">
-                <input type="serch" id="keyword" style="width:86%;" class="form-control pull-left bg_gray porel dbk tofh pr25" placeholder="输入业务、项目、资金、行业、用户名、个性标签……" v-model.trim="keyword">
-                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;right: 19%;top: 24px;z-index: 999;" alt="" @click="search">
-                <a href="javascript:history.go(-1)" class="pull-right c_primary mt5" style="font-size: 18px;color: #007FED;line-height: 25px;">取消</a>
+            <div class="search-box pt15 pr15 clearfix  mb10">
+            	<div class="form-search-control-left pull-left bg_gray"></div>
+                <input type="text" id="searchkey" style="width:83%;" class="form-search-control-right pull-left bg_gray porel dbk tofh pr25" placeholder="输入业务、项目、资金、行业、用户名、个性标签……">
+                <img src="/static/frontend/images/zoomtool.png" id="searchpic" style="width:18px;height:18px;position: absolute;left:8%;top: 24px;z-index: 999;" alt="" @click="search">
+                <a href="/static/frontend/index.html" class="pull-right c_primary mt5" style="font-size: 14px;color: #007FED;line-height: 25px;">取消</a>
             </div>
-            <div style="width: 100%;" class="searchDiv p20" style="border: 0 solid #979797;box-shadow: 0 2px 6px 0 rgba(5,0,56,0.50);border-radius: 4px;">
-                <p style="font-size: 16px;color: #999999;line-height: 22px;margin-bottom: 30px;text-align: center;">搜索指定内容</p>
-                <div style="font-size: 18px;color: #007FED;line-height: 25px;width: 100%;">
-                    <div class="clearfix mb30">
-                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultBusiness.html')">业务</div>
-                        <div class="pull-left text-center" style="width: 33%;border-left: 1px solid #F0F0F0;border-right: 1px solid #F0F0F0;" @click="searchByLabel('searchResultProject.html')">项目</div>
-                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultFunds.html')">资金</div>
-                    </div>
-                    <div class="clearfix mb30">
-                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultIndustry.html')">行业</div>
-                        <div class="pull-left text-center" style="width: 33%;border-left: 1px solid #F0F0F0;border-right: 1px solid #F0F0F0;" @click="searchByLabel('searchResultPublish.html')">发现</div>
-                        <div class="pull-left text-center" style="width: 33%;" @click="searchByLabel('searchResultConnections.html')">人脉</div>
-                    </div>
+            <div style="width: 100%;" class="searchDiv pl15 pr15" style="border: 0 solid #979797;box-shadow: 0 2px 6px 0 rgba(5,0,56,0.50);border-radius: 4px;">
+                <div v-if="counts > 0" class="c_black f16" style="font-weight:bold;margin:24px 0 0 0;height:50px;">
+               		<div class="pull-left">搜索历史</div>
+               		<div class="pull-right pr10"><img src="/static/frontend/images/del_icon.png" @click="delAll"></div>
+               	</div>
+                <div  v-if="counts > 0" class="searched" id="search_list" style="height:20%">
+                   <ul>
+	                   <li v-for="item in displayHistory" :id="item.s_id"><a href="javascript:void(0);" @click="searchByHot(item.keyword)">{{item.keyword}}</a><span @click="del(item.keyword,item.s_id)">×</span></li>
+                   </ul>
+                </div>
+                <div v-if="counts > 0" style="border:solid 1px #fbf9ff"></div>
+      			<div class="c_black f16" style="font-weight: bold; margin:24px 0 0 0;height:50px;">热搜</div>
+                <div class="searched">
+                   <ul>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultBusiness.html')">业务</a></li>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultProject.html')">项目</a></li>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultFunds.html')">资金</a></li>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultIndustry.html')">行业</a></li>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultBusiness.html')">业务</a></li>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultPublish.html')">发现</a></li>
+	                   <li><a href="javascript:void(0);" @click="searchByLabel('searchResultConnections.html')">人脉</a></li>
+                   </ul>
                 </div>
             </div>
-        </div>
+		</div>
     </div>
     <script type="text/javascript">
-    $("#box").height($(window).height());
-    $(".searchDiv").height($("#box").height() - $(".search-box").height() - 10 - 10);
-    $("#keyword").on('keypress', function(e) { //#keyword为input文本框
-        var keycode 	= e.keyCode;
-        var searchName 	= $(this).val();
-        if (keycode == '13') {
-            search();
-        }
-    });
-    var vue = new Vue({
-        el: "#box",
-        data: {
-            keyword: "",
-        },
-        mounted: function() {
-            this.$nextTick(function() {
-
-            });
-        },
-        methods: {
-            searchByLabel: function(pageName) {
-                window.location.replace("/static/frontend/"+pageName);
-                // window.location.href = "/static/frontend/search2.html";
-            },
-            search: function() {
-                console.log(encodeURI(vue.keyword));
-                window.location.replace("/static/frontend/searchResult.html?keyword=" + encodeURI(vue.keyword));
-            },
-
-        }
-    });
+	    $("#box").height($(window).height());
+	    $(".searchDiv").height($("#box").height() - $(".search-box").height() - 10 - 10);
+	    
+	    var vue = new Vue({
+	    	el: "#box",
+	       	data: {
+	       		displayHistory: [],
+	       		counts:0,
+	           	keyword: ""
+	       	},
+	        mounted: function() {
+	            this.$nextTick(function() {
+	            	$.ajax({
+	                    url: 'http://fin.jrfacai.com/home/index_api/getSearCount',
+	                    type: 'GET',
+	                    async: false,
+	                    dataType: 'json'
+	                })
+	                .done(function(res) {
+	                	if(res.code==200){
+	                		vue.counts = res.data;
+	                	}
+	                });
+	            	
+		            $.ajax({
+		                    url: 'http://fin.jrfacai.com/home/index_api/indexSearchHistory',
+		                    type: 'GET',
+		                    async: false,
+		                    dataType: 'json'
+	                })
+	                .done(function(res) {
+	                	if(res.code==200){
+	                		vue.displayHistory = res.data;
+	                	}
+	                });
+	            });
+	            $("#searchkey").keydown(function(event) {
+	                if (event.which == 13) {
+	                	$("#searchpic").trigger('click');
+	                }
+	            });
+	        },
+	        methods: {
+	            searchByLabel: function(pageName) {
+	                window.location.replace("/static/frontend/"+pageName);
+	            },
+	            searchByHot: function(keywords) {
+	            	window.location.replace("/static/frontend/searchResult.html?keyword=" + encodeURI(keywords));
+	            },
+	            delAll: function(keywords,sid) {
+	            	$.ajax({
+                        url: 'http://fin.jrfacai.com/home/index_api/delAllSearchHistory',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                        	$("#search_list").css('display','none');
+                        }
+                    });
+	            },
+	            del: function(keywords,sid) {
+	            	$.ajax({
+                        url: 'http://fin.jrfacai.com/home/index_api/delSearchHistory',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { "keywords": keywords},
+                    })
+                    .done(function(res) {
+                        if (res.code == 200) {
+                        	$("#"+sid).css('display','none');
+                        }
+                    });
+	            },
+	            search: function() {
+	                //console.log(encodeURI(vue.keyword));
+	                var keywords = $("#searchkey").val(); 
+	                window.location.replace("/static/frontend/searchResult.html?keyword=" + encodeURI(keywords));
+	            },
+	            
+	
+	        }
+	    });
     </script>
 </body>
 
