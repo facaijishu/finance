@@ -24,13 +24,15 @@ class IndexApi extends BaseApi
 
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 1;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=''){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 1;
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
        
         //每页显示数
        $length = 4;
@@ -56,13 +58,16 @@ class IndexApi extends BaseApi
        //当前登录的用户
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 2;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=""){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 2;
+           faLog("jhhgg-".json_encode($data));
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
        
         //每页显示数
        $length = 4;
@@ -89,13 +94,16 @@ class IndexApi extends BaseApi
        //当前登录的用户
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 3;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=''){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 3;
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
+       
        
         //每页显示数
        $length = 4;
@@ -121,13 +129,15 @@ class IndexApi extends BaseApi
        //当前登录的用户
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 4;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=''){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 4;
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
        
         //每页显示数
        $length = 4;
@@ -137,6 +147,7 @@ class IndexApi extends BaseApi
        $model->getIndexSearchOrganize($keyword,$page,$uid,$length,$offset);
        
     }
+    
      //首页搜索-指定内容-行业
     public function indexSearchIndustry()
     {  
@@ -153,19 +164,21 @@ class IndexApi extends BaseApi
        //当前登录的用户
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 5;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=''){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 5;
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
        
         //每页显示数
        $length = 4;
        //计算偏移量
        $offset = ($page-1)*$length; 
-       $model = model('ProjectRequire');
+       $model  = model('ProjectRequire');
        $model->getIndexSearchIndustry($keyword,$page,$uid,$length,$offset);
        
     }
@@ -185,13 +198,15 @@ class IndexApi extends BaseApi
        //当前登录的用户
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 6;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=''){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 6;
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
        
         //每页显示数
        $length = 4;
@@ -217,13 +232,15 @@ class IndexApi extends BaseApi
        //当前登录的用户
        $uid = session('FINANCE_USER.uid');
        
-       //保存用户搜索内容
-       $data = [];
-       $data['uid']      = $uid;
-       $data['keyword']  = $keyword;
-       $data['add_time'] = time();
-       $data['type']     = 7;
-       model('SearchKeywords')->createSearchKeywords($data);
+       if($keyword!=''){
+           //保存用户搜索内容
+           $data = [];
+           $data['uid']      = $uid;
+           $data['keyword']  = $keyword;
+           $data['add_time'] = time();
+           $data['type']     = 7;
+           model('SearchKeywords')->createSearchKeywords($data);
+       }
        
         //每页显示数
        $length = 4;
@@ -231,8 +248,47 @@ class IndexApi extends BaseApi
        $offset = ($page-1)*$length; 
        $model = model('Through');
        $model->getIndexSearchConnections($keyword,$page,$uid,$length,$offset);
-       
     }
+    
+    //搜索历史词条
+    public function indexSearchHistory()
+    {
+        $uid    = session('FINANCE_USER.uid');
+        $model  = model("SearchKeywords");
+        $search = $model->getSearchByUidApi($uid);
+        $this->result($search['data'],$search['code'],$search['msg'],'json');   
+    }
+    
+    //获取历史词条总数
+    public function getSearCount()
+    {
+        $uid        = session('FINANCE_USER.uid');
+        $model      = model("SearchKeywords");
+        $res        = $model->getSearchCountApi($uid);
+        faLog("jjj-".json_encode($res));
+        $this->result($res['data'],$res['code'],$res['msg'],'json');
+    }
+    
+    //删除历史搜索词条
+    public function delSearchHistory()
+    {
+        $keywords   = trim($this->request->param('keywords'))?trim($this->request->param('keywords')):'';
+        $uid        = session('FINANCE_USER.uid');
+        $model      = model("SearchKeywords");
+        $res        = $model->delSearchByUidApi($uid,$keywords);
+        $this->result('',$res['code'],$res['msg'],'json');
+    }
+    
+    //删除全部历史搜索词条
+    public function delAllSearchHistory()
+    {
+        $keywords   = trim($this->request->param('keywords'))?trim($this->request->param('keywords')):'';
+        $uid        = session('FINANCE_USER.uid');
+        $model      = model("SearchKeywords");
+        $res        = $model->delAllSearchByUidApi($uid);
+        $this->result('',$res['code'],$res['msg'],'json');
+    }
+    
 	//首页轮播图
     public function displayRotaryMap()
     {
@@ -243,9 +299,9 @@ class IndexApi extends BaseApi
     //首页精选前三条展示
     public function displayCareList()
     {   
-        $role_type =  session('FINANCE_USER.role_type');
-        $uid =  session('FINANCE_USER.uid');
-        $length = 10;
+        $role_type  = session('FINANCE_USER.role_type');
+        $uid        = session('FINANCE_USER.uid');
+        $length     = 5;
         switch (intval($role_type)) {
             case 1:
                 //资金方

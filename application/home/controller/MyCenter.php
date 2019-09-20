@@ -15,13 +15,16 @@ class MyCenter extends Base{
         $time   = date('Y-m' , time());
         $now    = $model->where('CREATE_TIME','like',$time.'%')->where(['superior' => $info['member']['uid'] , 'userType' => 2])->select();
         $this->assign('num' , count($now));
+        
         $user   = $model->getMemberInfoById($info['member']['uid']);
         $this->assign('balance' , $user['balance']);
         $this->assign('last_dividend' , $user['last_dividend']);
         $this->assign('info' , $info);
+        
         $model  = model("Bonus");
         $money  = $model->getBonusMoney();
         $this->assign('money' , $money);
+        
         //未提现余额
         $list = model("PresentRecord")->where(['openid' => $info['member']['openId'] , 'status' => 0])->select();
         $yue = 0;
@@ -30,18 +33,21 @@ class MyCenter extends Base{
         }
         $yue    = floatval($yue%100);
         $this->assign('yue' , $yue);
+        
         $list1  = model("PresentRecord")->where(['openid' => $info['member']['openId']])->select();
         $total  = 0;
         foreach ($list1 as $key => $value) {
             $total += intval($value['amount']);
         }
         $total  = floatval($total%100)+ floatval($user['balance']);
+        
         $this->assign('total' , $total);
         $this->assign('title' , '- 我的FA財钱包');
         $this->assign('img' , $info['member']['userPhoto']);
         $this->assign('des' , '我的FA財钱包!');
+        
         //客服logo
-        $model = model('Project');
+        $model   = model('Project');
         $project = $model->getProjectLimitOne();
         $this->assign('project',$project);
         return view();
