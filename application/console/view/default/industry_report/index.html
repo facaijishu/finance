@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="industry_report/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+           <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="report_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 发布时间： </label>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date1" placeholder="开始时间" id="start_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" name="create_date2" placeholder="结束时间" id="end_time" style="z-index:400" class="form-control datepicker" data-dateformat="yy-mm-dd">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 标题： </label>
+                                    <div class="col-lg-6 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="title" id="title" placeholder="标题">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 状态： </label>
+                                    <div class="radio-inline col-lg-11 col-sm-10 col-md-10">
+                                        <label>
+                                            <input type="radio" class="radiobox" id="status" name="status" value="" checked="">
+                                            <span> 全部 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="status" name="status" value="1">
+                                            <span> 已发布 </span> 
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="radiobox" id="status" name="status" value="-1">
+                                            <span> 未发布 </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-default" id="report_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="industryReport" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> 研报ID</th>
+                                <th> 标题</th>
+                                <th> 状态</th>
+                                <th> 是否置顶</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<script>
+    var report_url 			    = '{:url("IndustryReport/read")}';
+    var root_path_url 		    = $("#industry_report").attr("data-path");
+    var report_start_url 		= '{:url("IndustryReport/start")}';
+    var report_stop_url 		= '{:url("IndustryReport/stop")}';
+    var report_delete_url 	    = '{:url("IndustryReport/delete")}';
+    var report_hot_true_url 	= '{:url("IndustryReport/hotTrue")}';
+    var report_hot_false_url 	= '{:url("IndustryReport/hotFalse")}';
+    var report_judge_url 		= "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/industry_report/industry_report_list.js"></script>
