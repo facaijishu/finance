@@ -65,7 +65,6 @@ class IndexApi extends BaseApi
            $data['keyword']  = $keyword;
            $data['add_time'] = time();
            $data['type']     = 2;
-           faLog("jhhgg-".json_encode($data));
            model('SearchKeywords')->createSearchKeywords($data);
        }
        
@@ -265,7 +264,6 @@ class IndexApi extends BaseApi
         $uid        = session('FINANCE_USER.uid');
         $model      = model("SearchKeywords");
         $res        = $model->getSearchCountApi($uid);
-        faLog("jjj-".json_encode($res));
         $this->result($res['data'],$res['code'],$res['msg'],'json');
     }
     
@@ -349,8 +347,8 @@ class IndexApi extends BaseApi
     //热门头条
     public function displayHotHeadline()
     {
-    	$model = model("consultation");
-        $model->getConsultationListApi(5);
+    	$model = model("News");
+    	$model->getList(5);
     }
     //客服图标的跳转链接
     public function serviceUrl()
