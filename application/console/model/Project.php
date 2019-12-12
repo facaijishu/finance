@@ -21,239 +21,7 @@ class Project extends Model
         return $result;
     }
     
-    /**
-     * 设置项目状态
-     * @param 项目ID、 $id
-     * @param 项目状态  $status 1：草稿; 2：融资中; 3：结束
-     * @return boolean|数据集合
-     */
-    public function setProjectStatus($id , $status){
-        if(empty($id)){
-            $this->error = '该项目id不存在';
-            return false;
-        }
-        if(!is_numeric($status)){
-            $this->error = '项目状态不为整数';
-            return false;
-        }
-        $data = [];
-        $data['status'] = $status;
-        $result = $this->where(['pro_id' => $id])->update($data);
-        return $result;
-    }
-    
-    /**
-     * 项目排序显示设置
-     * @param 数据集合 $data
-     * @return boolean
-     */
-    public function setProjectOrderList($data){
-        if(empty($data)){
-            $this->error = '缺少相关数据';
-            return false;
-        }
-        //验证数据信息
-        $validate = validate('ProjectHot');
-        $scene = isset($data['id']) ? 'edit' : 'add';
-        if(!$validate->scene($scene)->check($data)){
-            $error = $validate->getError();
-            $this->error = $error;
-            return false;
-        }
-        //开启事务
-        $this->startTrans();
-        try{
-            $this->where(['pro_id' => $data['id']])->update(['list_order' => $data['list_order']]);
-            // 提交事务
-            $this->commit();
-            return true;
-        } catch (\Exception $e) {
-            // 回滚事务
-            $this->rollback();
-            return false;
-        }
-    }
-    
-    /**
-     * 保存项目
-     * @param 项目数据集合 $data
-     * @return boolean
-     */
-    public function createProjectDraft($data){
-        if(empty($data)){
-            $this->error = '项目信息不存在';
-            return false;
-        }
-        //开启事务
-        $this->startTrans();
-        try{
-            //企业亮点
-            $img        = explode(',' , trim($data['enterprise_url'], ','));
-            $material   = '';
-            foreach ($img as $key => $value) {
-                $arr       = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['enterprise_url'] = trim($material, ',');
-            
-            //公司简介
-            $img      = explode(',' , trim($data['company_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr       = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['company_url'] = trim($material, ',');
-            
-            //核心产品
-            $img      = explode(',' , trim($data['product_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr       = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['product_url'] = trim($material, ',');
-            
-            //行业分析
-            $img      = explode(',' , trim($data['analysis_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr       = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['analysis_url'] = trim($material, ',');
-            
-            //所属行业
-            $data['inc_industry'] = trim($data['inc_industry'], ',');
-            $dict = model("Dict")->getDictInfoById($data['inc_industry']);
-            $data['inc_top_industry'] = $dict['fid'];
-            
-            //所属业务
-            $data['inc_sign']     = trim($data['inc_sign'], ',');
-            $dict = model("Dict")->getDictInfoById($data['inc_sign']);
-            $data['inc_top_sign'] = $dict['fid'];
-            
-            //所属区域
-            $data['inc_area']     = trim($data['inc_area'], ',');
-            
-            $data['build_time']   = strtotime($data['build_time']);
-            $data['last_time']    = time();
-            if(isset($data['pro_id'])){
-                $this->allowField(true)->save($data ,['pro_id' => $data['pro_id']]);
-            } else {
-                $data['create_time']  = time();
-                $data['status']       = 1;
-                
-                $info   = \app\console\service\User::getInstance()->getInfo();
-                $data['create_uid']   = $info['uid'];
-                
-                $this->allowField(true)->save($data);
-                $id     = $this->getLastInsID();
-                
-                $system = model("SystemConfig")->getSystemConfigInfo();
-                $result = createProEditQrcodeDirection($system['current'] , 'project' , $id , '' , '');
-                if(!$result){
-                    $this->error = '创建二维码指向失败';
-                    return false;
-                } else {
-                    $this->where(['pro_id' => $id])->update(['qr_code' => $result]);
-                }
-            }
-            // 提交事务
-            $this->commit();
-            return true;
-        } catch (\Exception $e) {
-            // 回滚事务
-            $this->rollback();
-            return false;
-        }
-    }
-    
-    
-    public function createBoutiqueProject($id){
-        if(empty($id)){
-            $this->error = '大宗转让项目不存在';
-            return false;
-        }
-        //开启事务
-        $this->startTrans();
-        try{
-            $info = model("ZryxesEffect")->getZryxesEffectInfoById($id);
-            $info1 = $this->where(['stock_code' => $info['neeq']])->find();
-            if(empty($info1)){
-                model("ZryxesEffect")->where(['id' => $id])->update(['boutique' => 1]);
-                $user = \app\console\service\User::getInstance()->getInfo();
-                $system = model("SystemConfig")->getSystemConfigInfo();
-                $arr = [];
-                $arr['pro_name'] = $info['sec_uri_tyshortname'];
-                $arr['stock_code'] = $info['neeq'];
-                $arr['stock_name'] = $info['sec_uri_tyshortname'];
-                $arr['inc_sign'] = 15;
-                $arr['capital_plan'] = 5;
-                if($info['trademethod'] == '协议'){
-                    $arr['transfer_type'] = 7;
-                } else {
-                    $arr['transfer_type'] = 8;
-                }
-                if($info['sublevel'] == '基础层'){
-                    $arr['hierarchy'] = 10;
-                } else {
-                    $arr['hierarchy'] = 9;
-                }
-                $arr['contacts'] = $info['name'];
-                if($info['contact'] == '电话'){
-                    $arr['contacts_tel'] = $info['accountment'];
-                }
-                $arr['create_time'] = time();
-                $arr['last_time'] = time();
-                $arr['create_uid'] = $user['uid'];
-                $arr['status'] = 1;
-                $this->allowField(true)->save($arr);
-                $pro_id = $this->getLastInsID();
-                $result = createProEditQrcodeDirection($system['current'] , 'project' , $pro_id , '' , '');
-                if(!$result){
-                    $this->error = '创建二维码指向失败';
-                    return false;
-                } else {
-                    $this->where(['pro_id' => $pro_id])->update(['qr_code' => $result]);
-                }
-            } else {
-                $pro_id = $info1['pro_id'];
-                
-                model("ZryxesEffect")->where(['id' => $id])->update(['boutique' => 1]);
-            }
-            // 提交事务
-            $this->commit();
-            return $pro_id;
-        } catch (\Exception $e) {
-            // 回滚事务
-            $this->rollback();
-            return false;
-        }
-    }
-    public function stopBoutiqueProject($id){
-        if(empty($id)){
-            $this->error = '大宗转让项目不存在';
-            return false;
-        }
-        //开启事务
-        $this->startTrans();
-        try{
-            $info = model("ZryxesEffect")->getZryxesEffectInfoById($id);
-            $info1 = $this->where(['stock_code' => $info['neeq']])->find();
-            if(!empty($info1)){
-                $pro_id = $info1['pro_id'];
-                model("ZryxesEffect")->where(['id' => $id])->update(['boutique' => 0]);
-            } 
-            // 提交事务
-            $this->commit();
-            return $pro_id;
-        } catch (\Exception $e) {
-            // 回滚事务
-            $this->rollback();
-            return false;
-        }
-    }
+  
     public function createProject($data){
         if(empty($data)){
             $this->error = '缺少相关数据';
@@ -271,52 +39,8 @@ class Project extends Model
         //开启事务
         $this->startTrans();
         try{
-            $img = explode(',' , trim($data['enterprise_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['enterprise_url'] = trim($material, ',');
-            $img = explode(',' , trim($data['company_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['company_url'] = trim($material, ',');
-            $img = explode(',' , trim($data['product_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['product_url'] = trim($material, ',');
-            $img = explode(',' , trim($data['analysis_url'], ','));
-            $material = '';
-            foreach ($img as $key => $value) {
-                $arr = explode('-', $value);
-                $material .= $arr[0].',';
-            }
-            $data['analysis_url'] = trim($material, ',');
-            
-            //所属行业
-            $data['inc_industry'] = trim($data['inc_industry'], ',');
-            $dict = model("Dict")->getDictInfoById($data['inc_industry']);
-            $data['inc_top_industry'] = $dict['fid'];
-            
-            //所属业务
-            $data['inc_sign']     = trim($data['inc_sign'], ',');
-            $dict = model("Dict")->getDictInfoById($data['inc_sign']);
-            $data['inc_top_sign'] = $dict['fid'];
-            
-            //所属区域
-            $data['inc_area']     = trim($data['inc_area'], ',');
-            
-            $data['last_time']    = time();
-            
-            $data['build_time']   = strtotime($data['build_time']);
-            $data['status']       = 2;
+            $data['build_time']   = time();
+            $data['status']       = 0;
             
             if(isset($data['pro_id'])){
                 $arr = [];
@@ -339,34 +63,6 @@ class Project extends Model
                     $this->where(['pro_id' => $id])->update(['qr_code' => $result]);
                 }
             }
-            // 提交事务
-            $this->commit();
-            return true;
-        } catch (\Exception $e) {
-            // 回滚事务
-            $this->rollback();
-            return false;
-        }
-    }
-    public function stopProject($id){
-        //开启事务
-        $this->startTrans();
-        try{
-            $this->where(['pro_id' => $id])->update(['flag' => -1]);
-            // 提交事务
-            $this->commit();
-            return true;
-        } catch (\Exception $e) {
-            // 回滚事务
-            $this->rollback();
-            return false;
-        }
-    }
-    public function startProject($id){
-        //开启事务
-        $this->startTrans();
-        try{
-            $this->where(['pro_id' => $id])->update(['flag' => 1]);
             // 提交事务
             $this->commit();
             return true;
@@ -468,6 +164,114 @@ class Project extends Model
             // 回滚事务
             $this->rollback();
             return false;
+        }
+    }
+    
+    /**
+     * 审核项目通过
+     * @param 项目编号 $id
+     * @return boolean
+     */
+    public function approveProject($id){
+        //开启事务
+        $this->startTrans();
+        try{
+            $this->where(['pro_id' => $id])->update(['status' => 2,'flag' => 1]);
+            // 提交事务
+            $this->commit();
+            return true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            $this->rollback();
+            return false;
+        }
+    }
+    
+    /**
+     * 审核上下架
+     * @param 项目编号 $id
+     * @param 显示状态 $flag 1为显示上架  0为不显示下架
+     * @return boolean
+     */
+    public function changeProject($id,$flag){
+        //开启事务
+        $this->startTrans();
+        try{
+            $this->where(['pro_id' => $id])->update(['flag' => $flag]);
+            // 提交事务
+            $this->commit();
+            return true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            $this->rollback();
+            return false;
+        }
+    }
+    
+    
+    /**
+     * 保存项目
+     * @param 项目数据集合 $data
+     * @return boolean
+     */
+    public function saveProject($data){
+        if(empty($data)){
+            $this->error = '项目信息不存在';
+            return false;
+        }
+        //开启事务
+        $this->startTrans();
+        try{
+            $data['last_time']        = time();
+            $data['inc_sign']         = 0;
+            $data['is_display']       = 1;
+            if(isset($data['pro_id'])){
+                $this->allowField(true)->save($data ,['pro_id' => $data['pro_id']]);
+            } else {
+                $data['create_time']  = time();
+                $data['last_time']    = time();
+                $data['status']       = 1;
+                
+                $info   = \app\console\service\User::getInstance()->getInfo();
+                $data['create_uid']   = $info['uid'];
+                
+                $this->allowField(true)->save($data);
+                $id     = $this->getLastInsID();
+                
+                $system = model("SystemConfig")->getSystemConfigInfo();
+                $result = createProEditQrcodeDirection($system['current'] , 'project' , $id , '' , '');
+                if(!$result){
+                    $this->error = '创建二维码指向失败';
+                    return false;
+                } else {
+                    $this->where(['pro_id' => $id])->update(['qr_code' => $result]);
+                }
+            }
+            // 提交事务
+            $this->commit();
+            return true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            $this->rollback();
+            return false;
+        }
+    }
+    
+    
+    /**
+     * 创建项目二维码
+     * @param 项目吧编号 $id
+     * @return boolean
+     */
+    public function createdQrCode($id){
+        $system = model("SystemConfig")->getSystemConfigInfo();
+        $result = createProEditQrcodeDirection($system['current'] , 'project' , $id , '' , '');
+        if(!$result){
+            $this->error = '创建二维码指向失败';
+            return false;
+        } else {
+			$this->where(['pro_id' => $id])->update(['qr_code' => $result]);
+			return true;
         }
     }
 }

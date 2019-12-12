@@ -29,6 +29,7 @@ class Dict extends Model
         $info[] = $this->where($where)->select();
         return $info;
     }
+    
     public function getDictByType($str = ''){
         if($str == ''){
             $this->error = '该数据类型名称不存在';
@@ -45,24 +46,62 @@ class Dict extends Model
     //获取一级行业
     public function getTopIndustry()
     {
-        $result = $this->alias("d")
-                ->join("dict_type dt" , "d.dt_id=dt.dt_id")
-                ->where(['dt.sign' => 'industry','d.status' => 1,'d.fid'=>0])
-                ->order('d.list_order asc')
-                ->select();
+        $result  = $this->alias("d")
+                        ->join("dict_type dt" , "d.dt_id=dt.dt_id")
+                        ->where(['dt.sign' => 'industry','d.status' => 1,'d.fid'=>0])
+                        ->order('d.list_order desc')
+                        ->select();
         return $result;
     }
     
     //获取二级行业
     public function getIndustry($id = 0)
     {
-        $result = $this->alias("d")
-                ->join("dict_type dt" , "d.dt_id=dt.dt_id")
-                ->where(['dt.sign' => 'industry','d.status' => 1,'d.fid'=>$id])
-                ->order('d.list_order asc')
-                ->select();
+        $result  = $this->alias("d")
+                        ->join("dict_type dt" , "d.dt_id=dt.dt_id")
+                        ->where(['dt.sign' => 'industry','d.status' => 1,'d.fid'=>$id])
+                        ->order('d.list_order desc')
+                        ->select();
         return $result;
     }
+    
+    //获取投资阶段
+    public function getStage()
+    {
+        $result  = $this->alias("d")
+                        ->join("dict_type dt" , "d.dt_id=dt.dt_id")
+                        ->where(['dt.sign' => 'invest_stage','d.status' => 1,'d.fid'=>0])
+                        ->order('d.list_order desc')
+                        ->select();
+        return $result;
+    }
+    
+    //获取区域
+    public function getArea()
+    {
+        $result  = $this->alias("d")
+                        ->join("dict_type dt" , "d.dt_id=dt.dt_id")
+                        ->where(['dt.sign' => 'to_area','d.status' => 1,'d.fid'=>0])
+                        ->order('d.list_order desc')
+                        ->select();
+        return $result;
+    }
+    
+    //获取所属行业一级和二级标签
+    public function getSubDict($fid)
+    {
+            
+        $dict   = $this->alias('d')
+                        ->join('DictType dt','d.dt_id=dt.dt_id')
+                        ->field('d.id,d.fid,d.value')
+                        ->where(['d.fid'=>$fid,'d.status'=>1])
+                        ->order(['list_order'=>'desc'])
+                        ->select();
+           
+        
+        return $dict;
+    }
+    
     
     //获取一级业务
     public function getTopService()
@@ -304,6 +343,51 @@ class Dict extends Model
            $this->error = '投融规模标签不存在,请先往后台添加或启用';
            return false;
        }
+       return $dict;
+   }
+   
+  
+   public function getidList($id = '')
+   {
+       $result  = $this->alias("d")
+                       ->field('d.id,d.value')
+                       ->where(" id in (" .$id." ) ")
+                       ->select();
+       $str = '';
+       foreach ($result as $key => $item) {
+           if($str==''){
+               $str  = $item['value'];
+           }else{
+               $str  = $str."、".$item['value'];
+           }
+       }
+       return $str;
+   }
+   
+   
+   
+   /**
+    * 获取标签二级集合
+    * @param string 行业二级字符串以逗号分割
+    * @return string|unknown
+    */
+   public function getDictList($id = '')
+   {
+       $result      = $this->alias("d")
+                           ->field('d.id, d.fid, d.value as dict_name')
+                           ->where(" id = " .$id)
+                           ->find();
+       if($result['dict_name']=="其他"){
+           $dict  = $this->getInfo($result['fid']);
+           $result['dict_name'] = "其他(".$dict['value'].")";
+       }
+       return $result;
+   }
+   
+   //获取分类名称
+   public function getInfo($id)
+   {
+       $dict    = $this->alias('d')->field('d.id,d.value')->where(['d.status'=>1,'d.id'=>$id])->find();
        return $dict;
    }
 
