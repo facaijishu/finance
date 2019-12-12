@@ -1735,219 +1735,39 @@ class ProjectRequire extends BaseModel
      */
     public function getCareProjectAndProjectRequireMarketList($data = [])
     {
-        
-        //查询当前登录用户添加的偏好标签
-        $dl = model('DictLabel');
-        $dl = $dl->getDictLabelApi($data['uid']);
         //每页显示数
         $length = $data['length'];
+        
         //计算偏移量
         $offset = $data['offset'];
         
-        //用户未设置偏好标签时
-        if (empty($dl)) {
-            //平台精选项目sql
-            $project_list = model('Project')->alias('p')
-            ->join('Dict d','p.inc_top_sign=d.id')
-            ->join('Dict d2','p.inc_sign=d2.id')
-            ->join('Dict d3','p.inc_top_industry=d3.id')
-            ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
-            ->field([
-                'p.pro_id'          =>'id',
-                'ml.url',
-                'p.pro_name'        =>'name',
-                'p.company_name'    =>'top',
-                'concat_ws(",",d.value,d2.value,d3.value)'=>'label',
-                'p.introduction'    =>'bottom',
-                'p.view_num',
-                'p.type',
-            ])
-            ->where(['p.status' => 2 , 'p.flag' => 1])
-            ->order("p.list_order desc,p.view_num desc,p.pro_id desc")
-            ->select()
-            ->toArray();
-            
-            if (!empty($project_list)) {
-                foreach ($project_list as &$v) {
-                    $v['type_label']    = '精选项目';
-                    $v['bottom']        = subStrLen($v['bottom'],23);
-                    $v['label']         = explode(',', $v['label']);
-                    $v['url']           = config('view_replace_str')['__DOMAIN__'].$v['url'];
-                }
-            }
-            $all_project   = array_merge($project_list);
-            $final_project = array_slice($all_project,$offset,$length);
-            return $this->result($final_project);
-        }
+        $project_list     = model('Project')->alias('p')
+                                            ->join('Dict d','p.inc_top_industry  = d.id')
+                                            ->join('Dict d2','p.invest_stage = d2.id')
+                                            ->field([
+                                                'p.pro_id'      =>'id',
+                                                //'ml.url',
+                                                'p.pro_name'    =>'top',
+                                                'p.company_name'=>'name',
+                                                'concat(d.value,",",d2.value)'=>'label',
+                                                'p.introduction'=>'bottom',
+                                                'p.view_num',
+                                                'p.type',
+                                            ])
+                                            ->where(['p.status' => 2 , 'p.flag' => 1])
+                                            ->order("p.list_order desc,p.pro_id desc")
+                                            ->limit($length)
+                                            ->select();
         
-        //用户已设置偏好标签时
-        $dt = model('DictType');
-        $service_type_all       = [];//当前用户选择的业务类型所有一二级标签
-        $service_type_son_par   = [];//当前用户选中的业务类型的二级标签所属的一级标签
-        $service_type_son       = [];//当前用户选择的业务类型所有的2级标签(用来匹配的)
-        
-        $industry_type_all      = [];//当前用户选择的行业的所有一二级标签
-        $industry_type_son_par  = [];//当前用户选中行业的二级标签所属的一级标签
-        $industry_type_son      = [];//当前用户选择的行业所有的2级标签(用来匹配的)
-        
-        $size                   = [];//当前用户选择的投融资规模(用来匹配的)
-        $to_province            = [];//当前用户选择的所在省份(用来匹配的)
-        foreach ($dl as $k => $v) {
-            $sign = $dt->field('sign')->where(['dt_id'=>$v['dict_type_id']])->find();
-            //业务类型下的标签
-            if($sign['sign'] == 'service_type'){
-                $service_type_all[]             = $v['dict_id'];
-                if($v['dict_fid'] > 0){
-                    $service_type_son[]         = $v['dict_id'];
-                    $service_type_son_par[]     = $v['dict_fid'];
-                }
-            }
-            //所属行业下的标签
-            if($sign['sign'] == 'industry'){
-                $industry_type_all[]            = $v['dict_id'];
-                if($v['dict_fid'] > 0){
-                    $industry_type_son[]        = $v['dict_id'];
-                    $industry_type_son_par[]    = $v['dict_fid'];
-                }
-            }
-            //投融资规模
-            if($sign['sign'] == 'size'){
-                $size[]                         = $v['dict_id'];
-            }
-            //所在省份
-            if($sign['sign'] == 'to_province'){
-                $to_province[]                  = $v['dict_id'];
-            }
-        }
-        
-        //得到当前用户选中二级标签所属的一级标签和未选中二级标签的一级标签(业务类型)
-        $service_type_all_par   = array_diff($service_type_all, $service_type_son);
-        //得到当前用户未选中二级标签的一级标签(用来匹配的条件)(业务类型)
-        $service_type_null_par  = array_diff($service_type_all_par,$service_type_son_par);
-        
-        //得到当前用户选中二级标签所属的一级标签和未选中二级标签的一级标签(所属行业)
-        $industry_type_all_par  = array_diff($industry_type_all, $industry_type_son);
-        //得到当前用户未选中二级标签的一级标签(用来匹配的条件)(所属行业)
-        $industry_type_null_par = array_diff($industry_type_all_par,$industry_type_son_par);
-        
-        //开始匹配project表融资中且展示在前台的精选项目
-        $match_str = '';
-        $match_str2 = '';
-        $match_str3 = '';
-        $match_str4 = '';
-        
-        //匹配精品项目
-        if(!empty($service_type_son)){
-            //匹配精品
-            $match_str .= 'p.inc_sign in ('.implode(',', $service_type_son).') or ';
-        }
-        
-        //匹配业务类型未选中二级的一级标签
-        if(!empty($service_type_null_par)){
-            //匹配精品
-            $match_str .= 'p.inc_top_sign in ('.implode(',', $service_type_null_par).') or ';
-        }
-        
-        //匹配精品所属行业二级标签
-        if(!empty($industry_type_son)){
-            //匹配精品
-            $match_str .= 'p.inc_industry in ('.implode(',', $industry_type_son).') or ';
-        }
-        
-        //匹配精品所属行业未选中二级的一级标签
-        if(!empty($industry_type_null_par)){
-            //匹配精品
-            $match_str .= 'p.inc_top_industry in ('.implode(',', $industry_type_null_par).') or ';
-        }
-        //匹配所在省份
-        if(!empty($to_province)){
-            //精品项目
-            $match_str .= 'p.inc_area in ('.implode(',', $to_province).') or ';
-        }
-        //匹配投融资规模(根据选中的标签id匹配每一条的数值(万元))
-        //标签描述:500万以下          不等式: <500
-        //        500-1999万                >=500 && <=1999
-        //        2000-3999万               >=2000 && <=3999
-        //        4000-6999万               >=4000 && <=6999
-        //        7000-9999万               >=7000 && <=9999
-        //        1亿以上                    >=10000
-        $model = model('Dict');
-        if(!empty($size)){
-            foreach ($size as $va) {
-                $value = $model->field('value')->where(['id'=>$va])->find();
-                if ($value['value'] == '500万以下') {
-                    //精选
-                    $match_str .= 'p.financing_amount<500 or ';
-                }
-                if ($value['value'] == '500-1999万') {
-                    //精选
-                    $match_str .= '(p.financing_amount>=500 && p.financing_amount<=1999) or ';
-                }
-                
-                if ($value['value'] == '2000-3999万') {
-                    //精选
-                    $match_str .= '(p.financing_amount>=2000 && p.financing_amount<=3999) or ';
-                }
-                
-                if ($value['value'] == '4000-6999万') {
-                    //精选
-                    $match_str .= '(p.financing_amount>=4000 && financing_amount<=6999) or ';
-                }
-                
-                if ($value['value'] == '7000-9999万') {
-                    //精选
-                    $match_str .= '(p.financing_amount>=7000 && financing_amount<=9999) or ';
-                }
-                
-                if ($value['value'] == '1亿以上 ') {
-                    //精选
-                    $match_str .= 'p.financing_amount>=10000 or ';
-                }
-            }
-        }
-        //精选
-        $match_str = rtrim($match_str,' or ');
-        
-        //平台精选项目sql
-        $project_list = model('Project')->alias('p')
-        ->join('Dict d','p.inc_top_sign=d.id')
-        ->join('Dict d2','p.inc_sign=d2.id')
-        ->join('Dict d3','p.inc_top_industry=d3.id')
-        ->join('MaterialLibrary ml','p.top_img=ml.ml_id')
-        ->field([
-            'p.pro_id'              => 'id',
-            'ml.url',
-            'p.pro_name'            => 'name',
-            'p.company_name'        => 'top',
-            'concat_ws(",",d.value,d2.value,d3.value)'=>'label',
-            'p.introduction'        => 'bottom',
-            'p.view_num',
-            'p.type',
-        ])
-        ->where(['p.status' => 2 , 'p.flag' => 1])
-        ->where($match_str)
-        ->order("p.list_order desc,p.pro_id desc")
-        ->select()
-        ->toArray();
-        if(empty($project_list)) {
-            $this->code = 201;
-            $this->msg  = '没有更多项目或资金';
-            return $this->result('',$this->code,$this->msg);
-        }
         
         if (!empty($project_list)) {
             foreach ($project_list as &$v) {
                 $v['type_label']    = '精选项目';
                 $v['bottom']        = subStrLen($v['bottom'],23);
                 $v['label']         = explode(',', $v['label']);
-                $v['url']           = config('view_replace_str')['__DOMAIN__'].$v['url'];
             }
         }
-        //精准匹配后的所有结果
-        $all_project    = array_merge($project_list);
-        //分页显示
-        $final_project  = array_slice($all_project,$offset,$length);
-        return $this->result($final_project);
+        return $this->result($project_list,"200","");
     }
 
 
@@ -4197,4 +4017,11 @@ class ProjectRequire extends BaseModel
                 return $this->result($match_final);
         
     }
+    
+    //获取用户发布的项目需求
+    public function sumProNum($uid){
+        $count = $this->where(['uid'=>$uid,'is_show' => 1,'status'  => 1,])->count('pr_id');
+        return $count;
+    }
+    
 }
