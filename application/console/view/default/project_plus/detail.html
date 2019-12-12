@@ -1,0 +1,235 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="project_plus/tab_detail" /}
+            <div id="project_detail" data-id="{$info.pro_id}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">企业名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.company_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">添加时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目简称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.pro_name}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">项目状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.status_name}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                	<div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">业务类型：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.invest_stage}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属行业：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_industry}
+                        </div>
+                    </div>
+                    
+                </fieldset>
+               
+                <fieldset>
+                	<div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">所属地区：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.inc_area}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">融资金额：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.financing_amount}万
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">联系人：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.contacts}（{$info.contacts_tel} , {$info.contacts_email}）
+                        </div>
+                    </div>
+                    
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">简介：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.introduction}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">列表页头图：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.top_img}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">(top)</span>
+                        </div>
+                    </div>
+                </fieldset>
+               <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">详细页头图：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.index_img}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">(index)</span>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-5 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-4">商业计划书：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-9 col-xs-12">
+                            {$info.business_plan}
+                        </div>
+                    </div>
+                </fieldset>
+                
+                
+                <fieldset>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#investment_lights" aria-controls="investment_lights" role="tab" data-toggle="tab">项目要素</a></li>
+                           
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="investment_lights">
+                            	<fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">行业分析：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.analysis_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">企业亮点：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.enterprise_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group col-lg-12">
+                                        <div class="form-inline">
+                                            <label class="control-label col-lg-1">核心产品：</label>
+                                            <div class="col-lg-10 col-sm-12 col-md-12 col-xs-12">
+                                                {foreach name="info.product_des" item="light"}
+                                                {$light}</br>
+                                                {/foreach}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                             <div role="tabpanel" class="tab-pane" id="dialogue_details">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("body").removeClass("modal-open");
+        var project_approve_url 	= '{:url("ProjectPlus/proApprove")}';
+        var project_down_url 		= '{:url("ProjectPlus/proDown")}';
+        var project_up_url 		    = '{:url("ProjectPlus/proUp")}';
+
+        $("#content").on('click','.down',function(){
+            var _this = $(this);
+            Dialog.confirm('操作提示', '确定下架该项目吗？', function () {
+                var id = _this.attr("data-id");
+                $.ajax({
+                    url: project_down_url,
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 2000, function () {
+                                location.reload();
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                })
+            });
+        });
+        
+        $("#content").on('click','.up',function(){
+            var _this = $(this);
+            Dialog.confirm('操作提示', '确定上架该项目吗？', function () {
+                var id = _this.attr("data-id");
+                $.ajax({
+                    url: project_up_url,
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 2000, function () {
+                                location.reload();
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                })
+            });
+        });
+        
+        $("#content").on('click','.approve',function(){
+            var _this = $(this);
+            Dialog.confirm('操作提示', '确定架该项目审核通过吗？', function () {
+                var id = _this.attr("data-id");
+                $.ajax({
+                    url: project_approve_url,
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 2000, function () {
+                                location.reload();
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                })
+            });
+        });
+</script>

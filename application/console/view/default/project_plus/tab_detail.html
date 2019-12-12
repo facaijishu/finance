@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    	<li role="presentation" class="active"><a href="javascript:void(0);">项目详情</a></li>
+    {else /}
+    	<li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("ProjectPlus/detail")}')">项目详情</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("ProjectPlus/index")}')">返回</a>
+    {if condition="$info.status eq 2"}
+    	{if condition="$info.flag eq 0"}
+    		<a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("ProjectPlus/edit" , ['pro_id' => $info.pro_id])}')">修改</a>
+    		<a href="javascript:void(0);" style="float: right;" class="btn btn-link up" data-id="{$info.pro_id}">上架</a>
+    	{else /}
+    		<a href="javascript:void(0);" style="float: right;" class="btn btn-link down" data-id="{$info.pro_id}">下架</a>
+    	{/if}
+   {else /}
+   		<a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("ProjectPlus/edit" , ['pro_id' => $info.pro_id])}')">修改</a>
+		<a href="javascript:void(0);" style="float: right;" class="btn btn-link approve" data-id="{$info.pro_id}">审核</a>
+    {/if}
+</ul>
