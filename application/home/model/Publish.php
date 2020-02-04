@@ -89,7 +89,7 @@ class Publish extends BaseModel
                 return $this->result('',$this->code,$this->msg); 
             }
             $offset = ($page-1)*$length;
-            if($keyword === ''){
+            //if($keyword === ''){
                 
                 $list = $this->alias('pub')
                      ->join('Member m','pub.uid=m.uid')
@@ -105,69 +105,13 @@ class Publish extends BaseModel
                     $map['id'] = array('not in',$remove_id);
                     $list->where($map);
                 }
-                /**拼接根据用户选择的精准匹配标签和一键发布的个性标签匹配条件**/
-                $all_label = [];
-                //1.登录用户有无匹配业务二级标签
-                $map_dt['sign'] = array('in','service_type,industry');
-                $user_dl = model('DictLabel')->alias('dl')
-                                             ->join('Dict d','dl.dict_id=d.id')
-                                             ->join('DictType dt','dl.dict_type_id=dt.dt_id')
-                                             ->field('d.fid,d.value')
-                                             ->where(['dl.uid'=>$uid,'dl.is_del'=>2])
-                                             ->where($map_dt)
-                                             ->select()
-                                             ->toarray();
-                // dump($user_dl);die;
-                if (!empty($user_dl)) {
-                    //一二级业务标签名,一二级行业标签名
-                    $all_label = array_column($user_dl, 'value');
-                    $all_fid   =  array_unique(array_column($user_dl, 'fid'));
-                    $all_fid_str =  '';
-                    foreach ($all_fid as $each_fid) {
-                        if ($each_fid > 0) {
-                           $all_fid_str .= $each_fid.',';  
-                        }
-                            
-                    }
-                    $all_fid_str = trim($all_fid_str,',');
-                    $map_fid['id'] = array('in',$all_fid_str);
-                    $top_all_value = model('Dict')->where($map_fid)
-                                                  ->field('value')
-                                                  ->select()
-                                                  ->toArray();
-                    if (!empty($top_all_value)) {
-                        $all_label = array_unique(array_merge($all_label,array_column($top_all_value, 'value')));
-                    }
-                    //获取匹配标签名
-                    $tp_id_arr = [];
-                    foreach ($all_label as $each_label) {
-                        //查询匹配个性标签的一件发布的id
-                        $map2['tag_name'] = array('like','%'.$each_label.'%');
-                        $tp_id = model('TagsPublish')->field('pub_id')
-                                                     ->distinct(true)
-                                                     ->where(['is_del'=>2])
-                                                     ->where($map2)
-                                                     ->select()
-                                                     ->toArray();
-                        if (!empty($tp_id)) {
-                            $tp_id_arr =array_merge($tp_id_arr,array_column($tp_id,'pub_id'));
-                        }
-                    }
-                    $tp_id_arr = array_unique($tp_id_arr);
-                    if (!empty($tp_id_arr)) {
-                        $tp_id_str = implode(',', $tp_id_arr);
-                        $map3['id'] = array('in',$tp_id_str);
-                        $list->where($map3);
-                    }
-                        
-                    
-                }
+         
                 /**拼接根据用户选择的精准匹配标签和一键发布的个性标签匹配条件**/
                 $list = $list->limit($offset,$length)
                              ->order('pub.rank desc,pub.id desc')
                              ->select()
                              ->toArray();
-
+                
                 if(empty($list)){
                     $this->code = 201;
                     $this->msg = '数据不存在';
@@ -217,22 +161,27 @@ class Publish extends BaseModel
                               ->select()
                               ->toArray();
                     if (!empty($tag)) {
-                        $my_tag =  array_column($tag,'tag_name');
+                        foreach ($tag as &$t) {
+                            $my_tag[] = $t['tag_name'];
+                        }
                     }
                    
-                    $v['all_tag'] = $my_tag;
+                    $v['all_tag']     = $my_tag;
                     $v['create_time'] = friend_date(strtotime($v['create_time']));
+                    
                     //当前用户点赞过哪些一键发布
                     $point = model('Point')->field('pub_id')
                                            ->where(['uid'=>$uid,'is_del'=>2])
                                            ->select()
                                            ->toArray();
+                                           $v['is_point'] = 0;
                     if (!empty($point)) {
-                         $point_arr = array_column($point, 'pub_id');
-                        if (in_array($v['id'],$point_arr)) {
-                            $v['is_point'] = 1;
-                        }else{
-                            $v['is_point'] = 0;
+                        foreach ($point as &$p) {
+                           if($v['id']==$p['pub_id']){
+                               $v['is_point'] = 1;
+                           }else{
+                               $v['is_point'] = 0;
+                           }
                         }
                     }else{
                         $v['is_point'] = 0;
@@ -240,7 +189,7 @@ class Publish extends BaseModel
                 }
 
                 return $this->result($list);
-            }else{
+            /*}else{
 
                 //符合匹配结果的用户id
                 $match_uid = '';
@@ -364,7 +313,7 @@ class Publish extends BaseModel
                 }
 
                 return $this->result($list);
-            }
+            }*/
        }
        
       //发现详情(发现内容+当前发现的评论+转发当前发现的人)
@@ -416,12 +365,14 @@ class Publish extends BaseModel
                                    ->select()
                                    ->toArray();
             if (!empty($point)) {
-                 $point_arr = array_column($point, 'pub_id');
-                if (in_array($pub['id'],$point_arr)) {
-                    $pub['is_point'] = 1;
-                }else{
-                    $pub['is_point'] = 0;
-                }
+                 foreach ($point as &$p) {
+                     if($pub['id']==$p['pub_id']){
+                         $pub['is_point'] = 1;
+                     }else{
+                         $pub['is_point'] = 0;
+                     }
+                 }
+                 
             }else{
                 $pub['is_point'] = 0;
             }
@@ -448,7 +399,12 @@ class Publish extends BaseModel
                                       ->select()
                                       ->toArray();
             if(!empty($tp)){
-               $my_tag = array_column($tp, 'tag_name');
+               //是否添加个性标签
+                if (!empty($tp)) {
+                    foreach ($tp as &$t) {
+                       $my_tag[] = $t['tag_name'];
+                   }
+               }
             }
 
             $pub['all_tag'] = implode(',',$my_tag);
@@ -699,4 +655,11 @@ class Publish extends BaseModel
 
                 return $this->result($publish_list);
     }
+    
+    //获取用户发布的发现需求
+    public function sumPubNum($uid){
+        $count = $this->where(['uid'=>$uid,'is_del' => 2,'status'  => 1,])->count('id');
+        return $count;
+    }
+    
 }
