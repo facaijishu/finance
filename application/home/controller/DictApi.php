@@ -30,4 +30,13 @@ class DictApi extends BaseApi
 	   $dict->getToProvinceDictApi();
 	}
 	
+	
+	//获取相似行业二级标签
+	public function getMoreDict()
+	{
+	    $content   = trim($this->request->param('content'));
+	    $dict      = model('Dict');
+	    $dict->getMoreDictApi($content);
+	}
+	
 }
