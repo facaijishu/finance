@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,133 +34,144 @@
 </head>
 
 <body>
-    <div id="box" class="mofh bg_gray" style="width:100%;">
+    <div id="box" class="mofh" style="width:100%;">
         <section class="bg_white" style="overflow:hidden;width:100%;">
             <!-- 搜索 -->
-            <div class="search-box pt15 pl15 pr15 clearfix porel pb5">
-                <input type="text" class="form-control pull-left bg_gray" placeholder="输入项目、资金、需求" style="width:85%;" @click="searchModal">
-                <a class="pull-left text-right dbk" style="width: 15%;" href="/static/frontend/release-needs.html?needs=1">
-                    <img src="/static/frontend/images/find_release.png" alt="" style="height:27px;">
-                    <p style="font-size: 10px;color: #000000;">发布</p>
+            <div class="search-box pt15 pl15 pr15 clearfix porel">
+            	<div class="form-search-control-left pull-left bg_gray"></div>
+                <input type="text" id="searchkey" style="width:80%;" class="form-search-control-right pull-left bg_gray" placeholder="输入项目、资金、需求">
+                <img src="/static/frontend/images/zoomtool.png" id="searchpic" style="width:18px;height:18px;position: absolute;left:8%;top: 24px;z-index:999;" alt="" @click="search">
+                <a href="/static/frontend/release-needs.html" class="pull-left" style="width:10%;margin-left:2%;">
+                    <div style="width: 80%;text-align: center;"><img src="/static/frontend/images/find_release.png" alt="客服" style="width:20px;height:20px;"></div>
+                    <div style="width: 80%;text-align: center;"><span style="color:#c2c2c2;font-size:12px;">发布</span></div>
                 </a>
-                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 74%;top: 24px;z-index: 999;" alt="">
-            </div>
+        	</div>
         </section>
-        <div v-for="item in publishList" style="padding: 10px 7px 0;margin-top: 5px;">
-            <div style="padding:10px 10px;" class="bg_white">
+        <div v-for="item in publishList">
+            <div style="padding:15px 15px;" class="bg_white">
                 <div class="clearfix porel">
                     <a :href="'/static/frontend/othersBusiness.html?types=1&uid='+item.uid">
-                    <img id="headerImg" class="pull-left" :src="item.userPhoto"  width="46" height="46" style="border-radius:2px;margin-right:13px;">
-                    <div class="pull-left">
-                        <p style="font-size: 16px;line-height: 20px;color: #1E1E1E;margin-bottom: 10px;">{{item.realName}}</p>
-                        <p style="font-size: 12px;line-height: 16px;color: #999999;">{{item.company_jc}} | {{item.position}}</p>
-                    </div>
+                        <div style="margin-bottom:18px;">
+	                        <div class="pull-left" style="width:34px;height:34px;border-radius:17px;margin-right:5px;">
+	                        	<img id="headerImg" :src="item.userPhoto"  width="34" height="34" style="border-radius:17px;">
+	                        </div>
+		                    <div class="pull-left">
+		                        <p style="font-size: 16px;font-weight:bold;line-height: 20px;color:#222222;">{{item.realName}}</p>
+		                        <p style="font-size: 12px;line-height: 16px;color: #727272;">{{item.company_jc}} | {{item.position}}</p>
+		                    </div>
+                        </div>
                     </a>
+                     <div @click="reportBtnAct" :sid="item.id" style="float:right; width:10px; height:28px; line-height: 28px;">
+                        <img src="/static/frontend/images/find_close.png" alt="" width="8">
+                    </div>
                     <template v-if="item.uid != ui.uid">
-                        <div v-if="item.is_follow == '关注'" @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #545AFF;color: #007FED;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">关注</div>
-                        <div v-else @click="followUser(item)" class="pull-right mt10 text-center ball" style="border-color: #979797;color: #999999;border-radius: 2px;width: 70px;height: 24px;margin-right: 35px;">已关注</div>
+                        <div v-if="item.is_follow == '关注'" @click="followUser(item)" class="pull-right text-center" style="font-size:14px;background:#eff5ff;color:#387ef6;border-radius:14px;width:70px;height:28px;line-height:28px;margin-right:19px;">
+                        	<div style="float:left;text-align:center;line-height:26px;width:12px;margin-left:13px;"><img src="/static/frontend/images/plus.png" width="12" height="12"></div>
+                        	<div style="float:left;">&nbsp;关注</div>
+                        </div>
+                        <div v-else @click="followUser(item)" class="pull-right text-center " style="font-size:14px;background:#f0f0f0;color: #c2c2c2;border-radius:14px;width:70px;height:28px;line-height:28px;margin-right: 19px;">已关注</div>
                     </template>
-                    <div @click="reportBtnAct" :sid="item.id" style="width: 18px;height: 18px;border-radius: 9px; position: absolute;top: -5px;right: -5px;border-color: #999999;" class="ball">
-                        <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute;top: 4px;right: 4px;">
-                    </div>
-                    </div>
-                    <div>
-                        <a style="font-size: 15px;color: #444444;line-height: 24px;" class="mt15 dbk" :href="'/static/frontend/findCommemt.html?id='+item.id">
-                        <p>{{item.content}}</p>
+                </div>
+                <div>
+                    <a style="font-size:14px;color:#222222;line-height:25px;" class="mt15 dbk" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                        <div id="content" :sid="item.id">
+                            <p>{{item.content}}</p>
+                        </div>
                     </a>
                         <a class="clearfix mt15 mb15" :href="'/static/frontend/findCommemt.html?id='+item.id">
                         <img v-for="img in item.img_url" :src="'http://fin.jrfacai.com/uploads/'+img.url" alt="" width="108" class="mr10 mb5">
                     </a>
-                    </div>
-                    <div class="clearfix mt5">
-                        <div class="pull-left tofh text-center mr5 mb5" style="color: #007FED;border:1px solid #545AFF;border-radius:2px;padding:2px 8px;font-size:10px;" v-if="item.all_tag" v-for="t in item.all_tag"> {{t}}</div>
-                    </div>
-                    <div class="clearfix" style="font-size: 12px;line-height: 17px;color: #999999;">
-                        <p class="pull-left">{{item.create_time}}</p>
-                        <div class="pull-right">
-                            <div class="mr20 pull-left">
-                                <img v-if="item.is_point == 0" src="/static/frontend/images/like-0.png" alt="点赞" :sid="item.id" width="14" @click="like(event, item)">
-                                <img v-else src="/static/frontend/images/like-1.png" alt="点赞" width="14" :sid="item.id" @click="like(event, item)"> <span>{{item.point_num}}</span>
-                            </div>
-                            <a class="pull-left" :href="'/static/frontend/findCommemt.html?id='+item.id">
-                            <img src="/static/frontend/images/msg-0.png" alt="评论" width="14"> <span>{{item.comment_num}}</span>
-                        </a>
+                </div>
+                <div class="clearfix" style="margin:23px 0px 18px 0px;">
+                    <div class="pull-left" style="line-height:21px;text-align:center;background:#ffeff7;color:#e96328;border-radius:13px;font-size:12px;margin-right:6px;" v-if="item.all_tag" v-for="t in item.all_tag"> &nbsp;&nbsp;{{t}}&nbsp;&nbsp;</div>
+                </div>
+                <div class="clearfix" style="font-size: 12px;line-height: 17px;color:#444444;">
+                    <p class="pull-left">{{item.date}}</p>
+                    <div class="pull-right">
+                        <div class="mr20 pull-left">
+                            <img v-if="item.is_point == 0" src="/static/frontend/images/like-0.png" alt="点赞" :sid="item.id" width="14" @click="like(event, item)">
+                            <img v-else src="/static/frontend/images/like-1.png" alt="点赞" width="14" :sid="item.id" @click="like(event, item)"> <span>{{item.point_num}}</span>
                         </div>
+                        <a class="pull-left" :href="'/static/frontend/findCommemt.html?id='+item.id">
+                        <img src="/static/frontend/images/msg-0.png" alt="评论" width="14"> <span>{{item.comment_num}}</span>
+                    </a>
                     </div>
                 </div>
-            </div>
-            <div id="more" style="height:15px;line-height:15px;"></div>
-            <!-- 底部菜单 -->
-            <div style="height:70px;line-height:70px;"></div>
-			<div class="footer_new" style="height: 60px; padding: 12px 0px; position: fixed; left: 0px; bottom: 0px; width: 100%;">
-				<div class="clearfix" style="width: 100%; height: 50px;">
-					<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
-						<div class="f12 c_black" style="line-height: 22px; height: 22px;">首页</div>
-					</a> 
-					<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
-						<div class="f12 c_gray" style="line-height: 22px; height: 22px;">市场</div>
-					</a> 
-					<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
-						<div class="f12 c_gray" style="line-height: 22px; height: 22px;">需求发布</div>
-					</a> 
-					<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-4-1-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
-						<div class="f12 c_gray" style="line-height: 20px; height: 20px;">发现</div>
-					</a> 
-					<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;"> 
-						<div class="f12 c_gray" style="line-height: 22px; height: 22px;">我的</div>
-					</a>
-				</div>
-	  		</div>
+        	</div>
+        	<div style="margin:0 15px 0 15px;border-top:solid 1px #f0f0f0;height:1px;" ></div>
         </div>
-        <!-- 模态框 -->
-        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-describedby="反馈信息">
-            <div class="modal-dialog" aria-hidden="true">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="reportModalLabel">请选择反馈信息</h4>
-                    </div>
-                    <div class="modal-body clearfix f12 pb0">
-                        <div class="chooseBox pull-left" v="1">内容不真实 虚假内容</div>
-                        <div class="chooseBox pull-left" v="2">身份虚假 假借身份</div>
-                        <div class="chooseBox pull-left" v="3">诈骗 造谣</div>
-                        <div class="chooseBox pull-left" v="4">恶语相加</div>
-                        <div class="chooseBox pull-left" v="5">不诚实</div>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="reportPublish" type="button" class="btn btn-primary btn-block">确 定</button>
-                    </div>
+        <div id="more" style="height:15px;line-height:15px;"></div>
+        <!-- 底部菜单 -->
+		<div style="height:70px;line-height:70px;"></div>
+		<div class="footer_new" style="height: 60px; padding: 12px 0px; position: fixed; left: 0px; bottom: 0px; width: 100%;">
+			<div class="clearfix" style="width: 100%; height: 50px;">
+				<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
+					<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">首页</div>
+				</a> 
+				<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
+					<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">市场</div>
+				</a> 
+				<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
+					<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">需求发布</div>
+				</a> 
+				<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-4-1-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
+					<div class="f12 c_gold" style="line-height: 20px; height: 20px;">发现</div>
+				</a> 
+				<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
+					<img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;"> 
+					<div class="f12 c_sgold" style="line-height: 22px; height:22px;color:#c2c2c2;">我的</div>
+				</a>
+			</div>
+  		</div>
+	</div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-describedby="反馈信息">
+        <div class="modal-dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="reportModalLabel">请选择反馈信息</h4>
                 </div>
-            </div>
-        </div>
-        <!-- 提示框 -->
-        <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
-            <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
-                <div class="modal-content" style="border:0;">
-                    <div class="modal-body text-center"></div>
+                <div class="modal-body clearfix f12 pb0">
+                    <div class="chooseBox pull-left" v="1">内容不真实 虚假内容</div>
+                    <div class="chooseBox pull-left" v="2">身份虚假 假借身份</div>
+                    <div class="chooseBox pull-left" v="3">诈骗 造谣</div>
+                    <div class="chooseBox pull-left" v="4">恶语相加</div>
+                    <div class="chooseBox pull-left" v="5">不诚实</div>
+                </div>
+                <div class="modal-footer">
+                    <button id="reportPublish" type="button" class="btn btn-primary btn-block">确 定</button>
                 </div>
             </div>
         </div>
-        <!-- loading -->
-        <div id='loading' class='loading-box hidden'>
-            <div class='css3-loading-shade'></div>
-            <div class='css3-loading-box'>
-                <div>歆宝科技</div>
-                <div class='css3-loading'>
-                    <div class='bounce1'></div>
-                    <div class='bounce2'></div>
-                    <div class='bounce3'></div>
-                </div>
+    </div>
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+            <div class="modal-content" style="border:0;">
+                <div class="modal-body text-center"></div>
             </div>
         </div>
-        <script type="text/javascript">
+    </div>
+    <!-- loading -->
+    <div id='loading' class='loading-box hidden'>
+        <div class='css3-loading-shade'></div>
+        <div class='css3-loading-box'>
+            <div>歆宝科技</div>
+            <div class='css3-loading'>
+                <div class='bounce1'></div>
+                <div class='bounce2'></div>
+                <div class='bounce3'></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
         $(document).ready(function() {
             // 设置加载中...
             $(document).ajaxStart(function() {
@@ -187,6 +197,7 @@
             el: "#box",
             data: {
                 ui: {},
+                //keyword: "",
                 publishList: [],
                 reportId: '',
                 pageFlag: true,
@@ -200,8 +211,8 @@
             },
             mounted: function() {
                 this.$nextTick(function() {
-                    vue.ui = ui;
-
+                    vue.ui 		= ui;
+                    //vue.keyword = $("#searchkey").val();
                     // 发现-列表
                     vue.loadItems();
 
@@ -218,6 +229,12 @@
                         });
                     }, 400);
 
+                    $("#searchkey").keydown(function(event) {
+    	                if (event.which == 13) {
+    	                	$("#searchpic").trigger('click');
+    	                }
+    	            });
+                    
                     // 反馈信息
                     $(".chooseBox").click(function(event) {
                         var curr = event.currentTarget;
@@ -313,12 +330,13 @@
             },
             methods: {
                 loadItems: function() {
+                	var keyword = $("#searchkey").val();
                     $.ajax({
                             url: 'http://fin.jrfacai.com/home/publish_api/publishList',
                             type: 'GET',
                             dataType: 'json',
                             data: {
-                                "keyword": param.keyword,
+                                "keyword": keyword,
                                 "page": vue.page
                             },
                         })
@@ -380,8 +398,10 @@
                     $(".chooseBox").removeClass('active');
                     $("#reportModal").modal('show');
                 },
-                searchModal: function() {
-                    window.location.href = '/static/frontend/search.html';
+                search: function() {
+                	vue.page = 1;
+                	vue.publishList = [];
+                	vue.loadItems();
                 },
             }
         })
