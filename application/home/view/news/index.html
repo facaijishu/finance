@@ -1,0 +1,20 @@
+{include file="base/header" /}
+<style>
+    img{
+        height: 100% !important;
+    }
+</style>
+    <body>
+        {include file="base/dividend" /}
+        <div class="industry-view">
+            <h3>{$info.title}</h3>
+            <div class="time-box">
+            	<span class="time">{$info.news_date}</span>
+                <span class="writer">FA財</span>
+            </div>
+            <div class="industry-con">
+                {$info.content_h5}
+            </div>
+        </div>
+    </body>
+</html>

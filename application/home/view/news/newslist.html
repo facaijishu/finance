@@ -1,0 +1,69 @@
+{include file="base/header" /}
+    <body>
+	<style>
+        .more-text{
+            height: 50px;
+            line-height: 50px;
+            background-color: #E3E3E3;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .canDone{
+            background-color: #DDDDDD;
+            color: white;
+            font-size: 16px;
+			text-align:center;
+        }
+    </style>
+        {include file="base/dividend" /}
+        <div class="news-box" data-num = "{$num}">
+            <div class="list">
+                <ul>
+                    {foreach name="consultation" item="it"}
+                    <li>
+                        <img src="__UPLOAD__/{$it.top_img}" alt="头图">
+                        <div class="li-box">
+                            <a href="{:url('News/index',['id' => $it.id])}" class="list-t">{$it.title}</a>
+                            <span>{$it.source}</span><span>{$it.release_date}</span>
+                        </div>
+                    </li>
+                    {/foreach}
+                </ul>
+				{if condition="$num eq 10"}
+				<div id="canDone" class="more-text canDone">加载更多</div>
+				{/if}
+            </div>
+        </div>
+    </body>
+	<script type="text/javascript">
+	    $(function(){
+			$("body").on("click","#canDone",function(){
+			    var num = Number($(".news-box").attr("data-num"));
+				if(num == 10){
+				   $("#canDone").show();
+				}
+				$.post("/home/News/morelist",{id:num},function(data){
+				   var data = data.data;
+				   console.log(data);
+				   var length = data.length;
+				   var str = "";
+				   for(var i=0;i<length;i++){
+				       str += '<li>'+
+                                  '<img src="/uploads/'+data[i].top_img+'" alt="头图">'+
+                                  '<div class="li-box">'+
+                                      '<a href="/home/News/index/id/'+data[i].id+'" class="list-t">'+data[i].title+'</a>'+
+                                      '<span>'+data[i].source+'</span>'+
+									  '<span>'+data[i].release_date+'</span>'+
+                                  '</div>'+
+                              '</li>';
+				   }
+				   if(length < 10){
+				       $("#canDone").hide();
+				   }
+				   $(".news-box").attr("data-num",num+length);
+				   $(".list ul").append(str);
+				});
+			});
+		});
+	</script>
+</html>
