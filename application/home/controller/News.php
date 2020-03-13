@@ -27,7 +27,7 @@ class News extends Base
     }
     
     public function newslist(){
-        $this->assign('title' , '资讯列表 -');
+        $this->assign('title' , '热门资讯');
         $this->assign('img' , '');
         $this->assign('des' , '这里有最全面的金融资讯!');
         $model          = model("News");
