@@ -237,17 +237,18 @@ class Wechat
 	 */
 	private function checkSignature($str='')
 	{
+
         $signature = isset($_GET["signature"])?$_GET["signature"]:'';
 	    $signature = isset($_GET["msg_signature"])?$_GET["msg_signature"]:$signature; //如果存在加密验证则用加密验证段
         $timestamp = isset($_GET["timestamp"])?$_GET["timestamp"]:'';
-        $nonce = isset($_GET["nonce"])?$_GET["nonce"]:'';
+        $nonce	   = isset($_GET["nonce"])?$_GET["nonce"]:'';
 
-		$token = $this->token;
-		$tmpArr = array($token, $timestamp, $nonce,$str);
+		$token	   = $this->token;
+		$tmpArr    = array($token, $timestamp, $nonce,$str);
 		sort($tmpArr, SORT_STRING);
-		$tmpStr = implode( $tmpArr );
-		$tmpStr = sha1( $tmpStr );
-
+		$tmpStr	   = implode( $tmpArr );
+		$tmpStr	   = sha1( $tmpStr );
+		
 		if( $tmpStr == $signature ){
 			return true;
 		}else{
@@ -261,29 +262,35 @@ class Wechat
 	 */
 	public function valid($return=false)
     {
-        $encryptStr="";
+		
+        $encryptStr = "";
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $postStr = file_get_contents("php://input");
-            $array = (array)simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $this->encrypt_type = isset($_GET["encrypt_type"]) ? $_GET["encrypt_type"]: '';
-            if ($this->encrypt_type == 'aes') { //aes加密
-                $this->log($postStr);
-            	$encryptStr = $array['Encrypt'];
-            	$pc = new Prpcrypt($this->encodingAesKey);
-            	$array = $pc->decrypt($encryptStr,$this->appid);
-            	if (!isset($array[0]) || ($array[0] != 0)) {
-            	    if (!$return) {
-            	        die('decrypt error!');
-            	    } else {
-            	        return false;
-            	    }
-            	}
-            	$this->postxml = $array[1];
-            	if (!$this->appid)
-            	    $this->appid = $array[2];//为了没有appid的订阅号。
-            } else {
-                $this->postxml = $postStr;
-            }
+			$array   = (array)simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+			$str     = print_r($array,true);
+			
+			$this->encrypt_type = isset($_GET["encrypt_type"]) ? $_GET["encrypt_type"]: '';
+			if ($this->encrypt_type == 'aes') { //aes加密
+				$this->log($postStr);
+				$encryptStr = $array['Encrypt'];
+				$pc			= new Prpcrypt($this->encodingAesKey);
+				$array		= $pc->decrypt($encryptStr,$this->appid);
+				$str		= print_r($array,true);
+				if (!isset($array[0]) || ($array[0] != 0)) {
+					if (!$return) {
+						die('decrypt error!');
+					} else {
+						return false;
+					}
+				}
+				
+				$this->postxml = $array[1];
+				if (!$this->appid)
+					$this->appid = $array[2];//为了没有appid的订阅号。
+			} else {
+				$this->postxml = $postStr;
+			}
+		
         } elseif (isset($_GET["echostr"])) {
         	$echoStr = $_GET["echostr"];
         	if ($return) {
@@ -298,12 +305,13 @@ class Wechat
         			die('no access');
         	}
         }
-
+		
         if (!$this->checkSignature($encryptStr)) {
-        	if ($return)
+        	if ($return){
         		return false;
-        	else
-        		die('no access');
+        	}else{
+        		die('success');
+			}
         }
         return true;
     }
@@ -818,10 +826,18 @@ class Wechat
 	    $xml = '';
 	    foreach ($data as $key => $val) {
 	        is_numeric($key) && $key = "item id=\"$key\"";
-	        $xml    .=  "<$key>";
-	        $xml    .=  ( is_array($val) || is_object($val)) ? self::data_to_xml($val)  : self::xmlSafeStr($val);
-	        list($key, ) = explode(' ', $key);
-	        $xml    .=  "</$key>";
+			if($key==="CreateTime"){
+				$xml    .=  "<$key>";
+				$xml    .=  ( is_array($val) || is_object($val)) ? self::data_to_xml($val)  : preg_replace("/[\\x00-\\x08\\x0b-\\x0c\\x0e-\\x1f]/",'',$val);
+				list($key, ) = explode(' ', $key);
+				$xml    .=  "</$key>";
+			}else{
+				$xml    .=  "<$key>";
+				$xml    .=  ( is_array($val) || is_object($val)) ? self::data_to_xml($val)  : self::xmlSafeStr($val);
+				list($key, ) = explode(' ', $key);
+				$xml    .=  "</$key>";
+			}
+	        
 	    }
 	    return $xml;
 	}
@@ -846,7 +862,7 @@ class Wechat
 	    }
 	    $attr   = trim($attr);
 	    $attr   = empty($attr) ? '' : " {$attr}";
-	    $xml   = "<{$root}{$attr}>";
+	    $xml    = "<{$root}{$attr}>";
 	    $xml   .= self::data_to_xml($data, $item, $id);
 	    $xml   .= "</{$root}>";
 	    return $xml;
@@ -863,24 +879,26 @@ class Wechat
 	}
 
 	/**
-	 * 设置回复消息
+	 * 设置回复文本消息
 	 * Example: $obj->text('hello')->reply();
 	 * @param string $text
 	 */
 	public function text($text='')
 	{
-		$FuncFlag = $this->_funcflag ? 1 : 0;
-		$msg = array(
-			'ToUserName' => $this->getRevFrom(),
-			'FromUserName'=>$this->getRevTo(),
-			'MsgType'=>self::MSGTYPE_TEXT,
-			'Content'=>$this->_auto_text_filter($text),
-			'CreateTime'=>time(),
-			'FuncFlag'=>$FuncFlag
-		);
+		$FuncFlag	= $this->_funcflag ? 1 : 0;
+		$msg		= array(
+							'ToUserName'	=> $this->getRevFrom(),
+							'FromUserName'	=> $this->getRevTo(),
+							'CreateTime'	=> time(),
+							'MsgType'		=> self::MSGTYPE_TEXT,
+							'Content'		=> $this->_auto_text_filter($text),
+							
+							//'FuncFlag'		=> $FuncFlag
+							);
 		$this->Message($msg);
 		return $this;
 	}
+
 	/**
 	 * 设置回复消息
 	 * Example: $obj->image('media_id')->reply();
@@ -888,15 +906,15 @@ class Wechat
 	 */
 	public function image($mediaid='')
 	{
-		$FuncFlag = $this->_funcflag ? 1 : 0;
-		$msg = array(
-			'ToUserName' => $this->getRevFrom(),
-			'FromUserName'=>$this->getRevTo(),
-			'MsgType'=>self::MSGTYPE_IMAGE,
-			'Image'=>array('MediaId'=>$mediaid),
-			'CreateTime'=>time(),
-			'FuncFlag'=>$FuncFlag
-		);
+		$FuncFlag	= $this->_funcflag ? 1 : 0;
+		$msg		= array(
+							'ToUserName'	=> $this->getRevFrom(),
+							'FromUserName'	=> $this->getRevTo(),
+							'MsgType'		=> self::MSGTYPE_IMAGE,
+							'Image'			=> array('MediaId'=>$mediaid),
+							'CreateTime'	=> time(),
+							'FuncFlag'		=> $FuncFlag
+							);
 		$this->Message($msg);
 		return $this;
 	}
@@ -908,15 +926,15 @@ class Wechat
 	 */
 	public function voice($mediaid='')
 	{
-		$FuncFlag = $this->_funcflag ? 1 : 0;
-		$msg = array(
-			'ToUserName' => $this->getRevFrom(),
-			'FromUserName'=>$this->getRevTo(),
-			'MsgType'=>self::MSGTYPE_VOICE,
-			'Voice'=>array('MediaId'=>$mediaid),
-			'CreateTime'=>time(),
-			'FuncFlag'=>$FuncFlag
-		);
+		$FuncFlag	= $this->_funcflag ? 1 : 0;
+		$msg		= array(
+							'ToUserName'	=> $this->getRevFrom(),
+							'FromUserName'	=> $this->getRevTo(),
+							'MsgType'		=> self::MSGTYPE_VOICE,
+							'Voice'			=> array('MediaId'=>$mediaid),
+							'CreateTime'	=> time(),
+							//'FuncFlag'		=> $FuncFlag
+							);
 		$this->Message($msg);
 		return $this;
 	}
@@ -928,19 +946,19 @@ class Wechat
 	 */
 	public function video($mediaid='',$title='',$description='')
 	{
-		$FuncFlag = $this->_funcflag ? 1 : 0;
-		$msg = array(
-			'ToUserName' => $this->getRevFrom(),
-			'FromUserName'=>$this->getRevTo(),
-			'MsgType'=>self::MSGTYPE_VIDEO,
-			'Video'=>array(
-			        'MediaId'=>$mediaid,
-			        'Title'=>$title,
-			        'Description'=>$description
-			),
-			'CreateTime'=>time(),
-			'FuncFlag'=>$FuncFlag
-		);
+		$FuncFlag   = $this->_funcflag ? 1 : 0;
+		$msg		= array(
+							'ToUserName'	=> $this->getRevFrom(),
+							'FromUserName'	=> $this->getRevTo(),
+							'MsgType'		=> self::MSGTYPE_VIDEO,
+							'Video'			=> array(
+												'MediaId'		=> $mediaid,
+												'Title'			=> $title,
+												'Description'	=> $description
+											   ),
+							'CreateTime'	=> time(),
+							'FuncFlag'		=> $FuncFlag
+							);
 		$this->Message($msg);
 		return $this;
 	}
@@ -954,20 +972,20 @@ class Wechat
 	 * @param string $thumbmediaid 音乐图片缩略图的媒体id，非必须
 	 */
 	public function music($title,$desc,$musicurl,$hgmusicurl='',$thumbmediaid='') {
-		$FuncFlag = $this->_funcflag ? 1 : 0;
-		$msg = array(
-			'ToUserName' => $this->getRevFrom(),
-			'FromUserName'=>$this->getRevTo(),
-			'CreateTime'=>time(),
-			'MsgType'=>self::MSGTYPE_MUSIC,
-			'Music'=>array(
-				'Title'=>$title,
-				'Description'=>$desc,
-				'MusicUrl'=>$musicurl,
-				'HQMusicUrl'=>$hgmusicurl
-			),
-			'FuncFlag'=>$FuncFlag
-		);
+		$FuncFlag	= $this->_funcflag ? 1 : 0;
+		$msg		= array(
+							'ToUserName'		=> $this->getRevFrom(),
+							'FromUserName'		=> $this->getRevTo(),
+							'CreateTime'		=> time(),
+							'MsgType'			=> self::MSGTYPE_MUSIC,
+							'Music'				=> array(
+													'Title'			=> $title,
+													'Description'	=> $desc,
+													'MusicUrl'		=> $musicurl,
+													'HQMusicUrl'	=> $hgmusicurl
+												),
+							'FuncFlag'			=> $FuncFlag
+							);
 		if ($thumbmediaid) {
 			$msg['Music']['ThumbMediaId'] = $thumbmediaid;
 		}
@@ -991,18 +1009,17 @@ class Wechat
 	 */
 	public function news($newsData=array())
 	{
-		$FuncFlag = $this->_funcflag ? 1 : 0;
-		$count = count($newsData);
-
-		$msg = array(
-			'ToUserName' => $this->getRevFrom(),
-			'FromUserName'=>$this->getRevTo(),
-			'MsgType'=>self::MSGTYPE_NEWS,
-			'CreateTime'=>time(),
-			'ArticleCount'=>$count,
-			'Articles'=>$newsData,
-			'FuncFlag'=>$FuncFlag
-		);
+		$FuncFlag	= $this->_funcflag ? 1 : 0;
+		$count		= count($newsData);
+		$msg		= array(
+							'ToUserName'	=> $this->getRevFrom(),
+							'FromUserName'	=> $this->getRevTo(),
+							'MsgType'		=> self::MSGTYPE_NEWS,
+							'CreateTime'	=> time(),
+							'ArticleCount'  => $count,
+							'Articles'      => $newsData,
+							'FuncFlag'		=> $FuncFlag
+						);
 		$this->Message($msg);
 		return $this;
 	}
@@ -1021,30 +1038,32 @@ class Wechat
 		        return false;
 			$msg = $this->_msg;
 		}
-		$xmldata=  $this->xml_encode($msg);
+		$xmldata =  $this->xml_encode($msg);
 		$this->log($xmldata);
 		if ($this->encrypt_type == 'aes') { //如果来源消息为加密方式
-		    $pc = new Prpcrypt($this->encodingAesKey);
+		    $pc    = new Prpcrypt($this->encodingAesKey);
 		    $array = $pc->encrypt($xmldata, $this->appid);
-		    $ret = $array[0];
+		    $ret   = $array[0];
 		    if ($ret != 0) {
 		        $this->log('encrypt err!');
 		        return false;
 		    }
-		    $timestamp = time();
-		    $nonce = rand(77,999)*rand(605,888)*rand(11,99);
-		    $encrypt = $array[1];
-		    $tmpArr = array($this->token, $timestamp, $nonce,$encrypt);//比普通公众平台多了一个加密的密文
+		    $timestamp	= time();
+		    $nonce		= rand(77,999)*rand(605,888)*rand(11,99);
+		    $encrypt	= $array[1];
+		    $tmpArr		= array($this->token, $timestamp, $nonce,$encrypt);//比普通公众平台多了一个加密的密文
 		    sort($tmpArr, SORT_STRING);
-		    $signature = implode($tmpArr);
-		    $signature = sha1($signature);
-		    $xmldata = $this->generate($encrypt, $signature, $timestamp, $nonce);
+		    $signature	= implode($tmpArr);
+		    $signature	= sha1($signature);
+		    $xmldata	= $this->generate($encrypt, $signature, $timestamp, $nonce);
 		    $this->log($xmldata);
 		}
-		if ($return)
+
+		if ($return){
 			return $xmldata;
-		else
+		}else{
 			echo $xmldata;
+		}
 	}
 
     /**
@@ -1053,7 +1072,7 @@ class Wechat
 	private function generate($encrypt, $signature, $timestamp, $nonce)
 	{
 	    //格式化加密信息
-	    $format = "<xml>
+		$format = "<xml>
 <Encrypt><![CDATA[%s]]></Encrypt>
 <MsgSignature><![CDATA[%s]]></MsgSignature>
 <TimeStamp>%s</TimeStamp>
@@ -3991,7 +4010,7 @@ class PKCS7Encoder
      */
     function encode($text)
     {
-        $block_size = PKCS7Encoder::$block_size;
+		$block_size = PKCS7Encoder::$block_size;
         $text_length = strlen($text);
         //计算需要填充的位数
         $amount_to_pad = PKCS7Encoder::$block_size - ($text_length % PKCS7Encoder::$block_size);
@@ -4014,13 +4033,12 @@ class PKCS7Encoder
      */
     function decode($text)
     {
-
         $pad = ord(substr($text, -1));
         if ($pad < 1 || $pad > PKCS7Encoder::$block_size) {
             $pad = 0;
         }
         return substr($text, 0, (strlen($text) - $pad));
-    }
+	}
 
 }
 
@@ -4058,21 +4076,28 @@ class Prpcrypt
             $random = $this->getRandomStr();//"aaaabbbbccccdddd";
             $text = $random . pack("N", strlen($text)) . $text . $appid;
             // 网络字节序
-            $size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-            $module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
+            //$size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+            //$module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
             $iv = substr($this->key, 0, 16);
             //使用自定义的填充方式对明文进行补位填充
-            $pkc_encoder = new PKCS7Encoder;
-            $text = $pkc_encoder->encode($text);
-            mcrypt_generic_init($module, $this->key, $iv);
+            //$pkc_encoder = new PKCS7Encoder;
+            //$text = $pkc_encoder->encode($text);
+            //mcrypt_generic_init($module, $this->key, $iv);
             //加密
-            $encrypted = mcrypt_generic($module, $text);
-            mcrypt_generic_deinit($module);
-            mcrypt_module_close($module);
+            //$encrypted = mcrypt_generic($module, $text);
+            //mcrypt_generic_deinit($module);
+            //mcrypt_module_close($module);
 
             //			print(base64_encode($encrypted));
             //使用BASE64对加密后的字符串进行编码
-            return array(ErrorCode::$OK, base64_encode($encrypted));
+            //return array(ErrorCode::$OK, base64_encode($encrypted));
+			
+			$pkc_encoder = new PKCS7Encoder;
+			$text = $pkc_encoder->encode($text);
+			$data = openssl_encrypt($text, 'AES-256-CBC', substr($this->key, 0, 32), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $iv);
+			$data = base64_encode($data);
+			return array(0, $data);
+			//return $data;
         } catch (Exception $e) {
             //print $e;
             return array(ErrorCode::$EncryptAESError, null);
@@ -4082,6 +4107,7 @@ class Prpcrypt
     /**
      * 对密文进行解密
      * @param string $encrypted 需要解密的密文
+
      * @return string 解密得到的明文
      */
     public function decrypt($encrypted, $appid)
@@ -4090,30 +4116,30 @@ class Prpcrypt
         try {
             //使用BASE64对需要解密的字符串进行解码
             $ciphertext_dec = base64_decode($encrypted);
-            $module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
+            //$module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
             $iv = substr($this->key, 0, 16);
-            mcrypt_generic_init($module, $this->key, $iv);
+            //mcrypt_generic_init($module, $this->key, $iv);
             //解密
-            $decrypted = mdecrypt_generic($module, $ciphertext_dec);
-            mcrypt_generic_deinit($module);
-            mcrypt_module_close($module);
+            //$decrypted = mdecrypt_generic($module, $ciphertext_dec);
+            //mcrypt_generic_deinit($module);
+            //mcrypt_module_close($module);
+			$decrypted = openssl_decrypt($ciphertext_dec,'AES-256-CBC',$this->key,OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,$iv);
         } catch (Exception $e) {
             return array(ErrorCode::$DecryptAESError, null);
         }
 
-
         try {
             //去除补位字符
             $pkc_encoder = new PKCS7Encoder;
-            $result = $pkc_encoder->decode($decrypted);
+            $result      = $pkc_encoder->decode($decrypted);
             //去除16位随机字符串,网络字节序和AppId
             if (strlen($result) < 16)
                 return "";
-            $content = substr($result, 16, strlen($result));
-            $len_list = unpack("N", substr($content, 0, 4));
-            $xml_len = $len_list[1];
+            $content	 = substr($result, 16, strlen($result));
+            $len_list	 = unpack("N", substr($content, 0, 4));
+            $xml_len     = $len_list[1];
             $xml_content = substr($content, 4, $xml_len);
-            $from_appid = substr($content, $xml_len + 4);
+            $from_appid  = substr($content, $xml_len + 4);
             if (!$appid)
                 $appid = $from_appid;
             //如果传入的appid是空的，则认为是订阅号，使用数据中提取出来的appid
@@ -4136,7 +4162,7 @@ class Prpcrypt
     function getRandomStr()
     {
 
-        $str = "";
+        $str     = "";
         $str_pol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
         $max = strlen($str_pol) - 1;
         for ($i = 0; $i < 16; $i++) {
@@ -4154,19 +4180,19 @@ class Prpcrypt
 class ErrorCode
 {
     public static $OK = 0;
-    public static $ValidateSignatureError = 40001;
-    public static $ParseXmlError = 40002;
-    public static $ComputeSignatureError = 40003;
-    public static $IllegalAesKey = 40004;
-    public static $ValidateAppidError = 40005;
-    public static $EncryptAESError = 40006;
-    public static $DecryptAESError = 40007;
-    public static $IllegalBuffer = 40008;
-    public static $EncodeBase64Error = 40009;
-    public static $DecodeBase64Error = 40010;
-    public static $GenReturnXmlError = 40011;
-    public static $errCode=array(
-            '0' => '处理成功',
+    public static $ValidateSignatureError   = 40001;
+    public static $ParseXmlError            = 40002;
+    public static $ComputeSignatureError    = 40003;
+    public static $IllegalAesKey            = 40004;
+    public static $ValidateAppidError       = 40005;
+    public static $EncryptAESError          = 40006;
+    public static $DecryptAESError          = 40007;
+    public static $IllegalBuffer            = 40008;
+    public static $EncodeBase64Error        = 40009;
+    public static $DecodeBase64Error        = 40010;
+    public static $GenReturnXmlError        = 40011;
+    public static $errCode = array(
+            '0'     => '处理成功',
             '40001' => '校验签名失败',
             '40002' => '解析xml失败',
             '40003' => '计算签名失败',
