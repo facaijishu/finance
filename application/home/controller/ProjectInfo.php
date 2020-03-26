@@ -19,6 +19,31 @@ class ProjectInfo extends Base
             $model->where(['pro_id'=>$id])->setInc('view_num');
         }
         
+        
+        $org_id      = 0;
+        $org_flg     = 1;
+        
+        $memModel    = model("Member");
+        $mem = $memModel->getMemberInfoById($uid);
+        if($mem['userPhone']===''){
+            $org_flg     = 0;
+        }else{
+            $org_model   = model("Organize");
+            $org         = $org_model->getOrganizeInfoByTel($mem['userPhone']);
+            if($org==false){
+                $org_flg = 0;
+            }else{
+                if($org['is_confirm']==1){
+                    $org_flg = 0;
+                }else{
+                    $org_id = $org['org_id'];
+                }
+            }
+        }
+        
+        $this->assign('org_flg' , $org_flg);
+        $this->assign('org_id' , $org_id);
+        
         //项目详细信息
         $info1  = $model->getProjectInfoById($id);
         $this->assign('info1' , $info1);

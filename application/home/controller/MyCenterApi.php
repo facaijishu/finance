@@ -187,4 +187,52 @@ class MyCenterApi extends BaseApi
     	}
     	
     }
+    
+    public function getIndex(){
+        $res    = [];
+        
+        //获取当前用户的uid
+        $uid    = session('FINANCE_USER.uid');
+        
+        $mem    = model("Member")->getMemberInfoById($uid);
+        
+        $org    = model("Organize")->getOrganizeInfoByTel($mem['userPhone']);
+        if($mem['role_type']==2){
+            $res['num'] = $mem['service_num'];
+        }else{
+            if(empty($org)){
+                $res['num']     = "0";
+                $res['org_url'] = "#";
+            }else{
+                $res['num']     = "1";
+                if($org['is_confirm']==1){
+                    $res['org_url']  = "/static/frontend/detailsShowSelectedFunds.html?id=".$org['org_id']."&type=organize";
+                }else{
+                    $res['org_url']  = "/home/organize_info/edit/id/".$org['org_id'];
+                }
+            }
+        }
+        
+        
+        //我的业务
+        $pro    = model('ProjectRequire')->sumProNum($uid);
+        
+        //我的动态
+        $pub    = model('Publish')->sumPubNum($uid);
+        
+        //我的关注
+        $follow = model('FollowUser')->sumMyFollow($uid);
+        
+        //我的粉丝
+        $fans   = model('FollowUser')->sumMyfans($uid);
+        
+        $res['role']    = $mem['role_type'];
+        $res['pro']     = $pro;
+        $res['pub']     = $pub;
+        $res['follow']  = $follow;
+        $res['fans']    = $fans;
+        
+        return $this->result($res,'200','','json');
+    }
+    
 }

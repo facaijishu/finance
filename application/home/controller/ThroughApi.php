@@ -241,8 +241,10 @@ class ThroughApi extends BaseApi
          $uid = session('FINANCE_USER.uid');
          //头像
          $data['my_head']           = trim($this->request->param('my_head'))?trim($this->request->param('my_head')):'';
-         //身份
-         $data['role_type']         = trim($this->request->param('role_type'))?trim($this->request->param('role_type')):0;
+         if($this->request->param('role_type')>0){
+             //身份
+             $data['role_type']         = trim($this->request->param('role_type'))?trim($this->request->param('role_type')):0;
+         }
          //姓名
          $data['realName']          = trim($this->request->param('real_name'))?trim($this->request->param('real_name')):'';
          //电话

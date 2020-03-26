@@ -49,12 +49,10 @@ class OrganizeInfo extends Base
                       'target_industry'=>$inc_targets2[1]
                    );
                 }
-                
-            
             }else{
 
                 $arr_target[] = array(
-                      'target_company'=>'',
+                      'target_company' =>'',
                       'target_industry'=>''
                    );
             }
@@ -134,6 +132,134 @@ class OrganizeInfo extends Base
         } else {
             $this->result('' , 0 , '手机号输入错误' , 'json');
         }
+     }
+     
+     //机构认领页面
+     public function edit(){
+         $this->assign('title' , '机构认领');
+         $this->assign('img' , '');
+         $this->assign('des' , '机构认领');
+         
+         $data   = input();
+         $id     = intval($data['id']);
+         //会员
+         $user   = $this->jsGlobal;
+         $uid    = $user['member']['uid'];
+         
+         $mModel = model("Member");
+         $mem    = $mModel->getMemberInfoById($uid);
+         
+         
+         $model    = model("Organize");
+         $info     = $model->getOrganizeSimpleInfoById($id);
+         
+         /*if($info['contact_tel'] !== $mem['userPhone']){
+          $url   = "/home/organize/index/id/".$id;
+          header("Location: $url");
+          }else{
+          if($info['is_confirm']==1){
+          $url   = "/home/organize/index/id/".$id;
+          header("Location: $url");
+          }
+          }*/
+         
+         $model_d  = model("Dict");
+         $industry = $model_d->getIndustry();
+         $stage    = $model_d->getStage();
+         $area     = $model_d->getArea();
+         $type     = $model_d->getType();
+         
+         foreach ($industry as $key => $item) {
+             foreach ($item['sub'] as $key => $it) {
+                 $count = substr_count($info['inc_industry'],$it['id']);
+                 if($count==1){
+                     $it['checked'] = 1;
+                 } else{
+                     $it['checked'] = 0;
+                 }
+             }
+             
+         }
+         
+         foreach ($type as $key => $item) {
+             $count = substr_count($info['inc_type'],$item['id']);
+             if($count==1){
+                 $item['checked'] = 1;
+             } else{
+                 $item['checked'] = 0;
+             }
+         }
+         
+         foreach ($stage as $key => $item) {
+             $count = substr_count($info['invest_stage'],$item['id']);
+             if($count==1){
+                 $item['checked'] = 1;
+             } else{
+                 $item['checked'] = 0;
+             }
+         }
+         
+         foreach ($area as $key => $item) {
+             $count = substr_count($info['inc_area'],$item['id']);
+             if($count==1){
+                 $item['checked'] = 1;
+             } else{
+                 $item['checked'] = 0;
+             }
+         }
+         
+         $inc_list  = $model_d->getDictStr($info['inc_industry'],5);
+         $this->assign('inc_checkval' , subStrLen($inc_list,12));
+         $area_list = $model_d->getDictStr($info['inc_area'],5);
+         $this->assign('area_checkval' , subStrLen($area_list,12));
+         
+         
+         $this->assign('industryList' , $industry);
+         $this->assign('stageList' , $stage);
+         $this->assign('areaList' , $area);
+         $this->assign('typeList' , $type);
+         $this->assign('info' , $info);
+         
+         
+         $this->assign('title' , $info['org_name']."｜FA財-一站式智能信息投融交互平台");
+         return view();
+     }
+     
+     public function doEdit(){
+         $data      = [];
+         $post      = input();
+         $uid       = session('FINANCE_USER.uid');
+         $mem       = model("Member")->getMemberInfoById($uid);
+         if($post['contact_tel']==$mem['userPhone']){
+             $data['org_name']           = $post['org_name'];
+             $data['org_short_name']     = $post['org_short_name'];
+             $data['invest_stage']       = $post['stage'];
+             $data['inc_target']         = $post['inc_target'];
+             $data['inc_industry']       = $post['industry'];
+             $data['inc_area']           = $post['area'];
+             $data['invest_area']        = $post['area'];
+             $data['contacts']           = $post['contacts'];
+             $data['position']           = $post['position'];
+             $data['inc_type']           = $post['type'];
+             $data['org_id']             = $post['id'];
+             $data['status']             = 2;
+             $data['flag']               = 1;
+             $data['is_confirm']         = 1;
+             $org    = model("Organize");
+             $info   = $org->getOrganizeSimpleInfoById($post['id']);
+             $edit   = $org->edit($data);
+             if($edit==!false){
+                 if($info['inc_industry']!=$post['industry']){
+                     $res = model("OrganizeDict")->add($post['id'],$post['industry']);
+                 }
+                 $this->result('' ,'200', '编辑成功' , 'json');
+             }else{
+                 $this->result('' ,'201', '编辑失败' , 'json');
+             }
+         }else{
+             $this->result('' ,'201', '手机号码的修改请去个人中心操作' , 'json');
+         }
+         
      }
 
 }
