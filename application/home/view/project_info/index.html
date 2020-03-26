@@ -163,14 +163,9 @@
     <body>
         {include file="base/dividend" /}
         {include file="base/slide" /}
-        {if condition="$info1.roadshow_url neq ''"}
-        <video poster="__UPLOAD__/{$info1.index_img}" controls="controls" x5-playsinline="" playsinline="" webkit-playsinline="" poster="">
-            <source src="__UPLOAD__/{$info1.roadshow_url}" type="video/mp4">
-        </video>
-        {else /}
-        <img src="__UPLOAD__/{$info1.index_img}" alt="{$info1.pro_name}" style="width: 100%;">
-        {/if}
         <input type="hidden" name="send_id" value="{$info1.pro_id}">
+        <input type="hidden" name="org_flg" id="org_flg" value="{$org_flg}">
+		<input type="hidden" name="org_id" id="org_id" value="{$org_id}">
         <div class="my-pro">
             <div class="pro-t clearfix">
             	<div style="float: left">
@@ -255,7 +250,6 @@
         <!--投资亮点end-->
         <!--商业计划书start-->
 		<div class="news-box" style="display:none;">
-		
 			{if condition="$info1.business_plan neq ''"}
             <div class="business-book">
                 <ul>
@@ -1163,7 +1157,25 @@
 	            </div>
 	        </div>
 	    </div>
-		<div class="modal fade in" id="sendModal" style="top:30%;left:15%;width:70%;height:150px;border-radius:15px;border:solid 1px #eff5ff;background:#fff;" >
+		
+  		
+  		<div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="认证">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div style="width:290px;margin:0 auto;">
+	                        <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+	                        <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+	                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+	                        </div>
+	                        <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+	                     </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    
+	    <div class="modal fade in" id="sendModal" style="top:30%;left:15%;width:70%;height:150px;border-radius:15px;border:solid 1px #eff5ff;background:#fff;" >
 			<div style="height:100px;color:#333;">
 				<div style="text-align:right;line-height:30px;"><span id="closeSendModal" style="margin-right:16px;font-size:14px;">X</span></div>
 	            <span style="line-height:40px;font-size:16px;">是否就此次项目与TA沟通？</span>
@@ -1177,6 +1189,30 @@
 	            </div>
 	        </div>
   		</div>
+  		
+	    <!-- 认领 -->
+		<div class="modal fade in" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-describedby="认领">
+	        <div class="modal-dialog" aria-hidden="true">
+	            <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+	                <div class="modal-body porel p0">
+	                    <div class="popContent">
+							<div style="text-align:center;font-weight:bold;color:#ff2359;margin:50px 30px 0px  30px;">&nbsp;&nbsp;&nbsp;&nbsp;您有机构在平台还没有认领！！</div>
+							<div style="text-align:center;font-weight:bold;color:#2e77f5;margin:20px 30px 0px  30px;line-height:30px;letter-spacing:2px;">
+								&nbsp;&nbsp;&nbsp;&nbsp;认领机构享受更多服务：<br/>
+								项目精准推送<br/>
+								企业直接联系<br/>
+								路演直接报名<br/>
+								海量BP投递<br/>
+								学习中心免费
+							</div>
+							<div class="confirmBtn" onclick="refer()" title="去认领">去&nbsp;&nbsp;认&nbsp;&nbsp;领</div>
+						</div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    
+	    
     </body>
 	<script src="__HOME__/js/weixin_share.js"></script>
 	<script type="text/javascript">
@@ -1197,6 +1233,13 @@
         		window.location.href = '/static/frontend/followtab.html';
         	}
 		}
+
+		function refer(){
+			var id  = $("#org_id").val();
+			var url = "/home/organize_info/edit/id/"+id;
+			window.location.href = url;
+		}
+
 
         $("#closeAuthModal").click(function(event) {
             history.back(-1);
@@ -1304,7 +1347,13 @@
 				if($(this).hasClass("disRead")){
 					$(".msg-dialog").css("display","block");
 				}else{
-					location.href = $(this).attr("data-src");
+					
+					var flg = $("#org_flg").val();
+		        	if(flg == 1){
+						$("#confirmModal").modal("show");
+					}else{
+						window.location.href =  $(this).attr("data-src");
+					}
 				}
 			});
 		});
