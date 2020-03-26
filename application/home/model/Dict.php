@@ -180,6 +180,7 @@ class Dict extends BaseModel
         }
         return $value['value'];
     }
+    
     public function getDictDtidById($id = 0)
     {
         if(!$id){
@@ -195,4 +196,178 @@ class Dict extends BaseModel
         }
         return $dt_id['dt_id'];
     }
+    
+    /**
+     * 获取标签一级集合
+     * @param string 标签二级字符串以逗号分割
+     * @return string|unknown
+     */
+    public function getTopDictList($id = '')
+    {
+        $sql   = "SELECT  id,`value` as dict_name from fic_dict where id in ( SELECT distinct  fid  from fic_dict where id in (". $id .")) ORDER BY list_order desc limit 2 ";
+        $list  = $this->query($sql);
+        return $list;
+    }
+    
+    /**
+     * 获取标签二级集合
+     * @param string 行业二级字符串以逗号分割
+     * @return string|unknown
+     */
+    public function getSecDictList($id = '')
+    {
+        $sql   = "SELECT  id,`value` as dict_name from fic_dict where id in  (". $id .")";
+        $list  = $this->query($sql);
+        
+        return $list;
+    }
+    
+    /**
+     * 获取标签名称字符串
+     * @param string $id
+     * @return string|unknown
+     */
+    public function getDictStr($id = '',$length=0)
+    {
+        if($length>0){
+            $result  = $this->alias("d")
+                            ->field('d.id,d.value')
+                            ->where(" id in (" .$id." ) ")
+                            ->order("list_order desc")
+                            ->limit(0, $length)
+                            ->select();
+        }else{
+            $result  = $this->alias("d")
+                            ->field('d.id,d.value')
+                            ->where(" id in (" .$id." ) ")
+                            ->order("list_order desc")
+                            ->select();
+        }
+        
+        $str = '';
+        foreach ($result as $key => $item) {
+            if($str==''){
+                $str  = $item['value'];
+            }else{
+                $str  = $str."、".$item['value'];
+            }
+        }
+        return $str;
+    }
+    
+    
+    //获取相似行业二级标签
+    public function getMoreDictApi($content)
+    {
+        
+        $arr2    = array();
+        $arr3    = array();
+        $sql     = "SELECT d.id,d.`value` FROM fic_dict d  LEFT JOIN fic_dict_type dt on  d.dt_id = dt.dt_id where d.fid >0 and d.`status` =  1 and dt.sign = 'industry' and  d.`value`!='其他' ";
+        
+        if($content!=""){
+            $arr2 = zh_str_split($content,2);
+            $arr3 = zh_str_split($content,3);
+            $len2 = count($arr2);
+            $len3 = count($arr3);
+            if($len2>0){
+                $sql .= "and (";
+                for($i=0;$i<count($arr2);$i++){
+                    if($i==0){
+                        $sql .= " d.`value` like '%".$arr2[$i]."%' ";
+                    }else{
+                        $sql .= " or d.`value` like '%".$arr2[$i]."%' ";
+                    } 
+                }
+                
+                if($len3>0){
+                    for($j=0;$i<count($arr3);$j++){
+                        if($j==0){
+                            $sql .= " d.`value` like '%".$arr2[$j]."%' ";
+                        }else{
+                            $sql .= " or d.`value` like '%".$arr2[$j]."%' ";
+                        }
+                    }
+                }
+                
+                $sql .= ") ";
+            }
+        }
+        $sql .= " limit 18 ";
+        $list  = $this->query($sql);
+        if(count($list)>0){
+            $code  = 200;
+            $msg = '';
+        }else{
+            $code  = 211;
+            $msg = '';
+        }
+        
+        return $this->result($list,$code,$msg);
+    }
+    
+    //获取所属行业一级和二级标签
+    public function getIndustry()
+    {
+        $dict    = $this->alias('d')
+                        ->join('DictType dt','d.dt_id=dt.dt_id')
+                        ->field('d.id,d.fid,d.value')
+                        ->where(['d.fid'=>0,'d.status'=>1,'dt.sign'=>'industry'])
+                        ->order(['list_order'=>'desc'])
+                        ->select();
+        //二级
+        foreach ($dict as $key => $value) {
+            $dict2   = $this->alias('d')
+                            ->join('DictType dt','d.dt_id=dt.dt_id')
+                            ->field('d.id,d.fid,d.value')
+                            ->where(['d.fid'=>$value['id'],'d.status'=>1,'dt.sign'=>'industry'])
+                            ->order(['list_order'=>'desc'])
+                            ->select();
+            if (!empty($dict2)) {
+                $dict[$key]['sub']    = $dict2;
+                $dict[$key]['idname'] = "inc_".$value['id'];
+                $dict[$key]['allname']= "all".$value['id'];
+            }
+        }
+        return $dict;
+    }
+    
+    //获取投资阶段
+    public function getStage()
+    {
+        $dict    = $this->alias('d')
+                        ->join('DictType dt','d.dt_id=dt.dt_id')
+                        ->field('d.id,d.value')
+                        ->where(['d.status'=>1,'dt.sign'=>'invest_stage'])
+                        ->order(['list_order'=>'desc'])
+                        ->select();
+        return $dict;
+    }
+    
+    //获取所在区域的标签
+    public function getArea()
+    {
+        $dict    = $this->alias('d')
+                        ->join('DictType dt','d.dt_id=dt.dt_id')
+                        ->field('d.id,d.value')
+                        ->where(['d.status'=>1,'dt.sign'=>'to_area'])
+                        ->order(['list_order'=>'desc'])
+                        ->select();
+        
+        return $dict;
+    }
+    
+    //获取业务类型
+    public function getType()
+    {
+        $dict    = $this->alias('d')
+                        ->join('DictType dt','d.dt_id=dt.dt_id')
+                        ->field('d.id,d.value')
+                        ->where(['d.status'=>1,'dt.sign'=>'business_type'])
+                        ->order(['list_order'=>'desc'])
+                        ->select();
+        
+        return $dict;
+    }
+    
+    
 }
