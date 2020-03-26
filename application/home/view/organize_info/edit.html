@@ -1,0 +1,384 @@
+{include file="base/header" /}
+<script src="__HOME__/js/Chart.bundle.js"></script>
+<script src="__HOME__/js/readmore.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+<script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+<script type="text/javascript" src="/static/frontend/js/component.js"></script>
+<style>
+    .pfcTagBox,.areaTagBox{border:1px solid #dddddd;color:#999999;width:98px;height:28px;line-height:26px;text-align:center;margin-top:5px;margin-left:6%;width:25%; float:left;}
+	.pfcTagBox.active,.areaTagBox.active{color:#0076FF;border:1px solid #0076FF;}
+</style>
+    <body>
+        {include file="base/dividend" /}
+        {include file="base/slide" /}
+        <input type="hidden" name="org_id" id="org_id" value="{$info.org_id}" >
+        <div class="my-pro">
+        	<div class="master">
+				<ul class="org_body_list">
+                    <li class="li_bottom"><label>企业简称：</label><span><input id="org_short_name" name="org_short_name" type="text" value="{$info.org_short_name}"></span></li>
+					<li class="li_bottom"><label>企业名称：</label><span id="org_name"><input id="org_name" name="org_name" type="text" value="{$info.org_name}"></span></li>
+                    <li class="li_bottom"><label>联系人：</label><span id="contacts"><input id="contacts" name="contacts" type="text" value="{$info.contacts}"></span></li>
+                    <li class="li_bottom"><label>职务：</label><span id="position"><input id="position" name="position" type="text" value="{$info.position}"></span></li>
+                    <li class="li_bottom"><label>手机号码：</label><span id="contact_tel"><input id="contact_tel" name="contact_tel" type="text" value="{$info.contact_tel}" readonly="readonly"></span></li>
+              		<li class="li_bottom"><label>投资方向：</label><span id="inc_val" style="width:190px;">{$inc_checkval}</span><div id="more_inc" style="float:right;color:#2873f4;">查看更多</div></li>
+                    <!-- 行业选择 -->
+					<div class="clearfix pb10 pl5 pr5" id="incModal" style="display:none;">
+						{foreach name="industryList" item="inc"}
+			        	<div class="panel panel-default mb10">
+			            	<div class="panel-heading">
+			                     <h3 class="panel-title f16">{$inc.value}</h3>
+			                </div>
+			                <div class="panel-body clearfix pb10 pl0 pr0 pt10">
+			                	{foreach name="$inc.sub" item="sub"}
+			                	{if condition="$sub.checked eq 1"}
+								<div id="{$inc.idname}" class="pfcTagBox tofh active" onclick="chooseInc({$inc.id},{$sub.id})">
+								<input type="checkbox" name="inc" id="inc_{$sub.id}" value="{$sub.id}" checked="checked" style="display:none;">
+								<input type="checkbox" name="inc_name" id="inc_name_{$sub.id}" value="{$sub.value}" checked="checked" style="display:none;">
+								{else/}
+								<div id="{$inc.idname}" class="pfcTagBox tofh" onclick="chooseInc({$inc.id},{$sub.id})">
+								<input type="checkbox" name="inc" id="inc_{$sub.id}" value="{$sub.id}" style="display:none;">
+								<input type="checkbox" name="inc_name" id="inc_name_{$sub.id}" value="{$sub.value}" style="display:none;">
+								{/if}
+									<span> {$sub.value}</span>
+								</div>
+								{/foreach}
+			                </div>
+			        	</div>
+			        	{/foreach}
+			        	<input type="hidden" name="inc_str" id="inc_str" value="{$info.inc_industry}" >
+					</div>
+                    <li class="li_bottom">
+						<div style="float:left;font-weight:bold;width:22%;">业务类型：</div>
+						<div style="float:left;width:240px;">
+							{foreach name="typeList" item="type"}
+							<div style="float:left;">
+								<div style="float:left;">
+									{if condition="$type.checked eq 1"}
+									<div style="float:left;margin-top:16px;" id="type_radio_{$type.id}" class="check_radio true" onclick="chooseType({$type.id})"></div>
+									{else/}
+									<div style="float:left;margin-top:16px;" id="type_radio_{$type.id}" class="check_radio false" onclick="chooseType({$type.id})"></div>
+									{/if}
+									<div style="float:left;width:32px;margin-left:5px;">{$type.value}</div>
+								</div>
+							</div>
+							{/foreach}
+						</div>
+						<input type="hidden" id="inc_type"  name="inc_type" value="{$info.inc_type}"/>
+					</li>
+					
+					<li class="li_bottom">
+						<div style="float:left;font-weight:bold;width:22%;">投资阶段：</div>
+						<div style="float:left;">
+							{foreach name="stageList" item="stage"}
+							<div style="float:left;">
+								<div style="float:left;">
+									{if condition="$stage.checked eq 1"}
+										<div style="float:left;margin-top:20px;" id="stage_check_{$stage.id}" class="check_box true" onclick="chooseStage({$stage.id})"></div>
+										<input type="checkbox" name="stage" id="stage_{$stage.id}" value="{$stage.id}" checked="checked" style="display:none;">
+									{else/}
+										<div style="float:left;margin-top:20px;" id="stage_check_{$stage.id}" class="check_box false" onclick="chooseStage({$stage.id})"></div>
+										<input type="checkbox" name="stage" id="stage_{$stage.id}" value="{$stage.id}" style="display:none;">
+									{/if}
+									{if condition="$stage.id eq '536' "}
+										<div style="float:left;width:58px;margin-left:5px;">
+									{else/}
+										<div style="float:left;width:32px;margin-left:5px;">
+									{/if}
+									{$stage.value}
+									</div>
+								</div>
+							</div>
+							{/foreach}
+						</div>
+						<input type="hidden" name="stage_str" id="stage_str" value="{$info.invest_stage}" >
+					</li>
+                    <li class="li_bottom"><label>所属区域：</label><span id="area_val" style="width:190px;">{$area_checkval}</span><div id="more_area" style="float:right;color:#2873f4;">查看更多</div></li>
+                    <!-- 区域选择 -->
+					<div class="clearfix pb10 pl5 pr5" id="areaModal" style="display:none;">
+			        	<div class="panel panel-default mb10 pt20" style="height:480px;">
+			        		{foreach name="areaList" item="area"}
+			                	{if condition="$area.checked eq 1"}
+								<div id="area_id" class="areaTagBox tofh active" onclick="chooseArea({$area.id})">
+								<input type="checkbox" name="area" id="area_{$area.id}" value="{$area.id}" checked="checked" style="display:none;">
+								<input type="checkbox" name="area_name" id="area_name_{$area.id}" value="{$area.value}" checked="checked" style="display:none;">
+								{else/}
+								<div id="area_id" class="areaTagBox tofh" onclick="chooseArea({$area.id})">
+								<input type="checkbox" name="area" id="area_{$area.id}" value="{$area.id}" style="display:none;">
+								<input type="checkbox" name="area_name" id="area_name_{$area.id}" value="{$area.value}" style="display:none;">
+								{/if}
+									<span> {$area.value}</span>
+								</div>
+			            	{/foreach}
+			        	</div>
+			        	<input type="hidden" name="area_str" id="area_str" value="{$info.inc_area}" >
+					</div>
+                    
+                    <li class="li_bottom"><label>投资案例：</label><span id="inc_target"><input id="inc_target" name="inc_target" type="text" value="{$info.inc_target}"></span></li>
+                </ul>
+                <div class="clearfix mb25" style="width:56%;margin-left:25%;margin-top:50px;">
+	                <div id="agreePtl" class="false pull-left"></div>
+	                <div class="pull-left ml15">我已确定以上填写信息真实</div>
+            	</div>
+				<div class="">
+					<button type="button" id="submit" class="org_body_btn" >认领</button>
+				</div>
+			</div>
+        </div>
+        <!-- 提示框 -->
+	    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+	      <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+	        <div class="modal-content" style="border:0;">
+	          <div class="modal-body text-center"></div>
+	        </div>
+	      </div>
+	    </div>
+            
+    </body>
+	<script src="__HOME__/js/weixin_share.js"></script>
+	<script type="text/javascript">
+	
+		function chooseType(id){
+			var alread = $("#inc_type").val();
+			if(alread===id){
+				console.log("ID:"+alread);
+			}else{
+        		$("#type_radio_"+alread).removeClass('true').addClass('false');
+        		$("#type_radio_"+id).removeClass('false').addClass('true');
+				$("#inc_type").val(id);
+			}
+		}
+		
+		function chooseStage(id){
+			if($("#stage_check_"+id).hasClass('true')){
+				$("#stage_check_"+id).removeClass('true').addClass('false');
+				$("#stage_"+id).prop("checked",false);
+				$("#stage_"+id).attr("checked",false);
+        	}else{
+        		$("#stage_check_"+id).removeClass('false').addClass('true');
+        		$("#stage_"+id).prop("checked","checked"); 
+				$("#stage_"+id).attr("checked","checked"); 
+        	}
+			
+			var stageList = "";
+			$("input:checkbox[name='stage']:checked").each(function () {
+	        	if(stageList==''){
+	        		stageList = $(this).val();
+	        	}else{
+	        		stageList = stageList+","+$(this).val();
+	        	}
+	        });
+	        $("#stage_str").val(stageList);
+		}
+		
+		function chooseInc(id,sid){ 
+			var ct = $(event.currentTarget);
+           	if (ct.hasClass('active')) {
+            	ct.removeClass('active')
+            	$("#inc_"+sid).prop("checked",false);
+				$("#inc_"+sid).attr("checked",false);
+				$("#inc_name_"+sid).prop("checked",false);
+				$("#inc_name_"+sid).attr("checked",false);
+           	} else {
+				ct.addClass('active');
+				$("#inc_"+sid).prop("checked","checked"); 
+				$("#inc_"+sid).attr("checked","checked");
+				$("#inc_name_"+sid).prop("checked","checked"); 
+				$("#inc_name_"+sid).attr("checked","checked");
+           }
+           	
+           	var incList = "";
+			$("input:checkbox[name='inc']:checked").each(function () {
+	        	if(incList==''){
+	        		incList = $(this).val();
+	        	}else{
+	        		incList = incList+","+$(this).val();
+	        	}
+	        });
+	        $("#inc_str").val(incList);
+	        
+	        var incNameList = "";
+			$("input:checkbox[name='inc_name']:checked").each(function () {
+	        	if(incNameList==''){
+	        		incNameList = $(this).val();
+	        	}else{
+	        		incNameList = incNameList+","+$(this).val();
+	        	}
+	        });
+			
+			if(incNameList.length>12){
+				$("#inc_val").html(incNameList.substring(0,12)+"...");
+			}else{
+				$("#inc_val").html(incNameList);
+			}
+       }
+		
+		function chooseArea(id){ 
+			var ct = $(event.currentTarget);
+           	if (ct.hasClass('active')) {
+            	ct.removeClass('active')
+            	$("#area_"+id).prop("checked",false);
+				$("#area_"+id).attr("checked",false);
+				$("#area_name_"+id).prop("checked",false);
+				$("#area_name_"+id).attr("checked",false);
+           	} else {
+				ct.addClass('active');
+				$("#area_"+id).prop("checked","checked"); 
+				$("#area_"+id).attr("checked","checked");
+				$("#area_name_"+id).prop("checked","checked"); 
+				$("#area_name_"+id).attr("checked","checked");
+				
+           }
+           	
+           	var areaList = "";
+			$("input:checkbox[name='area']:checked").each(function () {
+	        	if(areaList==''){
+	        		areaList = $(this).val();
+	        	}else{
+	        		areaList = areaList+","+$(this).val();
+	        	}
+	        });
+	        $("#area_str").val(areaList);
+	        
+	        var areaNameList = "";
+			$("input:checkbox[name='area_name']:checked").each(function () {
+	        	if(areaNameList==''){
+	        		areaNameList = $(this).val();
+	        	}else{
+	        		areaNameList = areaNameList+"、"+$(this).val();
+	        	}
+	        });
+			
+			if(areaNameList.length>12){
+				$("#area_val").html(areaNameList.substring(0,12)+"...");
+			}else{
+				$("#area_val").html(areaNameList);
+			}
+       }
+		
+		
+		//提示框
+        function alertModal(msg) {
+          $("#alertModal").find('.modal-body').html(msg);
+          $("#alertModal").modal("show");
+          setTimeout(function() {
+            $("#alertModal").modal("hide");
+          }, msg.length/7*1000);
+        }
+		
+		//信息确认真实
+        $("#agreePtl").click(function(event) {
+        	if($("#agreePtl").hasClass('true')){
+        		$("#agreePtl").removeClass('true').addClass('false');
+        	}else{
+        		$("#agreePtl").removeClass('false').addClass('true');
+        	}
+        });
+		
+		
+		$("#more_inc").click(function(event) {
+			var inc_str = $("#more_inc").html(); 
+		
+			if(inc_str=="查看更多"){
+				$("#incModal").css('display','block'); 
+				$("#more_inc").html("关闭显示");
+			}else if(inc_str=="关闭显示"){
+				$("#incModal").css('display','none'); 
+				$("#more_inc").html("查看更多");
+			}
+		});
+		
+		$("#more_area").click(function(event) {
+			var area_str = $("#more_area").html();
+			if(area_str=="查看更多"){
+				$("#areaModal").css('display','block'); 
+				$("#more_area").html("关闭显示");
+			}else if(area_str=="关闭显示"){
+				$("#areaModal").css('display','none'); 
+				$("#more_area").html("查看更多");
+			}
+		});
+		
+		//提交认证
+        $("#submit").click(function(event) {
+        	
+        	var org_id 		    = $.trim($("input[name='org_id']").val());
+        	var org_name 		= $.trim($("input[name='org_name']").val());
+        	var org_short_name 	= $.trim($("input[name='org_short_name']").val());
+        	var contacts 		= $.trim($("input[name='contacts']").val());
+        	var contact_tel 	= $.trim($("input[name='contact_tel']").val());
+        	var position 		= $.trim($("input[name='position']").val());
+        	var stage 			= $.trim($("input[name='stage_str']").val());
+        	var industry 		= $.trim($("input[name='inc_str']").val());
+        	var area 			= $.trim($("input[name='area']").val());
+        	var type 		    = $.trim($("input[name='inc_type']").val());
+        	var inc_target 		= $.trim($("input[name='inc_target']").val());
+            var agree 			= $("#agreePtl").hasClass('true');
+            if (org_short_name == '') {
+            	alertModal("请输入企业简称");
+                return;
+            }
+            if (org_name == '') {
+            	alertModal("请输入企业名称");
+                return;
+            }
+            if (contacts == '') {
+            	alertModal("请输入联系人");
+                return;
+            }
+            if (position == '') {
+            	alertModal("请输入职务");
+                return;
+            }
+            if (inc_type == '') {
+            	alertModal("请选择业务类型");
+                return;
+            }
+            if (stage == '') {
+            	alertModal("请选择投资阶段");
+                return;
+            }
+            if (inc_target == '') {
+            	alertModal("请输入投资案例");
+                return;
+            }
+            if (!agree) {
+                alertModal("请先确认信息真实");
+                return;
+            }
+
+            //提交
+            $.ajax({
+                url: 'http://fin.jrfacai.com/home/organize_info/doEdit',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "org_name": org_name,
+                    "org_short_name": org_short_name,
+                    "contacts": contacts,
+                    "contact_tel": contact_tel,
+                    "position": position,
+                    "industry": industry,
+                    "stage": stage,
+                    "type": type,
+                    "area": area,
+                    "inc_target": inc_target,
+                    "id": org_id
+                },
+            })
+            .done(function(res) {
+                if (res.code == 200) {
+                    window.location.href = "/static/frontend/my.html";
+                }else {
+                    alertModal(res.msg);
+                }
+            })
+            .fail(function(res) {
+                console.log(res);
+                alertModal("系统错误，请稍后");
+            });
+        });
+			
+	</script>
+
+
+</html>
