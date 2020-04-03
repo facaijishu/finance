@@ -177,17 +177,30 @@ class CheckWechat {
                     }
 
                     //$media_id = "Nsa7kVlRtXICvXlqfrUUpS2A1QcE-VzdPr7cCoVg_1A";
-                    $media_id = "sIzlRivrNW-37oNWPU2W60ekoA3bQa-hjde1IOOKLAo";
-                    $weObj->voice($media_id)->reply();
+                    //$media_id = "sIzlRivrNW-37oNWPU2W60ekoA3bQa-hjde1IOOKLAo";
+                    //$weObj->voice($media_id)->reply();
+                    
+                    $model  = model("SystemConfig");
+                    $set    = $model->getSystemConfigInfo();
+                    if ($set['subscribe'] == '') {
+                        $content = '您好,欢迎关注此公众号!';
+                    } else {
+                        $content = "感谢您关注FA財，这里有海量项目和千家机构，等你来交流！
+						\r\n为了更好的项目勾兑，您可以发送您的BP到邮箱：xinbaokeji@jrfacai.com
+						\r\n备注：“项目名称+联系人+电话”，我们会尽快查阅答复您！
+						\r\n如果您觉得您的项目需要线上路演，也可以一并告诉我们！
+						\r\n点击<a href=\"https://m.qlchat.com/wechat/page/channel-intro?channelId=2000008784228144\">三方演绎</a>查看往期线上路演
+						\r\n加財哥微信(jrfacaige)了解更多投融信息！！
+						";
+                    }
+                    $data = ['touser'=>$openId , 'msgtype' => 'text' , 'text' => ['content' => $content]];
+                    $weObj->sendCustomMessage($data);
                     break;
                 }
                 
                 //扫描短链接二维码
                 if($result['event'] == 'SCAN'){
                     $id = $result['key'];
-                    //$media_id = "Nsa7kVlRtXICvXlqfrUUpS2A1QcE-VzdPr7cCoVg_1A";
-                    //$media_id = "sIzlRivrNW-37oNWPU2W60ekoA3bQa-hjde1IOOKLAo";
-                    //$weObj->voice($media_id)->reply();
                     
                     //获取二维码信息
                     $erweima = db("qrcode_direction")->where(['id' => $id])->find();
