@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-sm" id="ModalOrder" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="set_list_order_form" action="{:url('trilateral/set')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">设置发布排序</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">排序:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input type="text" name="list_order" placeholder="请输入排序号..." class="form-control">
+                                        <input type="text" name="id" class="form-control hide">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary addDictType">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="introdece_img/modal" /}
+            {include file="trilateral/tab" /}
+            <style>
+                .overflow{overflow-x: unset;}
+            </style>
+            <div class="tab-content padding-top-10">
+                <div class="tab-pane active in">
+                    <div class="form-horizontal">
+                        <form id="trilateral_form">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-md-2 col-sm-2 control-label"> 路演名称：</label>
+                                    <div class="col-lg-6 col-md-10 col-sm-10">
+                                        <input type="text" class="form-control" name="title" id="title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <button type="button" class="btn btn-default" id="trilateral_btn" > <i class="fa fa-search"></i>查询 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table id="trilateral" data-path="__UPLOAD__" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th> 路演ID</th>
+                                <th> 路演名称</th>
+                                <th> 路演时间</th>
+                                <th> 类型</th>
+                                <th> 参会人数</th>
+                                <th> 排序</th>
+                                <th> 状态</th>
+                                <th> 操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var trilateral_url 		 = '{:url("Trilateral/read")}';
+    var trilateral_stop_url  = '{:url("Trilateral/stop")}';
+    var trilateral_start_url = '{:url("Trilateral/start")}';
+    var trilateral_judge_url = "{:url('Publics/judge')}";
+</script>
+<script src="__STATIC__/js/trilateral/trilateral_list.js"></script>
