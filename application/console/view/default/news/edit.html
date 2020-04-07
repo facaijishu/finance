@@ -1,0 +1,349 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="news/tab_edit" /}
+            <div>
+                <form id="editNewsForm" action="{:url('News/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                	<fieldset>
+	                <div class="news_menu">
+		               <ul>
+						    <li><a href="javascript:void(0);" onclick="showView(1)">资讯内容</a></li>
+						    <li><a href="javascript:void(0);" onclick="showView(2)">对应项目的行业</a></li>
+						    <li><a href="javascript:void(0);" onclick="showView(3)">对应机构的行业</a></li>
+						    <li><a href="javascript:void(0);" onclick="showView(4)">PC正文</a></li>
+						    <li><a href="javascript:void(0);" onclick="showView(5)">H5正文</a></li>
+						</ul>
+		            </div>
+            		</fieldset>
+            		<legend></legend>
+            		<div id="titleid">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">标题： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="title" value="{$info.title}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">分类： <sup>*</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach name="typeList" key="k" item="ind"}
+                                    <label class="radio radio-inline">
+                                        {if condition="$k eq $info['type']"}
+                                        <input type="radio" class="radiobox" name="type" value="{$k}" checked="">
+                                        {else /}
+                                        <input type="radio" class="radiobox" name="type" value="{$k}">
+                                        {/if}
+                                        <span> {$ind} </span> 
+                                    </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头图： <sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value='{$info.top_img_url}'/>
+                                    <input type="text" class="hide" name="top_img" value="{$info.top_img}"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">头图长宽比例为12:7(微信分享用)</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">简介： <sup>*</sup></label>
+                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <textarea class="form-control" name="des">{$info.des}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </div>
+                    <div id="proid" style="display:none">
+                    <fieldset>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">对应项目的行业： <sup>*</sup></label>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            {foreach $inc_industry as $each_inc_industry}
+                            <label class="col-lg-1 control-label">&nbsp;</label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12" style="margin-top: 15px;">
+                            	<span style="color:#ffd908;font-weight:bold;">{$each_inc_industry['value']}</span>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach $each_inc_industry['son'] as $son_industry}
+                                        <label class="checkbox checkbox-inline">
+                                        <?php if(substr_count($info['industry_pro'],$son_industry['id'])==1) { ?>
+                                        	<input type="checkbox" class="checkbox" name="industry_pro" value="{$son_industry['id']}" checked="">
+                                        <?php }else{ ?>
+                                        	<input type="checkbox" class="checkbox" name="industry_pro" value="{$son_industry['id']}">
+                                        <?php }?>
+                                            <span>{$son_industry['value']}</span> 
+                                        </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                            {/foreach}
+                            <input type="text" name="inc_industry_pro" id="inc_industry_pro" class="hide" value="{$info.industry_pro}">
+                        </div>
+                    </fieldset>
+                    </div>
+                    <div id="orgid" style="display:none">
+                    <fieldset>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">对应机构的行业： <sup>*</sup></label>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            {foreach $inc_industry as $each_inc_industry}
+                            <label class="col-lg-1 control-label">&nbsp;</label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12" style="margin-top: 15px;">
+                            	<span style="color:#ffd908;font-weight:bold;">{$each_inc_industry['value']}</span>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach $each_inc_industry['son'] as $son_industry}
+                                        <label class="checkbox checkbox-inline">
+                                        <?php if(substr_count($info['industry_pro'],$son_industry['id'])==1) { ?>
+                                        	<input type="checkbox" class="checkbox" name="industry_org" value="{$son_industry['id']}" checked="">
+                                        <?php }else{ ?>
+                                        	<input type="checkbox" class="checkbox" name="industry_org" value="{$son_industry['id']}">
+                                        <?php }?>
+                                            <span>{$son_industry['value']}</span> 
+                                        </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                            {/foreach}
+                            <input type="text" name="inc_industry_org" id="inc_industry_org" class="hide" value="{$info.industry_org}">
+                        </div>
+                    </fieldset>
+                    </div>
+                    <div id="pcid" style="display:none">
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">PC正文：<sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div id="summernote"></div>
+                                <input type="text" class="hide" name="summernote" value="{:htmlentities($info.content_pc)}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </div>
+                    <div id="h5id" style="display:none">
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">H5正文：<sup>&nbsp;&nbsp;</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div id="summernote_h5"></div>
+                                <input type="text" class="hide" name="summernote_h5" value="{:htmlentities($info.content_h5)}"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="text" name="id" value="{$info.id}" class="hide">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script src="__STATIC__/js/summernote_common.js"></script>
+<script src="__STATIC__/js/summernote_common_h5.js"></script>
+<script>
+    var send_file_url = "{:url('News/uploads')}";
+    
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#editNewsForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入资讯标题'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 128,
+                                message: '用户名长度必须小于128个字符'
+                            },
+                        }
+                    },
+                    des: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入简介'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 255,
+                                message: '简介长度必须小于255个字符'
+                            },
+                        }
+                    },
+                    top_img: {
+                        validators: {
+                            notEmpty: {
+                                message: '请上传头图'
+                            }
+                        }
+                    },
+                    summernote: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入PC正文'
+                            }
+                        }
+                    },
+                    summernote_h5: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入H5正文'
+                            }
+                        }
+                    },
+                }
+            }).on('success.form.bv', function (e) {
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                var data = $form.serialize();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+            });
+        });
+        
+        $("input[name='industry_pro']").change(function(){
+        	var pro = "";
+	        $("input[name='industry_pro']:checked").each(function() {
+	        	if(pro==''){
+	        		pro = $(this).val();
+	        	}else{
+	        		pro = pro+","+$(this).val();
+	        	}
+	        });
+	        $("#inc_industry_pro").val(pro);
+        });
+        
+        $("input[name='industry_org']").change(function(){
+        	var org = "";
+	        $("input[name='industry_org']:checked").each(function() {
+	        	if(org==''){
+	        		org = $(this).val();
+	        	}else{
+	        		org = org+","+$(this).val();
+	        	}
+	            
+	        });
+	        $("#inc_industry_org").val(org);
+        });
+        
+        
+        $('.file-upload').each(function() {
+            var thiss 		= $(this)
+            var name 		= $(this).attr("data-value");
+            var extension 	= $(this).attr("data-extension");
+            var type 		= extension.split(',');
+            initFileInput('editNewsForm', thiss, 'news', type, '{:url("Publics/upload")}', 1, name);
+        });
+        $("input[name='type']").change(function(){
+            $("input[name='type']").val($(this).val());
+        });
+        
+        var content_pc = $("input[name='summernote']").val();
+        var content_h5 = $("input[name='summernote_h5']").val();
+        $('#summernote').summernote("code" , content_pc);
+        $('#summernote_h5').summernote("code" , content_h5);
+    });
+    
+    function showView(id){
+    	if(id == 1){
+    		$('#titleid').show();
+    		$('#proid').hide();
+    		$('#orgid').hide();
+    		$('#pcid').hide();
+    		$('#h5id').hide();
+    	}
+    	
+    	if(id == 2){
+    		$('#titleid').hide();
+    		$('#proid').show();
+    		$('#orgid').hide();
+    		$('#pcid').hide();
+    		$('#h5id').hide();
+    	}
+    	
+    	if(id == 3){
+    		$('#titleid').hide();
+    		$('#proid').hide();
+    		$('#orgid').show();
+    		$('#pcid').hide();
+    		$('#h5id').hide();
+    	}
+    	if(id == 4){
+    		$('#titleid').hide();
+    		$('#proid').hide();
+    		$('#orgid').hide();
+    		$('#pcid').show();
+    		$('#h5id').hide();
+    	}
+    	
+    	if(id == 5){
+    		$('#titleid').hide();
+    		$('#proid').hide();
+    		$('#orgid').hide();
+    		$('#pcid').hide();
+    		$('#h5id').show();
+    	}
+    	
+    }
+</script>

@@ -1,0 +1,509 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            {include file="organize_plus/tab_edit" /}
+
+            <div>
+                <form id="editOrganizeForm" action="{:url('organize_plus/edit')}" class="form-horizontal" method="post" onsubmit="return false;">
+                    <fieldset>
+                        <legend></legend>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">机构名称： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="org_name" value="{$info.org_name}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">机构简称： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="org_short_name" value="{$info.org_short_name}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">内部客服ID： <sup>*</sup></label>
+                            <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="customer_service_id" value="{$info.customer_service_id}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- <fieldset>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-lg-2">管理规模： <sup>*</sup></label>
+                            <div class="form-group col-lg-2 scale_min" style="margin-left: 0px;">
+                                <input type="text" class="form-control" name="scale_min" value="{$info.scale_min}" />
+                            </div>
+                            <div class="form-group col-lg-2 my-line" style="width: 7%;margin-left: -12px;padding-top: 6px;">——</div>
+                            <div class="form-group col-lg-2 scale_max" style="margin-left: -15px;">
+                                <input type="text" class="form-control" name="scale_max" value="{$info.scale_max}" />
+                            </div>
+                            {foreach name="management_scale" key="k" item="ind"}
+                            <label class="radio radio-inline" style="margin-left: 15px;">
+                                {if condition="$ind.id eq $info.unit"}
+                                <input type="radio" class="radiobox" name="unit" value="{$ind.id}" checked="">
+                                {else /}
+                                <input type="radio" class="radiobox" name="unit" value="{$ind.id}">
+                                {/if}
+                                <span> {$ind.value} </span>
+                            </label>
+                            {/foreach}
+                        </div>
+                    </fieldset>-->
+                    <input type="text" id="num" class="hide" value="{$num}">
+                    {foreach $info['inc_target'] as $value}
+                    <fieldset>
+                        <div class="form-group col-lg-3">
+                            <label class="control-label col-lg-4 company_name" style="margin-left: -5px;">投资企业： </label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control input_company_name" name="company_name" value="{$value['target_company']}" style="margin-left: 9px;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6" style="margin-left: -167px;">
+                            <label class="control-label col-lg-4">所属行业： </label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" value="{$value['target_industry']}" name="trade" />
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" name="inc_target" class="hide">
+                        <input type="button"  class="btn btn-primary del_company" name="del_company" value="删除企业" />
+                    </fieldset>
+                    {/foreach}
+                    <fieldset>
+                        <div class="form-group col-lg-6" >
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-3 col-sm-3 col-md-3 col-xs-3">
+                                    <input type="button"  class="btn btn-primary add_company" name="add_company" value="添加企业" style="margin-left: 132px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                    	<label class="col-lg-1 control-label">投资方向： <sup>*</sup></label><br/>
+                        <div class="form-group col-lg-12">
+                            {foreach $inc_industry as $each_inc_industry}
+                            <label class="col-lg-1 control-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>&nbsp;</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12" style="margin-bottom: 15px; ">
+                                <span style="color:#ffff00">{$each_inc_industry['value']}</span>
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach $each_inc_industry['son'] as $son_industry}
+                                        <label class="checkbox checkbox-inline">
+                                            {if condition="in_array($son_industry['id'] , $info.industry)"}
+                                                <input type="checkbox" class="checkbox" name="industry" value="{$son_industry['id']}" checked="">
+                                            {else}
+                                               <input type="checkbox" class="checkbox" name="industry" value="{$son_industry['id']}">
+                                            {/if}
+                                            <span> {$son_industry['value']} </span> 
+                                        </label>
+                                        <input type="text" name="inc_industry" class="hide">
+                                    {/foreach}
+                                </div>
+                            </div>
+                            {/foreach}
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                    	<div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">所属区域： <sup>*</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach name="inc_area" item="ind"}
+                                    <label class="checkbox checkbox-inline">
+                                      {if condition="in_array($ind.id , $info.area)"}
+                                        <input type="checkbox" class="checkbox" name="area" value="{$ind.id}" checked="">
+                                      {else}
+                                         <input type="checkbox" class="checkbox" name="area" value="{$ind.id}">
+                                      {/if}
+                                        <span> {$ind.value} </span> 
+                                    </label>
+                                    {/foreach}
+                                    <input type="text" name="inc_area" class="hide">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">业务类型： <sup>*</sup></label>
+                            <div class="col-lg-3 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    <select class="form-control m_uid" name="type" id="type">
+		                            <optgroup label="请选择">
+		                                <option value="">- - - 请选择- - -</option>
+		                                {foreach name="type" item="aa"}
+		                                {if condition="$aa.id eq $info.inc_type"}
+		                                <option value="{$aa.id}" selected="selected">{$aa.value}</option>
+		                                {else}
+		                                <option value="{$aa.id}">{$aa.value}</option>
+		                                {/if}
+		                                {/foreach}
+		                            </optgroup>
+		                        	</select>
+                                    <input type="text" name="inc_type" class="hide" value="{$info.inc_type}" class="hide">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="col-lg-1 control-label">投资阶段： <sup>*</sup></label>
+                            <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
+                                    {foreach name="invest_stage" item="ind"}
+                                    <label class="checkbox checkbox-inline">
+                                        {if condition="in_array($ind.id,$info.stage)"}
+                                        <input type="checkbox" class="checkbox" name="stage" value="{$ind.id}" checked="">
+                                        {else}
+                                        <input type="checkbox" class="checkbox" name="stage" value="{$ind.id}">
+                                        {/if}
+                                        <span> {$ind.value} </span>
+
+                                    </label>
+                                    {/foreach}
+                                    <input type="text" name="invest_stage" value="{$info.invest_stage}" class="hide">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group col-lg-3 contacts" style="margin-left: -7px;">
+                            <label class="control-label col-lg-4 ">机构联系人： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="contacts" value="{$info.contacts}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="control-label col-lg-4">职位：<sup>*</sup> </label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="position" value="{$info.position}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="control-label col-lg-4">联系方式：<sup>*</sup> </label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="contact_tel" value="{$info.contact_tel}" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group col-lg-3 yiju" style="padding-top: 7px;">
+                            (此字段是联系人判断依据)
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">头像： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">        
+                              <input id="input_top_img" type="file" class="file file-upload" data-extension="jpg,jpeg,png,gif" name="file" data-show-preview="false" data-value="{if $info.wx_img}微信头像{else}{$info.top_img_url}{/if}"/>
+
+                              <input type="text" class="hide" name="top_img" value="{if  $info.wx_uid}{$info.wx_uid}{elseif $info.top_img}{$info.top_img}{else}{/if}"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-12 col-md-12 col-xs-12">
+                                <label class="control-label">必填，图片格式</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group col-lg-12">
+                            <label class="control-label col-lg-1">排序： <sup>*</sup></label>
+                            <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">
+                                <div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <input type="text" class="form-control" name="list_order" value="{$info.list_order}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {:token()}
+                                <input type="text" name="org_id" value="{$info.org_id}" class="hide">
+                                {if condition="$info.status eq 1"}
+                                <button class="btn btn-primary save" type="button">
+                                    <i class="fa fa-save"></i>保存
+                                </button>
+                                {/if}
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-save"></i>发布
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/file_input_common.js"></script>
+<script>
+    $(function () {
+        loadModule('bootstrapValidator', function () {
+            $('#editOrganizeForm').bootstrapValidator({
+                excluded:[":disabled"],
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    org_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入机构名称'
+                            }
+                        }
+                    },
+                    org_short_name: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入机构简称'
+                            }
+                        }
+                    },
+                    customer_service_id: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入内部客服id'
+                            },
+                            regexp: {
+                                regexp: /^\d+$/,
+                                message: '内部客服id必须为数字'
+                            },
+                        }
+                    },
+                    contacts: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入机构联系人'
+                            }
+                        }
+                    },
+                    position: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入职位'
+                            }
+                        }
+                    },
+                    contact_tel: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入联系方式'
+                            },
+                            regexp: {
+                                regexp: /^1[3,5,7,8]\d{9}$/,
+                                message: '请输入正确的手机号'
+                            }
+                        }
+                    },
+                    list_order: {
+                        validators: {
+                            notEmpty: {
+                                message: '请输入排序'
+                            },
+                            regexp: {
+                                regexp: /^\d+$/,
+                                message: '排序必须为数字'
+                            }
+                        }
+                    }
+                }
+            }).on('click', '.save', function (e) {
+
+                //获取每一行投资企业和所属行业
+                var target = '';
+                var j = 0;
+                $("input[name='company_name']").each(function(){
+                    var index = $(this).index();
+                    var company_name = $(this).eq(index).val();
+                    var trade = $("input[name='trade']").eq(j).val();
+                    target += (company_name+'+'+trade+'-');
+                    j++;
+                });
+                $("input[name='inc_target']").val(target);
+                //获取选中的投资方向的id
+                var industry = '';
+                $("input[name='industry']:checked").each(function(){
+                    industry += ($(this).val()+',');
+                });
+                $("input[name='inc_industry']").val(industry);
+                //获取选中的所属区域的id
+                var area = '';
+                $("input[name='area']:checked").each(function(){
+                    area += ($(this).val()+',');
+                });
+                $("input[name='inc_area']").val(area);
+                
+                //获取选中的业务类型的id
+                $("input[name='inc_type']").val($("#type").find("option:selected").val());
+                
+                //获取选中的投资阶段的id
+                var stage = '';
+                $("input[name='stage']:checked").each(function(){
+                	stage += ($(this).val()+',');
+                });
+                $("input[name='invest_stage']").val(stage);
+                
+                
+                var form = $("form");
+                $.ajax({
+                    url: "{:url('organize_plus/save')}",
+                    type: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('保存成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('保存失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+            }).on('success.form.bv', function (e) {
+                //获取每一行投资企业和所属行业
+                var target = '';
+                var j = 0;
+                $("input[name='company_name']").each(function(){
+                    index = $(this).index();
+                    var company_name 	= $(this).eq(index).val();
+                    var trade 			= $("input[name='trade']").eq(j).val();
+                    target 			    += (company_name+'+'+trade+'-');
+                    j++;
+                });
+                $("input[name='inc_target']").val(target);
+                
+                //获取选中的投资方向的id
+                var industry = '';
+                $("input[name='industry']:checked").each(function(){
+                    industry += ($(this).val()+',');
+                });
+                $("input[name='inc_industry']").val(industry);
+                
+                //获取选中的所属区域的id
+                var area = '';
+                $("input[name='area']:checked").each(function(){
+                    area += ($(this).val()+',');
+                });
+                $("input[name='inc_area']").val(area);
+                
+                //获取选中的业务类型的id
+                $("input[name='inc_type']").val($("#type").find("option:selected").val());
+                
+                //获取选中的投资阶段的id
+                var stage = '';
+                $("input[name='stage']:checked").each(function(){
+                	stage += ($(this).val()+',');
+                });
+                $("input[name='invest_stage']").val(stage);
+
+                if($("input[name='inc_industry']").val() == ''){
+                    Dialog.error('请选择投资方向');
+                    return false;
+                }
+                if($("input[name='inc_area']").val() == ''){
+                    Dialog.error('请选择所属区域');
+                    return false;
+                }
+                if($("input[name='inc_type']").val() == ''){
+                    Dialog.error('请选择业务类型');
+                    return false;
+                }
+                if($("input[name='invest_stage']").val() == ''){
+                    Dialog.error('请选择投资阶段');
+                    return false;
+                }
+                if($("input[name='top_img']").val() == ''){
+                    Dialog.error('请选择头像');
+                    return false;
+                }
+                e.stopPropagation();
+                if(e && e.preventDefault){
+                    e.preventDefault();
+                }else{
+                    window.e.returnValue = false;//注意加window
+                }
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('发布成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('发布失败', resp.msg);
+                        }
+                    },
+                    error: function(resp) {
+                        Dialog.error('错误提示', resp.msg);
+                    }
+                });
+                return false;
+            });
+            
+        });
+        //上传头像(必填)
+        var fup = $('.file-upload');
+        var name = fup.attr("data-value");
+        var extension = fup.attr("data-extension");
+        var type = extension.split(',');
+        initFileInput('editOrganizeForm', fup, 'organize_plus', type, '{:url("Publics/upload")}', 1,name);
+
+        //动态添加企业节点
+        var num = $("#num").val();
+        var i = 1 + parseInt(num);
+        $('.add_company').click(function(){
+             var str = '<fieldset>'+
+                        '<div class="form-group col-lg-3">'+
+                            '<label class="control-label col-lg-4 company_name"'+ 'style="margin-left: -5px;">投资企业： </label>'+
+                            '<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">'+
+                                '<div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">'+
+                                    '<input type="text" class="form-control input_company_name" name="company_name" style="margin-left: 9px;" />'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="form-group col-lg-6" style="margin-left: -167px;">'+
+                            '<label class="control-label col-lg-4">所属行业： </label>'+
+                            '<div class="col-lg-8 col-sm-12 col-md-12 col-xs-12">'+
+                                '<div class="input-group col-lg-12 col-sm-12 col-md-12 col-xs-12">'+
+                                    '<input type="text" class="form-control" name="trade" />'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<input type="text" name="inc_target" class="hide">'+
+                        '<input type="button"  class="btn btn-primary del_company" name="del_company" value="删除企业" />'+
+                    '</fieldset>';
+             $('#editOrganizeForm').children('fieldset').eq(i).after(str);
+             i++;
+        });
+        $(document).on('click','.del_company',function(){
+            $(this).parent().remove();
+            i--;
+        });
+
+    });
+</script>
