@@ -361,3 +361,296 @@ html,body{font:14px/1.5 "Microsoft YaHei","微软雅黑","SimSun","宋体",Arial
 	font-weight:bold;
 	color:#222222;
 }
+
+.my_center_t_left{
+	float:left;width:300px;margin-top:42px;font-size:18px;color:#222222;font-weight:bold;
+}
+
+.my_center_t_right{
+	border-radius:19px;margin-top:40px;
+}
+
+.my_center_title{
+	width: 100%; height: 100px;
+}
+
+.my_center{
+	background-repeat:no-repeat;
+	background-position:center;
+	height:247px;background-size:380px 247px; 
+	background-image:url('/static/frontend/images/myCenter_bg.png');
+}
+
+.card_one{
+	margin:0 45px 0 45px; height: 64px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+}
+
+.card_name{
+	float:left;margin:29px 0 16px 0;color:#ffffff;font-size:22px;font-weight:bold;
+}
+.card_set{
+	float:right;margin:29px 0 16px 0;
+}
+
+.my_center_card_2{
+	float:left;margin-left: 45px;font-size: 12px; height:23px;text-align: center;
+}
+
+.my_center_card_memo{
+	float:left;width:90px;line-height:23px; color: rgb(255, 255, 255); border-radius: 12px; margin-right: 5px; background-color: rgba(255, 255, 255, 0.1);
+}
+
+.my_center_card_3{
+	float:left;margin:50px 45px 33px 45px;font-size: 12px;color:#fff; text-align: center;line-height:0px;
+}
+
+.my_center_card_space{
+	float:left;height:37px;width:14px;
+}
+
+.my_center_card_line{
+	float:left;height:37px;width:1px;border-radius:19px;background-color:rgba(255, 255, 255, 0.6);
+}
+
+.my_center_card_text{
+	float:left;height:37px;width:52px;
+}
+
+.my_center_card_text a{
+	fcolor:#fff;
+}
+
+.my_center_card_num{
+	margin-bottom:24px;font-weight:bold;font-size:18px;
+}
+
+.my_center_card_menu{
+	width:100%;height:51px;
+}
+
+.my_center_card_menu_icon{
+	float:left;width:10%;
+}
+.my_center_card_menu_text{
+	float:left;width:80%;color:#222222;font-size:16px;font-weight:bold;
+}
+.my_center_card_menu_right{
+	float:right;width:10%;text-align:right;
+}
+
+@media (device-width: 414px) and (-webkit-min-device-pixel-ratio: 2) {
+	.my_center_card_space{
+		width:18px;
+	}
+	.my_center{
+		height:260px;
+		background-size:400px 260px; 
+	}
+	.my_center_card_3{
+		margin:55px 45px 33px 45px;
+	}
+}
+
+@media (device-width: 375px) and (-webkit-min-device-pixel-ratio: 2) {
+	.my_center_t_left{
+		width:260px;margin-top:32px;
+	}
+	.my_center_t_right{
+		margin-top:30px;
+	}
+	.my_center_title{
+		height: 80px;
+	}
+	.my_center{
+		height:227px;
+		background-size:350px 227px; 
+	}
+	.my_center_card_3{
+		margin:30px 45px 33px 45px;
+	}
+	.my_center_card_space{
+		width:12px;
+	}
+	
+}
+@media (device-width: 360px) and (-webkit-min-device-pixel-ratio: 2) {
+	.my_center{
+		height:214px;
+		background-size:330px 214px; 
+	}
+	.my_center_t_left{
+		width:200px;margin-top:20px;
+	}
+	.my_center_card_2{
+		margin-left: 35px;
+	}
+	.my_center_title{
+		height: 60px;
+	}
+	.my_center_card_space{
+		width:10px;
+	}
+	.my_center_t_right{
+		margin-top:15px;
+	}
+	.my_center_card_3{
+		margin:30px 35px 33px 35px;
+	}
+}
+
+@media (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+	.my_center_t_left{
+		width:150px;margin-top:20px;
+	}
+	.my_center_t_right{
+		margin-top:15px;
+	}
+	.my_center_title{
+		height: 60px;
+	}
+	.my_center{
+		height:195px;
+		background-size:300px 195px; 
+	}
+	.card_one{
+		margin:0 30px 0 30px; height: 64px;
+	}
+	.my_center_card_2{
+		margin-left: 30px;
+	}
+	.my_center_card_memo{
+		 margin-right: 5px;  width:80px;
+	}
+	.my_center_card_3{
+		margin:20px 30px 33px 30px;
+	}
+	.my_center_card_space{
+		width:6px;
+	}
+}
+	.seos-box {
+		background: #fff;
+		text-align: left;
+	}
+	.seos-box ul { padding:0px 10px;}
+	.seos-box li {
+		border-bottom: 10px solid #fbf9ff;
+		padding:10px 0 10px 10px;
+	}
+	.seos-box li:last-child {
+		border: 0;
+	}
+	.seos-box .table-1 {
+		padding:0;
+		margin-top:10px;
+	}
+	.seos-box .table-1 li { border-bottom: 0; width:33.33%; }
+	.seos-box .table-1 li:nth-child(4){border-left:0; clear: left;}
+	.seos-box .table-1 li:nth-child(5){border-left: 1px solid #e3e1e1;border-top: 1px solid #e3e1e1;}
+	.seos-box .table-1 li:last-child {border-left: 1px solid #e3e1e1;border-top: 1px solid #e3e1e1;}
+	.seos-box .table-1 li div { color: #6c6c6c;}
+	.seos-t strong {
+		font-size: 16px;
+		color: #333;
+		font-weight: bold;
+	}
+	.seos-t strong small{
+		font-size: 60%;
+		color: #A0A0A0;
+	}
+
+	.seos-c { 
+		display: flex; 
+		width: 100%;
+		padding: 10px 0;
+	}
+	.seos-c .each {
+		flex: 1;
+		text-align: center;	
+	}
+	.seos-c .each .red {
+		color: #fa0606;
+	}
+	.seos-c .each small{
+		font-size: 60%;
+	}
+	.seos-c .each div {
+		color: #918f8f;
+		font-size:12px;
+	}
+	.seos-t2 {
+		padding:10px 8px 0;
+		overflow: hidden;
+	}
+	.seos-t2 .fl {
+		color: #A0A0A0;
+		font-size: 15px;
+	}
+	.seos-t2 strong {
+		color: #fa0606;
+		font-size: 22px;
+		margin-left:5px;
+	}
+	.seos-t2 strong small {
+		font-size: 14px;
+	}
+	.seos-t2 .fr {
+		padding-top:5px;
+	    overflow: hidden;
+	}
+	.seos-t2 label{
+	  float: right;
+	  width: 60px;
+	  height: 25px;
+	  line-height: 25px;
+	  color: white;
+	  text-align: center;
+	}
+	.seos-box label {
+	color: #A0A0A0;
+	}
+	.seos-box p .more {
+		float:right;
+		color: #0076FF;
+	}
+	 
+	.seos-t2 .red{
+	  background: url(img/label-red.png) left top no-repeat;
+	  background-size: 100%;
+	}
+	.seos-t2 .orange{
+	  background: url(img/label-orange.png) left top no-repeat;
+	  background-size: 100%;
+	}
+	
+	.seos-t3 { overflow: hidden; padding:5px 15px 0; }
+	
+	.seos-t3 .fl strong {
+		float:left;
+		font-size: 20px;
+		text-align: center;
+		margin-right: 10px;
+	}
+	.seos-t3 .fl strong small {
+		display: block;
+		font-size: 12px;
+	}
+	.seos-t3 .ico-over,.seos-t3 .fr { margin-top:5px; }
+	.seos-box .client{
+	  padding: 0px;
+	  background: white;
+	  text-align: left;
+	  margin: 0;
+	  float: right;
+	}
+	.seos-box .client .fr{
+	  padding: 0;
+	}
+	.seos-box .client .pro-label{
+	  padding-bottom: 0px;
+	  margin-top: 20px;
+	}
+	
+	
+	
+	
