@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>FA財-定向增发</title>
+    <meta name="keywords" content="FA財，新三板，定向增发" />
+    <meta name="description" content="FA財，新三板，定向增发" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="./images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" type="text/css" href="/static/home/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+    
+    <script type="text/javascript" src="./js/common.min.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/component.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+</head>
+
+<body class="mofh bg_white" style="width:100%;">     
+        <div id="box">
+			<div class="search-box pt15 pl15 pr15 clearfix porel">
+	           	<div class="form-search-control-left pull-left bg_gray" style="height:38px;"></div>
+				<input type="text" style="width:70%;" id="keyword" name="keyword" class="form-search-control-right pull-left" placeholder=" 输入股票代码、名称"  >
+	            <img id="searchpic" src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 6%;top: 24px;z-index: 999;" alt="" @click="search">
+	            <a href="#" class="pull-left" style="width:10%;margin-left:2%;" @click="getServiceUrl">
+                   <div style="width: 80%;text-align: center;"><img src="/static/frontend/images/kefuLogo.png" alt="客服" style="width:20px;height:20px;"></div>
+                   <div style="width: 80%;text-align: center;"><span style="color:#c2c2c2;font-size:12px;">客服</span></div>
+                </a>
+                <a href="#" class="pull-right" style="width:10%;" @click="showMune">
+                     <div style="width: 80%;text-align: center;"><img src="/static/frontend/images/select.png" alt="筛选" style="width:20px;height:20px;"></div>
+                     <div style="width: 80%;text-align: center;"><span style="color:#c2c2c2;font-size:12px;">筛选</span></div>
+                </a>
+	       	</div>
+	       	
+	       	<!-- 菜单 -->
+			<div class="clearfix pl15 pr15 mt10 mb5">
+				<a href="/static/frontend/selectedProjects.html" class="pull-left text-center s_active">
+               		<span style="font-weight:bold;">精选</span>
+				</a>
+                <a href="/static/frontend/conlist.html" class="pull-left text-center s_actived">
+              		<span style="font-weight:bold;">定增</span>
+           		</a>
+                <a href="/static/frontend/transfer.html" class="pull-left text-center s_active">
+               		<span style="font-weight:bold;">大宗</span>
+           		</a>
+			</div>
+			
+	       	<div class="select-box">
+	        	<input type="hidden" id="chose" name="chose" value="0" />
+                <dl>
+                    <dt>融资金额</dt>
+                    <dd class="dd-3">
+                        <span data-id="1" data-type="financing">1000万以下</span>
+                        <span data-id="2" data-type="financing">1000～3000万</span>
+                        <span data-id="3" data-type="financing">3000～5000万</span>
+                        <span data-id="4" data-type="financing">5000万以上</span>
+                    </dd>
+                </dl>
+                <input id="financing" type="hidden" name="financing">
+                <dl>
+                    <dt>净利润</dt>
+                    <dd class="dd-3">
+                        <span data-id="1" data-type="profit">500万以下</span>
+                        <span data-id="2" data-type="profit">500～2000万</span>
+                        <span data-id="3" data-type="profit">2000～5000万</span>
+                        <span data-id="4" data-type="profit">5000万以上</span>
+                    </dd>
+                </dl>
+                <input id="profit" type="hidden" name="profit">
+                <dl>
+                    <dt>年营业收入</dt>
+                    <dd class="dd-3">
+                        <span data-id="1" data-type="income">500万以下</span>
+                        <span data-id="2" data-type="income">500～2000万</span>
+                        <span data-id="3" data-type="income">2000～5000万</span>
+                        <span data-id="4" data-type="income">5000～1亿</span>
+                        <span data-id="5" data-type="income">1亿～2亿</span>
+                        <span data-id="6" data-type="income">2亿以上</span>
+                    </dd>
+                </dl>
+                <input id="income" type="hidden" name="income">
+                <dl>
+                    <dt>层级</dt>
+                    <dd class="dd-3">
+                        <span data-id="1" data-type="sublevel">基础层</span>
+                        <span data-id="2" data-type="sublevel">创新层</span>
+                    </dd>
+                </dl>
+                <input id="sublevel" type="hidden" name="sublevel">
+                <div class="bar-box">
+                </div>
+                <div class="bar-btn">
+                    <button class="btn-white" id="btn_cancel" type="button">清除</button>
+                    <button class="submit" id="btn_submit" type="button">确定</button>
+                </div>
+        	</div>
+        	<div style="height:10px;background:#fbf9ff;">&nbsp;</div>
+        	<div id="data-box">	
+				<div class="seos-box" v-if="zfList != null && zfList.length > 0">
+					<ul id="ul" style="padding:0px;background:#fff;">
+						<li v-for="(item,index) in zfList">
+							<a  @click="getDetail(item.neeq ,item.plannoticeddate)">
+		                        <div class="seos-t" style="margin-left:15px;">
+		                            <strong>{{item.sec_uri_tyshortname}}<small>【{{item.neeq}}】</small></strong>
+		                        </div>
+		                        <div class="seos-c"> 
+		                            <div class="each">
+		                                <span class="red">{{item.raise_money}}</span><small>万元</small><br />
+		                                <div>计划募资</div>
+		                            </div>
+		                            <div class="each">
+		                                {{item.additional_num}}<small>万股</small><br />
+		                                <div>增发数量</div>
+		                            </div>
+		                            <div class="each">
+		                                {{item.increase_price}}<small>元</small><br />
+		                                <div>定增价格</div>
+		                            </div>
+		                        </div>
+		                        <div style="font-size: 12px;height:24px;text-align:left;"> 
+		                            <div style="float:left;margin-left:30px;background:#ffede7;color:#e95528;">&nbsp;&nbsp;{{item.industry}}&nbsp;&nbsp;</div>
+		                            <div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		                            <div style="float:left;background:#ffede7;color:#e95528;">&nbsp;&nbsp;{{item.sublevel}}&nbsp;&nbsp;</div>
+		                        </div>
+		                    </a>
+						</li>
+					</ul>
+				</div>
+		        <a @click="loadMore" v-show="!isOver" class="dbk text-center f16 ml5 mr5 mb10" style="width:100%;height: 40px;line-height:40px;background: #FFFFFF;border: 0 solid #979797;border-radius: 4px;color: #0076FF;"><p >加载更多<img src="./images/loadingAll.png" alt="" width="16" height="8" class="ml5"></p></a>
+	            <p v-show="isOver" class="text-center mt10 mb10" style="font-size: 15px;color: #444444;line-height: 24px;">没有更多搜索结果了</p>
+        	</div>
+        </div>
+        <!-- 底部菜单 -->
+        <div id="footer-box">
+	        <div style="height:70px;line-height:70px;"></div>
+			<div class="footer_new" style="height: 60px; padding: 12px 0px; position: fixed; left: 0px; bottom: 0px; width: 100%;">
+				<div class="clearfix" style="width: 100%; height: 50px;">
+					<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
+						<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
+						<div class="f12 c_sgold" style="line-height: 22px; height: 22px;">首页</div>
+					</a> 
+					<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
+						<img src="/static/frontend/images/sign-2-1-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
+						<div class="f12 c_gold" style="line-height: 22px; height: 22px;">市场</div>
+					</a> 
+					<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
+						<img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
+						<div class="f12 c_sgold" style="line-height: 22px; height: 22px;">需求发布</div>
+					</a> 
+					<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
+						<img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
+						<div class="f12 c_sgold" style="line-height: 20px; height: 20px;">发现</div>
+					</a> 
+					<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
+						<img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;"> 
+						<div class="f12 c_sgold" style="line-height: 22px; height: 22px;">我的</div>
+					</a>
+				</div>
+	  		</div>
+		</div>
+        <div id='loading' class='loading-box hidden'>
+	        <div class='css3-loading-shade'></div>
+	        <div class='css3-loading-box'>
+	            <div>歆宝科技</div>
+	            <div class='css3-loading'>
+	                <div class='bounce1'></div>
+	                <div class='bounce2'></div>
+	                <div class='bounce3'></div>
+	            </div>
+	        </div>
+    	</div>
+		<script type="text/javascript">
+	        $(document).ready(function() {
+	            // 设置加载中...
+	            $(document).ajaxStart(function() {
+	                $("#loading").removeClass('hidden');
+	            });
+	            $(document).ajaxStop(function() {
+	                $("#loading").addClass('hidden');
+	            });
+	        });
+	        
+	        var vue = new Vue({
+	            el: "#box",
+	            data: {
+	                keyword: "",
+	                page: 1,
+	                zfList: [],
+	                isOver: false,
+	            },
+	            mounted: function() {
+	            	this.$nextTick(function() {
+	            		$.ajax({
+	                 		url: 'http://fin.jrfacai.com/home/zfmxes_api/conlistApi',
+	                        type: 'GET',
+	                        dataType: 'json',
+	                        data: {
+	                            keyword: vue.keyword,
+	                            page: vue.page,
+	                        },
+	                    })
+	                    .done(function(res) {
+	 						if(res.code == 214){
+	                     		vue.isOver	= true;
+	 							vue.zfList	= [];
+	                     	}else{
+	 							vue.isOver	= false;
+	 							vue.zfList  = res.data.zfmxes;
+	 						}
+	 						
+						});
+	            		 
+	            		// 加载微信配置
+			            $.ajax({
+			                url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+			                type: 'GET',
+			                dataType: 'JSON',
+			                async: false,
+			                data: {"link": window.location.href},
+			            })
+			            .done(function(res) {
+			                if (res.code == 200) {
+			                    vue.appId = res.data.appId;
+			                    vue.noncestr = res.data.noncestr;
+			                    vue.signature = res.data.signature;
+			                    vue.timestamp = res.data.timestamp;
+			                }
+			            });
+	            		
+			            vue.share = {
+				                "title": "FA財-定向增发",
+				                "desc": "一站式智能投融信息交互平台",
+				                "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+				            };
+				
+			            wx.config({
+			                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			                appId: vue.appId, // 必填，公众号的唯一标识
+			                timestamp: vue.timestamp, // 必填，生成签名的时间戳
+			                nonceStr: vue.noncestr, // 必填，生成签名的随机串
+			                signature: vue.signature,// 必填，签名
+			                jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+			            });
+			            
+			            var shareLink = window.location.href;
+			            if (ui.userType == 1 || ui.userType == 2) {
+			                shareLink = "http://fin.jrfacai.com/static/frontend/conlist.html?superior="+ui.uid;
+			            }
+			            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+			                wx.onMenuShareAppMessage({ 
+			                    title: vue.share.title, // 分享标题
+			                    desc: vue.share.desc, // 分享描述
+			                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			                    imgUrl: vue.share.imgUrl, // 分享图标
+			                    success: function () {
+			                      // 设置成功
+			                    }
+			                });
+			                wx.onMenuShareTimeline({ 
+			                    title: vue.share.title, // 分享标题
+			                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+			                    imgUrl: vue.share.imgUrl, // 分享图标
+			                    success: function () {
+			                      // 设置成功
+			                    }
+			                });
+			         	});
+					});
+	            	 
+	            	$(".select-box").on('click' , 'span' , function(){
+	                	if($(this).hasClass("actived")){
+	                        $(this).removeClass("actived");
+	                        var type = $(this).attr("data-type");
+	                        $("input[name='"+type+"']").val("");
+	                    }else{
+	                        $(this).parent().find("span").removeClass("actived");
+	                        $(this).addClass("actived");
+	                        var id   = $(this).attr("data-id");
+	                        var type = $(this).attr("data-type");
+	                        $("input[name='"+type+"']").val(id);
+	                    }
+	                    vue.page = 1;
+                        $("#searchpic").trigger('click');
+					});
+	            	 
+	            	$("#btn_cancel").on("click", function () {
+					    $(".select-box").fadeOut();
+	     				$("#data-box").show();
+	             		$("#footer-box").show();
+	             		$("input[name='chose']").val(0);
+	             		
+	                    $(".select-box span").removeClass("actived");
+	                    var txt = "";
+	                    $(".select-box span").parents("dl").next("input").val(txt);
+	                    
+	                    vue.page = 1;
+                        $("#searchpic").trigger('click');
+					});
+	            	 
+	            	$("#btn_submit").on("click", function () {
+						$(".select-box").fadeOut();
+	     				$("#data-box").show();
+	             		$("#footer-box").show();
+	             		$("input[name='chose']").val(0);
+	                });
+	            	 
+					$("#keyword").on('keypress', function(e) { //#keyword为input文本框
+	                     var keycode 	= e.keyCode;
+	                     var searchName = $(this).val();
+	                     if (keycode == '13') {
+	                         vue.page = 1;
+	                         $("#searchpic").trigger('click');
+	                     }
+	                 });
+	        	},
+	        	methods: {
+	        		getServiceUrl: function() {
+			            $.ajax({
+			                    url: 'http://fin.jrfacai.com/home/index_api/serviceUrl',
+			                    type: 'GET',
+			                    dataType: 'json'
+			                })
+			                .done(function(res) {
+			                    window.location.href = res.data;
+			                });
+			        },
+			        showMune: function() {
+			        	var chose = $("input[name='chose']").val();
+			        	if(chose==0){
+			        		$(".select-box").fadeIn();
+			        		$("#data-box").hide();
+			        		$("#footer-box").hide();
+			        		$("input[name='chose']").val(1);
+			        	}else{
+			        		$(".select-box").fadeOut();
+							$("#data-box").show();
+			        		$("#footer-box").show();
+			        		$("input[name='chose']").val(0);
+			        	}
+			        		
+			        },
+	            	search: function() {
+	            		var keyword 	= $("input[name='keyword']").val();
+	            		var financing 	= $("input[name='financing']").val();
+	            		var profit 		= $("input[name='profit']").val();
+	            		var income 		= $("input[name='income']").val();
+	            		var sublevel 	= $("input[name='sublevel']").val();
+	                	$.ajax({
+	                		url: 'http://fin.jrfacai.com/home/zfmxes_api/conlistApi',
+	                        type: 'GET',
+	                        dataType: 'json',
+	                        data: {
+	                            keyword: keyword,financing: financing,profit: profit,income: income,sublevel: sublevel,page: vue.page,
+	                        },
+	                    })
+	                    .done(function(res) {
+							
+	                    	if(res.code== 214){
+	                    		vue.isOver  = true;
+								vue.zfList	= [];
+	                    	}else{
+								vue.isOver		= false;
+								if (!res.data.zfmxes || res.data.zfmxes.length < 4) {
+									vue.isOver = true;
+								} else {
+									vue.isOver = false;
+								}
+								if (res.data.zfmxes) {
+									vue.zfList = res.data.zfmxes;
+								}
+								
+							}
+	                    });
+	            	},
+	            	getDetail: function(neeq, plannoticeddate) {
+	            		window.location.href = 'http://fin.jrfacai.com/home/zfmxes_info/index/neeq/'+neeq+'/plannoticeddate/'+plannoticeddate;
+	            	},
+	            	loadMore: function() {
+		                vue.page = vue.page + 1;
+		                $.ajax({
+		                		url: 'http://fin.jrfacai.com/home/zfmxes_api/conlistApi',
+		                        type: 'GET',
+		                        dataType: 'json',
+		                        data: {
+		                            keyword: vue.keyword,
+		                            page: vue.page,
+		                        },
+		                    })
+	                    	.done(function(res) {
+	                        if (!res.data.zfmxes || res.data.zfmxes.length < 4) {
+	                            vue.isOver = true;
+	                        } else {
+	                            vue.isOver = false;
+	                        }
+	                        if (res.data.zfmxes) {
+	                            vue.zfList = vue.zfList.concat(res.data.zfmxes);
+	                        }
+						});
+	            	}
+	        	}
+	    
+	        });
+        </script>
+    </body>
+</html>
