@@ -2625,6 +2625,61 @@ video {
   width: 23%;
 }
 
+
+.select-box {
+  position: absolute;
+  display:none;
+  top: 40px;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  /*height:36rem;*/
+  background: white;
+  text-align: left;
+  padding: 10px;
+}
+
+.select-box dl {
+  padding: 5px 0 0;
+}
+
+.select-box dt {
+  font-size: 12px;
+  padding: 0 5px 10px;
+}
+
+.select-box dd span {
+  float: left;
+  border: 1px solid #EEEBE4;
+  border-radius: 2px;
+  height: 36px;
+  line-height: 36px;
+  margin: 0 1% 10px;
+  text-align: center;
+}
+
+.select-box dd .actived {
+  border: 2px solid #0076FF;
+  color: #0076FF;
+  line-height: 34px;
+}
+
+.select-box dd:after {
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+
+.select-box .dd-3 span {
+  width: 31%;
+}
+
+.select-box .dd-4 span {
+  width: 23%;
+}
+
 .hide-search {
   position: absolute;
   left: 0;
@@ -4200,7 +4255,7 @@ video {
 	background: #fff;
 	text-align: left;
 }
-.seos-box ul { padding:0px 15px; }
+.seos-box ul { padding:0px 10px;}
 .seos-box li {
 	border-bottom: 1px solid #efefef;
 	padding:10px 0 10px 10px;
@@ -4287,6 +4342,7 @@ video {
 }
 .seos-c .each div {
 	color: #918f8f;
+	font-size:12px;
 }
 .ico-shi {
 	background: #0076FF;
@@ -4667,7 +4723,7 @@ video {
 	height: 35px;
 	line-height: 35px;
 	font-size: 25px;
-	color: #deb46f;
+	color: #2873f4;
 	text-align: center;
 	position: absolute;
 	top: 0;
@@ -4715,7 +4771,7 @@ video {
     display: inline-block;
     width: 5px;
     height: 23px;
-    background: #deb46f;
+    background: #2873f4;
     margin-right: 8px;
 }
 .list-pg { width:200px; position: absolute; right:10px; top:10px; z-index: 999; }
@@ -4903,10 +4959,10 @@ video {
 .header_ioop{
   width:30px;
   height:0;
-  border:0.5rem solid #0076FF;
-  border-left:0.6rem solid #0076FF;
-  border-top-color:transparent;
-  border-bottom-color:transparent;
+  border-left:10px solid #0076FF;
+  border-right: 0 none;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
   border-right:0;
   float:right;
   margin-top:2px;
@@ -4972,8 +5028,8 @@ video {
 	top: -0.05rem;
 }
 .f-h4 s>img{
-	height: 0.5rem;
-	width: 0.8rem;
+	height: 10px;
+	width: 12px;
 }
 .f-h4 .lie{
 	width:103%;
