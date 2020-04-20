@@ -50,7 +50,7 @@
 	            <a href="/home/activity/index" class="a-4">活动</a>
        	 	</div>
 			<!-- banner -->
-			<div class="pl5 pr5" style="margin-bottom:-8px;">
+			<div class="pl5 pr5 pt5" style="margin-bottom:0px;">
                 <div id="index-slider" class="swiper-container" style="width:100%;overflow:hidden;">
                     <div class="swiper-wrapper">
                         <a v-for="item in displayRotaryMap" class="swiper-slide" style="width:100%;" :href="item.url">
@@ -88,7 +88,90 @@
 	        	</div>
     		</a>
         </section>
-         <!-- 热门头条 -->
+        <!-- 定向增发 -->
+        <section style="overflow:hidden;width:100%;background:#fbf9ff;">
+        	<div class="bg_white" style="height:58px;line-height:58px;">
+                <span class="pull-left c_black f18 fb pl25">定向增发</span>
+                <div class="pull-right">
+                    <a href="/static/frontend/conlist.html" class="pull-left f14 pr25" style="color:#327af5;">查看全部</a>
+        		</div>
+            </div>
+            <div class="bg_white"><div style="margin-left:15px;margin-right:15px;height:1px;border-top:solid 1px #f9faff;"></div></div>
+        	<div class="seos-box" style="background:#fbf9ff;">
+				<ul id="ul" style="padding:0px;background:#fff;">
+					<li v-for="item in displayZfList" style="border-bottom: 10px solid #fbf9ff;">
+						<a :href="item.url">
+	                        <div class="seos-t" style="margin-left:15px;">
+	                            <strong>{{item.sec_uri_tyshortname}}<small>【{{item.neeq}}】</small></strong>
+	                        </div>
+	                        <div class="seos-c"> 
+	                            <div class="each">
+	                                <span class="red">{{item.raise_money}}</span><small>万元</small><br />
+	                                <div>计划募资</div>
+	                            </div>
+	                            <div class="each">
+	                                {{item.additional_num}}<small>万股</small><br />
+	                                <div>增发数量</div>
+	                            </div>
+	                            <div class="each">
+	                                {{item.increase_price}}<small>元</small><br />
+	                                <div>定增价格</div>
+	                            </div>
+	                        </div>
+	                        <div style="font-size: 12px;height:24px;text-align:left;"> 
+	                            <div style="float:left;margin-left:30px;background:#ffede7;color:#e95528;">&nbsp;&nbsp;{{item.industry}}&nbsp;&nbsp;</div>
+	                            <div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	                            <div style="float:left;background:#ffede7;color:#e95528;">&nbsp;&nbsp;{{item.sublevel}}&nbsp;&nbsp;</div>
+	                           
+	                           
+	                        </div>
+	                    </a>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<!-- 大宗交易 -->
+        <section style="overflow:hidden;width:100%;background:#fbf9ff;">
+        	<div class="bg_white" style="height:58px;line-height:58px;">
+                <span class="pull-left c_black f18 fb pl25">大宗交易</span>
+                <div class="pull-right">
+                    <a href="/static/frontend/transfer.html" class="pull-left f14 pr25" style="color:#327af5;">查看全部</a>
+        		</div>
+            </div>
+            <div class="bg_white"><div style="margin-left:15px;margin-right:15px;height:1px;border-top:solid 1px #f9faff;"></div></div>
+        	<div class="seos-box" style="background:#fbf9ff;">
+				<ul id="ul" style="padding:0px;background:#fff;">
+					<li v-for="item in displayZryList" style="border-bottom: 10px solid #fbf9ff;">
+						<a :href="item.url">
+	                        <div class="seos-t" style="margin-left:15px;">
+		                            <strong>{{item.sec_uri_tyshortname}}<small>【{{item.neeq}}】</small></strong>
+		                        </div>
+		                        <div class="seos-c"> 
+		                            <div class="each">
+		                                <span class="red">{{item.price}}</span><small>元/股</small><br />
+		                                <div>意向价格</div>
+		                            </div>
+		                            <div class="each">
+		                                {{item.num}}<small>股</small><br />
+		                                <div v-if="item.direction =='买入'">求购数量</div>
+		                                <div v-else>卖出数量</div>
+		                            </div>
+		                            <div class="each">
+		                                <span class="red">{{item.direction}}</span><br />
+		                                <div>买卖方向</div>
+		                            </div>
+		                        </div>
+	                        <div style="font-size: 12px;height:24px;text-align:left;"> 
+	                            <div style="float:left;margin-left:30px;background:#ffede7;color:#e95528;">&nbsp;&nbsp;{{item.industry}}&nbsp;&nbsp;</div>
+	                            <div style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	                            <div style="float:left;background:#ffede7;color:#e95528;">&nbsp;&nbsp;{{item.sublevel}}&nbsp;&nbsp;</div>
+	                        </div>
+	                    </a>
+					</li>
+				</ul>
+			</div>
+		</section>
+        <!-- 热门头条 -->
         <section style="overflow:hidden;width:100%;background:#fbf9ff;">
             <div class="bg_white" style="height:58px;line-height:58px;">
                 <span class="pull-left c_black f18 fb pl25">热门资讯</span>
@@ -145,7 +228,6 @@
 				</a>
 			</div>
   		</div>
-  		
 	</div>
 
     <!-- 模态框 -->
@@ -189,6 +271,8 @@
 		        displayBrainPower: [],
 		        displayHotHeadline: [],
 		        displayRotaryMap: [],
+		        displayZfList:[],
+		        displayZryList:[],
 		        ui: {},
 		        appId: "",
 		        noncestr: "",
@@ -226,6 +310,38 @@
 		                        vue.displayBrainPower = res.data;
 		                    }
 		                });
+		            
+		         	// 智能推荐
+		            $.ajax({
+		            	    url: 'http://fin.jrfacai.com/home/zfmxes_api/conlistApi',
+		                    type: 'GET',
+		                    async: false,
+		                    dataType: 'json',
+		                    data: {
+	                            num:3,
+	                        },
+		                })
+		                .done(function(res) {
+		                    if (res.code == 200) {
+		                        vue.displayZfList = res.data.zfmxes;
+		                    }
+		                });
+		            // 智能推荐
+		            $.ajax({
+	            	    url: 'http://fin.jrfacai.com/home/zryxes_api/conlistApi',
+	                    type: 'GET',
+	                    async: false,
+	                    dataType: 'json',
+	                    data: {
+                            num:3,
+                        },
+	                })
+	                .done(function(res) {
+	                    if (res.code == 200) {
+	                        vue.displayZryList = res.data.zryx;
+	                    }
+	                });
+		            
 		
 		            // 热门头条
 		            $.ajax({

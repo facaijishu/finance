@@ -34,20 +34,11 @@
 				<a href="/static/frontend/selectedProjects.html" class="pull-left text-center s_actived">
                		<span>精选</span>
 				</a>
-                <a href="/static/frontend/stockRights.html" class="pull-left text-center s_active">
-              	   <span>股权</span>
+                <a href="/static/frontend/conlist.html" class="pull-left text-center s_active">
+              		<span style="font-weight:bold;">定增</span>
            		</a>
-                <a href="/static/frontend/creditorRights.html" class="pull-left text-center s_active">
-               		<span>债权</span>
-           		</a>
-                <a href="/static/frontend/startBusiness.html" class="pull-left text-center s_active">
-               		<span>创业</span>
-           		</a>
-                <a href="/static/frontend/market.html" class="pull-left text-center s_active">
-               		<span>上市</span>
-           		</a>
-                <a href="/static/frontend/other.html" class="pull-left text-center s_active">
-               		<span>其他</span>
+                <a href="/static/frontend/transfer.html" class="pull-left text-center s_active">
+               		<span style="font-weight:bold;">大宗</span>
            		</a>
 			</div>
         </section>
@@ -72,14 +63,9 @@
 				            </div>
 			        	</div>
 		    		</a>
-		    		<a href="/static/frontend/intelligentMatch.html" v-show="(index+1)%6==0" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(/static/frontend/images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
-	            </div>  
-	        </template>
-	        <template v-else>
-	            <div>
-	                <a href="/static/frontend/intelligentMatch.html" class="dbk text-center c_white" style="width:260px;height:34px;line-height:34px;background-image:url(/static/frontend/images/index-button.png);background-size:260px 34px;margin: 0 auto 10px;">精准匹配 选择偏好标签 ></a>
 	            </div>
 	        </template>
+	        
         </section>
         <div id="more" class="mt10 mb10 ofh" style="height: 100px;">
 			<div style="margin-left: 20%; margin-top: 10px;">
@@ -161,6 +147,62 @@
 	                        }
 	                    }
 	                });
+	                
+	             // 加载微信配置
+		            $.ajax({
+		                url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+		                type: 'GET',
+		                dataType: 'JSON',
+		                async: false,
+		                data: {"link": window.location.href},
+		            })
+		            .done(function(res) {
+		                if (res.code == 200) {
+		                    vue.appId = res.data.appId;
+		                    vue.noncestr = res.data.noncestr;
+		                    vue.signature = res.data.signature;
+		                    vue.timestamp = res.data.timestamp;
+		                }
+		            });
+            		
+		            vue.share = {
+			                "title": "FA財-精选推荐",
+			                "desc": "一站式智能投融信息交互平台",
+			                "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+			            };
+			
+		            wx.config({
+		                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		                appId: vue.appId, // 必填，公众号的唯一标识
+		                timestamp: vue.timestamp, // 必填，生成签名的时间戳
+		                nonceStr: vue.noncestr, // 必填，生成签名的随机串
+		                signature: vue.signature,// 必填，签名
+		                jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+		            });
+		            
+		            var shareLink = window.location.href;
+		            if (ui.userType == 1 || ui.userType == 2) {
+		                shareLink = "http://fin.jrfacai.com/static/frontend/selectedProjects.html?superior="+ui.uid;
+		            }
+		            wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+		                wx.onMenuShareAppMessage({ 
+		                    title: vue.share.title, // 分享标题
+		                    desc: vue.share.desc, // 分享描述
+		                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+		                    imgUrl: vue.share.imgUrl, // 分享图标
+		                    success: function () {
+		                      // 设置成功
+		                    }
+		                });
+		                wx.onMenuShareTimeline({ 
+		                    title: vue.share.title, // 分享标题
+		                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+		                    imgUrl: vue.share.imgUrl, // 分享图标
+		                    success: function () {
+		                      // 设置成功
+		                    }
+		                });
+		            });
 	            });
 	        },
 	        methods: {
