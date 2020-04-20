@@ -3,7 +3,7 @@
 {include file="base/dividend" /}
     <link rel="stylesheet" href="__HOME__/css/financial.css">
     <div class="headear_title">
-	    <div class="header_font"><span style="font-size:70%;">{$title2}-资产负债表</span></div>
+	    <div class="header_font"><span style="font-size:14px;">{$title2}-资产负债表</span></div>
 		<div class="header_icon"></div>
 	</div>
 	<div class="header_nav" style="display:none;">
@@ -27,7 +27,7 @@
             <ul class="list4 li">
 				{foreach name = "$info.cwbbs1" item = "it"}
 					{if condition="($it.name == '流动资产：') OR ($it.name == '流动资产合计(元)') OR ($it.name == '非流动资产：') OR ($it.name == '非流动资产合计(元)') OR ($it.name == '资产总计(元)') OR ($it.name == '流动负债：') OR ($it.name == '流动负债合计(元)') OR ($it.name == '非流动负债：') OR ($it.name == '负债合计(元)') OR ($it.name == '所有者权益（或股东权益）：') OR ($it.name == '归属于母公司股东权益合计(元)') OR ($it.name == '股东权益合计(元)') OR ($it.name == '负债和股东权益合计(元)')"}
-					<li class="red" style="font-size:12px;"><div class="linner" style="width:55%;"><span style="font-size:12px;">{$it.name}</span></div></li>
+					<li class="blue" style="font-size:12px;"><div class="linner" style="width:55%;"><span style="font-size:12px;">{$it.name}</span></div></li>
 					{else /}
 					<li><div class="linner" style="width:55%;"><span style="font-size:12px;">{$it.name}</span></div></li>
 					{/if}
@@ -56,9 +56,9 @@
 	<div style="width:100%;height:60px;"></div>
 	<div class="header_footer">
 	    <div class="header_con">
-			<div class="footer_left line_footer bg" style="font-size:80%" data-id="3">最新</div>
-			<div class="footer_center line_footer" style="font-size:80%" data-id="1">年报</div>
-			<div class="footer_right line_footer" style="font-size:80%" data-id="2">中报</div>
+			<div class="footer_left line_footer bg" style="font-size:14px;" data-id="3">最新</div>
+			<div class="footer_center line_footer" style="font-size:14px;" data-id="1">年报</div>
+			<div class="footer_right line_footer" style="font-size:14px;" data-id="2">中报</div>
 		</div>
 	</div>
 	<!--阴影层-->
@@ -117,7 +117,7 @@
 		var arr = [];
 		var arr2 = [];
 		$(".li li").each(function(){
-		    if($(this).hasClass("red")){
+		    if($(this).hasClass("blue")){
 		       var num = $(this).index();
 			   arr.push(num);
 		    }
@@ -128,7 +128,7 @@
 		});
 		for(var i=0;i<arr.length;i++){
 		   $(".list4").each(function(){
-			  $(this).children().eq(arr[i]).addClass("red");
+			  $(this).children().eq(arr[i]).addClass("blue");
 		   });
 		}
 		//隔行变色
@@ -235,7 +235,7 @@
 					$(".swiper-wrapper").html(str);
 					for(var i=0;i<arr.length;i++){
 					   $(".list4").each(function(){
-						  $(this).children().eq(arr[i]).addClass("red");
+						  $(this).children().eq(arr[i]).addClass("blue");
 					   });
 					}
 					child_hide();
