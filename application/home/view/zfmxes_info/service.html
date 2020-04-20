@@ -1,15 +1,27 @@
 {include file="base/header" /}
-   <style>
-img{
-   pointer-events:auto !important;
-}
+<style>
+	img{
+	   pointer-events:auto !important;
+	}
+	.bgp{
+		wdith:353px;
+		height:328px;
+		background: url('/static/home/css/img/qrbgp.png') center  #fff;
+		background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+		background-size: 353px 328px;
+	}
+ }
 </style>
-    <body>
+    <body style="background:#fff;">
         {include file="base/dividend" /}
-        <div class="service">
-             <p>感谢您关注我们的项目,请扫描下图二维码进入公众号与您的专属客服进行交流。</p>
-            <p>如有任何疑问请拨打电话：13818807894</p>
-            <img src="__PROJECT__/code/{$info.add.qr_code}" alt="二维码">
+        <div>
+            <div class="bgp">
+        		<img style="margin-top:48px;" src="__PROJECT__/code/{$info.add.qr_code}" width="130" height="130"  alt="客服二维码">
+        	</div>
+            <div style="line-height:25px;font-size:14px;font-weight:bold;text-align:center;color:#c7c7c7">感谢您关注我们的项目，<br/>请长按或扫描上方二维码联系微信专属客服。<br/>如有疑问，请拨打客服电话：13818807894</div>
         </div>
     </body>
 </html>
+

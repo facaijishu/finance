@@ -3,87 +3,170 @@
 <script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
 <script type="text/javascript" src="/static/frontend/js/component.js"></script>
 <style>
-.news-box ul{padding: 0 20px 10px 20px;}
-.news-box .list ul{padding: 0 100px 20px 20px;}
-.of{
-  padding: 0 0px 15px 0px !important;
-}
-.information2{
-  background-color:#fff !important;
-}
-.op{
-  /*overflow:visible !important;*/
-  height:auto !important;
-}
-
-.news-tab1{
-	height: 44px;
-    padding: 7px 0.5rem;
-    line-height: 30px;
-    background: #fff;
-	color:#000;
-	overflow:hidden;
-}
-.news-tab1 > div{
-    width:23%;
-    float:left;
-	font-size:0.85rem;
-}
-.news-tab1 > div+div{
-    margin-left:2%;
-}
-.border{
-    border-bottom:1px solid #eee;
-}
-.news-tab1 .actived {
-    background: white;
-    border-radius: 20px;
-    background-color: #CBA054;
-	color:#fff;
-}
-.info-chart{
-    position:relative;
-}
-.info-chart .pos{
-    width:60px;
-	outline:none;
-	position:absolute;
-	top:5px;
-	right:30px;
-}
-.news-box .actived {
-    background: #eee !important;
-}
-.swiper-container1{
-    width:150px !important;
-	margin-right:50px !important;
-}
-@media screen and (max-width: 350px) and (min-width: 320px) {
-    .info-chart .pos{
-		width:60px;
+	.news-box ul{padding: 0 20px 10px 20px;}
+	.news-box .list ul{padding: 0 100px 20px 20px;}
+	.of{
+		padding: 0 0px 15px 0px !important;
+	}
+	.information2{
+	  	background-color:#fff !important;
+	}
+	.op{
+	  	/*overflow:visible !important;*/
+	  	height:auto !important;
+	}
+	
+	.news-tab1{
+		height: 44px;
+	    padding: 7px 0.5rem;
+	    line-height: 30px;
+	    background: #fff;
+		color:#000;
+		overflow:hidden;
+	}
+	.news-tab1 > div{
+	    width:23%;
+	    float:left;
+		font-size:0.85rem;
+	}
+	.news-tab1 > div+div{
+	    margin-left:2%;
+	}
+	.border{
+	    border-bottom:1px solid #eee;
+	}
+	.news-tab1 .actived {
+	    background: white;
+	    border-radius: 20px;
+	    background-color: #CBA054;
+		color:#fff;
+	}
+	.info-chart{
+	    position:relative;
+	}
+	.info-chart .pos{
+	    width:60px;
 		outline:none;
 		position:absolute;
 		top:5px;
-		right:10px;
+		right:30px;
 	}
-}
+	.news-box .actived {
+	    background: #eee !important;
+	}
+	.swiper-container1{
+	    width:150px !important;
+		margin-right:50px !important;
+	}
+	@media screen and (max-width: 350px) and (min-width: 320px) {
+	    .info-chart .pos{
+			width:60px;
+			outline:none;
+			position:absolute;
+			top:5px;
+			right:10px;
+		}
+	}
+	
+	.pro-barh{
+    	width:100%;position:fixed;_position:absolute;bottom:0px;_bottom:0px;_margin-top:expression(this.style.pixelHeight+document.documentElement.scrollTop)
+  	}
+    .pro-barc{width:30%;float:left;}
+    .pro-barc  a{
+  	  	display:block;
+  	  	height:50px;
+  	  	line-height: 46px;
+	  	background: url('/static/home/css/img/icon-fav.png') center -0.25rem #fff;
+	  	background-size: 24px 20px;
+	 	 background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 0;
+	  	box-shadow: none;
+	  	color: #999999;
+	}
+	.pro-barc a.actived{
+		display:block;
+  	  	height:50px;
+  	  	line-height: 46px;
+	  	background: url('/static/home/css/img/icon-fav-on.png') center -0.25rem #fff;
+	  	background-size: 24px 20px;
+	  	background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 0;
+	 	box-shadow: none;
+	  	color: #999999;
+	}
+	.pro-barl{width:40%;float:left;}
+    .pro-barl  a{
+  	  	display:block;
+  	  	height:50px;
+  	  	line-height: 46px;
+	  	background: url('/static/home/css/img/icon-intention.png') center -0.25rem #fff;
+	  	background-size: 24px 20px;
+	 	 background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 0;
+	  	box-shadow: none;
+	  	color: #999999;
+	}
+	.pro-barl a.actived{
+		display:block;
+  	  	height:50px;
+  	  	line-height: 46px;
+	  	background: url('/static/home/css/img/icon-intention-on.png') center -0.25rem #fff;
+	  	background-size: 24px 20px;
+	  	background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 0;
+	 	box-shadow: none;
+	  	color: #999999;
+	}
+  	.pro-barw{width:30%;float:left;}
+  	.pro-barw  a{
+  	  	display:block;
+  	  	height:50px;
+  	  	line-height: 46px;
+	  	background: url('/static/home/css/img/icon-wechat-on.png') center -0.25rem #fff;
+	  	background-size: 24px 20px;
+	  	background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	  	margin: 0;
+	  	box-shadow: none;
+	  	color: #999999;
+	}
+	
+	.pro-bart{width:40%;float:right;}
+	.pro-bart a{
+	  	display:block;
+  	  	height:50px;
+  	  	line-height: 30px;
+	  	background: url('/static/home/css/img/callme.png') center  -0.25rem #fff;
+	  	background-size: 250px 38px;
+	  	background-attachment:scorll;
+	  	background-repeat:no-repeat;
+	  	background-position:top center;
+	  	padding: 6px 0 0 0px;
+	 	margin: 0;
+	  	box-shadow: none;
+	  	color: #ffffff;
+	  	text-align: center;
+	}
 </style>
 <body>
 {include file="base/dividend" /}
-    <!--
-    <div class="header-title2">
-        <div class="pull-left">
-            <a href="javascript:history.back(-1)"><i class="fa fa-angle-left" style="color: white;"></i></a>
-        </div>
-        <h1>【{$info.sec_uri_tyshortname}】详情页<small>{$info.neeq}</small></h1>
-    </div>
-    -->
     <div class="seos-box">
         <div class="seos-t3">
             <div class="fl ft"><strong>{$info.sec_uri_tyshortname}<small>【{$info.neeq}】</small></strong> <span class="ico-over">转让中</span></div>
-            <!--
-            <div class="fr"><a href="#" class="btn1 share_my_pro" data_upload="__UPLOAD__">转发分享</a></div>
-            -->
             <div class="my-pro client">
                 <div class="info-t">
                     <div class="fr"><a href="#" class="btn2">{$info['gszls']['xyfl']}</a></div>
@@ -101,37 +184,6 @@
             <li><div>是否可议价</div>{$info.isdiscount}</li>
             <li><div>截止时间</div>{$info.enddate}</li>
             <li><div>发布时间</div>{$info.noticedate}</li>
-        </ul>
-    </div>
-    <div class="info-box" style="display: none;">
-        <div class="my-pro">
-            <div class="info-t">
-                <div class="fl">
-                    <strong>
-                        <span class="c0">3.80</span>
-                        <small>
-                            <div>-0.05</div>
-                            <div>-1.30%</div>
-                        </small>
-                    </strong>
-                </div>
-                <div class="fr"><a href="#" class="btn2">电影和影视节目制作</a></div>
-            </div>
-            <div class="pro-label">
-                <div class="fl"><em class="c1">122</em><em class="c2">人有意向</em></div>
-                <label for="" class="red">基础层</label>
-                <label for="" class="orange">协议</label>
-            </div>
-        </div>
-        <ul class="table-1">
-            <li><div>今开</div>3.80</li>
-            <li><div>昨收</div>3.85</li>
-            <li><div>最高</div>3.80</li>
-            <li><div>最低</div>3.80</li>
-            <li><div>成交量（股）</div>100000股</li>
-            <li><div>成交额</div>1000万元</li>
-            <li><div>总股本</div>1.2324万股</li>
-            <li><div>流通股数</div>0.8234万股</li>
         </ul>
     </div>
     <div class="info-tab" style="margin: 10px 0 0 0;">
@@ -191,9 +243,7 @@
                 <div class="box-1">
                     <canvas id="myChart" width="240" height="240"></canvas>
                 </div>
-                <div class="box-2">
-                    截止日：{$info['gdyjs'][0]['jzrq']}<br />
-                    股东数：{$info.gdyjs_num}<br />
+                <div class="box-2">截止日：{$info['gdyjs'][0]['jzrq']}<br /> 股东数：{$info.gdyjs_num}<br />
                 </div>
                 <table class="table-2">
                     <therd>
@@ -291,8 +341,8 @@
         <div class="info-son-con" style="display: none;">
         {/if}
             <div class="info-chart">
-                <canvas id="chart-area-1"></canvas>
-				<h4 class="f-h4 change pos cli" style="z-index:1;">
+                <canvas id="chart-area-1" style="height:26px;"></canvas>
+				<h4 class="f-h4 change pos cli" style="z-index:1;height:26px;">
 					<div class="text">
 						<s>
 							<img src="__CSS__/img/arrdw.png">
@@ -921,17 +971,28 @@
         </ul>
         <div class="foot-tips">已到底部</div>
     </div>
-    <div class="bar-box"></div>
-    <div class="pro-bar">
-        <a href="{:url('ZryxesEffectInfo/service',['id'=>$info.id])}">联系客服</a>
-        <a href="{:url('ZryxesIntention/index',['id'=>$info.id])}">我有意向</a>
-        {if condition="$sign eq 'true'"}
-        <a class="collection active" data-id="{$info.id}"><i class="glyphicon glyphicon-heart" style="margin-right: 2px;color: #d7a44c;"></i>已收藏</a>
-        {else /}
-        <a class="collection" data-id="{$info.id}"><i class="glyphicon glyphicon-heart" style="margin-right: 2px;color: #d7a44c;display: none;"></i>收藏项目</a>
-        {/if}
+    
+    <div class="pro-barh" style="font-size:14px;">
+    	<div style="width:100%;height:20px;background:#ffffff;"></div>	
+    	 <div class="pro-barw">
+	        <a href="{:url('ZryxesEffectInfo/service',['id'=>$info.id])}">联系客服</a>
+        
+	    </div>
+	    <div class="pro-barl">
+		    {if condition="$intention eq 'true'"}
+	        <a class="intention actived" data-id="{$info.id}" data-neeq="{$info.neeq}">发送成功</a>
+	        {else /}
+	        <a class="intention" data-id="{$info.id}" data-neeq="{$info.neeq}">我有意向</a>
+	        {/if}
+	    </div>
+	    <div class="pro-barc">
+		    {if condition="$sign eq 'true'"}
+	        <a class="collection actived" data-id="{$info.id}">已收藏</a>
+        	{else /}
+	        <a class="collection" data-id="{$info.id}">收藏项目</a>
+        	{/if}
+	    </div>
     </div>
-
     <div id="shadeAuth" class="dno" style="background:#ffffff;width:100%;height:100%;position:absolute;top:0;left:0;"></div>
     <!-- 认证模态框 -->
     <div class="modal fade in" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-describedby="公众号二维码">
@@ -966,6 +1027,15 @@
             </div>
         </div>
     </div>
+    
+    <!-- 提示框 -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
+        <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
+            <div class="modal-content" style="border:0;">
+                <div class="modal-body text-center"></div>
+            </div>
+        </div>
+    </div>
     <script src="__HOME__/js/weixin_share.js"></script>
     <script>
         if (ui.userType == 0) {
@@ -985,9 +1055,9 @@
 
         var upload_url = $(".share_my_pro").attr("data_upload");
         $(".collection").on("click", function () {
-            var _this = $(this);
-            var id = _this.attr("data-id");
-            if (_this.hasClass("active")) {
+            var _this 	= $(this);
+            var id 		= _this.attr("data-id");
+            if (_this.hasClass("actived")) {
                 var sign = 'false';
             } else {
                 var sign = 'true';
@@ -998,19 +1068,51 @@
                 type: "POST",
                 dataType: 'json',
                 success: function (resp) {
-                    alert(resp.msg);
+                	alertModal(resp.msg);
                     if (resp.code) {
-                        if (_this.hasClass("active")) {
-                            _this.removeClass("active");
+                        if (_this.hasClass("actived")) {
+                            _this.removeClass("actived");
                             _this.html("收藏项目");
                         } else {
-                            _this.addClass("active");
-                            _this.html('<i class="glyphicon glyphicon-heart" style="margin-right: 2px;color: #d7a44c;"></i>已收藏');
+                            _this.addClass("actived");
+                            _this.html('已收藏');
                         }
                     }
                 }
             });
         });
+        
+        $(".intention").on("click",function(){
+            var _this 			= $(this);
+            var id 				= _this.attr("data-id");
+            var neeq  			= _this.attr("data-neeq");
+            if(_this.hasClass("actived")){
+            	alertModal("已经发送");
+            }else{
+            	$.ajax({
+                    url: "{:url('ZryxesEffectInfo/purpose')}",
+                    data: {neeq:neeq,id:id},
+                    type: "POST",
+                    dataType: 'json',
+                    success: function(resp){
+                    	alertModal(resp.msg);
+                        if(resp.code){
+                            _this.addClass("actived");
+                            _this.html('发送成功');
+                       }
+                    }
+                });
+            }
+            
+        });
+        
+        function alertModal(msg) {
+            $("#alertModal").find('.modal-body').html(msg);
+            $("#alertModal").modal("show");
+            setTimeout(function() {
+                $("#alertModal").modal("hide");
+            }, msg.length / 7 * 1000);
+        }
     </script>
     <script>
 	/***
