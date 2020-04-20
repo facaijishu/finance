@@ -4,23 +4,42 @@ namespace app\home\controller;
 class ZryxesEffectInfo extends Base
 {
     public function index(){
-        $id = $this->request->param('id/d');
-        $user = $this->jsGlobal;
+        $id     = $this->request->param('id/d');
+        $user   = $this->jsGlobal;
         if(in_array($id, explode(',', $user['member']['collection_zryxes']))){
             $this->assign('sign' , 'true');
         } else {
             $this->assign('sign' , 'false');
         }
+        
+        
         $model = model("ZryxesEffect");
          //查看人数+1
         $model->where(['id'=>$id])->setInc('view_num');
+        
         $info = $model->getZryxesEffectCompleteInfo($id);
         if(empty($info['noticedate'])){
             $info['noticedate'] = $info['created_at'];
+            
+            if ($info['num'] >= 100000000) {
+                $info['num'] = round($info['num']/100000000,2).'亿';
+            } elseif ($info['num'] >= 10000) {
+                $info['num'] = round($info['num']/10000,2).'万';
+            }
         }
-//        $info['enddate'] = substr($info['enddate'], 0 ,10);
+        
+        $model_i    = model("ZryxesIntention");
+        $intent     = $model_i->getById($info['neeq'],$user['member']['uid']);
+        if($intent['id']>0){
+            $this->assign('intention' , 'true');
+        }else{
+            $this->assign('intention' , 'false');
+        }
+        
         //圆盘Pie
-        $data = [];$color = [];$name = [];
+        $data   = [];
+        $color  = [];
+        $name   = [];
         $colors = ['#2e84cf','#308f8e','#f5a362','#3347c1','#74d8d8','#e4d03a','#9dcd7d','#39f0f0','#ee3130','#f05d80','#902c8e'];
         foreach ($info['gdyjs'] as $key => $value) {
             array_push($data, $value['cgsl']);
@@ -38,14 +57,20 @@ class ZryxesEffectInfo extends Base
         $this->assign('pie_data' , json_encode($data));
         $this->assign('pie_name' , json_encode($name));
         $this->assign('pie_color' , json_encode($color));
+        
 		//占比总数
 		$t = 0;
 		foreach($info['gdyjs'] as $key=>$value){
 			$t = $t+$value['fen'];
 		}
 		$this->assign("t",$t);
-        //树状图 - 利润(年报，中报)
-        $data = [];$color = [];$name = [];$zhong = [];$name_zhong=[];
+		
+		//利润(年报，中报)- 树状图 
+        $data       = [];
+        $color      = [];
+        $name       = [];
+        $zhong      = [];
+        $name_zhong = [];
         foreach ($info['lirun'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -59,7 +84,6 @@ class ZryxesEffectInfo extends Base
 			}
             array_push($color, $colors[2]);
         }
-		//var_dump($info['lirun']);
         $this->assign('lirun' , json_encode($info['lirun']));
         $this->assign('lirun_data' , json_encode($data));
 		//中报数据
@@ -68,8 +92,11 @@ class ZryxesEffectInfo extends Base
 		//中报时间
 		$this->assign('lirun_name_zhong' , json_encode($name_zhong));
         $this->assign('lirun_color' , json_encode($color));
-        //树状图 - 利润比
-        $data = [];$color = [];$lirun_bi_zhong = [];
+        
+        //利润比- 树状图 
+        $data           = [];
+        $color          = [];
+        $lirun_bi_zhong = [];
         foreach ($info['lirun_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -86,8 +113,13 @@ class ZryxesEffectInfo extends Base
         $this->assign('lirun_bi_data' , json_encode($data));
 		$this->assign('lirun_bi_zhong' , json_encode($lirun_bi_zhong));
         $this->assign('lirun_bi_color' , json_encode($color));
-        //树状图 - 营业收入
-        $data = [];$color = [];$name = [];$yingye_zhong = [];$yingye_time_zhong = [];
+        
+        //营业收入- 树状图 
+        $data               = [];
+        $color              = [];
+        $name               = [];
+        $yingye_zhong       = [];
+        $yingye_time_zhong  = [];
         foreach ($info['shouru'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -109,8 +141,11 @@ class ZryxesEffectInfo extends Base
 		$this->assign('yingye_zhong' , json_encode($yingye_zhong));
         $this->assign('yingye_time_zhong' , json_encode($yingye_time_zhong));
         $this->assign('shouru_color' , json_encode($color));
-        //树状图 - 营业收入比
-        $data = [];$color = [];$ying_bi_zhong = [];
+        
+        //营业收入比- 树状图 
+        $data           = [];
+        $color          = [];
+        $ying_bi_zhong  = [];
         foreach ($info['shouru_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -127,8 +162,13 @@ class ZryxesEffectInfo extends Base
         $this->assign('shouru_bi_data' , json_encode($data));
 		$this->assign('ying_bi_zhong' , json_encode($ying_bi_zhong));
         $this->assign('shouru_bi_color' , json_encode($color));
-        //树状图 - 每股净资产
-        $data = [];$color = [];$name = [];$jing_zhong = [];$jing_time = [];
+        
+        //每股净资产 - 树状图
+        $data       = [];
+        $color      = [];
+        $name       = [];
+        $jing_zhong = [];
+        $jing_time  = [];
         foreach ($info['zichan'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -151,10 +191,12 @@ class ZryxesEffectInfo extends Base
 		
 		$this->assign('jing_zhong' , json_encode($jing_zhong));
         $this->assign('jing_time' , json_encode($jing_time));
-		
         $this->assign('zichan_color' , json_encode($color));
+        
         //树状图 - 每股净资产比
-        $data = [];$color = [];$jing_bi_zhong = [];
+        $data           = [];
+        $color          = [];
+        $jing_bi_zhong  = [];
         foreach ($info['zichan_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -169,12 +211,15 @@ class ZryxesEffectInfo extends Base
         array_push($color, '#E53434');
         $this->assign('zichan_bi' , json_encode($info['zichan_bi']));
         $this->assign('zichan_bi_data' , json_encode($data));
-		
 		$this->assign('jing_bi_zhong' , json_encode($jing_bi_zhong));
-		
         $this->assign('zichan_bi_color' , json_encode($color));
+        
         //树状图 - 每股现金流
-        $data = [];$color = [];$name = [];$xianjin_zhong=[];$xianjin_time_zhong = [];
+        $data               = [];
+        $color              = [];
+        $name               = [];
+        $xianjin_zhong      = [];
+        $xianjin_time_zhong = [];
         foreach ($info['xianjinliu'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -193,13 +238,14 @@ class ZryxesEffectInfo extends Base
         $this->assign('xianjinliu' , json_encode($info['xianjinliu']));
         $this->assign('xianjinliu_data' , json_encode($data));
         $this->assign('xianjinliu_name' , json_encode($name));
-		
 		$this->assign('xianjin_zhong' , json_encode($xianjin_zhong));
         $this->assign('xianjin_time_zhong' , json_encode($xianjin_time_zhong));
-		
         $this->assign('xianjinliu_color' , json_encode($color));
+        
         //树状图 - 每股现金流比
-        $data = [];$color = [];$xianjin_bi_zhong = [];
+        $data               = [];
+        $color              = [];
+        $xianjin_bi_zhong   = [];
         foreach ($info['xianjinliu_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -213,12 +259,15 @@ class ZryxesEffectInfo extends Base
         array_push($color, '#E53434');
         $this->assign('xianjinliu_bi' , json_encode($info['xianjinliu_bi']));
         $this->assign('xianjinliu_bi_data' , json_encode($data));
-		
 		$this->assign('xianjin_bi_zhong' , json_encode($xianjin_bi_zhong));
-		
         $this->assign('xianjinliu_bi_color' , json_encode($color));
+        
         //树状图 - 毛利率
-        $data = [];$color = [];$name = [];$lilv_zhong=[];$lilv_time_zhong = [];
+        $data            = [];
+        $color           = [];
+        $name            = [];
+        $lilv_zhong      = [];
+        $lilv_time_zhong = [];
         foreach ($info['maolilv'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -411,10 +460,11 @@ class ZryxesEffectInfo extends Base
         $this->assign('des' , $title);
         return view();
     }
+    
     public function collection(){
-        $sign = $this->request->param('sign/s');
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
+        $sign   = $this->request->param('sign/s');
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
         if($model->setCollection($id , $sign)){
             if($sign == 'true'){
                 $this->result('', 1, '收藏成功', 'json');
@@ -426,15 +476,69 @@ class ZryxesEffectInfo extends Base
             $this->result('', 0, $error, 'json');
         }
     }
+    
     public function service(){
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
-        $info = $model->getZryxesEffectSimpleInfo($id);
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
+        $info   = $model->getZryxesEffectSimpleInfo($id);
         $this->assign('info' , $info);
-        $this->assign('title' , '联系客服 -');
+        $this->assign('title' , '联系客服');
         $this->assign('img' , '');
         $this->assign('des' , '金融合伙人客服很高兴为您服务!');
         return view();
+    }
+    
+    /**
+     * 申请意向提交
+     */
+    public function purpose(){
+        $id     = $this->request->param('id/d');
+        $neeq   = $this->request->param('neeq/s');
+        $user   = $this->jsGlobal;
+        $model  = model("ZryxesIntention");
+        $intent = $model->getById($neeq,$user['member']['uid']);
+        if(empty($intent)){
+            $data   = [];
+            $data['company']         = $user['member']['company'];
+            $data['phone']           = $user['member']['userPhone'];
+            $data['create_uid']      = $user['member']['uid'];
+            $data['id']              = $id;
+            $data['num']             = 1;
+            $data['money']           = 1;
+            if($model->createZryxesIntention($data)){
+                $this->sendWechat($user['member']['uid'],$user['member']['userName'],$user['member']['userPhone'],$user['member']['company'],$neeq);
+                $this->result($data, 1, '意向登记成功', 'json');
+            }else{
+                $error = $model->getError() ? $model->getError() : '意向登记失败';
+                $this->result('', 0, $error, 'json');
+            }
+        }else{
+            $error  = '你已经登记过了';
+            $this->result('', 0, $error, 'json');
+        }
+    }
+    
+    /**
+     * 发送大宗项目咨询的微信推动消息
+     * @param 微信昵称 $name
+     * @param 手机号码 $phone
+     * @param 股票代码 $neeq
+     */
+    public function  sendWechat($uid,$name,$phone,$company,$neeq){
+        $template_id = "rQ53Qg49ZU-9oOCINXeqTMydpBsu-VaIgGwJuF9Oz-U";
+        $openid      = "osmRL1gkuFXpLndZtwRhqzZv5PWo";
+        $array = [
+            'first'    => ['value' => '你有一条来自大宗项目【'.$neeq.'】的意向咨询' , 'color' => '#173177'],
+            'keyword1' => ['value' => $name."(".$phone.")" , 'color' => '#777777'],
+            'keyword2' => ['value' => $company.'的人员对大宗项目【'.$neeq.'】有意向' , 'color' => '#777777'],
+            'remark'   => ['value' => '点击立即沟通吧!' , 'color' => '#173177'],
+        ];
+        wechatLog("大宗咨询的微信消息推送开始");
+        //$re = sendTemplateMessage($template_id, $openid, $_SERVER['SERVER_NAME'].'/console/index/index#/console/intention/index/menu_id/209/menu_type/1', $array);
+        $re = sendTemplateMessage($template_id, $openid, $_SERVER['SERVER_NAME'].'/home/chat/index/to_uid/'.$uid, $array);
+        
+        wechatLog("大宗咨询的推送结果为：".json_encode($re));
+        wechatLog("大宗咨询的微信消息推送结束");
     }
 
     public function company(){
@@ -845,5 +949,4 @@ class ZryxesEffectInfo extends Base
         $this->assign('des' , $title);
         return view();
     }
-
 }

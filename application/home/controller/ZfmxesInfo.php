@@ -4,18 +4,32 @@ namespace app\home\controller;
 class ZfmxesInfo extends Base
 {
     public function index(){
-        $neeq = $this->request->param('neeq/s');
-        $plannoticeddate = $this->request->param('plannoticeddate/s');
+        $neeq               = $this->request->param('neeq/s');
+        $plannoticeddate    = $this->request->param('plannoticeddate/s');
         $user = $this->jsGlobal;
         if(in_array($neeq.'_'.$plannoticeddate, explode(',', $user['member']['collection_zfmxes']))){
             $this->assign('sign' , 'true');
         } else {
             $this->assign('sign' , 'false');
         }
+        
+        $model      = model("ZfmxesIntention");
+        $intent     = $model->getById($neeq,$user['member']['uid']);
+        
+        if($intent['id']>0){
+            $this->assign('intention' , 'true');
+        }else{
+            $this->assign('intention' , 'false');
+        }
+        
+        
         $model = model("Zfmxes");
-        $info = $model->getZfmxesCompleteInfo($neeq , $plannoticeddate);
+        $info  = $model->getZfmxesCompleteInfo($neeq , $plannoticeddate);
+        
         //圆盘Pie
-        $data = [];$color = [];$name = [];
+        $data   = [];
+        $color  = [];
+        $name   = [];
         $colors = ['#2e84cf','#308f8e','#f5a362','#3347c1','#74d8d8','#e4d03a','#9dcd7d','#39f0f0','#ee3130','#f05d80','#902c8e'];
         foreach ($info['gdyjs'] as $key => $value) {
             array_push($data, $value['cgsl']);
@@ -33,6 +47,7 @@ class ZfmxesInfo extends Base
         $this->assign('pie_data' , json_encode($data));
         $this->assign('pie_name' , json_encode($name));
         $this->assign('pie_color' , json_encode($color));
+        
 		//占比总数
 		$t = 0;
 		foreach($info['gdyjs'] as $key=>$value){
@@ -81,8 +96,13 @@ class ZfmxesInfo extends Base
         $this->assign('lirun_bi_data' , json_encode($data));
 		$this->assign('lirun_bi_zhong' , json_encode($lirun_bi_zhong));
         $this->assign('lirun_bi_color' , json_encode($color));
+        
         //树状图 - 营业收入
-        $data = [];$color = [];$name = [];$yingye_zhong = [];$yingye_time_zhong = [];
+        $data               = [];
+        $color              = [];
+        $name               = [];
+        $yingye_zhong       = [];
+        $yingye_time_zhong  = [];
         foreach ($info['shouru'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -94,9 +114,7 @@ class ZfmxesInfo extends Base
 				array_push($data, round($value['xmsz']/10000));
 				array_push($name, $value['bbrq']);
 			}
-            //array_push($data, round($value['xmsz']/10000));
             array_push($color, $colors[2]);
-            //array_push($name, $value['bbrq']);
         }
         $this->assign('shouru' , json_encode($info['shouru']));
         $this->assign('shouru_data' , json_encode($data));
@@ -104,6 +122,7 @@ class ZfmxesInfo extends Base
 		$this->assign('yingye_zhong' , json_encode($yingye_zhong));
         $this->assign('yingye_time_zhong' , json_encode($yingye_time_zhong));
         $this->assign('shouru_color' , json_encode($color));
+        
         //树状图 - 营业收入比
         $data = [];$color = [];$ying_bi_zhong = [];
         foreach ($info['shouru_bi'] as $key => $value) {
@@ -115,7 +134,6 @@ class ZfmxesInfo extends Base
 				//说明是年报
 				array_push($data, $value['xmsz']);
 			}
-            //array_push($data, $value['xmsz']);
         }
         array_push($color, '#E53434');
         $this->assign('shouru_bi' , json_encode($info['shouru_bi']));
@@ -123,7 +141,11 @@ class ZfmxesInfo extends Base
 		$this->assign('ying_bi_zhong' , json_encode($ying_bi_zhong));
         $this->assign('shouru_bi_color' , json_encode($color));
         //树状图 - 每股净资产
-        $data = [];$color = [];$name = [];$jing_zhong = [];$jing_time = [];
+        $data       = [];
+        $color      = [];
+        $name       = [];
+        $jing_zhong = [];
+        $jing_time  = [];
         foreach ($info['zichan'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -135,21 +157,19 @@ class ZfmxesInfo extends Base
 				array_push($data, $value['xmsz']);
 				array_push($name, $value['bbrq']);
 			}
-			
-            //array_push($data, $value['xmsz']);
             array_push($color, $colors[2]);
-            //array_push($name, $value['bbrq']);
         }
         $this->assign('zichan' , json_encode($info['zichan']));
         $this->assign('zichan_data' , json_encode($data));
         $this->assign('zichan_name' , json_encode($name));
-		
 		$this->assign('jing_zhong' , json_encode($jing_zhong));
         $this->assign('jing_time' , json_encode($jing_time));
-		
         $this->assign('zichan_color' , json_encode($color));
+        
         //树状图 - 每股净资产比
-        $data = [];$color = [];$jing_bi_zhong = [];
+        $data           = [];
+        $color          = [];
+        $jing_bi_zhong  = [];
         foreach ($info['zichan_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -159,17 +179,19 @@ class ZfmxesInfo extends Base
 				//说明是年报
 				array_push($data, $value['xmsz']);
 			}
-            //array_push($data, $value['xmsz']);
         }
         array_push($color, '#E53434');
         $this->assign('zichan_bi' , json_encode($info['zichan_bi']));
         $this->assign('zichan_bi_data' , json_encode($data));
-		
 		$this->assign('jing_bi_zhong' , json_encode($jing_bi_zhong));
-		
         $this->assign('zichan_bi_color' , json_encode($color));
+        
         //树状图 - 每股现金流
-        $data = [];$color = [];$name = [];$xianjin_zhong=[];$xianjin_time_zhong = [];
+        $data               = [];
+        $color              = [];
+        $name               = [];
+        $xianjin_zhong      = [];
+        $xianjin_time_zhong = [];
         foreach ($info['xianjinliu'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -181,20 +203,19 @@ class ZfmxesInfo extends Base
 				array_push($data, $value['xmsz']);
 				array_push($name, $value['bbrq']);
 			}
-            //array_push($data, $value['xmsz']);
             array_push($color, $colors[2]);
-            //array_push($name, $value['bbrq']);
         }
         $this->assign('xianjinliu' , json_encode($info['xianjinliu']));
         $this->assign('xianjinliu_data' , json_encode($data));
         $this->assign('xianjinliu_name' , json_encode($name));
-		
 		$this->assign('xianjin_zhong' , json_encode($xianjin_zhong));
         $this->assign('xianjin_time_zhong' , json_encode($xianjin_time_zhong));
-		
         $this->assign('xianjinliu_color' , json_encode($color));
+        
         //树状图 - 每股现金流比
-        $data = [];$color = [];$xianjin_bi_zhong = [];
+        $data               = [];
+        $color              = [];
+        $xianjin_bi_zhong   = [];
         foreach ($info['xianjinliu_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -208,12 +229,15 @@ class ZfmxesInfo extends Base
         array_push($color, '#E53434');
         $this->assign('xianjinliu_bi' , json_encode($info['xianjinliu_bi']));
         $this->assign('xianjinliu_bi_data' , json_encode($data));
-		
 		$this->assign('xianjin_bi_zhong' , json_encode($xianjin_bi_zhong));
-		
         $this->assign('xianjinliu_bi_color' , json_encode($color));
+        
         //树状图 - 毛利率
-        $data = [];$color = [];$name = [];$lilv_zhong=[];$lilv_time_zhong = [];
+        $data            = [];
+        $color           = [];
+        $name            = [];
+        $lilv_zhong      = [];
+        $lilv_time_zhong = [];
         foreach ($info['maolilv'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -225,21 +249,19 @@ class ZfmxesInfo extends Base
 				array_push($data, $value['xmsz']);
 				array_push($name, $value['bbrq']);
 			}
-			
-            //array_push($data, $value['xmsz']);
             array_push($color, $colors[2]);
-            //array_push($name, $value['bbrq']);
         }
         $this->assign('maolilv' , json_encode($info['maolilv']));
         $this->assign('maolilv_data' , json_encode($data));
         $this->assign('maolilv_name' , json_encode($name));
-		
 		$this->assign('lilv_zhong' , json_encode($lilv_zhong));
         $this->assign('lilv_time_zhong' , json_encode($lilv_time_zhong));
-		
         $this->assign('maolilv_color' , json_encode($color));
+        
         //树状图 - 毛利率比
-        $data = [];$color = [];$lilv_bi_zhong = [];
+        $data           = [];
+        $color          = [];
+        $lilv_bi_zhong  = [];
         foreach ($info['maolilv_bi'] as $key => $value) {
 			$t = explode("-",$value['bbrq']);
 			if($t[1] != "12"){
@@ -400,6 +422,10 @@ class ZfmxesInfo extends Base
         $this->assign('des' , '这里有最详细的增发明细!');
         return view();
     }
+    
+    /**
+     * 收藏项目
+     */
     public function collection(){
         $sign = $this->request->param('sign/s');
         $neeq = $this->request->param('neeq/s');
@@ -416,6 +442,8 @@ class ZfmxesInfo extends Base
             $this->result('', 0, $error, 'json');
         }
     }
+    
+    
     public function service(){
         $neeq = $this->request->param('neeq/s');
         $plannoticeddate = $this->request->param('plannoticeddate/s');
@@ -426,5 +454,58 @@ class ZfmxesInfo extends Base
         $this->assign('img' , '');
         $this->assign('des' , '金融合伙人客服很高兴为您服务!');
         return view();
+    }
+    
+    /**
+     * 申请意向提交
+     */
+    public function purpose(){
+        $neeq               = $this->request->param('neeq/s');
+        $plannoticeddate    = $this->request->param('plannoticeddate/s');
+        $user               = $this->jsGlobal;
+        $model              = model("ZfmxesIntention");
+        $intent             = $model->getById($neeq,$user['member']['uid']);
+        if(empty($intent)){
+            $data   = [];
+            $data['company']         = $user['member']['company'];
+            $data['phone']           = $user['member']['userPhone'];
+            $data['create_uid']      = $user['member']['uid'];
+            $data['neeq']            = $neeq;
+            $data['plannoticeddate'] = $plannoticeddate;
+            $data['num']             = 1;
+            $data['money']           = 1;
+            if($model->createZfmxesIntention($data)){
+                $this->sendWechat($user['member']['uid'],$user['member']['userName'],$user['member']['userPhone'],$user['member']['company'],$neeq);
+                $this->result($data, 1, '意向登记成功', 'json');
+            }else{
+                $error = $model->getError() ? $model->getError() : '意向登记失败';
+                $this->result('', 0, $error, 'json');
+            }
+        }else{
+            $error  = '你已经登记过了';
+            $this->result('', 0, $error, 'json');
+        }
+    }
+    
+    /**
+     * 发送定增项目咨询的微信推动消息
+     * @param 微信昵称 $name
+     * @param 手机号码 $phone
+     * @param 股票代码 $neeq
+     */
+    public function  sendWechat($uid,$name,$phone,$company,$neeq){
+        $template_id = "rQ53Qg49ZU-9oOCINXeqTMydpBsu-VaIgGwJuF9Oz-U";
+        $openid      = "osmRL1gkuFXpLndZtwRhqzZv5PWo";
+        $array = [
+            'first'    => ['value' => '你有一条来自定增项目【'.$neeq.'】的意向咨询' , 'color' => '#173177'],
+            'keyword1' => ['value' => $name."(".$phone.")" , 'color' => '#777777'],
+            'keyword2' => ['value' => $company.'的人员对定增项目【'.$neeq.'】有意向' , 'color' => '#777777'],
+            'remark'   => ['value' => '点击立即沟通吧!' , 'color' => '#173177'],
+        ];
+        wechatLog("定增咨询的微信消息推送开始");
+        //$re = sendTemplateMessage($template_id, $openid, $_SERVER['SERVER_NAME'].'/console/index/index#/console/intention/index/menu_id/209/menu_type/1', $array);
+        $re = sendTemplateMessage($template_id, $openid, $_SERVER['SERVER_NAME'].'/home/chat/index/to_uid/'.$uid, $array);
+        wechatLog("定增咨询的推送结果为：".json_encode($re));
+        wechatLog("定增咨询的微信消息推送结束");
     }
 }
