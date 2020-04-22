@@ -462,6 +462,7 @@ class ProjectInfo extends Base
             $this->result('', 0, $error, 'json');
         }
     }
+    
     public function forward_project(){
         $data = input();
         $member = $this->jsGlobal['member'];
@@ -480,6 +481,29 @@ class ProjectInfo extends Base
         } else {
             $this->result($result, 0, '收藏失败', 'json');
         }
+    }
+    
+    
+    public function prolist(){
+        $id          = $this->request->param('id/d');
+        $show        = model("ProjectDictShow")->getInfo($id);
+        if(!empty($show)){
+            $model   = model("Project");
+            $project = $model->getProjectShowDs($show['pro_ids']);
+        }else{
+            $project = array();
+        }
+        
+        $user   = $this->jsGlobal;
+        $news   = $user['member']['news'];
+        
+        $this->assign('title' , '-'.$show['title']);
+        $this->assign('img' , 'http://fin.jrfacai.com/static/frontend/images/share-img.png');
+        $this->assign('des' , $show['des']);
+        $this->assign('project',$project);
+        $this->assign('news' , $news);
+        
+        return view();
     }
 	
 }
