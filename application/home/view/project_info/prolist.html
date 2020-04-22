@@ -1,0 +1,81 @@
+{include file="base/header" /}
+<script src="__HOME__/js/Chart.bundle.js"></script>
+<script src="__HOME__/js/readmore.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/frontend/css/common.css" />
+<script type="text/javascript" src="/static/frontend/js/common.min.js"></script>
+<script type="text/javascript" src="/static/frontend/js/component.js"></script>
+<body class="mofh bg_gray" style="width:100%;">
+	<div id="box" style="background:#fbf9ff;text-align:left;">
+		<section class="bg_white mb10" style="overflow:hidden;width:100%;">
+            <!-- 搜索 -->
+            <div class="search-box pt15 pl15 pr15 clearfix porel mb15">
+            	<div class="form-search-control-left pull-left bg_gray"></div>
+                <input type="text" style="width:80%;" class="form-search-control-right pull-left" placeholder="输入项目、资金、需求"  Onclick="searchModal()">
+                <img src="/static/frontend/images/zoomtool.png" style="width:18px;height:18px;position: absolute;left: 8%;top: 24px;z-index: 999;" alt="">
+                <a href="/static/frontend/search.html" class="pull-right c_primary mt5" style="font-size: 14px;color: #007FED;line-height: 25px;">取消</a>
+        	</div>
+        </section>
+		<section style="overflow:hidden;width:100%;background:#fbf9ff;">
+        	{foreach name="$project" item="item"}
+            <a class="mb10 dbk pt10 pb10 pl10 bg_white" style="height:110px;" href="/home/project_info/index/id/{$item.id}">
+	        	<div class="clearfix porel">
+		            <div style="position: absolute;width:100%;height:60px;left:15px;top:0;">
+		                <div class="f16 c_black dbk tofh rightDiv" style="top:-4px;height:40px;line-height:40px;color:#222222;font-weight:bold;">{$item.top}</div>
+		                <div>
+		                	<div style="float: left; height: 40px;width:19px;"><img src="/static/frontend/images/yellowicon.png" width="6" height="37" style="margin-top:5px;"></div>
+		                	<div style="float: left;width:90%;">
+			                	<div style="font-size:12px;margin-right:25px;height:18px;background-color:#f9faff;color:#848e98;">{$item.bottom}</div>
+				                <div class="c_gray clearfix rightDiv" style="float:left;margin-top:10px;left: 0px; width: 235px;">
+				                    <div style="height:18px;line-height:18px;margin-bottom: 3px;" class="pl5 pr5 f12 mr5 pull-left index_icon">{$item.label1}</div>
+				                    <div style="height:18px;line-height:18px;margin-bottom: 3px;" class="pl5 pr5 f12 mr5 pull-left index_icon">{$item.label2}</div>
+				                </div>
+				                <div class="f12 c_gray text-right pr25" style="line-height:40px; float: right; ">{$item.view_num}人浏览</div>
+			                </div>
+		                </div>
+		            </div>
+	        	</div>
+    		</a>
+        	{/foreach}
+       </section>
+       </div>
+        <!-- 底部菜单 -->
+	<div style="height:70px;line-height:70px;"></div>
+	<div class="footer_new" style="height: 60px; padding: 12px 0px; position: fixed; left: 0px; bottom: 0px; width: 100%;">
+		<div class="clearfix" style="width: 100%; height: 50px;">
+			<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
+				<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">首页</div>
+			</a> 
+			<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-2-1-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
+				<div class="f12 c_gold" style="line-height: 22px; height: 22px;">市场</div>
+			</a> 
+			<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-3-0-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
+				<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">需求发布</div>
+			</a> 
+			<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
+				<div class="f12 c_sgold" style="line-height: 20px; height: 20px;color:#c2c2c2;">发现</div>
+			</a> 
+			<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
+				<img class="my-news" src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;">
+				{if condition="$news neq 0"}
+					<div class="badge-news">{$news}</div>
+					<div class="f12 c_sgold" style="margin-top:-20px;line-height:22px;height:22px;color:#c2c2c2;">我的</div>
+				{else /}
+					<div class="f12 c_sgold" style="line-height:22px;height:22px;color:#c2c2c2;">我的</div>
+				{/if}
+			</a>
+					
+		</div>
+	</div>
+    </body>
+	<script src="__HOME__/js/weixin_share.js"></script>
+	<script type="text/javascript">
+		function searchModal(){
+			window.location.href = '/static/frontend/search.html';
+		}
+	</script>
+	
+</html>
