@@ -23,6 +23,9 @@ class ProjectPlus extends ConsoleBase{
         $create_date2 = $this->request->get('create_date2', '');
         $status       = $this->request->get('status', '');
         $pro_name     = $this->request->get('pro_name', '');
+        $company_name = $this->request->get('company_name', '');
+        $pro_id       = $this->request->get('pro_id', '');
+        
         $project      = model('Project')->alias("p")
                                         ->join("QrcodeDirection qd","p.qr_code=qd.id","LEFT")
                                         ->field("SQL_CALC_FOUND_ROWS p.*,qd.qrcode_path");
@@ -48,6 +51,14 @@ class ProjectPlus extends ConsoleBase{
         }
         if('' !== $pro_name) {
             $project->where('pro_name','like','%'.$pro_name.'%');
+        }
+        
+        if('' !== $company_name) {
+            $project->where('company_name','like','%'.$company_name.'%');
+        }
+        
+        if('' !== $pro_id) {
+            $project->where(['pro_id' => $pro_id ]);
         }
         //排序
         if(!empty($order)) {
@@ -126,7 +137,6 @@ class ProjectPlus extends ConsoleBase{
             
             //行业细分一级
             $topindustry   = $dict->getTopIndustry();
-            faLog(json_encode($topindustry));
             $this->assign('topindustry' , $topindustry);
             
             //行业细分二级
