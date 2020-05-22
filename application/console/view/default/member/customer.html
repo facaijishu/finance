@@ -1,0 +1,249 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+        	<div class="modal fade bs-example-modal-sm" id="ModalNote" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="note_form" action="{:url('Member/EditNote')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加备注</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="reason" class="control-label">来源:</label>
+                                    <div class="input-group col-lg-12">
+                                        <input class="form-control" type="text" name="source" value="{$info.source}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reason" class="control-label">业务:</label>
+                                    <div class="input-group col-lg-12">
+                                        <select class="form-control m_uid" name="business" id="business">
+				                            <optgroup label="请选择">
+				                                <option value="">- - - 请选择- - -</option>
+				                                {foreach name="businessList" key="k" item="ss"}
+				                                {if condition="$ss eq $info['business']"}
+		                                        	<option value="{$ss}" selected="selected">{$ss}</option>
+		                                        {else /}
+		                                        	<option value="{$ss}">{$ss}</option>
+		                                        {/if}
+				                                {/foreach}
+				                            </optgroup>
+				                        </select>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="hide" type="text" name="uid" value="{$info.uid}">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            
+        	{include file="introdece_img/modal" /}
+        	{include file="member/tab_customer" /}
+            <div id="member_customer" data-id="{$info.uid}">
+                <fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            <img style="width:60px;cursor:pointer;" src="{$info.userPhoto}" data-toggle="modal" data-target="#ModalImg">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">用户编号：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.uid}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">姓名：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.realName}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">电话：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.userPhone}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">身份：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.role_name}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司名称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司简称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company_jc}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">职位：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.position}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">上级用户：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.superior_name}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">性别：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.userSex}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">邮箱：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.email}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">微信关注：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.is_follow}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">微信帐号：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.weixin}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">关注渠道来源：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.scene}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">注册日期：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.createTime}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">最近登录日期：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.lastTime}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">是否禁用：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.pullback}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">最近登录IP：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.last}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">来源：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.source}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">业务：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                           {$info.business}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	$('#ModalNote').on('show.bs.modal', function (e) {
+	    var id = $(e.relatedTarget).attr("data-id");
+	    //$('#ModalNote').find("input").val(id);
+	    loadModule('bootstrapValidator', function () {
+	        $('#note_form').bootstrapValidator({
+	            feedbackIcons: {
+	                valid: 'glyphicon glyphicon-ok',
+	                invalid: 'glyphicon glyphicon-remove',
+	                validating: 'glyphicon glyphicon-refresh'
+	            },
+	            fields: {
+	            	source: {
+	                    validators: {
+	                        notEmpty: {
+	                            message:'请输入来源'
+	                        }
+	                    }
+	                },
+	                business: {
+	                    validators: {
+	                        notEmpty: {
+	                            message:'请选择业务'
+	                        }
+	                    }
+	                }
+	            }
+	        }).on('success.form.bv', function (e) {
+	            e.preventDefault();
+	            var $form = $(e.target);
+	            $.ajax({
+	                url: $form.attr('action'),
+	                type: 'POST',
+	                data: $form.serialize(),
+	                dataType: 'json',
+	                success: function (resp) {
+	                    if (resp.code) {
+	                        Dialog.success('操作成功', resp.msg, 3000, function () {
+	                            loadURL(resp.data.url);
+	                        });
+	                    } else {
+	                        Dialog.error('操作失败', resp.msg);
+	                    }
+	                }
+	            });
+	        });
+	    });
+	}).on('hidden.bs.modal', function (e) {
+	    $('#note_form').bootstrapValidator('destroy');
+	    $('#note_form')[0].reset();
+	});
+</script>
+<script src="__STATIC__/js/show/introduce_img.js"></script>
