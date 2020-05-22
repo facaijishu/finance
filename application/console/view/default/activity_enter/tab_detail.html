@@ -1,0 +1,12 @@
+<ul class="nav nav-tabs">
+    {if condition="$Request.action eq 'detail' "}
+    <li role="presentation" class="active"><a href="javascript:void(0);">报名信息</a></li>
+    {else /}
+    <li role="presentation"><a href="javascript:void(0);" onclick="loadURL('{:url("ActivityEnter/detail")}')">报名信息</a></li>
+    {/if}
+    <a class="btn btn-link" style="float: right;" onclick="loadURL('{:url("ActivityEnter/index")}')">返回</a>
+    {if condition="$info.review eq 0"}
+    <button class="btn btn-primary" style="float: right;" type="button" data-toggle="modal" data-target="#ModalReview" data-id="{$info.o_id}"><i class="fa fa-save"></i>审核</button>
+    {/if}
+
+</ul>

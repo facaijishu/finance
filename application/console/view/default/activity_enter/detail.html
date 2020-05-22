@@ -1,0 +1,188 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well well-sm well-light">
+            <div class="modal fade bs-example-modal-sm" id="ModalReview" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <form id="review_form" action="{:url('ActivityEnter/review')}" method="post" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">审核</h4>
+                            </div>
+                            <div class="modal-body">
+                            	<div class="form-group">
+                                    <label for="reason" class="control-label">状态:</label>
+                                    <div class="input-group col-lg-12">
+                                        <div class="col-lg-8 col-sm-12 col-md-12 col-xs-12 radio-inline">
+			                               <label>
+			                                   <input type="radio" class="radiobox" id="is_pass" name="is_pass" value="1">
+			                                   <span>通过</span> 
+			                               </label>
+			                               <label>
+			                                   <input type="radio" class="radiobox" id="is_pass" name="is_pass" value="2">
+			                                   <span>拒绝 </span> 
+			                               </label>
+			                           </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reason" class="control-label">备注:</label>
+                                    <div class="input-group col-lg-12">
+                                        <textarea name="note" class="col-lg-12" rows="6" placeholder="可输入补充说明..." style="background-color: rgba(0,0,0,0);">{$info.note}</textarea>
+                                        <input class="hide" type="text" name="o_id" value="{$info.o_id}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            {include file="activity_enter/tab_detail" /}
+            <div id="detail" data-id="{$info.o_id}">
+            	<fieldset>
+                    <legend></legend>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            <img style="width:60px;cursor:pointer;" src="{$info.userPhoto}" data-toggle="modal" data-target="#ModalImg">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">用户编号：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.uid}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">姓名：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.name}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">性别：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.userSex}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">昵称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.userName}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">电话：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.phone}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">微信号：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.introduce}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">公司简称：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.company_jc}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">职位：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.position}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">报名时间：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.create_time}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">审核状态：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.review_des}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">是否关注：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.is_follow}
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label class="control-label col-lg-2 col-md-4 col-sm-4">备注：</label>
+                        <div class="form-group col-lg-8 col-sm-8 col-md-8 col-xs-12">
+                            {$info.note}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var through_success = '{:url("ActivityEnter/review")}';
+    $('#ModalReview').on('show.bs.modal', function (e) {
+        var id = $(e.relatedTarget).attr("data-id");
+        loadModule('bootstrapValidator', function () {
+            $('#review_form').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                	is_pass: {
+                        validators: {
+                            notEmpty: {
+                                message:'请选择审核状态'
+                            }
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function (resp) {
+                        if (resp.code) {
+                            Dialog.success('操作成功', resp.msg, 3000, function () {
+                                loadURL(resp.data.url);
+                            });
+                        } else {
+                            Dialog.error('操作失败', resp.msg);
+                        }
+                    }
+                });
+            });
+        });
+    }).on('hidden.bs.modal', function (e) {
+        $('#review_form').bootstrapValidator('destroy');
+        $('#review_form')[0].reset();
+    });
+
+</script>
