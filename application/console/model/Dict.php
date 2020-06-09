@@ -38,7 +38,7 @@ class Dict extends Model
         $result = $this->alias("d")
                 ->join("dict_type dt" , "d.dt_id=dt.dt_id")
                 ->where(['dt.sign' => $str,'d.status'=>1])
-                ->order('d.list_order asc')
+                ->order('d.list_order desc')
                 ->select();
         return $result;
     }
@@ -82,6 +82,17 @@ class Dict extends Model
         $result  = $this->alias("d")
                         ->join("dict_type dt" , "d.dt_id=dt.dt_id")
                         ->where(['dt.sign' => 'to_area','d.status' => 1,'d.fid'=>0])
+                        ->order('d.list_order desc')
+                        ->select();
+        return $result;
+    }
+    
+    //获取区域
+    public function getNewsType()
+    {
+        $result  = $this->alias("d")
+                        ->join("dict_type dt" , "d.dt_id=dt.dt_id")
+                        ->where(['dt.sign' => 'news_type','d.status' => 1,'d.fid'=>0])
                         ->order('d.list_order desc')
                         ->select();
         return $result;
@@ -389,6 +400,41 @@ class Dict extends Model
    {
        $dict    = $this->alias('d')->field('d.id,d.value')->where(['d.status'=>1,'d.id'=>$id])->find();
        return $dict;
+   }
+   
+   /**
+    * 获取标签二级集合
+    * @param string 行业二级字符串以逗号分割
+    * @return string|unknown
+    */
+   public function getSecDictList($id = '')
+   {
+       $sql   = "SELECT  id,`value` as dict_name from fic_dict where id in  (". $id .")";
+       $list  = $this->query($sql);
+       
+       return $list;
+   }
+   
+   /**
+    * 获取标签名称字符串
+    * @param string $id
+    * @return string|unknown
+    */
+   public function getDictStr($id = '')
+   {
+       $result  = $this->alias("d")
+       ->field('d.id,d.value')
+       ->where(" id in (" .$id." ) ")
+       ->select();
+       $str = '';
+       foreach ($result as $key => $item) {
+           if($str==''){
+               $str  = $item['value'];
+           }else{
+               $str  = $str."、".$item['value'];
+           }
+       }
+       return $str;
    }
 
 }
