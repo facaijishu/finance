@@ -34,16 +34,12 @@
                             <label class="col-lg-1 control-label">分类： <sup>*</sup></label>
                             <div class="col-lg-11 col-sm-12 col-md-12 col-xs-12">
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 input-group">
-                                    {foreach name="typeList" key="k" item="ind"}
-                                    <label class="radio radio-inline">
-                                        {if condition="$k eq 1"}
-                                        <input type="radio" class="radiobox" name="type" value="{$k}" checked="">
-                                        {else /}
-                                        <input type="radio" class="radiobox" name="type" value="{$k}">
-                                        {/if}
-                                        <span> {$ind} </span> 
+                                	{foreach name="$typeList" item="it"}
+									<label class="radio radio-inline">
+                                        <input type="radio" class="radiobox" name="type" value="{$it.id}">
+                                        <span> {$it.value} </span> 
                                     </label>
-                                    {/foreach}
+									{/foreach}
                                 </div>
                             </div>
                         </div>
