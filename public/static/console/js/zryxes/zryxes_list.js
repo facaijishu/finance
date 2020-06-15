@@ -66,10 +66,10 @@ $(document).ready(function () {
                 }
                 if(aData.boutique == 1){
                     $('td:eq(9)', nRow).html("<div class='badge bg-color-red'>精品</div>");
-                    $('td:eq(11)', nRow).append('<a href="javascript:void(0);" data-id="' + aData.id + '" class="btn btn-xs btn-primary js-stop-boutique cale">取消致精</a>');
+                   // $('td:eq(11)', nRow).append('<a href="javascript:void(0);" data-id="' + aData.id + '" class="btn btn-xs btn-primary js-stop-boutique cale">取消置精</a>');
                 }else{
                     $('td:eq(9)', nRow).html("-");
-                    $('td:eq(11)', nRow).append('<a href="javascript:void(0);" data-id="' + aData.id + '" class="btn btn-xs btn-primary js-boutique cale">致精</a>');
+                    //$('td:eq(11)', nRow).append('<a href="javascript:void(0);" data-id="' + aData.id + '" class="btn btn-xs btn-primary js-boutique cale">置精</a>');
                 }
                 if(aData.zryx_sign == 1){
                     $('td:eq(8)', nRow).html("<div class='badge bg-color-green'>是</div>");
