@@ -3,10 +3,10 @@ namespace app\console\controller;
 
 class Zryxes extends ConsoleBase{
     public function index(){
-        $list = model("ZryxesEffect")->where(['zryx_financing' => 0])->select();
-        $now_time = time();
-        $all_time = 3600*24*90;
-        $str = '';
+        $list       = model("ZryxesEffect")->where(['zryx_financing' => 0])->select();
+        $now_time   = time();
+        $all_time   = 3600*24*90;
+        $str        = '';
         foreach ($list as $key => $value) {
             $time = intval($now_time)-intval(strtotime($value['create_time']));
             if($time > $all_time){
@@ -30,13 +30,13 @@ class Zryxes extends ConsoleBase{
         //$start = $this->request->get('start', 0);
         //$length = $this->request->get('length', config('paginate.list_rows'));
 
-        $create_date1 = $this->request->get('create_date1', '');
-        $create_date2 = $this->request->get('create_date2', '');
-        $zryx_exhibition = $this->request->get('zryx_exhibition', '');
-        $zryx_financing = $this->request->get('zryx_financing', '');
-        $zryx_sign = $this->request->get('zryx_sign', '');
+        $create_date1        = $this->request->get('create_date1', '');
+        $create_date2        = $this->request->get('create_date2', '');
+        $zryx_exhibition     = $this->request->get('zryx_exhibition', '');
+        $zryx_financing      = $this->request->get('zryx_financing', '');
+        $zryx_sign           = $this->request->get('zryx_sign', '');
         $sec_uri_tyshortname = $this->request->get('sec_uri_tyshortname', '');
-        $secucode = $this->request->get('secucode', '');
+        $secucode            = $this->request->get('secucode', '');
 
         $zryxes = model('ZryxesEffect')
                 ->alias("ze")
@@ -75,10 +75,10 @@ class Zryxes extends ConsoleBase{
             }
             $zryxes->order($_order);
         }
-        $list = $zryxes->select();
+        $list   = $zryxes->select();
         $result = $zryxes->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
+        $total  = $result[0]['count'];
+        $data   = [];
         foreach ($list as $key => $item) {
             $data[] = $item->toArray();
         }
@@ -89,18 +89,18 @@ class Zryxes extends ConsoleBase{
 		}
 	}
     public function read(){
-        $return = [];
-        $order = $this->request->get('order/a', []);
-        $start = $this->request->get('start', 0);
-        $length = $this->request->get('length', config('paginate.list_rows'));
+        $return              = [];
+        $order               = $this->request->get('order/a', []);
+        $start               = $this->request->get('start', 0);
+        $length              = $this->request->get('length', config('paginate.list_rows'));
 
-        $create_date1 = $this->request->get('create_date1', '');
-        $create_date2 = $this->request->get('create_date2', '');
-        $zryx_exhibition = $this->request->get('zryx_exhibition', '');
-        $zryx_financing = $this->request->get('zryx_financing', '');
-        $zryx_sign = $this->request->get('zryx_sign', '');
+        $create_date1        = $this->request->get('create_date1', '');
+        $create_date2        = $this->request->get('create_date2', '');
+        $zryx_exhibition     = $this->request->get('zryx_exhibition', '');
+        $zryx_financing      = $this->request->get('zryx_financing', '');
+        $zryx_sign           = $this->request->get('zryx_sign', '');
         $sec_uri_tyshortname = $this->request->get('sec_uri_tyshortname', '');
-        $secucode = $this->request->get('secucode', '');
+        $secucode            = $this->request->get('secucode', '');
 
         $zryxes = model('ZryxesEffect')
                 ->alias("ze")
@@ -139,29 +139,29 @@ class Zryxes extends ConsoleBase{
             $zryxes->order($_order);
         }
 //        $zryxes->field('SQL_CALC_FOUND_ROWS *');
-        $list = $zryxes->limit($start, $length)->select();
+        $list   = $zryxes->limit($start, $length)->select();
         $result = $zryxes->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
+        $total  = $result[0]['count'];
+        $data   = [];
         foreach ($list as $key => $item) {
             $data[] = $item->toArray();
         }
-        $return['data'] = $data;
-        $return['recordsFiltered'] = $total;
-        $return['recordsTotal'] = $total;
+        $return['data']             = $data;
+        $return['recordsFiltered']  = $total;
+        $return['recordsTotal']     = $total;
 
         echo json_encode($return);
     }
     public function sucaiRead(){
-        $return = [];
-        $order = $this->request->get('order/a', []);
-        $start = $this->request->get('start', 0);
-        $length = $this->request->get('length', config('paginate.list_rows'));
+        $return              = [];
+        $order               = $this->request->get('order/a', []);
+        $start               = $this->request->get('start', 0);
+        $length              = $this->request->get('length', config('paginate.list_rows'));
 
-        $create_date1 = $this->request->get('create_date1', '');
-        $create_date2 = $this->request->get('create_date2', '');
+        $create_date1        = $this->request->get('create_date1', '');
+        $create_date2        = $this->request->get('create_date2', '');
         $sec_uri_tyshortname = $this->request->get('sec_uri_tyshortname', '');
-        $secucode = $this->request->get('secucode', '');
+        $secucode            = $this->request->get('secucode', '');
 
         $zryxes = model('Zryxes')
                 ->alias("z")
@@ -192,29 +192,29 @@ class Zryxes extends ConsoleBase{
             $zryxes->order($_order);
         }
 //        $zryxes->field('SQL_CALC_FOUND_ROWS *');
-        $list = $zryxes->limit($start, $length)->select();
+        $list   = $zryxes->limit($start, $length)->select();
         $result = $zryxes->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
+        $total  = $result[0]['count'];
+        $data   = [];
         foreach ($list as $key => $item) {
             $data[] = $item->toArray();
         }
-        $return['data'] = $data;
-        $return['recordsFiltered'] = $total;
-        $return['recordsTotal'] = $total;
+        $return['data']             = $data;
+        $return['recordsFiltered']  = $total;
+        $return['recordsTotal']     = $total;
 
         echo json_encode($return);
     }
     public function sucaiDetail(){
-        $id = $this->request->param('id/d');
-        $model = model("Zryxes");
-        $info = $model->getZryxesInfoById($id);
+        $id     = $this->request->param('id/d');
+        $model  = model("Zryxes");
+        $info   = $model->getZryxesInfoById($id);
         $this->assign("info" , $info);
         $this->assign("date" , substr($info['created_at'], 0 , 10).'转让');
         return view();
     }
     public function release(){
-        $id = $this->request->param('id/d');
+        $id    = $this->request->param('id/d');
         $model = model("Zryxes");
         if($id = $model->releaseZryxes($id)){
             $data['url'] = url('Zryxes/index');
@@ -226,8 +226,8 @@ class Zryxes extends ConsoleBase{
         }
     }
     public function exhibition_true(){
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
         if($model->setZryxesEffectExhibitionTrue($id)){
             $data['url'] = url('Zryxes/detail' , ['id' => $id]);
             $this->result($data, 1, '展示成功', 'json');
@@ -237,8 +237,8 @@ class Zryxes extends ConsoleBase{
         }
     }
     public function exhibition_false(){
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
         if($model->setZryxesEffectExhibitionFalse($id)){
             $data['url'] = url('Zryxes/detail' , ['id' => $id]);
             $this->result($data, 1, '取消展示成功', 'json');
@@ -248,9 +248,9 @@ class Zryxes extends ConsoleBase{
         }
     }
     public function detail(){
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
-        $info = $model->getZryxesEffectInfoById($id);
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
+        $info   = $model->getZryxesEffectInfoById($id);
         //大宗头图
         $img_url = model('MaterialLibrary')->getMaterialInfoById($info['img_id']);
         if (!empty($img_url)) {
@@ -263,18 +263,20 @@ class Zryxes extends ConsoleBase{
         $this->assign("date" , substr($info['created_at'], 0 , 10).'转让');
         return view();
     }
+    
     public function detail2(){
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
-        $info = $model->getZryxesEffectInfoById($id);
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
+        $info   = $model->getZryxesEffectInfoById($id);
         $this->assign("info" , $info);
         $this->assign("id" , $id);
         $this->assign("date" , substr($info['created_at'], 0 , 10).'转让');
         return view();
     }
+    
     public function add(){
         if(request()->isPost()){
-            $data = input();
+            $data  = input();
             $model = model('ZryxesEffect');
             if($model->createZryxesEffect($data)){
                 $data['url'] = url('Zryxes/index');
@@ -289,7 +291,7 @@ class Zryxes extends ConsoleBase{
     }
     public function edit(){
         if(request()->isPost()){
-            $data = input();
+            $data  = input();
             $model = model('ZryxesEffect');
             if($model->createZryxesEffect($data)){
                 $data['url'] = url('Zryxes/detail' , ['id' => $data['id']]);
@@ -299,7 +301,7 @@ class Zryxes extends ConsoleBase{
                 $this->result('', 0, $error, 'json');
             }
         }else{
-            $id = $this->request->param('id/d', 0);
+            $id   = $this->request->param('id/d', 0);
             $info = model("ZryxesEffect")->getZryxesEffectInfoById($id);
             //大宗头图
             $url = model('MaterialLibrary')->getMaterialInfoById($info['img_id']);
@@ -319,12 +321,13 @@ class Zryxes extends ConsoleBase{
         return view();
     }
     public function settopread(){
-        $return = [];
-        $order = $this->request->get('order/a', []);
-        $start = $this->request->get('start', 0);
-        $length = $this->request->get('length', config('paginate.list_rows'));
+        $return              = [];
+        $order               = $this->request->get('order/a', []);
+        $start               = $this->request->get('start', 0);
+        $length              = $this->request->get('length', config('paginate.list_rows'));
         $sec_uri_tyshortname = $this->request->get('sec_uri_tyshortname', '');
-        $secucode = $this->request->get('secucode', '');
+        $secucode            = $this->request->get('secucode', '');
+        
         $zryxes = model('ZryxesEffect');
         //搜索条件
         if('' !== $sec_uri_tyshortname) {
@@ -343,10 +346,10 @@ class Zryxes extends ConsoleBase{
             $zryxes->order($_order);
         }
         $zryxes->field('SQL_CALC_FOUND_ROWS *');
-        $list = $zryxes->limit($start, $length)->select();
+        $list   = $zryxes->limit($start, $length)->select();
         $result = $zryxes->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
+        $total  = $result[0]['count'];
+        $data   = [];
         foreach ($list as $key => $item) {
             $data[] = $item->toArray();
         }
@@ -367,8 +370,8 @@ class Zryxes extends ConsoleBase{
         }
     }
     public function stick_false(){
-        $id = $this->request->param('id/d');
-        $model = model("ZryxesEffect");
+        $id     = $this->request->param('id/d');
+        $model  = model("ZryxesEffect");
         if($model->setZryxesEffectTopFalse($id)){
             $data['url'] = url('Zryxes/settop');
             $this->result($data, 1, '取消置顶成功', 'json');
@@ -378,8 +381,8 @@ class Zryxes extends ConsoleBase{
         }
     }
     public function boutique(){
-        $id = $this->request->param('id/d');
-        $model = model("Project");
+        $id     = $this->request->param('id/d');
+        $model  = model("Project");
         if($result = $model->createBoutiqueProject($id)){
             $data['url'] = url('Project/detail' , ['id' => $result]);
             $this->result($data, 1, '致精成功', 'json');
@@ -389,8 +392,8 @@ class Zryxes extends ConsoleBase{
         }
     }
     public function stop_boutique(){
-        $id = $this->request->param('id/d');
-        $model = model("Project");
+        $id     = $this->request->param('id/d');
+        $model  = model("Project");
         if($result = $model->stopBoutiqueProject($id)){
             $data['url'] = url('Project/detail' , ['id' => $result]);
             $this->result($data, 1, '取消致精成功', 'json');
@@ -399,19 +402,18 @@ class Zryxes extends ConsoleBase{
             $this->result('', 0, $error, 'json');
         }
     }
+    
     /**
-     * @return \think\response\View
-     * @param:推送消息
-     * @time:2018/5/29
+     * 发送微信消息推送（单个群发）
      */
     public function sendinfo(){
-        $id = $this->request->param('id/d');
-        $uid = $this->request->post('uid/d');
-        $openId = $this->request->post('openId');
-        $userType = $this->request->post('userType');
-        $name = $this->request->post('name');
-        $model = model("ZryxesEffect");
-        if($model->sendProjectInfo($id,$uid,$openId,$userType,$name)){
+        $id         = $this->request->param('id/d');
+        $uid        = $this->request->post('uid');
+        $userType   = $this->request->post('userType');
+        $name       = $this->request->post('name');
+        
+        $model      = model("ZryxesEffect");
+        if($model->sendProjectInfo($id,$uid,$userType,$name)){
             $data['code'] = 200;
             $this->result($data, 200, '推送成功', 'json');
         }else{
