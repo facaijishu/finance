@@ -1,9 +1,11 @@
 <?php
 namespace app\console\controller;
 class Member extends ConsoleBase{
+    
     public function index(){
         return view();
     }
+    
     /**
     @param:用户拉黑
     @time：2018/5/25
@@ -18,24 +20,25 @@ class Member extends ConsoleBase{
             if($result){
                 $kar = $member->where("openId = '".$openId."'")->update($num);
                 if($kar){
-                    $t['msg'] = "操作成功";
-                    $t['id'] = $data;
-                    $t['code'] = 200;
+                    $t['msg']   = "操作成功";
+                    $t['id']    = $data;
+                    $t['code']  = 200;
                     return json($t);
                 }
             }else{
-                $t['msg'] = "用户不存在";
-                $t['id'] = $data;
-                $t['code'] = 101;
+                $t['msg']   = "用户不存在";
+                $t['id']    = $data;
+                $t['code']  = 101;
                 return json($t);
             }
         }else{
-            $t['msg'] = "操作失败";
-            $t['id'] = $data;
-            $t['code'] = 102;
+            $t['msg']   = "操作失败";
+            $t['id']    = $data;
+            $t['code']  = 102;
             return json($t);
         }
     }
+    
     public function read(){
         $return = [];
         $order  = $this->request->get('order/a', []);
@@ -50,7 +53,7 @@ class Member extends ConsoleBase{
         $realName       = $this->request->get('realName', '');
         $userPhone      = $this->request->get('userPhone', '');
         $uid            = $this->request->get('uid', '');
-        $userType       = $this->request->get('userType', '');
+        $roleType       = $this->request->get('roleType', '');
         $is_follow      = $this->request->get('is_follow', '');
 
         $member = model('member');
@@ -81,8 +84,8 @@ class Member extends ConsoleBase{
         if('' !== $uid) {
             $member->where('uid','eq',$uid);
         }
-        if('' !== $userType) {
-            $member->where('userType','eq',$userType);
+        if('' !== $roleType) {
+            $member->where('role_type','eq',$roleType);
         }
         if('' !== $is_follow) {
             $member->where('is_follow','eq',$is_follow);
@@ -96,11 +99,11 @@ class Member extends ConsoleBase{
             $member->order($_order);
         }
         $member->field('SQL_CALC_FOUND_ROWS *');
-        $list = $member->limit($start, $length)->select();
+        $list   = $member->limit($start, $length)->select();
         $result = $member->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
-        $model = model("Member");
+        $total  = $result[0]['count'];
+        $data   = [];
+        $model  = model("Member");
         foreach ($list as $key => $item) {
             if($item['superior'] != 0){
                 $user = $model->getMemberInfoById($item['superior']);
@@ -112,17 +115,18 @@ class Member extends ConsoleBase{
             $list[$key]['lastTime'] = date('Y-m-d H:i:s' , $item['lastTime']);
             $data[] = $item->toArray();
         }
-        $return['data'] = $data;
-        $return['recordsFiltered'] = $total;
-        $return['recordsTotal'] = $total;
+        $return['data']             = $data;
+        $return['recordsFiltered']  = $total;
+        $return['recordsTotal']     = $total;
 
         echo json_encode($return);
     }
+    
     public function count(){
-        $all_member = model("Member")->count('uid');
-        $all_through = model("Member")->where(['userType' => 2])->count('uid');
-        $all_superior = model("Member")->where("superior","neq",0)->count('uid');
-        $all_month = model("Member")->field("DATE_FORMAT(`CREATE_TIME`, '%Y-%m') as day,count('uid') as num")->group("day")->order('day desc')->select();
+        $all_member     = model("Member")->count('uid');
+        $all_through    = model("Member")->where(['userType' => 2])->count('uid');
+        $all_superior   = model("Member")->where("superior","neq",0)->count('uid');
+        $all_month      = model("Member")->field("DATE_FORMAT(`CREATE_TIME`, '%Y-%m') as day,count('uid') as num")->group("day")->order('day desc')->select();
         $all_through_tb = model("Through")->field("DATE_FORMAT(`THROUGH_TIME`, '%Y-%m') as day,count('uid') as num")->where(['status' => 1])->group("day")->order('day desc')->select();
         $arr = [];
         foreach ($all_through_tb as $key => $value) {
@@ -141,22 +145,22 @@ class Member extends ConsoleBase{
         return view("count");
     }
     public function detail(){
-        $model = model("Member");
-        $list = $model->getMemberList(2);
+        $model  = model("Member");
+        $list   = $model->getMemberList(2);
         $this->assign('list' , $list);
         return view();
     }
     public function detailread(){
-        $return = [];
-        $order = $this->request->get('order/a', []);
-        $start = $this->request->get('start', 0);
-        $length = $this->request->get('length', config('paginate.list_rows'));
+        $return       = [];
+        $order        = $this->request->get('order/a', []);
+        $start        = $this->request->get('start', 0);
+        $length       = $this->request->get('length', config('paginate.list_rows'));
 
         $create_date1 = $this->request->get('create_date1', '');
         $create_date2 = $this->request->get('create_date2', '');
-        $uid = $this->request->get('uid', '');
-        $userName = $this->request->get('userName', '');
-        $userType = $this->request->get('userType', '');
+        $uid          = $this->request->get('uid', '');
+        $userName     = $this->request->get('userName', '');
+        $userType     = $this->request->get('userType', '');
 
         $member = model('member');
         $member->where('superior','neq',0);
@@ -186,19 +190,19 @@ class Member extends ConsoleBase{
             $member->order($_order);
         }
         $member->field('SQL_CALC_FOUND_ROWS *');
-        $list = $member->limit($start, $length)->select();
+        $list   = $member->limit($start, $length)->select();
         $result = $member->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
-        $model = model("Member");
+        $total  = $result[0]['count'];
+        $data   = [];
+        $model  = model("Member");
         foreach ($list as $key => $item) {
             $info = $model->getMemberInfoById($item['superior']);
             $list[$key]['superior'] = $info['realName'];
             $data[] = $item->toArray();
         }
-        $return['data'] = $data;
-        $return['recordsFiltered'] = $total;
-        $return['recordsTotal'] = $total;
+        $return['data']             = $data;
+        $return['recordsFiltered']  = $total;
+        $return['recordsTotal']     = $total;
 
         echo json_encode($return);
     }
@@ -218,8 +222,8 @@ class Member extends ConsoleBase{
         $userName       = $this->request->get('userName', '');
         $realName       = $this->request->get('realName', '');
         $userPhone      = $this->request->get('userPhone', '');
-        $openId         = $this->request->get('openId', '');
-        $userType       = $this->request->get('userType', '');
+        $uid            = $this->request->get('uid', '');
+        $roleType       = $this->request->get('roleType', '');
         $is_follow      = $this->request->get('is_follow', '');
         
         
@@ -259,13 +263,13 @@ class Member extends ConsoleBase{
         }
         
         //微信openid
-        if('' !== $openId) {
-            $member->where('openId','like','%'.$openId.'%');
+        if('' !== $uid) {
+            $member->where('uid','eq', $uid);
         }
         
         //身份类型
-        if('' !== $userType) {
-            $member->where('userType','eq',$userType);
+        if('' !== $roleType) {
+            $member->where('role_type','eq',$roleType);
         }
         
         //公众号关注
@@ -277,15 +281,14 @@ class Member extends ConsoleBase{
         $list = $member->select();
         
         
-        
         $datas = [];
         foreach ($list as $key => $value) {
-            if($value['userType'] == 0){
+            if($value['role_type'] == 0){
                 $typename = '游客';
-            }elseif ($value['userType'] == 1) {
-                $typename = '绑定用户';
-            }elseif ($value['userType'] == 2) {
-                $typename = '认证合伙人';
+            }elseif ($value['role_type'] == 1) {
+                $typename = '投资人';
+            }elseif ($value['role_type'] == 2) {
+                $typename = '项目方';
             }
             
             if($value['is_follow'] == 1){
@@ -301,7 +304,7 @@ class Member extends ConsoleBase{
                 $superior = '-';
             }
             
-            $arr  = [$value['uid'],$value['userName'],$value['realName'],$value['userPhone'],$value['openId'],$typename,$superior,date('Y-m-d H:i:s',$value['createTime']),date('Y-m-d H:i:s',$value['lastTime']),$isFollow];
+            $arr  = [$value['uid'],$value['userName'],$value['realName'],$value['userPhone'],$value['company_jc'],$value['position'],$typename,$isFollow,$superior,date('Y-m-d H:i:s',$value['createTime']),date('Y-m-d H:i:s',$value['lastTime'])];
             array_push($datas, $arr);
         }
         
@@ -332,6 +335,8 @@ class Member extends ConsoleBase{
         $objPHPExcel->getActiveSheet()->getStyle('G')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('H')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('I')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('J')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('K')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('J')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('B')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -342,6 +347,8 @@ class Member extends ConsoleBase{
         $objPHPExcel->getActiveSheet()->getStyle('G')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('H')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('I')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('J')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('K')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('B')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
@@ -353,6 +360,7 @@ class Member extends ConsoleBase{
         $objPHPExcel->getActiveSheet()->getStyle('H2')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('I2')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('J2')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('K2')->getFont()->setBold(true);
         $name = '用户信息明细表（截止时间：'. date('Y-m-d H:i:s' , time()).'）';
         $objPHPExcel->setActiveSheetIndex(0)
         ->setCellValue('A1', $name)
@@ -360,12 +368,14 @@ class Member extends ConsoleBase{
         ->setCellValue('B2', '昵称')
         ->setCellValue('C2', '姓名')
         ->setCellValue('D2', '电话')
-        ->setCellValue('E2', 'openid')
-        ->setCellValue('F2', '身份')
-        ->setCellValue('G2', '上级用户')
-        ->setCellValue('H2', '注册时间')
-        ->setCellValue('I2', '最后登录日期')
-        ->setCellValue('J2', '是否关注公众号');
+        ->setCellValue('E2', '公司名称')
+        ->setCellValue('F2', '职位')
+        ->setCellValue('G2', '身份')
+        ->setCellValue('H2', '微信关注')
+        ->setCellValue('I2', '上级用户')
+        ->setCellValue('J2', '注册时间')
+        ->setCellValue('K2', '最后登录日期');
+        
         $objPHPExcel->getActiveSheet()->setTitle(date('Y-m-d' , time()));
         $objPHPExcel->setActiveSheetIndex(0);
         
@@ -381,6 +391,7 @@ class Member extends ConsoleBase{
             $objPHPExcel->getActiveSheet()->setCellValue('H'. $i, $data[7]);
             $objPHPExcel->getActiveSheet()->setCellValue('I'. $i, $data[8]);
             $objPHPExcel->getActiveSheet()->setCellValue('J'. $i, $data[9]);
+            $objPHPExcel->getActiveSheet()->setCellValue('K'. $i, $data[10]);
             $i ++;
         }
         
@@ -428,8 +439,8 @@ class Member extends ConsoleBase{
             for ($index1 = $index; $index1 < count($data); $index1++) {
                 if($data[$index][8] < $data[$index1][8]){
                     $asd = $data[$index1];
-                    $data[$index1] = $data[$index];
-                    $data[$index] = $asd;
+                    $data[$index1]  = $data[$index];
+                    $data[$index]   = $asd;
                 }
             }
         }
@@ -577,7 +588,125 @@ class Member extends ConsoleBase{
             }
             echo $isFollow."<br/>";
         }
+    }
+    
+    /**
+     * 会员详细页面
+     * @return 数据集合
+     */
+    public function customer(){
+        $id     = $this->request->param('id/d');
+        $model  = model("Member");
+        $info   = $model->getMemberInfoById($id);
+        if($info['role_type']==0){
+            $info['role_name'] = "未知";
+        }else if($info['role_type']==1){
+            $info['role_name'] = "投资方";
+        }else if($info['role_type']==2){
+            $info['role_name'] = "项目方";
+        }else{
+            $info['role_name'] = "合伙人";
+        }
         
+        if($info['superior'] != 0){
+            $superior = $model->getMemberInfoById($info['superior']);
+            $info['superior_name'] = $superior['realName'];
+        } else {
+            $info['superior_name'] = '-';
+        }
+        if($info['is_follow']==1){
+            $info['is_follow'] = "是";
+        }else{
+            $info['is_follow'] = "否";
+        }
+        
+        if($info['userSex']==0){
+            $info['userSex'] = "未知";
+        }else if($info['userSex']==1){
+            $info['userSex'] = "男";
+        }else{
+            $info['userSex'] = "女";
+        }
+        
+        if($info['pullback']==1){
+            $info['pullback'] = "是";
+        }else{
+            $info['pullback'] = "否";
+        }
+        $ip = ipToArea($info['lastIP']);
+        $info['last']       = $info['lastIP']."（".$ip."）";
+        $info['createTime'] = date('Y-m-d H:i:s' , $info['createTime']);
+        $info['lastTime']   = date('Y-m-d H:i:s' , $info['lastTime']);
+        
+        $this->assign("info" , $info);
+        
+        $business = config('users_business');
+        $this->assign('businessList' , $business);
+        
+        $scene    = config('subscribe_scene');
+        if($info['subscribe_scene']!==""){
+            $info['scene'] = $scene[$info['subscribe_scene']];
+        }else{
+            $info['scene'] = "未知";
+        }
+        
+        return view();
+    }
+    
+    /**
+     * 添加备注
+     */
+    public function editNote(){
+        $model = model("Member");
+        $data  = input();
+        if($data['uid']> 0){
+            $res = $model->saveNote($data);
+            if($res){
+                $data['url'] = url('Member/index');
+                $this->result($data, 1, '备注更新成功', 'json');
+            } else {
+                $data['url'] = url('Member/index');
+                $this->result($data, 0, '备注更新失败', 'json');
+            }
+        }else{
+            $this->result('', 0, '操作异常', 'json');
+        }
+    }
+    
+    /**
+     * 更新微信最新信息
+     */
+    public function updateWechat(){
+        $id     = input('id');
+        $model  = model("Member");
+        $info   = $model->getMemberInfoById($id);
+        $result = getWechatUser($info['openId'],getAccessTokenFromFile());
+        $data   = [];
+        //关注检查
+        if ($result['subscribe'] == 0) {
+            $data['is_follow'] = 0;
+            
+        } elseif ($result['subscribe'] == 1) {
+            $data['is_follow'] = 1;
+            //头像检查
+            if(!checkWPhoto($info['userPhoto'])){
+                $data['userPhoto'] = $result['headimgurl'];
+            }
+            $data['userName'] = $result['nickname'];
+        }
+        
+        $res = model('member')->where("uid = '".$id."'")->update($data);
+        if($res){
+            $t['msg']   = "更新成功";
+            $t['id']    = $id;
+            $t['code']  = 200;
+            return json($t);
+        }else{
+            $t['msg']   = "更新失败";
+            $t['id']    = $id;
+            $t['code']  = 100;
+            return json($t);
+        }
     }
     
 }

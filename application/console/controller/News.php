@@ -55,10 +55,10 @@ class News extends ConsoleBase{
         $user   = model("User");
         
         foreach ($list as $key => $item) {
-            $type = $dict->getDictInfoById($item['type']);
-            $list[$key]['type'] = $type['value'];
-            $create_user = $user->getUserById($item['create_uid']);
-            $list[$key]['create_uid'] = $create_user['real_name'];
+            $type           = $dict->getDictInfoById($item['type']);
+            $create_user    = $user->getUserById($item['create_uid']);
+            $list[$key]['type']         = $type['value'];
+            $list[$key]['create_uid']   = $create_user['real_name'];
             $data[] = $item->toArray();
         }
         $return['data']             = $data;
@@ -71,7 +71,8 @@ class News extends ConsoleBase{
     public function add(){
         if(request()->isPost()){
             $news = model('News');
-            if($news->createNews(input())){
+            $post = input();
+            if($news->createNews($post)){
                 $data['url'] = url('News/index');
                 $this->result($data, 1, '添加资讯成功', 'json');
             }else{
@@ -96,7 +97,8 @@ class News extends ConsoleBase{
             }
             $this->assign('inc_industry' , $top_industry);
             
-            $type = config('news_type');
+            //$type = config('news_type');
+            $type = $model->getNewsType();
             $this->assign('typeList' , $type);
             
             $this->assign('time' , date('Y-m-d', time()));
@@ -132,7 +134,8 @@ class News extends ConsoleBase{
             }
             $this->assign('inc_industry' , $top_industry);
             
-            $type = config('news_type');
+            //$type = config('news_type');
+            $type = $model->getNewsType();
             $this->assign('typeList' , $type);
             
             $model = model("News");
@@ -153,8 +156,9 @@ class News extends ConsoleBase{
         $info['pro_name']    = $industry_pro_name;
         $info['org_name']    = $industry_org_name;
         
-        $type   = config('news_type');
-        $info['type_name'] = $type[$info['type']];
+        //$type   = config('news_type');
+        $type = $model->getInfo($info['type']);
+        $info['type_name'] = $type['value'];
         
         $this->assign("info" , $info);
         return view();
