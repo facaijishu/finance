@@ -6,14 +6,14 @@ class ProjectHot extends ConsoleBase{
         return view();
     }
     public function read(){
-        $return = [];
-        $order = $this->request->get('order/a', []);
-        $start = $this->request->get('start', 0);
-        $length = $this->request->get('length', config('paginate.list_rows'));
-
-        $pro_name = $this->request->get('pro_name', '');
-
-        $project = model('Project');
+        $return     = [];
+        $order      = $this->request->get('order/a', []);
+        $start      = $this->request->get('start', 0);
+        $length     = $this->request->get('length', config('paginate.list_rows'));
+        
+        $pro_name   = $this->request->get('pro_name', '');
+        
+        $project    = model('Project');
         //搜索条件
         if('' !== $pro_name) {
             $project->where('pro_name','like','%'.$pro_name.'%');
@@ -28,16 +28,16 @@ class ProjectHot extends ConsoleBase{
         }
         $project->where('status','eq','2');
         $project->field('SQL_CALC_FOUND_ROWS *');
-        $list = $project->limit($start, $length)->select();
+        $list   = $project->limit($start, $length)->select();
         $result = $project->query('SELECT FOUND_ROWS() as count');
-        $total = $result[0]['count'];
-        $data = [];
+        $total  = $result[0]['count'];
+        $data   = [];
         foreach ($list as $key => $item) {
             $data[] = $item->toArray();
         }
-        $return['data'] = $data;
-        $return['recordsFiltered'] = $total;
-        $return['recordsTotal'] = $total;
+        $return['data']             = $data;
+        $return['recordsFiltered']  = $total;
+        $return['recordsTotal']     = $total;
 
         echo json_encode($return);
     }
