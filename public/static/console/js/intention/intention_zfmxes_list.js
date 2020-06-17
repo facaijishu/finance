@@ -32,12 +32,14 @@ $(document).ready(function () {
                 { data: "money" },
                 { data: "company" },
                 { data: "phone" },
+                { data: "userName" },
                 { data: "create_uid" },
+                { data: "create_time" },
                 { data: "id"}
             ],
             "fnRowCallback": function (nRow, aData, iDisplayIndex, fnRowCallback) {
                 $('td:eq(1)', nRow).append("【"+aData.plannoticeddate+"】");
-                $('td:eq(9)', nRow).html('<a href="javascript:void(0);" class="btn btn-xs btn-info cale" data-action="detail" data-id="' + aData.id + '"><i class="fa fa-search"></i>查看详情</a>');
+                $('td:eq(11)', nRow).html('<a href="javascript:void(0);" class="btn btn-xs btn-info cale" data-action="detail" data-id="' + aData.id + '"><i class="fa fa-search"></i>查看详情</a>');
                 return nRow;
             }
         }));
