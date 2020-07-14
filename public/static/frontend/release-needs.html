@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
-    <title>FA財</title>
+    <title>FA財-项目发布</title>
     <meta name="keywords" content="FA財" />
     <meta name="description" content="FA財" />
     <link rel="shortcut icon" href="/static/frontend/images/favicon.ico" type="image/vnd.microsoft.icon" />
@@ -25,12 +25,13 @@
     </style>
 </head>
 
-<body id="box" class="bg_white mofh">
-    <!-- 需求发布 -->
+<body class="bg_white mofh">
+<div id="ebox">
+    <!-- 项目发布 -->
     <div id="oneKeyReleaseContent">
-        <div class="f18 c_black fb" style="margin:20px 0 0 20px;">需求发布</div>
+        <div class="f18 c_black fb" style="margin:20px 0 0 20px;">项目发布</div>
         <div class="pl10 pr10 mt15 porel">
-            <textarea id="rcInput" maxSize="300" rows="8" class="form-control f12 rcInput bg_gray" placeholder="例：找项目、找资金、找人脉、找业务、找合作" style="width:100%;-webkit-box-shadow: inset 0 0px 0px;box-shadow: inset 0 0px 0px;border:0;"></textarea>
+            <textarea id="rcInput" maxSize="300" rows="8" class="form-control f12 rcInput bg_gray" placeholder="发布项目融资需求，精准对接千家机构。                                               免费路演找财哥(13818807894)" style="width:100%;-webkit-box-shadow: inset 0 0px 0px;box-shadow: inset 0 0px 0px;border:0;"></textarea>
             <div class="rcInputHint" style="position: absolute;bottom: 2px;right: 12px;">0/300</div>
         </div>
         <div class="f18 c_gray" style="margin:25px 0 15px 20px;">添加标签</div>
@@ -49,6 +50,11 @@
         <div class="clearfix" style="width:300px;margin:20px auto 0px;">
             <div class="c_primary f14 pointer text-center pull-left mr20" onclick="javascript:history.back(-1);" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;">取 消</div>
             <div id="oneKeyReleaseFinish" class="c_white f14 pointer text-center pull-left" style="width:140px;border:1px solid #0076FF;height:38px;line-height:38px;border-radius:19px;background:#0076FF">完 成</div>
+        </div>
+        <div class="clearfix" style="width:300px;margin:20px auto 0px;color:#0076FF;font-weight:bold;line-height:30px;">
+			*tips：<br/>
+           	点击菜单“市场”可查看精选项目<br/>
+           	点击菜单“发现”可浏览业务需求
         </div>
         <!-- 编辑我的标签 -->
         <div class="modal fade" id="modifyTagModal" tabindex="-1" role="dialog" aria-labelledby="modifyTagModalLabel" aria-describedby="选择标签">
@@ -99,30 +105,36 @@
     
     <!-- 底部菜单 -->
     <div style="height:70px;line-height:70px;"></div>
-			<div class="footer_new" style="height: 60px; padding: 12px 0px; position: fixed; left: 0px; bottom: 0px; width: 100%;">
-				<div class="clearfix" style="width: 100%; height: 50px;">
-					<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
-						<div class="f12 c_sgold" style="line-height: 22px; height: 22px;">首页</div>
-					</a> 
-					<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
-						<div class="f12 c_sgold" style="line-height: 22px; height: 22px;">市场</div>
-					</a> 
-					<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-3-1-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
-						<div class="f12 c_gold" style="line-height: 22px; height: 22px;">需求发布</div>
-					</a> 
-					<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
-						<div class="f12 c_sgold" style="line-height: 20px; height: 20px;">发现</div>
-					</a> 
-					<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
-						<img src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;"> 
-						<div class="f12 c_sgold" style="line-height: 22px; height: 22px;">我的</div>
-					</a>
-				</div>
-	  		</div>
+	<div class="footer_back">
+		<div class="clearfix" style="width: 100%; height: 50px;">
+			<a href="/static/frontend/index.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-1-0-menu.png" alt="" class="dbk" style="width: 20px; height: 20px; margin: 3px auto 0px;"> 
+				<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">首页</div>
+			</a> 
+			<a href="/static/frontend/selectedProjects.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-2-0-menu.png" alt="" class="dbk" style="width: 20px; height: 19px; margin: 4px auto 0px;"> 
+				<div class="f12 c_sgold" style="line-height: 22px; height: 22px;color:#c2c2c2;">市场</div>
+			</a> 
+			<a href="/static/frontend/release-needs.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-3-1-menu.png" alt="" class="dbk" style="width: 30px; height: 29px; margin: -6px auto 0px; position: relative;"> 
+				<div class="f12 c_gold" style="line-height: 22px; height: 22px;">项目发布</div>
+			</a> 
+			<a href="/static/frontend/find.html" class="pull-left text-center" style="width: 20%;">
+				<img src="/static/frontend/images/sign-4-0-menu.png" alt="" class="dbk" style="width: 21px; height: 21px; margin: 4px auto 0px;"> 
+				<div class="f12 c_sgold" style="line-height: 20px; height: 20px;color:#c2c2c2;">发现</div>
+			</a> 
+			<a href="/static/frontend/my.html" class="pull-left text-center" style="width: 20%;">
+				<img class="my-news" src="/static/frontend/images/sign-5-0-menu.png" alt="" class="dbk" style="width: 22px; height: 21px; margin: 2px auto 0px;"> 
+				<div v-if="news != 0 " class="badge-news">{{news}}</div>
+				<template v-if="news != 0 ">
+					<div class="f12 c_sgold" style="margin-top:-20px;line-height:22px;height:22px;color:#c2c2c2;">我的</div>
+				</template>
+				<template v-else>
+					<div class="f12 c_sgold" style="line-height:22px;height:22px;color:#c2c2c2;">我的</div>
+				</template>
+			</a>
+		</div>
+	</div>
     <!-- 提示框 -->
     <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-describedby="提示信息">
         <div class="modal-dialog" aria-hidden="true" style="margin:30px 20px 0;">
@@ -154,435 +166,423 @@
                             <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
                         </div>
                         <a href="javascript:void(0)" onclick="doreg()" style="position: absolute;top: 365px;left: 75px;width: 210px;height: 35px;line-height:30px;"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 完善模态框 -->
-        <div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="公众号二维码">
-			<div class="modal-dialog" aria-hidden="true">
-                <div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
-                    <div class="modal-body porel p0">
-                        <div style="width:290px;margin:0 auto;">
-                            <img src="/static/frontend/images/cmp_info.png" width="290" alt="">
-                            <div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
-                                <img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
-                        	</div>
-                            <a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
-                    	</div>
-                	</div>
-            	</div>
+					</div>
+				</div>
 			</div>
-        </div>
-        <script type="text/javascript">
-            
-            $("#closeAuthModal").click(function(event) {
-                $("#authModal").modal("hide");
-            });
-            $("#closeCmpInfoModal").click(function(event) {
-                $("#cmpInfoModal").modal("hide");
-            });
+		</div>
+	</div>
+	<!-- 完善模态框 -->
+	<div class="modal fade in" id="cmpInfoModal" tabindex="-1" role="dialog" aria-labelledby="cmpInfoModalLabel" aria-describedby="公众号二维码">
+		<div class="modal-dialog" aria-hidden="true">
+			<div class="modal-content" style="background: none;border: 0;box-shadow: none;margin-top: 60px;">
+				<div class="modal-body porel p0">
+					<div style="width:290px;margin:0 auto;">
+						<img src="/static/frontend/images/cmp_info.png" width="290" alt="">
+						<div id="closeCmpInfoModal" class="ball" style="width: 18px; height: 18px; border-radius: 9px; position: absolute; top: 20px; right: 30px; border-color: #bbbbbb;">
+							<img src="/static/frontend/images/find_close.png" alt="" width="8" style="position: absolute; top: 4px; right: 4px;">
+						</div>
+						<a href="javascript:void(0)" onclick="doinfo()" style="position: absolute;top:295px;left:90px;width:180px;height: 30px;line-height:30px;"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-            //公共变量
-            var allService = new Array();
-            var wh = $(window).height();
-            var ww = $(window).width();
-            
-            //========================== 一键发布 ===============================
-            $(document).ready(function() {
-                // 设置加载中...
-                $(document).ajaxStart(function() {
-                    $("#loading").removeClass('hidden');
-                });
-                $(document).ajaxStop(function() {
-                    $("#loading").addClass('hidden');
-                });
-            });
+<script type="text/javascript">
+	var vue = new Vue({
+		el: "#ebox",
+		data: {
+			ui: {},
+			news:0,
+			appId: "",
+			noncestr: "",
+			signature: "",
+			timestamp: "",
+			share: {}
+		},
+		mounted: function() { 
+			this.$nextTick(function() {
+				vue.news = ui.news;
+				//加载微信配置
+				$.ajax({
+					url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
+					type: 'GET',
+					dataType: 'JSON',
+					async: false,
+					data: {"link": window.location.href},
+				})
+				.done(function(res) {
+					if (res.code == 200) {
+						vue.appId		= res.data.appId;
+						vue.noncestr	= res.data.noncestr;
+						vue.signature	= res.data.signature;
+						vue.timestamp	= res.data.timestamp;
+					}
+				});
+				vue.share = {
+						"title": "FA財-项目发布",
+						"desc": "发布项目融资需求，精准对接千家机构。免费路演找财哥(13818807894)",
+						"imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
+				};
+		
+				wx.config({
+					debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+					appId: vue.appId, // 必填，公众号的唯一标识
+					timestamp: vue.timestamp, // 必填，生成签名的时间戳
+					nonceStr: vue.noncestr, // 必填，生成签名的随机串
+					signature: vue.signature,// 必填，签名
+					jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+				});
+				
+				var shareLink = window.location.href;
+				if (ui.userType == 1 || ui.userType == 2) {
+					shareLink = "http://fin.jrfacai.com/static/frontend/release-needs.html?superior="+ui.uid;
+				}
+				wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+					wx.onMenuShareAppMessage({ 
+						title: vue.share.title, // 分享标题
+						desc: vue.share.desc, // 分享描述
+						link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: vue.share.imgUrl, // 分享图标
+						success: function () {
+						  // 设置成功
+						}
+					});
+					wx.onMenuShareTimeline({ 
+						title: vue.share.title, // 分享标题
+						link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+						imgUrl: vue.share.imgUrl, // 分享图标
+						success: function () {
+						  // 设置成功
+						}
+					});
+				});
+			});
+		},
+		methods: {}
+	});
 
-            //提示框
-            function alertModal(msg) {
-                $("#alertModal").find('.modal-body').html(msg);
-                $("#alertModal").modal("show");
-                setTimeout(function() {
-                    $("#alertModal").modal("hide");
-                }, msg.length / 7 * 1000);
-            }
+	$("#closeAuthModal").click(function(event) {
+		$("#authModal").modal("hide");
+	});
+	$("#closeCmpInfoModal").click(function(event) {
+		$("#cmpInfoModal").modal("hide");
+	});
 
-            // 一键发布检查会员属性
-            $("#oneKeyRelease").click(function(event) {
-                if (ui.userType == 0) {
-                    $("#authModal").modal("show");
-                    return;
-                }
-                if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
-                    $("#cmpInfoModal").modal("show");
-                    return;
-                }
+	//公共变量
+	var allService = new Array();
+	var wh = $(window).height();
+	var ww = $(window).width();
 
-                $(".rcInput").trigger('keyup');
-                $("#firstChooseContent").hide();
-                $("#oneKeyReleaseContent").show();
-            });
-            
-            
+	//刷新等待显示
+	$(document).ready(function() {
+		// 设置加载中...
+		$(document).ajaxStart(function() {
+			$("#loading").removeClass('hidden');
+		});
+		$(document).ajaxStop(function() {
+			$("#loading").addClass('hidden');
+		});
+	});
 
-            //发布内容验证长度
-            $(".rcInput").keyup(function(event) {
-                var el = event.currentTarget;
-                // $(el).val($.trim($(el).val()));
-                $(el).val($(el).val());
-                var i = $(el).val().length;
-                var s = $(el).attr('maxSize');
-                if (i > parseInt(s)) {
-                    alertModal("此内容最多为" + s + "字");
-                    $(el).val($(el).val().substring(0, parseInt(s)));
-                    $(el).next().html(s + "/" + s);
-                } else {
-                    $(el).next().html(i + "/" + s);
-                }
-            });
-            $(".rcInput").blur(function(event) {
-                var el = event.currentTarget;
-                $(el).val($.trim($(el).val()));
-                var i = $(el).val().length;
-                var s = $(el).attr('maxSize');
-                if (i > parseInt(s)) {
-                    alertModal("此内容最多为" + s + "字");
-                    $(el).val($(el).val().substring(0, parseInt(s)));
-                    $(el).next().html(s + "/" + s);
-                } else {
-                    $(el).next().html(i + "/" + s);
-                }
-            });
-            
-            //添加标签
-            $("#openAddTagModal").click(function(event) {
-                $("#addTagModal").modal("show");
-                $("#tagInput").focus();;
-            });
-            $("#tagBox").on('click', '.tagDel', function(event) {
-                $(this).parent().remove();
-            });
-            $("#tagBox2").on('click', '.tagDel', function(event) {
-                $(this).parent().remove();
-            });
-            $("#addTagBtn").click(function(event) {
-                var v = $.trim($("#tagInput").val());
-                if (v.length > 0) {
-                    if ($(".tagCt").length < 18) {
-                        var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
-                        <span class=\"tagCt\">" + v + "</span>\
-                        <img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
-                    </div>";
-                        $("#tagBox").prepend(n);
-                        $("#tagInput").val("");
-                        $("#addTagModal").modal("hide");
-                    } else {
-                        $("#addTagModal").modal("hide");
-                        setTimeout(function() {
-                            alertModal("最多添加18个标签");
-                        }, 400);
-                    }
-                } else {
-                    $("#addTagModal").modal("hide");
-                }
-                $("#addTagBtn").focus();
-            });
-            $("#tagInput").keydown(function(event) {
-                if (event.which == 13) {
-                    $("#addTagBtn").trigger('click');
-                }
-            });
-            $("#typeTagBoxCn").on('click', '.typeTagBox', function(event) {
-                var curr = $(event.currentTarget);
-                if (curr.hasClass('active')) {
-                    curr.removeClass('active')
-                } else {
-                    curr.addClass('active');
-                }
-            });
-            $("#pfcTagBoxCn").on('click', '.pfcTagBox', function(event) {
-                var curr = $(event.currentTarget);
-                if (curr.hasClass('active')) {
-                    curr.removeClass('active')
-                } else {
-                    curr.addClass('active');
-                }
-            });
-    
+	//提示框
+	function alertModal(msg) {
+		$("#alertModal").find('.modal-body').html(msg);
+		$("#alertModal").modal("show");
+		setTimeout(function() {
+			$("#alertModal").modal("hide");
+		}, msg.length / 7 * 1000);
+	}
+	
+	//发布内容验证长度
+	$(".rcInput").keyup(function(event) {
+		var el = event.currentTarget;
+		// $(el).val($.trim($(el).val()));
+		$(el).val($(el).val());
+		var i = $(el).val().length;
+		var s = $(el).attr('maxSize');
+		if (i > parseInt(s)) {
+			alertModal("此内容最多为" + s + "字");
+			$(el).val($(el).val().substring(0, parseInt(s)));
+			$(el).next().html(s + "/" + s);
+		} else {
+			$(el).next().html(i + "/" + s);
+		}
+	});
+	
+	$(".rcInput").blur(function(event) {
+		var el = event.currentTarget;
+		$(el).val($.trim($(el).val()));
+		var i = $(el).val().length;
+		var s = $(el).attr('maxSize');
+		if (i > parseInt(s)) {
+			alertModal("此内容最多为" + s + "字");
+			$(el).val($(el).val().substring(0, parseInt(s)));
+			$(el).next().html(s + "/" + s);
+		} else {
+			$(el).next().html(i + "/" + s);
+		}
+	});
 
-            //确定选择标签
-            var dict_id = new Array();
-            $("#tagFinishBtn").click(function(event) {
-                dict_id = new Array();
-                var tn = new Array();
-               
-                $(".pfcTagBox.active").each(function(index, el) {
-                    dict_id.push($(el).attr('tagId'));
-                    tn.push($(el).html());
-                });
-                var tagboxhtml = "";
-                $("#tagBox .tagCt").each(function(index, el) {
-                    tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
-                        <span class=\"tagCt\">" + $(el).html() + "</span>\
-                        <img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
-                    </div>";
-                });
-                for (var i = 0; i < tn.length; i++) {
-                    tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
-                        <span class=\"tagCt\">" + tn[i] + "</span>\
-                        <img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
-                    </div>";
-                }
-                $("#tagBox2 .boxct").html(tagboxhtml);
-            });
-            
-            
+	//添加标签
+	$("#openAddTagModal").click(function(event) {
+		$("#addTagModal").modal("show");
+		$("#tagInput").focus();;
+	});
+	$("#tagBox").on('click', '.tagDel', function(event) {
+		$(this).parent().remove();
+	});
+	$("#tagBox2").on('click', '.tagDel', function(event) {
+		$(this).parent().remove();
+	});
+	$("#addTagBtn").click(function(event) {
+		var v = $.trim($("#tagInput").val());
+		if (v.length > 0) {
+			if ($(".tagCt").length < 18) {
+				var n = "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+				<span class=\"tagCt\">" + v + "</span>\
+				<img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+			</div>";
+				$("#tagBox").prepend(n);
+				$("#tagInput").val("");
+				$("#addTagModal").modal("hide");
+			} else {
+				$("#addTagModal").modal("hide");
+				setTimeout(function() {
+					alertModal("最多添加18个标签");
+				}, 400);
+			}
+		} else {
+			$("#addTagModal").modal("hide");
+		}
+		$("#addTagBtn").focus();
+	});
+	$("#tagInput").keydown(function(event) {
+		if (event.which == 13) {
+			$("#addTagBtn").trigger('click');
+		}
+	});
+	$("#typeTagBoxCn").on('click', '.typeTagBox', function(event) {
+		var curr = $(event.currentTarget);
+		if (curr.hasClass('active')) {
+			curr.removeClass('active')
+		} else {
+			curr.addClass('active');
+		}
+	});
+	$("#pfcTagBoxCn").on('click', '.pfcTagBox', function(event) {
+		var curr = $(event.currentTarget);
+		if (curr.hasClass('active')) {
+			curr.removeClass('active')
+		} else {
+			curr.addClass('active');
+		}
+	});
 
-            //选择标签
-            $("#openModifyTagModal").click(function(event) {
-            	$('#pfcTagBoxCn').html("");
-            	$.ajax({
-                    url: "http://fin.jrfacai.com/home/dict_api/getMoreDict",
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {"content": $("#rcInput").val()},
-                })
-	            .done(function(res) {
-	                if (res.code == 200) {
-	                	var dt = res.data;
-	                    for (var i = 0; i < dt.length; i++) {
-	                    	var el = "<div tagId=\"" + dt[i].id + "\" class=\"pfcTagBox tofh\">" + dt[i].value + "</div>";
-	                        $("#pfcTagBoxCn").append(el);
-	                    }
-	                }
-	            });
-                $("#modifyTagModal").modal("show");
-            });
-            $("#modifyTagModal .modal-body").height(wh - 160);
-            $("#myTagBox").on('click', '.tagDel', function(event) {
-                $(this).parent().remove();
-            });
+	//确定选择标签
+	var dict_id = new Array();
+	$("#tagFinishBtn").click(function(event) {
+		dict_id = new Array();
+		var tn = new Array();
+	   
+		$(".pfcTagBox.active").each(function(index, el) {
+			dict_id.push($(el).attr('tagId'));
+			tn.push($(el).html());
+		});
+		var tagboxhtml = "";
+		$("#tagBox .tagCt").each(function(index, el) {
+			tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+				<span class=\"tagCt\">" + $(el).html() + "</span>\
+				<img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+			</div>";
+		});
+		for (var i = 0; i < tn.length; i++) {
+			tagboxhtml += "<div class=\"pull-left pl15 pr15 mr10 mb10 porel\" style=\"height: 27px;border:1px solid #0076FF;line-height: 23px;\">\
+				<span class=\"tagCt\">" + tn[i] + "</span>\
+				<img class=\"tagDel noShow\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+			</div>";
+		}
+		$("#tagBox2 .boxct").html(tagboxhtml);
+	});
 
-            //添加图片
-            $("#addImgBtn").click(function(event) {
-                $("#fileInput").click();
-            });
-            $("#imgBox").on('click', '.imgDel', function(event) {
-                $(this).parent().remove();
-            });
-            $("#form").on('click', '.imgDel', function(event) {
-                $(this).parent().remove();
-                var imgids = "";
-                $("#addImgBox .imgCt").each(function(index, el) {
-                    imgids += $(el).attr('imgId') + ",";
-                });
-                imgids = imgids.substring(0, imgids.length - 1);
-                $("#addImgBox input").val(imgids);
-            });
-            $("#fileInput").change(function(event) {
-                var fn = $(this).val();
-                //判断图片格式
-                var suffixIndex = fn.lastIndexOf(".");
-                var suffix = fn.substring(suffixIndex + 1).toUpperCase();
-                if (suffix != "BMP" && suffix != "JPG" && suffix != "JPEG" && suffix != "PNG" && suffix != "GIF") {
-                    alertModal("图片格式错误(请上传BMP、JPG、JPEG、PNG、GIF)");
-                    return;
-                }
+	//选择标签
+	$("#openModifyTagModal").click(function(event) {
+		$('#pfcTagBoxCn').html("");
+		$.ajax({
+			url: "http://fin.jrfacai.com/home/dict_api/getMoreDict",
+			type: 'GET',
+			dataType: 'json',
+			data: {"content": $("#rcInput").val()},
+		})
+		.done(function(res) {
+			if (res.code == 200) {
+				var dt = res.data;
+				for (var i = 0; i < dt.length; i++) {
+					var el = "<div tagId=\"" + dt[i].id + "\" class=\"pfcTagBox tofh\">" + dt[i].value + "</div>";
+					$("#pfcTagBoxCn").append(el);
+				}
+			}
+		});
+		$("#modifyTagModal").modal("show");
+	});
 
-                //上传图片操作
-                var fileForm = new FormData($("#fileForm").get(0));
-                $.ajax({
-                        url: "http://fin.jrfacai.com/home/base_api/upload",
-                        type: "POST",
-                        data: fileForm,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                    })
-                    .done(function(res) {
-                        if (res.code == 200) {
-                            var imgUrl = "http://fin.jrfacai.com/uploads/" + res.data.url;
-                            imgUrl = imgUrl.replace("\/", "/");
-                            var n = "<div class=\"pull-left mr10 mb10 porel\" style=\"width:80px;height: 80px;\">\
-                                <img imgId=\"" + res.data.id + "\" class=\"imgCt\" src=\"" + imgUrl + "\" style=\"width:80px;height:80px;\">\
-                                <img class=\"imgDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
-                            </div>";
-                            $("#imgBox").prepend(n);
-                            $("#addImgBox").prepend(n);
-                            if ($("#addImgBox input").length <= 0) {
-                                $("#addImgBox").append("<input type=\"text\" name=\"" + $("#addImgBox").attr("fieldsName") + "\" class=\"sr-only\">");
-                            }
-                            var imgids = "";
-                            $("#addImgBox .imgCt").each(function(index, el) {
-                                imgids += $(el).attr('imgId') + ",";
-                            });
-                            imgids = imgids.substring(0, imgids.length - 1);
-                            $("#addImgBox input").val(imgids);
-                            $("#addImgBox").show();
-                        } else {
-                            alertModal(res.msg);
-                        }
-                    });
-            });
+	$("#modifyTagModal .modal-body").height(wh - 160);
 
-            //完成
-            $("#oneKeyReleaseFinish").click(function(event) {
-                var ctL  = $("#rcInput").val().length;
-                var tagL = $("#tagBox2 .tagCt").length;
-                var imgL = $(".imgCt").length;
-                var s    = parseInt($("#rcInput").attr("maxSize"));
-                if (ctL == 0) {
-                    alertModal("请填写需求");
-                    return;
-                }
-                if (ctL > s) {
-                    alertModal("发布的内容最多为" + s + "字");
-                    return;
-                }
-                if (tagL == 0) {
-                    alertModal("请添加标签");
-                    return;
-                }
-                if (tagL > 18) {
-                    alertModal("最多添加18个标签");
-                    return;
-                }
+	$("#myTagBox").on('click', '.tagDel', function(event) {
+		$(this).parent().remove();
+	});
 
-                //添加操作
-                var tagArr = new Array();
-                var imgArr = new Array();
-                $("#tagBox2 .tagCt").each(function(index, el) {
-                    tagArr.push($(el).html());
-                });
-                $(".imgCt").each(function(index, el) {
-                    imgArr.push($(el).attr('imgId'));
-                });
-                $.ajax({
-                        url: 'http://fin.jrfacai.com/home/publish_api/addPublish',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            "content": $("#rcInput").val(),
-                            "img_id": JSON.stringify(imgArr).substring(1, JSON.stringify(imgArr).length - 1),
-                            "tag_name": JSON.stringify(tagArr).substring(1, JSON.stringify(tagArr).length - 1)
-                        },
-                    })
-                    .done(function(res) {
-                        if (res.code == 200) {
-                            alertModal(res.msg);
-                            setTimeout(function() {
-                                window.location.href = 'http://fin.jrfacai.com/static/frontend/find.html';
-                            }, 2200);
-                        } else {
-                        	alertModal(res.msg);
-                        }
-                    });
-            });
+	//添加图片
+	$("#addImgBtn").click(function(event) {
+		$("#fileInput").click();
+	});
 
-            //========================== 发布项目 ===============================   
+	$("#imgBox").on('click', '.imgDel', function(event) {
+		$(this).parent().remove();
+	});
 
-            // 图片添加
-            $("#form").on('click', '#addImgBtn2', function(event) {
-                $("#fileInput").click();
-            });
+	$("#form").on('click', '.imgDel', function(event) {
+		$(this).parent().remove();
+		var imgids = "";
+		$("#addImgBox .imgCt").each(function(index, el) {
+			imgids += $(el).attr('imgId') + ",";
+		});
+		imgids = imgids.substring(0, imgids.length - 1);
+		$("#addImgBox input").val(imgids);
+	});
+
+	$("#fileInput").change(function(event) {
+		var fn = $(this).val();
+		//判断图片格式
+		var suffixIndex = fn.lastIndexOf(".");
+		var suffix = fn.substring(suffixIndex + 1).toUpperCase();
+		if (suffix != "BMP" && suffix != "JPG" && suffix != "JPEG" && suffix != "PNG" && suffix != "GIF") {
+			alertModal("图片格式错误(请上传BMP、JPG、JPEG、PNG、GIF)");
+			return;
+		}
+
+		//上传图片操作
+		var fileForm = new FormData($("#fileForm").get(0));
+		$.ajax({
+				url: "http://fin.jrfacai.com/home/base_api/upload",
+				type: "POST",
+				data: fileForm,
+				cache: false,
+				contentType: false,
+				processData: false,
+			})
+			.done(function(res) {
+				if (res.code == 200) {
+					var imgUrl = "http://fin.jrfacai.com/uploads/" + res.data.url;
+					imgUrl = imgUrl.replace("\/", "/");
+					var n = "<div class=\"pull-left mr10 mb10 porel\" style=\"width:80px;height: 80px;\">\
+						<img imgId=\"" + res.data.id + "\" class=\"imgCt\" src=\"" + imgUrl + "\" style=\"width:80px;height:80px;\">\
+						<img class=\"imgDel\" src=\"/static/frontend/images/del-sign.png\" style=\"width:12px;height:12px;position:absolute;top:-6px;right:-6px;\">\
+					</div>";
+					$("#imgBox").prepend(n);
+					$("#addImgBox").prepend(n);
+					if ($("#addImgBox input").length <= 0) {
+						$("#addImgBox").append("<input type=\"text\" name=\"" + $("#addImgBox").attr("fieldsName") + "\" class=\"sr-only\">");
+					}
+					var imgids = "";
+					$("#addImgBox .imgCt").each(function(index, el) {
+						imgids += $(el).attr('imgId') + ",";
+					});
+					imgids = imgids.substring(0, imgids.length - 1);
+					$("#addImgBox input").val(imgids);
+					$("#addImgBox").show();
+				} else {
+					alertModal(res.msg);
+				}
+			});
+	});
+
+    //完成
+	$("#oneKeyReleaseFinish").click(function(event) {
+		
+		if (ui.userType == 0) {
+			$("#authModal").modal("show");
+			return;
+		}
+		if (ui.userType == 1 || (ui.role_type == 0 && ui.userType != 0)) {
+			$("#cmpInfoModal").modal("show");
+			return;
+		}
+		
+		var ctL  = $("#rcInput").val().length;
+		var tagL = $("#tagBox2 .tagCt").length;
+		var imgL = $(".imgCt").length;
+		var s    = parseInt($("#rcInput").attr("maxSize"));
+		if (ctL == 0) {
+			alertModal("请填写需求");
+			return;
+		}
+		if (ctL > s) {
+			alertModal("发布的内容最多为" + s + "字");
+			return;
+		}
+		if (tagL == 0) {
+			alertModal("请添加标签");
+			return;
+		}
+		if (tagL > 18) {
+			alertModal("最多添加18个标签");
+			return;
+		}
+
+		//添加操作
+		var tagArr = new Array();
+		var imgArr = new Array();
+
+		$("#tagBox2 .tagCt").each(function(index, el) {
+			tagArr.push($(el).html());
+		});
+
+		$(".imgCt").each(function(index, el) {
+			imgArr.push($(el).attr('imgId'));
+		});
+
+		$.ajax({
+				url: 'http://fin.jrfacai.com/home/publish_api/addPublish',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					"content": $("#rcInput").val(),
+					"img_id": JSON.stringify(imgArr).substring(1, JSON.stringify(imgArr).length - 1),
+					"tag_name": JSON.stringify(tagArr).substring(1, JSON.stringify(tagArr).length - 1)
+				},
+			})
+			.done(function(res) {
+				if (res.code == 200) {
+					alertModal(res.msg);
+					setTimeout(function() {
+						window.location.href = 'http://fin.jrfacai.com/static/frontend/find.html';
+					}, 2200);
+				} else {
+					alertModal(res.msg);
+				}
+			});
+	});
+
+	function doreg(){
+		if(ui.is_follow==1){
+			window.location.href = '/static/frontend/reg.html';
+		}else{
+			window.location.href = '/static/frontend/followtab.html';
+		}
+	}
+	
+	function doinfo(){
+		if(ui.is_follow==1){
+			window.location.href = '/static/frontend/basic-info.html';
+		}else{
+			window.location.href = '/static/frontend/followtab.html';
+		}
+	}
 
 
-
-
-            if (getParams().needs == "1") {
-                $("#oneKeyRelease").trigger('click');
-            }
-            $("body").on('click', 'img', function(event) {
-                var el = event.currentTarget;
-                if ($(el).hasClass('noShow')) {
-                    return;
-                }
-                wx.previewImage({
-                    current: $(el).attr('src'), // 当前显示图片的http链接
-                    urls: [$(el).attr('src')] // 需要预览的图片http链接列表
-                });
-            });
-
-            var appId = "";
-            var noncestr = "";
-            var signature = "";
-            var timestamp = "";
-            var share = {};
-
-            // 加载微信配置
-            $.ajax({
-                    url: 'http://fin.jrfacai.com/home/base_api/readyWxJs',
-                    type: 'GET',
-                    dataType: 'JSON',
-                    async: false,
-                    data: { "link": window.location.href },
-                })
-                .done(function(res) {
-                    if (res.code == 200) {
-                        appId = res.data.appId;
-                        noncestr = res.data.noncestr;
-                        signature = res.data.signature;
-                        timestamp = res.data.timestamp;
-                    }
-                });
-
-            share = {
-                "title": "FA財-发布中心",
-                "desc": "需求一键发布 快速对接",
-                "imgUrl": "http://fin.jrfacai.com/static/frontend/images/share-img.png"
-            };
-
-            wx.config({
-                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                "appId": appId, // 必填，公众号的唯一标识
-                "timestamp": timestamp, // 必填，生成签名的时间戳
-                "nonceStr": noncestr, // 必填，生成签名的随机串
-                "signature": signature, // 必填，签名
-                "jsApiList": ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
-            });
-
-            var shareLink = window.location.href;
-            if (ui.userType == 1 || ui.userType == 2) {
-                shareLink = "http://fin.jrfacai.com/static/frontend/release-needs.html?superior=" + ui.uid;
-            }
-
-            wx.ready(function() { //需在用户可能点击分享按钮前就先调用
-                wx.onMenuShareAppMessage({
-                    title: share.title, // 分享标题
-                    desc: share.desc, // 分享描述
-                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: share.imgUrl, // 分享图标
-                    success: function() {
-                        // 设置成功
-                    }
-                });
-                wx.onMenuShareTimeline({
-                    title: share.title, // 分享标题
-                    link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: share.imgUrl, // 分享图标
-                    success: function() {
-                        // 设置成功
-                    }
-                });
-            });
-            
-            function doreg(){
-    			if(ui.is_follow==1){
-            		window.location.href = '/static/frontend/reg.html';
-            	}else{
-            		window.location.href = '/static/frontend/followtab.html';
-            	}
-    		}
-    		
-    		function doinfo(){
-    			if(ui.is_follow==1){
-            		window.location.href = '/static/frontend/basic-info.html';
-            	}else{
-            		window.location.href = '/static/frontend/followtab.html';
-            	}
-    		}
- 		</script>
+</script>
+        
 </body>
 </html>
