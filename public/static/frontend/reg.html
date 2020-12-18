@@ -33,8 +33,8 @@
         <div class="mt10 f16 text-center">身份选择</div>
         <div style="padding:10px 30px 0;">
             <div class="clearfix" style="padding-bottom: 30px;">
-                <div class="chooseRole text-center pull-left mr25 default" style="background-repeat: no-repeat;background-size:131px 41px; height: 41px;width:131px;line-height:41px;">我是资金方</div>
-                <div class="chooseRole text-center pull-left default" style="background-repeat: no-repeat;background-size:131px 41px; height: 41px;width:131px;line-height:41px;">我是项目方</div>
+                <div class="chooseRole text-center pull-left default" style="background-repeat: no-repeat;background-size:131px 41px; height: 41px;width:131px;line-height:41px;">我是资金方</div>
+                <div class="chooseRole text-center pull-right default" style="background-repeat: no-repeat;background-size:131px 41px; height: 41px;width:131px;line-height:41px;">我是项目方</div>
             </div>
             <div class="clearfix mb25" style="border-radius:19px;height: 38px;border: 1px solid #dddddd;">
                 <div class="pull-left" style="line-height:38px;padding-left:19px;">姓名：</div>
@@ -63,7 +63,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    	<span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title" id="ptlModalLabel">FA財平台注册认证协议书</h4>
                 </div>
@@ -506,7 +506,7 @@
         //发送验证码
         $("#sendAuthCode").click(function(event) {
             var phone = $.trim($("input[name='phone']").val());
-            if (!(/^1(3|4|5|6|7|8)\d{9}$/.test(phone))) {
+            if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(phone))) {
                 alertModal("请输入正确的手机号");
                 return;
             }
@@ -545,11 +545,11 @@
 
         //提交认证
         $("#submitAuth").click(function(event) {
-            var rl = $(".chooseRole.active").length;
-            var name = $.trim($("input[name='name']").val());
-            var phone = $.trim($("input[name='phone']").val());
-            var authCode = $.trim($("input[name='authCode']").val());
-            var agree = $("#agreePtl").hasClass('true');
+            var rl 			= $(".chooseRole.active").length;
+            var name 		= $.trim($("input[name='name']").val());
+            var phone 		= $.trim($("input[name='phone']").val());
+            var authCode 	= $.trim($("input[name='authCode']").val());
+            var agree 		= $("#agreePtl").hasClass('true');
             if (rl <= 0) {
                 alertModal("请选择身份：资金方/项目方");
                 return;
@@ -558,7 +558,7 @@
                 alertModal("请输入姓名");
                 return;
             }
-            if (!(/^1(3|4|5|7|8)\d{9}$/.test(phone))) {
+            if (!(/^1(3|4|5|7|8|9)\d{9}$/.test(phone))) {
                 alertModal("请输入正确的手机号");
                 return;
             }
@@ -590,7 +590,8 @@
             })
             .done(function(res) {
                 if (res.code == 200) {
-                    window.location.href = "/static/frontend/preference.html";
+                	var url = res.data['url'];
+                    window.location.href = url;
                 }else {
                     alertModal(res.msg);
                 }
