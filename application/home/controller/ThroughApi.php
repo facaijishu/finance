@@ -20,17 +20,17 @@ class ThroughApi extends BaseApi
     public function through()
 	{    
         //当前用户
-	    $user = session('FINANCE_USER');//临时测试用户登录后获取的微信信息,最终上线后替换
+	    $user               = session('FINANCE_USER');//临时测试用户登录后获取的微信信息,最终上线后替换
         //当前用户uid
-        $data['uid'] = $user['uid']?$user['uid']:0;
+        $data['uid']        = $user['uid']?$user['uid']:0;
 	    //当前用户提交的身份选择
-	    $data['role_type'] = $this->request->param('role_type')?$this->request->param('role_type'):0;
+	    $data['role_type']  = $this->request->param('role_type')?$this->request->param('role_type'):0;
 	    //当前用户提交的姓名
-	    $data['real_name'] = $this->request->param('real_name')?$this->request->param('real_name'):'';
+	    $data['real_name']  = $this->request->param('real_name')?$this->request->param('real_name'):'';
 	    //当前用户提交的手机号
-	    $data['phone']     = $this->request->param('phone')?$this->request->param('phone'):'';
+	    $data['phone']      = $this->request->param('phone')?$this->request->param('phone'):'';
         //当前用户获取的短信验证码
-        $data['code'] = $this->request->param('code');
+        $data['code']       = $this->request->param('code');
         //参数校验
         $validate = new Through();
         if(!$validate->scene('add')->check($data)){
@@ -60,7 +60,9 @@ class ThroughApi extends BaseApi
                     }
                     session('FINANCE_USER' , $info);
                     session('code', null);
-                    $this->result('', 200, '添加认证信息成功', 'json');
+                    $data['url'] = session('REG_BACK_URL');
+                    session('REG_BACK_URL',null);
+                    $this->result($data, 200, '添加认证信息成功', 'json');
                 }else{
                     $error = $model->getError() ? '添加认证合伙人失败,'.$model->getError() : '添加认证合伙人失败';
                     $this->result('', 247, $error, 'json');
@@ -89,7 +91,7 @@ class ThroughApi extends BaseApi
 	//获取手机验证码
 	public function getNumber(){
         $mobile  = $this->request->param('phone/s');
-        $partten = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57]|16[0-9])[0-9]{8}$/';
+        $partten = '/^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57]|16[0-9]|19[0-9])[0-9]{8}$/';
         if(empty($mobile) || preg_match($partten, $mobile) == 0){
             return $this->result('', 244, '手机号码不正确', 'json');
         }
@@ -110,18 +112,19 @@ class ThroughApi extends BaseApi
         
         if($res){
             $sms    = new \common\Sms();
-            $tem_id = "SMS_170180037";
+            $tem_id = "SMS_173190063";
             $array  = $sms->sendSms($mobile,$number,$tem_id);
             $array  = json_decode(json_encode($array) , true);
+            //if(1==1){
             if($array['Code'] == "OK"){
                 //插入短信发送表
-                $text    = "您的验证码".$number."，该验证码15分钟内有效，请勿泄漏于他人！您正在注册成为新用户，感谢您的支持！";
+                $text    = "您的验证码".$number."，该验证码15分钟内有效，请勿泄漏于他人！";
                 $model   = model("SendSms");
                 $smsId   = $model->addSms($mobile,$text,1);
                 $this->result('', 200, '发送成功', 'json');
             }else{
                 //插入短信发送表
-                $text    = "您的验证码".$number."，该验证码15分钟内有效，请勿泄漏于他人！您正在注册成为新用户，感谢您的支持！";
+                $text    = "您的验证码".$number."，该验证码15分钟内有效，请勿泄漏于他人！！";
                 $model   = model("SendSms");
                 $smsId   = $model->addSms($mobile,$text,2,$array['Message']);
                 $this->result('', 246, "验证码短信异常，请稍后再试", 'json');
